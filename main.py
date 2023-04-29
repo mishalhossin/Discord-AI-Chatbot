@@ -2,6 +2,7 @@ import os
 import phind
 import aiohttp
 import discord
+from collections import deque
 from keep_alive import keep_alive
 from discord.ext import commands
 
@@ -11,7 +12,6 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    global current_status
     print(f"{bot.user.name} has connected to Discord!")
 
 def generate_response(prompt):
@@ -19,40 +19,54 @@ def generate_response(prompt):
         model='gpt-3.5-turbo',
         prompt=prompt,
         results=phind.Search.create(prompt, actualSearch=False),  # create search (set actualSearch to False to disable internet)
-        creative=True,
+        creative=False,
         detailed=False,
         codeContext=''  # up to 3000 chars of code
     )
     return result.completion.choices[0].text
 
-message_history = {}
-MAX_HISTORY = 3
 
+conversation_history = deque(maxlen=3)
 
 @bot.event
 async def on_message(message):
+    global conversation_history
+
     if message.author.bot:
         return # ignore messages from bots
 
     if isinstance(message.channel, discord.DMChannel):
-        author_id = str(message.author.id)
-        if author_id not in message_history:
-            message_history[author_id] = []
+        # Save user message to conversation history
+        conversation_history.append(f"{message.author.name}: {message.content}")
 
-        message_history[author_id].append(message.content)
-        message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-
-        user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{message.author.name}: {message.content}\n{bot.user.name}:"
+        # Combine conversation history with current prompt
+        prompt = '\n'.join(conversation_history) + f"\n{bot.user.name}:"
         response = generate_response(prompt)
-        # get user object from ID
-        user = bot.get_user(int(author_id))
-        if user:
+
+        # Save bot response to conversation history
+        conversation_history.append(f"{bot.user.name}: {response}")
+
+        # Split response into smaller chunks if it's too large
+        max_message_length = 1900
+        if len(response) > max_message_length:
+            response_chunks = []
+            current_chunk = ''
+            words = response.split(' ')
+            for word in words:
+                if len(current_chunk) + len(word) < max_message_length:
+                    current_chunk += word + ' '
+                else:
+                    response_chunks.append(current_chunk.strip())
+                    current_chunk = word + ' '
+            if current_chunk:
+                response_chunks.append(current_chunk.strip())
+            for chunk in response_chunks:
+                await message.reply(chunk)
+        else:
             await message.reply(response)
-            message_history[author_id].append(f"{bot.user.name}: {response}")
-            message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
 
     await bot.process_commands(message)
+
 
 @bot.command()
 async def pfp(ctx, attachment_url=None):
