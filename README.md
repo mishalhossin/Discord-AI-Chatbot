@@ -3,7 +3,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ## Features 🥳
 
-- Responds to messages in direct messages.
+- Responds to messages in direct messages only
 - Changes its profile picture with the `!pfp` command.
 - Provides latency information with the `!ping` command.
 - Changes its username with the `!changeusr` command.
