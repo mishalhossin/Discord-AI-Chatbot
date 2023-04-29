@@ -16,7 +16,7 @@ async def on_ready():
 
 def generate_response(prompt):
     result = phind.Completion.create(
-        model='gpt-3.5-turbo',
+        model='gpt-4',
         prompt=prompt,
         results=phind.Search.create(prompt, actualSearch=False),  # create search (set actualSearch to False to disable internet)
         creative=False,
