@@ -24,8 +24,8 @@ cd Gpt4Free-Chat-bot
 ### 6. Set up .env it will look like this:
 ```
 {
-  "DISCORD_TOKEN": "Your user agent from step 3",
-  "CF_COOKIE": "Your user agent from step 4",
+  "DISCORD_TOKEN": "Your discord bot token from step 3",
+  "CF_COOKIE": "Your cookie from step 4",
   "USER_AGENT": "Your user agent from step 5"
 }
 ```
