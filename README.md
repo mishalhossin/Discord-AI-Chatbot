@@ -23,19 +23,20 @@ cd Gpt4Free-Chat-bot
 }
 ```
 ### 7. Install all the dependencies
-# Windows:
+#### Windows:
 ```
 py pip install -r requirements.txt
 ```
-# linux :
+#### Linux :
 ```
 python3 pip install -r requirements.txt
 ```
 ### 8.Run the bot
-# Windows
+#### Windows
 ```
 py main.py
 ```
+#### Linux
 ```
 python main.py
 ```
