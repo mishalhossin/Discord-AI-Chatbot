@@ -1,5 +1,6 @@
 import phind
 
+prompt = "write a bash script to clone a github repo"
 
 # normal completion
 result = phind.Completion.create(
