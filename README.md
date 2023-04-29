@@ -1,5 +1,12 @@
 # Gpt4Free-Chat-bot
+This is a Python-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `phind` library from [GPT4FREE](https://github.com/xtekky/gpt4free) generating responses based on conversation history.
 
+## Features
+
+- Responds to messages in direct messages.
+- Changes its profile picture with the `!pfp` command.
+- Provides latency information with the `!ping` command.
+- Changes its username with the `!changeusr` command.
 
 # Steps to install and run :
 ### 1. git clone repository
