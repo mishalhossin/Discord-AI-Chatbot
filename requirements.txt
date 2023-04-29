@@ -1,0 +1,5 @@
+Flask==2.1.1
+aiohttp==3.8.1
+cffi==1.15.0
+curl-cffi==0.1.0
+discord.py==2.0.0a
