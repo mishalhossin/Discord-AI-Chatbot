@@ -9,46 +9,48 @@ from discord.ext import commands
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-
 @bot.event
 async def on_ready():
     global current_status
     print(f"{bot.user.name} has connected to Discord!")
 
-
 def generate_response(prompt):
     result = phind.Completion.create(
-        model='gpt-4',
+        model='gpt-3.5-turbo',
         prompt=prompt,
         results=phind.Search.create(prompt, actualSearch=False),  # create search (set actualSearch to False to disable internet)
-        creative=False,
+        creative=True,
         detailed=False,
         codeContext=''  # up to 3000 chars of code
     )
     return result.completion.choices[0].text
 
 message_history = {}
-MAX_HISTORY = 4
+MAX_HISTORY = 3
 
 
 @bot.event
 async def on_message(message):
+    if message.author.bot:
+        return # ignore messages from bots
+
     if isinstance(message.channel, discord.DMChannel):
-        
         author_id = str(message.author.id)
         if author_id not in message_history:
             message_history[author_id] = []
+
         message_history[author_id].append(message.content)
         message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-        
+
         user_prompt = "\n".join(message_history[author_id])
         prompt = f"{user_prompt}\n{message.author.name}: {message.content}\n{bot.user.name}:"
         response = generate_response(prompt)
-
         # get user object from ID
         user = bot.get_user(int(author_id))
         if user:
             await message.reply(response)
+            message_history[author_id].append(f"{bot.user.name}: {response}")
+            message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
 
     await bot.process_commands(message)
 
