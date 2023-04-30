@@ -56,18 +56,9 @@ def main():
             <h2>HaruniAI Commands</h2>
             <p class="command">!pfp [image_url] - Change the bot's profile picture</p>
             <p class="command">!changeusr [new_username] - Change the bot's username</p>
-            <p class="command">!invite_all - Generate invites for all servers the bot is in</p>
-            <p class="command">!addroles - Add all roles to the specified user</p>
-            <p class="command">!checkperm - Check the bot's permissions in this server</p>
-            <p class="command">!troll - Change all nicknames to 'Slaves lol' for trolzez</p>
             <p class="command">!ping - Pong</p>
-            <p class="command">!addchannel - Add the current channel to the list of active channels</p>
-            <p class="command">!randomstory - Uses AI to generate a random story</p>
-            <p class="command">!define [Word] - Uses AI to explain a word</p>
-            <p class="command">!ask [Question] - Uses AI to answer a question</p>
-            <p class="command">!storyonusr [@USER] - Uses AI to create a random story on a mentioned @user</p>
             <div style="text-align: center; margin-top: 20px;">
-                <a href="https://github.com/mishalhossin/Gpt3-chatbot-discord" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #fabb34; color: #fff; border-radius: 50px;">View Source Code on GitHub</a>
+                <a href="https://github.com/mishalhossin/Coding-Chatbot-Gpt4Free" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #fabb34; color: #fff; border-radius: 50px;">View Source Code on GitHub</a>
             </div>
         </div>
     </body>
