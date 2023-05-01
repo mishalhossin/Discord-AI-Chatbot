@@ -36,7 +36,7 @@ py pip install -r requirements.txt
 ```
 #### Linux :
 ```
-python3 pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 ### 6.Run the bot
 #### Windows
