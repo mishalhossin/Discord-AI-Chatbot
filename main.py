@@ -1,5 +1,5 @@
 import os
-import phind
+from gpt4free import theb
 import aiohttp
 import discord
 from collections import deque
@@ -15,15 +15,10 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 def generate_response(prompt):
-    result = phind.Completion.create(
-        model='gpt-4',
-        prompt=prompt,
-        results=phind.Search.create(prompt, actualSearch=False),  # create search (set actualSearch to False to disable internet)
-        creative=False,
-        detailed=False,
-        codeContext=''  # up to 3000 chars of code
-    )
-    return result.completion.choices[0].text
+    response = ""
+    for token in theb.Completion.create(prompt):
+        response += token
+    return response
 
 
 conversation_history = deque(maxlen=3)
@@ -46,24 +41,8 @@ async def on_message(message):
         # Save bot response to conversation history
         conversation_history.append(f"{bot.user.name}: {response}")
 
-        # Split response into smaller chunks if it's too large
-        max_message_length = 1900
-        if len(response) > max_message_length:
-            response_chunks = []
-            current_chunk = ''
-            words = response.split(' ')
-            for word in words:
-                if len(current_chunk) + len(word) < max_message_length:
-                    current_chunk += word + ' '
-                else:
-                    response_chunks.append(current_chunk.strip())
-                    current_chunk = word + ' '
-            if current_chunk:
-                response_chunks.append(current_chunk.strip())
-            for chunk in response_chunks:
-                await message.reply(chunk)
-        else:
-            await message.reply(response)
+        # Send the complete response
+        await message.reply(response)
 
     await bot.process_commands(message)
 
