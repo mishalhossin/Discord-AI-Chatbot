@@ -1,9 +1,4 @@
-### I'm fixing some shit
-### I'm fixing some shit
-### I'm fixing some shit
-### I'm fixing some shit
-### I'm fixing some shit
-### ADDING SEXY STREAMING COMPLETION
+### CAN YOU ? YES YOU? HELP ME ADDING STREAMING COMPLETION TO THIS ?
 
 # Gpt4Free-Chat-bot 🤖
 This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `theb` library from [GPT4FREE](https://github.com/xtekky/gpt4free) (Its now removed btw) for generating responses based on conversation history.
