@@ -50,3 +50,6 @@ python main.py
 ### 7. Invite your bot and DM (Direct message) it
 ![image](https://user-images.githubusercontent.com/91066601/235293746-60257d85-9a7c-4396-9f42-cea92ab78cf8.png)
 🏁🏁🏁🏁🏁🏁🏁🏁                      FINISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
+
+
+Was this too sfw for you ? then check this out [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
