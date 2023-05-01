@@ -22,10 +22,11 @@ def generate_response(prompt):
     return response
 
 
-conversation_history = deque(maxlen=3)
+conversation_history = deque(maxlen=2)
 
 @bot.event
 async def on_message(message):
+    await bot.process_commands(message)
     global conversation_history
 
     if message.author.bot:
@@ -36,16 +37,14 @@ async def on_message(message):
         conversation_history.append(f"{message.author.name}: {message.content}")
 
         # Combine conversation history with current prompt
-        prompt = '\n'.join(conversation_history) + f"\n{bot.user.name}:"
+        prompt = '\n'.join(conversation_history) + f"\nLLM:"
         response = generate_response(prompt)
 
         # Save bot response to conversation history
-        conversation_history.append(f"{bot.user.name}: {response}")
+        conversation_history.append(f"LLM : {response}")
 
         # Send the complete response
         await message.reply(response)
-
-    await bot.process_commands(message)
 
 
 @bot.command()
