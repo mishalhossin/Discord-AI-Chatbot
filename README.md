@@ -47,9 +47,14 @@ py main.py
 ```
 python main.py
 ```
-### 7. Invite your bot and DM (Direct message) it
+### 7. Invite your bot and DM (Direct message) it | ⚠️ IMPORTANT
+
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
 🏁🏁🏁🏁🏁🏁🏁🏁                      FINISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
 
 
-Want something nsfw ? then check this out [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
+
+
+
+# Want something nsfw ? then check this out:
+[SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
