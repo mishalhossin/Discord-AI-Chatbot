@@ -52,4 +52,4 @@ python main.py
 🏁🏁🏁🏁🏁🏁🏁🏁                      FINISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
 
 
-Was this too sfw for you ? then check this out [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
+Want something nsfw ? then check this out [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
