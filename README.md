@@ -13,11 +13,11 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 # Steps to install and run 🚩 :
 ### 1. git clone repository
 ```
-git clone https://github.com/mishalhossin/Gpt4Free-Chat-bot
+git clone https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free
 ```
 ### 2. change directory to cloned directory
 ```
-cd Gpt4Free-Chat-bot
+cd Discord-Chatbot-Gpt4Free
 ```
 ### 3. Get discord bot token [here](https://discord.com/developers/applications)
 ### 4. Set up `.env` file it will look like this:
