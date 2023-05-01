@@ -16,8 +16,9 @@ async def on_ready():
 
 def generate_response(prompt):
     response = ""
-    for token in theb.Completion.create(prompt):
-        response += token
+    while not response:
+        for token in theb.Completion.create(prompt):
+            response += token
     return response
 
 
