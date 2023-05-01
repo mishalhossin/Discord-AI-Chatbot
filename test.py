@@ -1,14 +1,6 @@
-import phind
+from gpt4free import theb
 
-prompt = "write a bash script to clone a github repo"
-
-# normal completion
-result = phind.Completion.create(
-    model  = 'gpt-4',
-    prompt = prompt,
-    results     = phind.Search.create(prompt, actualSearch = False), # create search (set actualSearch to False to disable internet)
-    creative    = False,
-    detailed    = False,
-    codeContext = '') # up to 3000 chars of code
-
-print(result.completion.choices[0].text)
+# simple streaming completion
+for token in theb.Completion.create('hello world'):
+    print(token, end='', flush=True)
+print("")
