@@ -56,4 +56,4 @@ python main.py
 ```
 ### 9. Invite your bot and DM (Direct message) it
 ![image](https://user-images.githubusercontent.com/91066601/235293746-60257d85-9a7c-4396-9f42-cea92ab78cf8.png)
-🏁🏁🏁🏁🏁🏁🏁🏁                      FNISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
+🏁🏁🏁🏁🏁🏁🏁🏁                      FINISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
