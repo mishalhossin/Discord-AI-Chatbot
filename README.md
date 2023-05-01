@@ -25,7 +25,6 @@ git clone https://github.com/mishalhossin/Gpt4Free-Chat-bot
 cd Gpt4Free-Chat-bot
 ```
 ### 3. Get discord bot token [here](https://discord.com/developers/applications)
-![image](https://media.discordapp.net/attachments/1085616784100560966/1101787228696481852/image.png)
 ### 4. Set up `.env` file it will look like this:
 ```
 {
