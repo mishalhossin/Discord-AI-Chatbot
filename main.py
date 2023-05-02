@@ -5,6 +5,8 @@ import discord
 from collections import deque
 from keep_alive import keep_alive
 from discord.ext import commands
+from dotenv import load_dotenv
+load_dotenv()
 
 # Set up the Discord bot
 intents = discord.Intents.all()
