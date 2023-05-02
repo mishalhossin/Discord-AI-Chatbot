@@ -40,20 +40,20 @@ DISCORD_TOKEN=token_from_step_3
 ```
 ![image](https://user-images.githubusercontent.com/91066601/235554576-74e9e1e5-40ed-49d8-b815-dfecf890892d.png)
 ### Step 5. ⚙️ Install all the dependencies
-#### Windows:
+> Windows:
 ```
 py pip install -r requirements.txt
 ```
-#### Linux :
+> Linux :
 ```
 pip3 install -r requirements.txt
 ```
 ### Step 6. 🚀 Run the bot
-#### Windows
+> Windows
 ```
 py main.py
 ```
-#### Linux
+> Linux
 ```
 python main.py
 ```
@@ -64,7 +64,7 @@ python main.py
 
 # ✨✨✨  Other ways to run ✨✨✨
 
-### Using docker to run ![Run with docker](https://img.shields.io/badge/Docker-4d9dff?style=for-the-badge&logo=docker&logoColor=white)
+### Using docker to run :whale:
 - Have a working bot token
 - Follow up-to step 4 
 #### - Install docker compose on linux machine :
@@ -77,9 +77,10 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 sudo docker-compose up --build
 ```
 ### Using replit to run ☁️
-#### - Follow all the steps. This just skips `step 1`
+#### Follow all the steps except `step 1`
 
-# [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
-###
+# [![Try on repl.it](https://repl-badge.jajoosam.repl.co/run.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
+
+
 ###
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
