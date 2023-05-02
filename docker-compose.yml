@@ -1,0 +1,8 @@
+version: "3"
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    container_name: "discordbot"
+    ports:
+    - 3000:3000
