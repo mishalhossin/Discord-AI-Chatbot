@@ -41,7 +41,7 @@ async def on_message(message):
 
     if message.author.bot:
         return # ignore messages from bots
-    if isinstance(message.channel, discord.DMChannel) and if message.channel.id in active_channels:
+    if isinstance(message.channel, discord.DMChannel) and message.channel.id in active_channels:
         # Save user message to conversation history
         conversation_history.append(f"{message.author.name}: {message.content}")
 
