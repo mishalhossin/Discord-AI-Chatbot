@@ -63,7 +63,7 @@ python main.py
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
 
-## Other ways to run
+## Other ways to run ✨✨✨
 
 ### Using docker to run
 - Install docker compose on linux machine 
@@ -82,6 +82,6 @@ sudo docker-compose up --build
 - Follow all the steps. This just skips `step 1`
 
 # [![Run on replit](https://img.shields.io/badge/replit-ff245e?style=for-the-badge&logo=replit&logoColor=white)](https://replit.com/@Mishal0legit/Discord-Chatbot-Gpt4Free)
-
-
+#
+#
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
