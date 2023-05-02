@@ -58,7 +58,9 @@ py main.py
 python main.py
 ```
 
-### 🏁 Final step. Invite your bot and DM (Direct message) it or **if you want it in server channel use !addchannel** | ⚠️ Make sure you have DM enabled
+### 🏁 Final step. 
+- Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
+- **if you want it in server channel use !addchannel** 
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
 
