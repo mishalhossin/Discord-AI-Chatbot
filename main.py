@@ -54,6 +54,7 @@ async def on_message(message):
 
         # Send the complete response
         await message.reply(response)
+    await bot.process_commands(message)
 
 
 @bot.command()
