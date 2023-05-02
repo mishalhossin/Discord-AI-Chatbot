@@ -58,6 +58,20 @@ py main.py
 ```
 python main.py
 ```
+
+### Using docker
+- Install docker compose on linux machine 
+
+```
+apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
+```
+- Running bot 
+- Follow till step 4 
+- Start the bot in docker container
+```
+sudo docker-compose up --build
+```
+
 ### Step 7. Invite your bot and DM (Direct message) it | ⚠️ IMPORTANT
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
