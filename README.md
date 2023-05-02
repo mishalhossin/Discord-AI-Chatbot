@@ -29,7 +29,7 @@ cd Discord-Chatbot-Gpt4Free
 ##### Enable intents
 ![image](https://user-images.githubusercontent.com/91066601/235555012-e8427bfe-cffc-4761-bbc0-d1467ca1ff4d.png)
 
-##### Get the token !!!
+##### Get the token !!! by clicking copy
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 
 
