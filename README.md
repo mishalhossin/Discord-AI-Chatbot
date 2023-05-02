@@ -65,7 +65,7 @@ python main.py
 # ✨✨✨  Other ways to run ✨✨✨
 
 ### Using docker to run 🐳
-- Install docker compose on linux machine 
+## - Install docker compose on linux machine 
 
 ```
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
@@ -77,8 +77,8 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 ```
 sudo docker-compose up --build
 ```
-### Using replit to run
-- Follow all the steps. This just skips `step 1`
+### Using replit to run ☁️
+## - Follow all the steps. This just skips `step 1`
 
 # [![Run on replit](https://img.shields.io/badge/replit-ff245e?style=for-the-badge&logo=replit&logoColor=white)](https://replit.com/@Mishal0legit/Discord-Chatbot-Gpt4Free)
 ###
