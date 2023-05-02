@@ -64,16 +64,14 @@ python main.py
 
 # ✨✨✨  Other ways to run ✨✨✨
 
-### Using docker to run 🐳
-#### - Install docker compose on linux machine 
-# ![Run with docker](https://img.shields.io/badge/Docker-ffffff?style=for-the-badge&logo=docker&logoColor=black)
-
+### Using docker to run ![Run with docker](https://img.shields.io/badge/Docker-4d9dff?style=for-the-badge&logo=docker&logoColor=white)
+- Have a working bot token
+- Follow up-to step 4 
+#### - Install docker compose on linux machine :
 ```
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
 ```
-- Have working bot token
-- Follow up-to step 4 
-- Start the bot in docker container
+#### Start the bot in docker container :
 
 ```
 sudo docker-compose up --build
