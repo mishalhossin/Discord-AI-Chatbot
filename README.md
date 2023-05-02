@@ -84,4 +84,4 @@ sudo docker-compose up --build
 # [![Run on replit](https://img.shields.io/badge/replit-ff245e?style=for-the-badge&logo=replit&logoColor=white)](https://replit.com/@Mishal0legit/Discord-Chatbot-Gpt4Free)
 
 
-####### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
+###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
