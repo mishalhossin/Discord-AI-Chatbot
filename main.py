@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set up the Discord bot
+
+TOKEN = os.getenv('DISCORD_TOKEN')
+
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -81,4 +84,4 @@ async def changeusr(ctx, new_username):
 
 keep_alive()
 
-bot.run(os.getenv("DISCORD_TOKEN"))
+bot.run(TOKEN)
