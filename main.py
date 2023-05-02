@@ -10,7 +10,7 @@ load_dotenv()
 
 # Set up the Discord bot
 
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
