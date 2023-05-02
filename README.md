@@ -23,23 +23,23 @@ cd Discord-Chatbot-Gpt4Free
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [here](https://discord.com/developers/applications)
 
-#### Select application
+##### Select application
 ![image](https://user-images.githubusercontent.com/91066601/235554871-a5f98345-4197-4b55-91d7-1aef0d0680f0.png)
 
-#### Enable intents
+##### Enable intents
 ![image](https://user-images.githubusercontent.com/91066601/235555012-e8427bfe-cffc-4761-bbc0-d1467ca1ff4d.png)
 
-#### Get the token !!!
+##### Get the token !!!
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 
 
 
-### Step 4. 🔐 Crate a `.env` file it will look like this:
+### Step 4. 🔐 Create a `.env` file. It will look like this:
 ```
 DISCORD_TOKEN=token_from_step_3
 ```
 ![image](https://user-images.githubusercontent.com/91066601/235554576-74e9e1e5-40ed-49d8-b815-dfecf890892d.png)
-### Step 5. Install all the dependencies
+### Step 5. ⚙️ Install all the dependencies
 #### Windows:
 ```
 py pip install -r requirements.txt
