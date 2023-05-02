@@ -66,6 +66,7 @@ python main.py
 
 ### Using docker to run 🐳
 #### - Install docker compose on linux machine 
+# [![Run with docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
 
 ```
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
