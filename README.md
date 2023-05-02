@@ -81,7 +81,7 @@ sudo docker-compose up --build
 ### Using replit to run ☁️
 #### - Follow all the steps. This just skips `step 1`
 
-# [![Run on replit](https://img.shields.io/badge/replit-ff245e?style=for-the-badge&logo=replit&logoColor=white)](https://replit.com/@Mishal0legit/Discord-Chatbot-Gpt4Free)
+# [![Run on Repl.it](https://repl.it/badge/github/mishalhossin/Discord-Chatbot-Gpt4Free)](https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free)
 ###
 ###
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
