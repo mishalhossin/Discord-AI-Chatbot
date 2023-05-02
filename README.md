@@ -82,10 +82,4 @@ sudo docker-compose up --build
 
 # [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
 
-###
-###
-###
-###
-###
-###
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
