@@ -81,8 +81,4 @@ sudo docker-compose up --build
 
 🏁🏁🏁🏁🏁🏁🏁🏁                      FINISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
 
-
-
-
-
-###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
+####### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
