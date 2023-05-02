@@ -25,10 +25,9 @@ cd Discord-Chatbot-Gpt4Free
 ### 3. Get discord bot token [here](https://discord.com/developers/applications)
 ### 4. Create a `.env` file it will look like this:
 ```
-{
-  "DISCORD_TOKEN": "token_from_step_3",
-}
+DISCORD_TOKEN=token_from_step_3
 ```
+![image](https://user-images.githubusercontent.com/91066601/235554576-74e9e1e5-40ed-49d8-b815-dfecf890892d.png)
 ### 5. Install all the dependencies
 #### Windows:
 ```
