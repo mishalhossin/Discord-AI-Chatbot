@@ -12,6 +12,10 @@ load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
 
+# Keep track of the channels where the bot is active
+
+active_channels = set()
+
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -36,8 +40,7 @@ async def on_message(message):
 
     if message.author.bot:
         return # ignore messages from bots
-
-    if isinstance(message.channel, discord.DMChannel):
+    if isinstance(message.channel, discord.DMChannel) and if message.channel.id in active_channels:
         # Save user message to conversation history
         conversation_history.append(f"{message.author.name}: {message.content}")
 
@@ -81,6 +84,33 @@ async def changeusr(ctx, new_username):
         await ctx.send(f"Sorry, the username '{new_username}' is already taken.")
         return
 
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def addchannel(ctx):
+    channel_id = ctx.channel.id
+    if channel_id not in active_channels:
+        active_channels.add(channel_id)
+        with open("channels.txt", "a") as f:
+            f.write(str(channel_id) + "\n")
+        await ctx.send(f"{ctx.channel.mention} has been added to the list of active channels.")
+    else:
+        await ctx.send(f"{ctx.channel.mention} is already in the list of active channels.")
+# Read the active channels from channels.txt on startup
+if os.path.exists("channels.txt"):
+    with open("channels.txt", "r") as f:
+        for line in f:
+            channel_id = int(line.strip())
+            active_channels.add(channel_id)
+            
+@bot.command()
+async def welp(ctx):
+    embed = discord.Embed(title="Bot Commands", color=0x00ff00)
+    embed.add_field(name="!pfp [image_url]", value="Change the bot's profile picture", inline=False)
+    embed.add_field(name="!changeusr [new_username]", value="Change the bot's username", inline=False)
+    embed.add_field(name="!ping", value="Pong", inline=False)
+    embed.add_field(name="!addchannel", value="Add the current channel to the list of active channels", inline=False)   
+    embed.set_footer(text="Created by Mishal#1916")
+            
 
 keep_alive()
 
