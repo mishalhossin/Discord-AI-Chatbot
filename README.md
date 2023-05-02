@@ -48,7 +48,7 @@ py pip install -r requirements.txt
 ```
 pip3 install -r requirements.txt
 ```
-### Step 6.🚀 Run the bot
+### Step 6. 🚀 Run the bot
 #### Windows
 ```
 py main.py
