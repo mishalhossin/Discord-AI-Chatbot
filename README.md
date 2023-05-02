@@ -22,7 +22,19 @@ git clone https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free
 ```
 cd Discord-Chatbot-Gpt4Free
 ```
-### 3. Get discord bot token [here](https://discord.com/developers/applications)
+### 3. Getting discord bot token from [here](https://discord.com/developers/applications)
+
+Select application
+![image](https://user-images.githubusercontent.com/91066601/235554871-a5f98345-4197-4b55-91d7-1aef0d0680f0.png)
+
+Enable intents
+![image](https://user-images.githubusercontent.com/91066601/235555012-e8427bfe-cffc-4761-bbc0-d1467ca1ff4d.png)
+
+Get the token !!!
+![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
+
+
+
 ### 4. Create a `.env` file it will look like this:
 ```
 DISCORD_TOKEN=token_from_step_3
