@@ -59,7 +59,13 @@ py main.py
 python main.py
 ```
 
-## Using docker to run
+### Final step. Invite your bot and DM (Direct message) it | ⚠️ IMPORTANT
+
+![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
+
+## Other ways to run
+
+### Using docker to run
 - Install docker compose on linux machine 
 
 ```
@@ -72,13 +78,9 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 ```
 sudo docker-compose up --build
 ```
+### Using replit to run
+- Follow all the steps. This just skips `step 1`
+[![Run on replit](https://img.shields.io/badge/replit-ff245e?style=for-the-badge&logo=replit&logoColor=white)](https://replit.com/@Mishal0legit/Discord-Chatbot-Gpt4Free)
 
-### Step 7. Invite your bot and DM (Direct message) it | ⚠️ IMPORTANT
-
-![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
-
-# VOILÀ and you are done. Wasn't that very easy
-
-🏁🏁🏁🏁🏁🏁🏁🏁                      FINISH LINE                              🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
 
 ####### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
