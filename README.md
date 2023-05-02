@@ -80,7 +80,7 @@ sudo docker-compose up --build
 - Follow all the steps except `step 1`
 - Have a replit account
 
-# [![Try on repl.it](https://repl-badge.jajoosam.repl.co/run.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
+# [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
 
 ###
 ###
