@@ -67,7 +67,7 @@ python main.py
 ### Using docker to run :whale:
 - Have a working bot token
 - Follow up-to step 4 
-#### - Install docker compose on linux machine :
+#### Install docker compose on linux machine :
 ```
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
 ```
@@ -77,10 +77,15 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 sudo docker-compose up --build
 ```
 ### Using replit to run ☁️
-#### Follow all the steps except `step 1`
+- Follow all the steps except `step 1`
+- Have a replit account
 
 # [![Try on repl.it](https://repl-badge.jajoosam.repl.co/run.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
 
-
+###
+###
+###
+###
+###
 ###
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
