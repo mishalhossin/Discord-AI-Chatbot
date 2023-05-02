@@ -58,8 +58,8 @@ py main.py
 python main.py
 ```
 
-### 🏁 Talk to the bot
-#### 2 ways to talk to the ai
+### 🏁 Finally talk to the bot
+#### There are 2 ways to talk to the ai
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
 - **if you want it in server channel use !addchannel** 
 
