@@ -33,27 +33,30 @@ conversation_history = deque(maxlen=4)
 def bonk():
     conversation_history.clear()
     
+message_history = {'user': [], 'bot': []}
+MAX_HISTORY = 4
+
 @bot.event
 async def on_message(message):
-    await bot.process_commands(message)
-    
-    global conversation_history
-    
     if message.author.bot:
-        return # ignore messages from bots
-    if isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels:
-        # Save user message to conversation history
-        conversation_history.append(f"{message.author.name}: {message.content}")
+        author_type = 'bot'
+    else:
+        author_type = 'user'
 
-        # Combine conversation history with current prompt
-        prompt = '\n'.join(conversation_history) + f"\nLLM:"
+    message_history[author_type].append(message.content)
+    message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
+
+    if message.channel.id in active_channels and not message.author.bot:
+        user_history = "\n".join(message_history['user'])
+        bot_history = "\n".join(message_history['bot'])
+        prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nbot:"
         response = generate_response(prompt)
-
-        # Save bot response to conversation history
-        conversation_history.append(f"LLM : {response}")
-
-        # Send the complete response
         await message.reply(response)
+        # Update the bot's message history with its response
+        message_history['bot'].append(response)
+        message_history['bot'] = message_history['bot'][-MAX_HISTORY:]
+
+    await bot.process_commands(message)
 
 
 @bot.command()
