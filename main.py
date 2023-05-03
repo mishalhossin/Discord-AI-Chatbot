@@ -46,7 +46,7 @@ async def on_message(message):
     message_history[author_type].append(message.content)
     message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
 
-     if (isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels) and not message.author.bot and not message.content.startswith(bot.command_prefix):
+    if (isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels) and not message.author.bot and not message.content.startswith(bot.command_prefix):
         user_history = "\n".join(message_history['User'])
         bot_history = "\n".join(message_history['BAI'])
         prompt = f"{user_history}\n{bot_history}\nUser: {message.content}\nBAI:"
