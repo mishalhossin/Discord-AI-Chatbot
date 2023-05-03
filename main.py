@@ -1,5 +1,5 @@
 import os
-from gpt4free import theb
+from gpt4free import forefront
 import aiohttp
 import discord
 from collections import deque
@@ -20,12 +20,24 @@ active_channels = set()
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+token = forefront.Account.create(logging=False)
+
 @bot.event
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
+(
+	token=token,
+	prompt='hello world',
+	model='gpt-4'
+):
+
 def generate_response(prompt):
-    response = theb.Completion.create(prompt)
+    response = theb.Completion.create(
+	    token=token,
+	    prompt='hello world',
+	    model='gpt-4'
+    ):
     if not response:
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
