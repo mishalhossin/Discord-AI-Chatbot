@@ -26,16 +26,10 @@ token = forefront.Account.create(logging=False)
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
-(
-	token=token,
-	prompt='hello world',
-	model='gpt-4'
-):
-
 def generate_response(prompt):
     response = theb.Completion.create(
 	    token=token,
-	    prompt='hello world',
+	    prompt=prompt,
 	    model='gpt-4'
     ):
     if not response:
