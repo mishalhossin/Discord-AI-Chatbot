@@ -5,18 +5,17 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ![image](https://user-images.githubusercontent.com/91066601/235470838-cad26039-c843-4497-8ba7-fc88c66dab49.png)
 
-## Features 🥳
+## Commands 🥳
 
-- Responds to messages in direct messages and active channel
-  enabled by using `!toggleactive` command.
-  
+- Toggle active channel for a server by using `!toggleactive` command. ⚠️
+- Toggle if dm be active or not by using `!toggledm` ⚠️
 - Changes its profile picture with the `!pfp` command.
 
 - Provides latency information with the `!ping` command.
 
 - Changes its username with the `!changeusr` command.
 
-- If anything gose wrong use !bonk to clear history
+- If anything gose wrong use `!bonk` to clear history
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
