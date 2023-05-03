@@ -7,7 +7,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ## Features 🥳
 
-- Responds to messages in direct messages only
+- Responds to messages in direct messages and active channel enabled by !toggleactive commands.
 - Changes its profile picture with the `!pfp` command.
 - Provides latency information with the `!ping` command.
 - Changes its username with the `!changeusr` command.
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 pip3 install -r requirements.txt
 ```
 ### Step 6. 🚀 Run the bot
-> Windows
+> Windows :
 ```
 py main.py
 ```
@@ -58,9 +58,13 @@ or
 ```
 python main.py
 ```
-> Linux
+> Linux :
 ```
 python main.py
+```
+or
+```
+python3 main.py
 ```
 
 ### 🏁 Finally talk to the bot
