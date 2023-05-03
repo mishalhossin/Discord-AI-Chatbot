@@ -11,6 +11,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - Changes its profile picture with the `!pfp` command.
 - Provides latency information with the `!ping` command.
 - Changes its username with the `!changeusr` command.
+- If anything gose wrong use !bonk to clear history
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
@@ -74,10 +75,6 @@ python3 main.py
 - For more awesome commands use **!welp**
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
-
-- If anything gose wrong use !bonk
-
-![image](https://user-images.githubusercontent.com/91066601/235818572-ee758951-b6b1-4b8a-a00f-52418d8d5266.png)
 
 # ✨✨✨  Other ways to run ✨✨✨
 
