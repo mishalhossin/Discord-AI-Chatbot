@@ -7,10 +7,15 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ## Features 🥳
 
-- Responds to messages in direct messages and active channel enabled by !toggleactive commands.
+- Responds to messages in direct messages and active channel
+  enabled by `!toggleactive` commands.
+  
 - Changes its profile picture with the `!pfp` command.
+
 - Provides latency information with the `!ping` command.
+
 - Changes its username with the `!changeusr` command.
+
 - If anything gose wrong use !bonk to clear history
 
 # Steps to install and run 🚩 :
