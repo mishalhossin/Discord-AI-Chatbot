@@ -98,7 +98,6 @@ async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
     await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
-
     
 @bot.command()
 @commands.has_permissions(administrator=True)
