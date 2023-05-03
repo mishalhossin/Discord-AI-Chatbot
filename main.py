@@ -25,13 +25,8 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 def generate_response(prompt):
-    response_tokens = []
-    while not response_tokens:
-        tokens = theb.Completion.create(prompt)
-        response_tokens.extend(tokens)
-    return response_tokens
-
-
+    response = theb.Completion.create(prompt)
+    return ''.join(token for token in response)
 
 conversation_history = deque(maxlen=4)
 
