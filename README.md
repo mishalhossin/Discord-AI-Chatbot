@@ -16,11 +16,11 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ![image](https://user-images.githubusercontent.com/91066601/235982180-d9926bb6-b6f9-44de-a0f7-045fce0dbda1.png)
 
-- Changes its profile picture with the `!pfp` command.
+- Changes its profile picture with the `!pfp [url or attachment]` command.
 
 - Provides latency information with the `!ping` command.
 
-- Changes its username with the `!changeusr` command.
+- Changes its username with the `!changeusr [New username]` command.
 
 - If anything gose wrong use `!bonk` to clear history
 
