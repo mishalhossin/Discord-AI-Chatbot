@@ -1,12 +1,16 @@
 from enum import Enum
-
 from gpt4free import theb
 
 
 class Provider(Enum):
     """An enum representing  different providers."""
 
+    You = 'you'
+    Poe = 'poe'
+    ForeFront = 'fore_front'
     Theb = 'theb'
+    CoCalc = 'cocalc'
+    UseLess = 'useless'
 
 
 class Completion:
@@ -14,7 +18,6 @@ class Completion:
 
     @staticmethod
     def create(provider: Provider, prompt: str, **kwargs) -> str:
-        
         """
         Invokes the given provider with given prompt and addition arguments and returns the string response
 
@@ -24,10 +27,7 @@ class Completion:
         :return: A string representing the response from the provider
         """
         if provider == Provider.Theb:
-            return Completion.__theb_service(prompt, **kwargs)
-        else:
-            raise Exception('Provider not exist, Please try again')
-
+        
     @staticmethod
     def __theb_service(prompt: str, **kwargs):
         return ''.join(theb.Completion.create(prompt=prompt))
