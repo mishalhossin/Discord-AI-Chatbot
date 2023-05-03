@@ -32,10 +32,8 @@ def generate_response(prompt):
     return ''.join(token for token in response)
     
 
-conversation_history = deque(maxlen=4)
-
 def bonk():
-    conversation_history.clear()
+    message_history.clear()
     
 message_history = {'user': [], 'b': []}
 MAX_HISTORY = 4
