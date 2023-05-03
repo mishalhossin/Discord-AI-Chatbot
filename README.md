@@ -8,7 +8,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 ## Features 🥳
 
 - Responds to messages in direct messages and active channel
-  enabled by `!toggleactive` commands.
+  enabled by using `!toggleactive` command.
   
 - Changes its profile picture with the `!pfp` command.
 
