@@ -27,9 +27,13 @@ async def on_ready():
 def generate_response(prompt):
     response = ""
     while not response:
-        for token in theb.Completion.create(prompt):
+        tokens = theb.Completion.create(prompt)
+        for token in tokens:
             response += token
+        if response:
+            break
     return response
+
 
 
 conversation_history = deque(maxlen=2)
