@@ -26,35 +26,41 @@ async def on_ready():
 
 def generate_response(prompt):
     response = theb.Completion.create(prompt)
+    if not response:
+    response = "I couldn't generate a response. Please try again."
+    
     return ''.join(token for token in response)
+    
 
 conversation_history = deque(maxlen=4)
 
 def bonk():
     conversation_history.clear()
     
-message_history = {'user': [], 'bot': []}
+message_history = {'user': [], 'b': []}
 MAX_HISTORY = 4
 
 @bot.event
 async def on_message(message):
     if message.author.bot:
-        author_type = 'BAI'
+        author_type = 'b'
     else:
-        author_type = 'User'
+        author_type = 'user'
 
     message_history[author_type].append(message.content)
     message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
 
-    if (isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels) and not message.author.bot and not message.content.startswith(bot.command_prefix):
-        user_history = "\n".join(message_history['User'])
-        bot_history = "\n".join(message_history['BAI'])
-        prompt = f"{user_history}\n{bot_history}\nUser: {message.content}\nBAI:"
+    if (isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels) \
+            and not message.author.bot and not message.content.startswith(bot.command_prefix):
+    
+        user_history = "\n".join(message_history['user'])
+        bot_history = "\n".join(message_history['b'])
+        prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
         response = generate_response(prompt)
         await message.reply(response)
         # Update the bot's message history with its response
-        message_history['BAI'].append(response)
-        message_history['BAI'] = message_history['BAI'][-MAX_HISTORY:]
+        message_history['b'].append(response)
+        message_history['b'] = message_history['b'][-MAX_HISTORY:]
 
     await bot.process_commands(message)
 
