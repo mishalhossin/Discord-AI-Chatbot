@@ -66,7 +66,7 @@ python main.py
 ### 🏁 Finally talk to the bot
 #### There are 2 ways to talk to the ai
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
-- **if you want it in server channel use !addchannel** 
+- **if you want it in server channel use !toggleactive** 
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
 
