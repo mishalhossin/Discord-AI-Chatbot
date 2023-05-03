@@ -41,17 +41,17 @@ DISCORD_TOKEN=token_from_step_3
 ```
 ![image](https://user-images.githubusercontent.com/91066601/235554576-74e9e1e5-40ed-49d8-b815-dfecf890892d.png)
 ### Step 5. ⚙️ Install all the dependencies
-> Windows:
+#### Windows:
 - If you dont have pip already. Run `python get-pip.py` on windows
 ```
 pip install -r requirements.txt
 ```
-> Linux :
+#### Linux :
 ```
 pip3 install -r requirements.txt
 ```
 ### Step 6. 🚀 Run the bot
-> Windows :
+#### Windows :
 ```
 py main.py
 ```
@@ -59,7 +59,7 @@ or
 ```
 python main.py
 ```
-> Linux :
+#### Linux :
 ```
 python main.py
 ```
