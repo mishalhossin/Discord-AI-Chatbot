@@ -54,6 +54,10 @@ pip3 install -r requirements.txt
 ```
 py main.py
 ```
+or
+```
+python main.py
+```
 > Linux
 ```
 python main.py
