@@ -33,7 +33,8 @@ def generate_response(prompt):
 
 
 conversation_history = deque(maxlen=2)
-
+def bonk():
+    conversation_history.clear()
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
@@ -103,11 +104,17 @@ if os.path.exists("channels.txt"):
         for line in f:
             channel_id = int(line.strip())
             active_channels.add(channel_id)
-            
+      
+@bot.command(name='bonk')
+async def _bonk(ctx):
+    bonk()
+    await ctx.send('Ugh my head hurts')
+    
 @bot.command()
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
     embed.add_field(name="!pfp [image_url]", value="Change the bot's profile picture", inline=False)
+    embed.add_field(name="!bonk", value="Clears history of the bot", inline=False)
     embed.add_field(name="!changeusr [new_username]", value="Change the bot's username", inline=False)
     embed.add_field(name="!ping", value="Pong", inline=False)
     embed.add_field(name="!addchannel", value="Add the current channel to the list of active channels", inline=False)   
