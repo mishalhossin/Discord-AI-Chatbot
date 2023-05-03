@@ -10,15 +10,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set up the Discord bot
+intents = discord.Intents.all()
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
 
-# Keep track of the channels where the bot is active
+# Keep track of the channels where the bot should be active
 
+allow_dm = True
 active_channels = set()
-
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
@@ -43,13 +43,15 @@ async def on_message(message):
         author_type = 'b'
     else:
         author_type = 'user'
-
+    
     message_history[author_type].append(message.content)
     message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
-
-    if (isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels) \
-            and not message.author.bot and not message.content.startswith(bot.command_prefix):
     
+    global allow_dm
+    
+    if ((isinstance(message.channel, discord.DMChannel) and allow_dm) or message.channel.id in active_channels) \
+            and not message.author.bot and not message.content.startswith(bot.command_prefix):
+        
         user_history = "\n".join(message_history['user'])
         bot_history = "\n".join(message_history['b'])
         prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
@@ -92,6 +94,13 @@ async def changeusr(ctx, new_username):
         return
 
 @bot.command()
+async def toggledm(ctx):
+    global allow_dm
+    allow_dm = not allow_dm
+    await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
+
+    
+@bot.command()
 @commands.has_permissions(administrator=True)
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
@@ -130,6 +139,7 @@ async def welp(ctx):
     embed.add_field(name="!changeusr [new_username]", value="Change the bot's username", inline=False)
     embed.add_field(name="!ping", value="Pong", inline=False)
     embed.add_field(name="!toggleactive", value="Toggle the current channel to the list of active channels", inline=False)   
+    embed.add_field(name="!toggledm", value="Toggle if DM should be active or not", inline=False)   
     embed.set_footer(text="Created by Mishal#1916")
             
 
