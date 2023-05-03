@@ -25,14 +25,11 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 def generate_response(prompt):
-    response = ""
-    while not response:
+    response_tokens = []
+    while not response_tokens:
         tokens = theb.Completion.create(prompt)
-        for token in tokens:
-            response += token
-        if response:
-            break
-    return response
+        response_tokens.extend(tokens)
+    return response_tokens
 
 
 
