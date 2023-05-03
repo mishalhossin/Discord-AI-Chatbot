@@ -41,7 +41,6 @@ def bonk():
     conversation_history.clear()
 @bot.event
 async def on_message(message):
-    await bot.process_commands(message)
     global conversation_history
 
     if message.author.bot:
