@@ -92,15 +92,23 @@ async def changeusr(ctx, new_username):
 
 @bot.command()
 @commands.has_permissions(administrator=True)
-async def addchannel(ctx):
+async def toggleactive(ctx):
     channel_id = ctx.channel.id
-    if channel_id not in active_channels:
+    if channel_id in active_channels:
+        active_channels.remove(channel_id)
+        with open("channels.txt", "w") as f:
+            for id in active_channels:
+                f.write(str(id) + "\n")
+        await ctx.send(
+            f"{ctx.channel.mention} has been removed from the list of active channels."
+        )
+    else:
         active_channels.add(channel_id)
         with open("channels.txt", "a") as f:
             f.write(str(channel_id) + "\n")
-        await ctx.send(f"{ctx.channel.mention} has been added to the list of active channels.")
-    else:
-        await ctx.send(f"{ctx.channel.mention} is already in the list of active channels.")
+        await ctx.send(
+            f"{ctx.channel.mention} has been added to the list of active channels.")
+
 # Read the active channels from channels.txt on startup
 if os.path.exists("channels.txt"):
     with open("channels.txt", "r") as f:
