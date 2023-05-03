@@ -26,6 +26,8 @@ async def on_ready():
 
 def generate_response(prompt):
     response = theb.Completion.create(prompt)
+    if not response:
+        response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
     
 
