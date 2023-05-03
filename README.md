@@ -70,7 +70,7 @@ python main.py
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
 
-## If anything gose wrong use !bonk
+- If anything gose wrong use !bonk
 
 ![image](https://user-images.githubusercontent.com/91066601/235818572-ee758951-b6b1-4b8a-a00f-52418d8d5266.png)
 
