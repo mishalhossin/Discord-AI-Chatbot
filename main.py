@@ -36,14 +36,17 @@ def generate_response(prompt):
 
 
 
-conversation_history = deque(maxlen=2)
+conversation_history = deque(maxlen=4)
+
 def bonk():
     conversation_history.clear()
+    
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
+    
     global conversation_history
-
+    
     if message.author.bot:
         return # ignore messages from bots
     if isinstance(message.channel, discord.DMChannel) or message.channel.id in active_channels:
