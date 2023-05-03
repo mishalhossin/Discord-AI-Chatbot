@@ -5,10 +5,17 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ![image](https://user-images.githubusercontent.com/91066601/235470838-cad26039-c843-4497-8ba7-fc88c66dab49.png)
 
-## Commands 🥳
+## Commands ⚙️⚙️
 
 - Toggle active channel for a server by using `!toggleactive` command. ⚠️
+
+![image](https://user-images.githubusercontent.com/91066601/235982560-d7c068d6-d35f-4153-9723-923a8c31546d.png)
+
+
 - Toggle if dm be active or not by using `!toggledm` ⚠️
+
+![image](https://user-images.githubusercontent.com/91066601/235982180-d9926bb6-b6f9-44de-a0f7-045fce0dbda1.png)
+
 - Changes its profile picture with the `!pfp` command.
 
 - Provides latency information with the `!ping` command.
