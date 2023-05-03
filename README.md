@@ -84,6 +84,7 @@ sudo docker-compose up --build
 - Follow all the steps except `step 1`
 - Have a replit account
 - Please note `.env` is found in secrets tab of replit :
+
 ![image](https://user-images.githubusercontent.com/91066601/235810871-5d4c1469-35fd-42d2-a3a2-3382002877cb.png)
 
 
