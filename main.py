@@ -128,7 +128,7 @@ async def welp(ctx):
     embed.add_field(name="!bonk", value="Clears history of the bot", inline=False)
     embed.add_field(name="!changeusr [new_username]", value="Change the bot's username", inline=False)
     embed.add_field(name="!ping", value="Pong", inline=False)
-    embed.add_field(name="!addchannel", value="Add the current channel to the list of active channels", inline=False)   
+    embed.add_field(name="!toggleactive", value="Toggle the current channel to the list of active channels", inline=False)   
     embed.set_footer(text="Created by Mishal#1916")
             
 
