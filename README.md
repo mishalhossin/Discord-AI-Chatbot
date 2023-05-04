@@ -7,12 +7,12 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ## Commands ⚙️⚙️
 
-- Toggle active channel for a server by using `!toggleactive` command. ⚠️
+- Toggle active channel for a server by using `!toggleactive` command. ⚠️  (You need to be admin or owner)
 
 ![image](https://user-images.githubusercontent.com/91066601/235982560-d7c068d6-d35f-4153-9723-923a8c31546d.png)
 
 
-- Toggle if dm should be active or not by using `!toggledm` ⚠️
+- Toggle if dm should be active or not by using `!toggledm` ⚠️ (You need to be admin or owner)
 
 ![image](https://user-images.githubusercontent.com/91066601/235982180-d9926bb6-b6f9-44de-a0f7-045fce0dbda1.png)
 
