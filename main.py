@@ -97,6 +97,7 @@ async def changeusr(ctx, new_username):
         return
 
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
@@ -132,7 +133,12 @@ if os.path.exists("channels.txt"):
 async def _bonk(ctx):
     bonk()
     await ctx.send('Ugh my head hurts')
-    
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You don't have administrator permissions to use this command. Please contact server owner.")
+
 @bot.command()
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
