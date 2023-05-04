@@ -46,7 +46,7 @@ cd Discord-Chatbot-Gpt4Free
 
 
 
-### Step 4. 🔐 Create a `.env` file. It will look like this:
+### Step 4. 🔐 Rename `example.env` to `.env` and put the discord token. It will look like this:
 ```
 DISCORD_TOKEN=token_from_step_3
 ```
