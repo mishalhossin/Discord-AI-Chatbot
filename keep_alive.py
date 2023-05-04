@@ -53,10 +53,13 @@ def main():
     <body>
         <h1>Created by Mishal</h1>
         <div class="commands-container">
-            <h2>HaruniAI Commands</h2>
+            <h2>GPT4FREE Chatbot Commands</h2>
             <p class="command">!pfp [image_url] - Change the bot's profile picture</p>
             <p class="command">!changeusr [new_username] - Change the bot's username</p>
             <p class="command">!ping - Pong</p>
+            <p class="command">!clear or !bonk - Clear bot's message history</p>
+            <p class="command">!toggleactive - Makes the bot active in the channel</p>
+            <p class="command">!toggledm - Turn on or off DMs/p>
             <div style="text-align: center; margin-top: 20px;">
                 <a href="https://github.com/mishalhossin/Coding-Chatbot-Gpt4Free" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #fabb34; color: #fff; border-radius: 50px;">View Source Code on GitHub</a>
             </div>
