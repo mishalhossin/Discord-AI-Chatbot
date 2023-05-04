@@ -34,32 +34,28 @@ def generate_response(prompt):
 def bonk():
     message_history.clear()
     
-message_history = {'user': [], 'b': []}
-MAX_HISTORY = 4
+
+MAX_HISTORY = 4  # Number of messages to store for each user
+message_history = {}
 
 @bot.event
 async def on_message(message):
-    if message.author.bot:
-        author_type = 'b'
-    else:
-        author_type = 'user'
-    
-    message_history[author_type].append(message.content)
-    message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
-    
-    global allow_dm
-    
+    global allow_dm, message_history
+
     if ((isinstance(message.channel, discord.DMChannel) and allow_dm) or message.channel.id in active_channels) \
             and not message.author.bot and not message.content.startswith(bot.command_prefix):
-        
-        user_history = "\n".join(message_history['user'])
-        bot_history = "\n".join(message_history['b'])
-        prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
+
+        user_id = message.author.id
+        if user_id not in message_history:
+            message_history[user_id] = deque(maxlen=MAX_HISTORY)
+
+        message_history[user_id].append(f"user: {message.content}")
+
+        prompt = "\n".join(message_history[user_id]) + "\nb:"
         response = generate_response(prompt)
+
+        message_history[user_id].append(f"b: {response}")
         await message.reply(response)
-        # Update the bot's message history with its response
-        message_history['b'].append(response)
-        message_history['b'] = message_history['b'][-MAX_HISTORY:]
 
     await bot.process_commands(message)
 
