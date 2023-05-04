@@ -1,6 +1,14 @@
 from gpt4free import theb
 
-# simple streaming completion
-for token in theb.Completion.create('hello world'):
-    print(token, end='', flush=True)
-print("")
+prefix = "Bot : "
+
+while True:
+    input_text = input("User : ")
+    
+    if input_text.lower() == "exit":
+        break
+    
+    completed_text = ""
+    for token in theb.Completion.create(input_text):
+        completed_text += token
+    print(f"{prefix}{completed_text}")
