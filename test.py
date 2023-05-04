@@ -1,17 +1,12 @@
-from gpt4free import usesless
+import usesless
 
-def generate_response(prompt, message_id=""):
-    req = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
-    return req['text'], req['id']
-
-message_history = []
-
+message_id = ""
 while True:
     prompt = input("Question: ")
     if prompt == "!stop":
         break
 
-    answer, message_id = generate_response(prompt, message_id)
-    message_history.append((prompt, answer, message_id))
+    req = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
 
-    print(f"Answer: {answer}")
+    print(f"Answer: {req['text']}")
+    message_id = req["id"
