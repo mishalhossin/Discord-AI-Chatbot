@@ -64,9 +64,13 @@ async def on_message(message):
                 result += token
                 if token_count % 12 == 0:
                     await loading_message.edit(content=result)
+                if len(result) > 2000:
+                    loading_message = await message.channel.send("...")
+                    result = ""
+
 
             # Edit the loading message with the generated response
-            await loading_message.edit(content=result+"\n\n"+":kissing_smiling_eyes:"*2)
+            await loading_message.edit(content=result+"\n\n"+":kissing_smiling_eyes: "*2)
         except Exception as e:
             await message.channel.send(f"Sorry, I ran into an error: {e}")
 
