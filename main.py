@@ -55,14 +55,10 @@ async def on_message(message):
         user_history = "\n".join(message_history['user'])
         bot_history = "\n".join(message_history['b'])
         prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
-
-        # Send a loading message
-        loading_message = await message.reply("Generating response, please wait....")
-
         response = generate_response(prompt)
 
-        # Edit the loading message with the generated response
-        await loading_message.edit(content=response)
+        # Send the generated response
+        await await message.reply(response)
 
         # Update the bot's message history with its response
         message_history['b'].append(response)
