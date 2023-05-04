@@ -1,11 +1,13 @@
 import os
-from gpt4free import theb
-import aiohttp
+import asyncio
 import discord
+from gpt4free import usesless
 from collections import deque
-from keep_alive import keep_alive
-from discord.ext import commands
 from dotenv import load_dotenv
+from discord.ext import commands
+from keep_alive import keep_alive
+
+
 
 load_dotenv()
 
@@ -24,45 +26,28 @@ active_channels = set()
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
-def generate_response(prompt):
-    response = theb.Completion.create(prompt)
-    if not response:
-        response = "I couldn't generate a response. Please try again."
-    return ''.join(token for token in response)
-    
-
-def bonk():
-    message_history.clear()
-    
-message_history = {'user': [], 'b': []}
-MAX_HISTORY = 4
+message_id = "" # Store a empty message id
+async def process_user_input(message):
+    global message_id
+    prompt = f"{message.content}" 
+    # Process the user input and generate a response
+    req = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
+    await message.channel.send(f"{req['text']}")
+    message_id = req["id"]
 
 @bot.event
 async def on_message(message):
-    if message.author.bot:
-        author_type = 'b'
-    else:
-        author_type = 'user'
-    
-    message_history[author_type].append(message.content)
-    message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
-    
-    global allow_dm
-    
+    global allow_dm, req
     if ((isinstance(message.channel, discord.DMChannel) and allow_dm) or message.channel.id in active_channels) \
             and not message.author.bot and not message.content.startswith(bot.command_prefix):
-        
-        user_history = "\n".join(message_history['user'])
-        bot_history = "\n".join(message_history['b'])
-        prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
-        response = generate_response(prompt)
-        await message.reply(response)
-        # Update the bot's message history with its response
-        message_history['b'].append(response)
-        message_history['b'] = message_history['b'][-MAX_HISTORY:]
+
+
+        await process_user_input(message)
+    if message.content == "!bonk" or message.content == "!clear":
+        message_id = ""
+        await message.channel.send("Conversation history has been reset!")
 
     await bot.process_commands(message)
-
 
 @bot.command()
 async def pfp(ctx, attachment_url=None):
@@ -124,12 +109,7 @@ if os.path.exists("channels.txt"):
         for line in f:
             channel_id = int(line.strip())
             active_channels.add(channel_id)
-      
-@bot.command(name='bonk')
-async def _bonk(ctx):
-    bonk()
-    await ctx.send('Ugh my head hurts')
-    
+
 @bot.command()
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
@@ -140,7 +120,10 @@ async def welp(ctx):
     embed.add_field(name="!toggleactive", value="Toggle the current channel to the list of active channels", inline=False)   
     embed.add_field(name="!toggledm", value="Toggle if DM should be active or not", inline=False)   
     embed.set_footer(text="Created by Mishal#1916")
-            
+
+@bot.command()        
+async def bonk(ctx):
+    return
 
 keep_alive()
 
