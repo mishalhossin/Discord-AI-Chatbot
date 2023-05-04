@@ -22,7 +22,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 - Changes its username with the `!changeusr [New username]` command.
 
-- If anything gose wrong use `!bonk` or `!clear` to clear history ⚠️
+- If anything gose wrong use `!bonk` to clear history ⚠️
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
