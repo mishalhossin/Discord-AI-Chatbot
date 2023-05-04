@@ -58,7 +58,7 @@ async def on_message(message):
         response = generate_response(prompt)
 
         # Send the generated response
-        await await message.reply(response)
+        await message.reply(response)
 
         # Update the bot's message history with its response
         message_history['b'].append(response)
