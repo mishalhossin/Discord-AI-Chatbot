@@ -1,14 +1,17 @@
-from gpt4free import theb
+from gpt4free import usesless
 
-prefix = "Bot : "
+def generate_response(prompt, message_id=""):
+    req = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
+    return req['text'], req['id']
+
+message_history = []
 
 while True:
-    input_text = input("User : ")
-    
-    if input_text.lower() == "exit":
+    prompt = input("Question: ")
+    if prompt == "!stop":
         break
-    
-    completed_text = ""
-    for token in theb.Completion.create(input_text):
-        completed_text += token
-    print(f"{prefix}{completed_text}")
+
+    answer, message_id = generate_response(prompt, message_id)
+    message_history.append((prompt, answer, message_id))
+
+    print(f"Answer: {answer}")
