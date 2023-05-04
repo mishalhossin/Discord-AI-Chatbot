@@ -2,7 +2,6 @@ import os
 import theb
 import aiohttp
 import discord
-from collections import deque
 from keep_alive import keep_alive
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -23,16 +22,11 @@ active_channels = set()
 @bot.event
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
-
-def generate_response(prompt):
-    response = theb.Completion.create(prompt)
-    if not response:
-        response = "I couldn't generate a response. Please try again."
-    return ''.join(token for token in response)
     
 
 def bonk():
-    message_history.clear()
+    global message_history
+    message_history = {'user': [], 'b': []}
     
 message_history = {'user': [], 'b': []}
 MAX_HISTORY = 4
@@ -55,13 +49,29 @@ async def on_message(message):
         user_history = "\n".join(message_history['user'])
         bot_history = "\n".join(message_history['b'])
         prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
-        response = generate_response(prompt)
 
-        # Send the generated response
-        await message.reply(response)
+        try:
+            # Send a loading message
+            loading_message = await message.channel.send("Generating a response...")
+
+            response = theb.Completion.create(prompt)
+            if not response:
+                response = "Sorry, I can't generate a response right now."
+            token_count = 0
+            result = ""
+            for token in response:
+                token_count += 1
+                result += token
+                if token_count % 12 == 0:
+                    await loading_message.edit(content=result)
+
+            # Edit the loading message with the generated response
+            await loading_message.edit(content=result+"\n\n"+":kissing_smiling_eyes:"*2)
+        except Exception as e:
+            await message.channel.send(f"Sorry, I ran into an error: {e}")
 
         # Update the bot's message history with its response
-        message_history['b'].append(response)
+        message_history['b'].append(result)
         message_history['b'] = message_history['b'][-MAX_HISTORY:]
 
     await bot.process_commands(message)
@@ -97,7 +107,6 @@ async def changeusr(ctx, new_username):
         return
 
 @bot.command()
-@commands.has_permissions(administrator=True)
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
@@ -133,12 +142,7 @@ if os.path.exists("channels.txt"):
 async def _bonk(ctx):
     bonk()
     await ctx.send('Ugh my head hurts')
-
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send("You don't have administrator permissions to use this command. Please contact server owner.")
-
+    
 @bot.command()
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
@@ -150,7 +154,6 @@ async def welp(ctx):
     embed.add_field(name="!toggledm", value="Toggle if DM should be active or not", inline=False)   
     embed.set_footer(text="Created by Mishal#1916")
             
-
 keep_alive()
 
 bot.run(TOKEN)
