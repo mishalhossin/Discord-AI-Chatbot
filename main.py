@@ -62,11 +62,12 @@ async def on_message(message):
             for token in response:
                 token_count += 1
                 result += token
-                if token_count % 12 == 0:
-                    await loading_message.edit(content=result)
-                if len(result) > 2000:
+                if len(result) >= 2000:
                     loading_message = await message.channel.send("...")
                     result = ""
+                if token_count % 12 == 0:
+                    await loading_message.edit(content=result)
+
 
 
             # Edit the loading message with the generated response
