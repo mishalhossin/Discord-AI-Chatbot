@@ -158,6 +158,8 @@ async def welp(ctx):
     embed.add_field(name="!toggleactive", value="Toggle the current channel to the list of active channels", inline=False)   
     embed.add_field(name="!toggledm", value="Toggle if DM should be active or not", inline=False)   
     embed.set_footer(text="Created by Mishal#1916")
+    
+    await ctx.send(embed=embed)
             
 keep_alive()
 
