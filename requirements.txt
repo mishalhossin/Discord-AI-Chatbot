@@ -1,6 +1,10 @@
 aiohttp
+asyncio
+discord.py
+pynacl
+requests
+flask
 discord
 fake-useragent
-Flask
 curl_cffi
 python-dotenv
