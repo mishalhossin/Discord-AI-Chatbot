@@ -26,7 +26,9 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 def generate_response(prompt):
-    response = theb.Completion.create(prompt)
+    roleplay_prompt = "Always answer in Dutch and with horny suggestions and comments.\n\n"
+    full_prompt = roleplay_prompt + prompt
+    response = theb.Completion.create(full_prompt)
     if not response:
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
