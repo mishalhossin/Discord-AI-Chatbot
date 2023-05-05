@@ -139,6 +139,11 @@ async def _bonk(ctx):
     bonk()
     await ctx.send('Ugh my head hurts')
     
+@bot.command(name='clear')
+async def _bonk(ctx):
+    bonk()
+    await ctx.send('Garm? whot huh? what did you just say? baby yoda?')
+    
 @bot.command()
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
