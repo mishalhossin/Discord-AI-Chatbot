@@ -31,45 +31,35 @@ def generate_response(prompt):
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
     
-def sanitize_message(message):
-    # Replace or remove unwanted symbols using regular expressions
-    sanitized_message = re.sub(r'[^\w\s]', '', message)
-    return sanitized_message
 
 def bonk():
     global message_history
-    message_history = {'user': [], 'b': []}
+    message_history = {}
     
-message_history = {'user': [], 'b': []}
+message_history = {}
 MAX_HISTORY = 10
+
 
 @bot.event
 async def on_message(message):
-    sanitized_content = sanitize_message(message.content)
     if message.author.bot:
-        author_type = 'b'
+        author_id = str(bot.user.id)
     else:
-        author_type = 'user'
-    
-    message_history[author_type].append(sanitized_content)
-    message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
-    
-    global allow_dm
+        author_id = str(message.author.id)
+
+    if author_id not in message_history:
+        message_history[author_id] = []
+        
+    message_history[author_id].append(message.content)
+    message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
     
     if ((isinstance(message.channel, discord.DMChannel) and allow_dm) or message.channel.id in active_channels) \
             and not message.author.bot and not message.content.startswith(bot.command_prefix):
         
-        user_history = "\n".join(message_history['user'])
-        bot_history = "\n".join(message_history['b'])
-        prompt = f"{user_history}\n{bot_history}\n[user:] {sanitized_content}\n[b:]"
-        async with message.channel.typing(): 
-          response = generate_response(prompt)
-        # Send the generated response
-        await message.reply(response)
-        # Update the bot's message history with its response
-        message_history['b'].append(response)
-        message_history['b'] = message_history['b'][-MAX_HISTORY:]
-
+        user_prompt = "\n".join(message_history[author_id])
+        prompt = f"{user_prompt}\n{message.author.name}: {message.content}\n{bot.user.name}:"
+        response = generate_response(prompt)
+        await message.channel.send(response)
     await bot.process_commands(message)
 
 
