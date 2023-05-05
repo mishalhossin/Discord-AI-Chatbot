@@ -47,9 +47,9 @@ MAX_HISTORY = 10
 async def on_message(message):
     sanitized_content = sanitize_message(message.content)
     if message.author.bot:
-        author_type = 'user'
-    else:
         author_type = 'b'
+    else:
+        author_type = 'user'
     
     message_history[author_type].append(sanitized_content)
     message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
