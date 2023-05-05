@@ -22,11 +22,11 @@ active_channels = set()
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="Coded by Mishal#1916"))
+    await bot.change_presence(activity=discord.Game(name="Shower With Your Dad Simulator 2015"))
     print(f"{bot.user.name} has connected to Discord!")
 
 def generate_response(prompt):
-    roleplay_prompt = "Always answer in Dutch and with horny suggestions and comments.\n\n"
+    roleplay_prompt = "Always answer in language they write and with horny suggestions and comments.\n\n"
     full_prompt = roleplay_prompt + prompt
     response = theb.Completion.create(full_prompt)
     if not response:
