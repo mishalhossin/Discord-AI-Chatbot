@@ -49,17 +49,24 @@ async def on_message(message):
 
     if author_id not in message_history:
         message_history[author_id] = []
-        
+
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-    
-    if ((isinstance(message.channel, discord.DMChannel) and allow_dm) or message.channel.id in active_channels) \
-            and not message.author.bot and not message.content.startswith(bot.command_prefix):
-        
-        user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{message.author.name}: {message.content}\n{bot.user.name}:"
-        response = generate_response(prompt)
-        await message.channel.send(response)
+
+    if message.channel.id in active_channels and not message.author.bot:
+        user_history = "\n".join(message_history[author_id])
+        prompt = f"{user_history}\n{message.author.name}: {message.content}\n{bot.user.name}:"
+
+        # Send a loading message
+        loading_message = await message.channel.send("Loading response...")
+
+        # Display typing animation
+        async with message.channel.typing():
+            response = generate_response(prompt)
+
+        # Edit the loading message with the generated response
+        await loading_message.edit(content=response)
+
     await bot.process_commands(message)
 
 
