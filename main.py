@@ -1,5 +1,6 @@
 import os
 import re
+import io
 import theb
 import aiohttp
 import discord
@@ -7,14 +8,19 @@ from keep_alive import keep_alive
 from discord.ext import commands
 from dotenv import load_dotenv
 import discord.errors
+from wit import Wit
+from pydub import AudioSegment
 
 load_dotenv()
 
 # Set up the Discord bot
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents, heartbeat_timeout=20)
 
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
+WIT_TOKEN = os.getenv('WIT_TOKEN') # Loads Wit.ai token for speech to text
+
+speech_to_text_client = Wit(WIT_TOKEN)
 
 # Keep track of the channels where the bot should be active
 
@@ -43,6 +49,11 @@ MAX_HISTORY = 10
 
 @bot.event
 async def on_message(message):
+    ctx = await bot.get_context(message)
+    if ctx.valid and ctx.command:
+        await bot.process_commands(message)
+        return
+    
     if message.author.bot:
         author_id = str(bot.user.id)
     else:
@@ -61,6 +72,23 @@ async def on_message(message):
         # Send a loading message
         loading_message = await message.channel.send("Loading response...")
 
+        for attachment in message.attachments:
+            if attachment.content_type.startswith('audio'):
+                file_bytes = io.BytesIO(await attachment.read())
+                ogg_audio = AudioSegment.from_file(file_bytes, format="ogg")
+                wav_bytes = io.BytesIO()
+                ogg_audio.export(wav_bytes, format="wav")
+                resp = speech_to_text_client.speech(wav_bytes, {'Content-Type': 'audio/wav'})
+                if "text" not in resp.keys():
+                    await message.channel.send("Error, try again later!")
+                    return
+                if resp["text"] == "":
+                    await message.channel.send("Unrecognizable audio clip, please try again!")
+                    return
+                prompt = f"{user_history}\n{message.author.name}: {resp['text']}\n{bot.user.name}:"
+                # await message.channel.send(resp["text"]) # The text from speech
+                break
+
         # Display typing animation
         async with message.channel.typing():
             response = generate_response(prompt)
@@ -68,7 +96,6 @@ async def on_message(message):
         # Edit the loading message with the generated response
         await loading_message.edit(content=response)
 
-    await bot.process_commands(message)
 
 
 @bot.command()
