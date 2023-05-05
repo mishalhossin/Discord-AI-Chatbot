@@ -71,7 +71,7 @@ async def on_message(message):
 
 
             # Edit the loading message with the generated response
-            await loading_message.edit(content=result+"\n\n"+":kissing_smiling_eyes: "*2)
+            await loading_message.edit(content=result)
         except Exception as e:
             await message.channel.send(f"Sorry, I ran into an error: {e}")
 
