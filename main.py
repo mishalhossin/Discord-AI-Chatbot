@@ -23,7 +23,17 @@ active_channels = set()
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Coded by Mishal#1916"))
     print(f"{bot.user.name} has connected to Discord!")
+
+def generate_response(prompt):
+    response = theb.Completion.create(prompt)
+    if not response:
+        response = "I couldn't generate a response. Please try again."
+    return ''.join(token for token in response)
     
+def sanitize_message(message):
+    # Replace or remove unwanted symbols using regular expressions
+    sanitized_message = re.sub(r'[^\w\s]', '', message)
+    return sanitized_message
 
 def bonk():
     global message_history
@@ -34,12 +44,13 @@ MAX_HISTORY = 10
 
 @bot.event
 async def on_message(message):
+    sanitized_content = sanitize_message(message.content)
     if message.author.bot:
-        author_type = 'b'
-    else:
         author_type = 'user'
+    else:
+        author_type = 'b'
     
-    message_history[author_type].append(message.content)
+    message_history[author_type].append(sanitized_content)
     message_history[author_type] = message_history[author_type][-MAX_HISTORY:]
     
     global allow_dm
@@ -49,35 +60,13 @@ async def on_message(message):
         
         user_history = "\n".join(message_history['user'])
         bot_history = "\n".join(message_history['b'])
-        prompt = f"{user_history}\n{bot_history}\nuser: {message.content}\nb:"
-
-        try:
-            # Send a loading message
-            loading_message = await message.channel.send("Generating a response...")
-
-            response = theb.Completion.create(prompt)
-            if not response:
-                response = "Sorry, I can't generate a response right now."
-            token_count = 0
-            result = ""
-            for token in response:
-                token_count += 1
-                result += token
-                if len(result) >= 2000:
-                    loading_message = await message.channel.send("...")
-                    result = ""
-                if token_count % 12 == 0:
-                    await loading_message.edit(content=result)
-
-
-
-            # Edit the loading message with the generated response
-            await loading_message.edit(content=result)
-        except Exception as e:
-            await message.channel.send(f"Sorry, I ran into an error: {e}")
-
+        prompt = f"{instructions}{user_history}\n{bot_history}\n[user:] {sanitized_content}\n[b:]"
+        async with message.channel.typing(): 
+          response = generate_response(prompt)
+        # Send the generated response
+        await message.reply(response)
         # Update the bot's message history with its response
-        message_history['b'].append(result)
+        message_history['b'].append(response)
         message_history['b'] = message_history['b'][-MAX_HISTORY:]
 
     await bot.process_commands(message)
