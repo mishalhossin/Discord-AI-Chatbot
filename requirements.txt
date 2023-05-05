@@ -4,4 +4,3 @@ fake-useragent
 Flask
 curl_cffi
 python-dotenv
-re
