@@ -61,7 +61,7 @@ async def on_message(message):
         
         user_history = "\n".join(message_history['user'])
         bot_history = "\n".join(message_history['b'])
-        prompt = f"{instructions}{user_history}\n{bot_history}\n[user:] {sanitized_content}\n[b:]"
+        prompt = f"{user_history}\n{bot_history}\n[user:] {sanitized_content}\n[b:]"
         async with message.channel.typing(): 
           response = generate_response(prompt)
         # Send the generated response
