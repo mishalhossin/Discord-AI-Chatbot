@@ -30,7 +30,7 @@ def bonk():
     message_history = {'user': [], 'b': []}
     
 message_history = {'user': [], 'b': []}
-MAX_HISTORY = 4
+MAX_HISTORY = 10
 
 @bot.event
 async def on_message(message):
