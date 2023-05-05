@@ -101,6 +101,7 @@ async def changeusr(ctx, new_username):
         return
     if new_username == "":
         await ctx.send("Please send the new username as well!")
+        return 
     try:
         await bot.user.edit(username=new_username)
     except discord.errors.HTTPException as e:
