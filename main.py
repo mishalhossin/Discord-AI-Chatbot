@@ -6,6 +6,7 @@ import discord
 from keep_alive import keep_alive
 from discord.ext import commands
 from dotenv import load_dotenv
+import discord.errors
 
 load_dotenv()
 
@@ -98,6 +99,12 @@ async def changeusr(ctx, new_username):
     if new_username.lower() in taken_usernames:
         await ctx.send(f"Sorry, the username '{new_username}' is already taken.")
         return
+    if new_username == "":
+        await ctx.send("Please send the new username as well!")
+    try:
+        await bot.user.edit(username=new_username)
+    except discord.errors.HTTPException as e:
+        await ctx.send("".join(e.text.split(":")[1:]))
 
 @bot.command()
 async def toggledm(ctx):
