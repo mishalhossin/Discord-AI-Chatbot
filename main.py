@@ -68,7 +68,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-@bot.command()
+@bot.hybrid_command()
 async def pfp(ctx, attachment_url=None):
     if attachment_url is None and not ctx.message.attachments:
         return await ctx.send(
@@ -84,12 +84,12 @@ async def pfp(ctx, attachment_url=None):
 
     await ctx.send("My profile picture has been updated!")
 
-@bot.command()
+@bot.hybrid_command()
 async def ping(ctx):
     latency = bot.latency * 1000
     await ctx.send(f"Pong! Latency: {latency:.2f} ms")
 
-@bot.command()
+@bot.hybrid_command()
 async def changeusr(ctx, new_username):
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
@@ -103,13 +103,13 @@ async def changeusr(ctx, new_username):
     except discord.errors.HTTPException as e:
         await ctx.send("".join(e.text.split(":")[1:]))
 
-@bot.command()
+@bot.hybrid_command()
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
     await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
     
-@bot.command()
+@bot.hybrid_command()
 @commands.has_permissions(administrator=True)
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
@@ -135,17 +135,17 @@ if os.path.exists("channels.txt"):
             channel_id = int(line.strip())
             active_channels.add(channel_id)
       
-@bot.command(name='bonk')
+@bot.hybrid_command(name='bonk')
 async def _bonk(ctx):
     bonk()
     await ctx.send('Ugh my head hurts')
     
-@bot.command(name='clear')
+@bot.hybrid_command(name='clear')
 async def _bonk(ctx):
     bonk()
     await ctx.send('What did you just say? baby yoda?')
     
-@bot.command()
+@bot.hybrid_command()
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
     embed.add_field(name="!pfp [image_url]", value="Change the bot's profile picture", inline=False)
