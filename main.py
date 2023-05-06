@@ -42,6 +42,11 @@ MAX_HISTORY = 10
 
 @bot.event
 async def on_message(message):
+    ctx = await bot.get_context(message)
+    if ctx.valid and ctx.command:
+        await bot.process_commands(message)
+        return
+    
     if message.author.bot:
         author_id = str(bot.user.id)
     else:
