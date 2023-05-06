@@ -1,6 +1,7 @@
 aiohttp
 asyncio
 discord.py
+discord-py-interactions
 pynacl
 requests
 flask
