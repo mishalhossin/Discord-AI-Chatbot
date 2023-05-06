@@ -11,7 +11,7 @@ load_dotenv()
 
 # Set up the Discord bot
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents, heartbeat_timeout=60)
 
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
 
@@ -36,7 +36,7 @@ def generate_response(prompt):
 
 def bonk():
     global message_history
-    message_history = {}
+    message_history.clear()
     
 message_history = {}
 MAX_HISTORY = 10
@@ -44,6 +44,11 @@ MAX_HISTORY = 10
 
 @bot.event
 async def on_message(message):
+    ctx = await bot.get_context(message)
+    if ctx.valid and ctx.command:
+        await bot.process_commands(message)
+        return
+    
     if message.author.bot:
         author_id = str(bot.user.id)
     else:
@@ -54,20 +59,13 @@ async def on_message(message):
 
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-
+    
     if message.channel.id in active_channels and not message.author.bot:
         user_history = "\n".join(message_history[author_id])
         prompt = f"{user_history}\n{message.author.name}: {message.content}\n{bot.user.name}:"
-
-        # Send a loading message
-        loading_message = await message.channel.send("Loading response...")
-
-        # Display typing animation
         async with message.channel.typing():
             response = generate_response(prompt)
-
-        # Edit the loading message with the generated response
-        await loading_message.edit(content=response)
+        await message.reply(content=response)
 
     await bot.process_commands(message)
 
@@ -95,11 +93,17 @@ async def ping(ctx):
 
 @bot.command()
 async def changeusr(ctx, new_username):
-    # Check that the new username is not already taken
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
         await ctx.send(f"Sorry, the username '{new_username}' is already taken.")
         return
+    if new_username == "":
+        await ctx.send("Please send the new username as well!")
+        return 
+    try:
+        await bot.user.edit(username=new_username)
+    except discord.errors.HTTPException as e:
+        await ctx.send("".join(e.text.split(":")[1:]))
 
 @bot.command()
 async def toggledm(ctx):
@@ -141,7 +145,7 @@ async def _bonk(ctx):
 @bot.command(name='clear')
 async def _bonk(ctx):
     bonk()
-    await ctx.send('Garm? whot huh? what did you just say? baby yoda?')
+    await ctx.send('What did you just say? baby yoda?')
     
 @bot.command()
 async def welp(ctx):
