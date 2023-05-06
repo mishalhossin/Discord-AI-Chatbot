@@ -34,7 +34,7 @@ def generate_response(prompt):
 
 def bonk():
     global message_history
-    message_history = {}
+    message_history.clear()
     
 message_history = {}
 MAX_HISTORY = 10
