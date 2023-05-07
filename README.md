@@ -9,19 +9,11 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 - Toggle active channel for a server by using `/toggleactive` command. ⚠️
 
-![image](https://user-images.githubusercontent.com/91066601/235982560-d7c068d6-d35f-4153-9723-923a8c31546d.png)
-
-
 - Toggle if dm should be active or not by using `/toggledm` ⚠️
 
-![image](https://user-images.githubusercontent.com/91066601/235982180-d9926bb6-b6f9-44de-a0f7-045fce0dbda1.png)
-
 - Changes its profile picture with the `/pfp [url]` command.
-
 - Provides latency information with the `/ping` command.
-
 - Changes its username with the `/changeusr [New username]` command.
-
 - If anything gose wrong use `/bonk` to clear history ⚠️
 
 # Steps to install and run 🚩 :
@@ -34,15 +26,6 @@ git clone https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free
 cd Discord-Chatbot-Gpt4Free
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [here](https://discord.com/developers/applications)
-
-##### Select application
-![image](https://user-images.githubusercontent.com/91066601/235554871-a5f98345-4197-4b55-91d7-1aef0d0680f0.png)
-
-##### Enable intents
-![image](https://user-images.githubusercontent.com/91066601/235555012-e8427bfe-cffc-4761-bbc0-d1467ca1ff4d.png)
-
-##### Get the token !!! by clicking copy
-![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 
 
 
