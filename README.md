@@ -31,7 +31,7 @@ cd Discord-Chatbot-Gpt4Free
 ### Step 4. 🔑 Get hugging face Access Tokens from [here](https://huggingface.co/settings/tokens)
 
 
-### Step 5. 🔐 Rename `example.env` to `.env` and put the discord token. It will look like this:
+### Step 5. 🔐 Rename `example.env` to `.env` and put the discord token and hugging face access token. It will look like this:
 ```
 HUGGING_FACE_API=hf_access_token_from_step_4
 DISCORD_TOKEN=token_from_step_3
