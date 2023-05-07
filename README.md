@@ -6,16 +6,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 
 ## Commands ⚙️⚙️
-
-- Toggle active channel for a server by using `/toggleactive` command. ⚠️
-
-- Toggle if dm should be active or not by using `/toggledm` ⚠️
-
-- Changes its profile picture with the `/pfp [url]` command.
-- Provides latency information with the `/ping` command.
-- Changes its username with the `/changeusr [New username]` command.
-- If anything gose wrong use `/bonk` to clear history ⚠️
-
+- For all commands use `/help` in discord for your mom
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
 ```
