@@ -9,3 +9,4 @@ discord
 fake-useragent
 curl_cffi
 python-dotenv
+httpx
