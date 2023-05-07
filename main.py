@@ -22,6 +22,7 @@ active_channels = set()
 
 @bot.event
 async def on_ready():
+    await bot.tree.sync()
     await bot.change_presence(activity=discord.Game(name="Coded by Mishal#1916"))
     print(f"{bot.user.name} has connected to Discord!")
 
@@ -68,8 +69,7 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-
-@bot.hybrid_command()
+@bot.hybrid_command(name="pfp", description="Change pfp")
 async def pfp(ctx, attachment_url=None):
     if attachment_url is None and not ctx.message.attachments:
         return await ctx.send(
@@ -83,14 +83,12 @@ async def pfp(ctx, attachment_url=None):
         async with session.get(attachment_url) as response:
             await bot.user.edit(avatar=await response.read())
 
-    await ctx.send("My profile picture has been updated!")
-
-@bot.hybrid_command()
+@bot.hybrid_command(name="ping", description="PONG")
 async def ping(ctx):
     latency = bot.latency * 1000
     await ctx.send(f"Pong! Latency: {latency:.2f} ms")
 
-@bot.hybrid_command()
+@bot.hybrid_command(name="changeusr", description="Change bot's actual username")
 async def changeusr(ctx, new_username):
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
@@ -104,14 +102,13 @@ async def changeusr(ctx, new_username):
     except discord.errors.HTTPException as e:
         await ctx.send("".join(e.text.split(":")[1:]))
 
-@bot.hybrid_command()
+@bot.hybrid_command(name="toggledm", description="Toggle dm for chatting")
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
     await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
     
-@bot.hybrid_command()
-@commands.has_permissions(administrator=True)
+@bot.hybrid_command(name="toggleactive", description="Toggle active channels")
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
     if channel_id in active_channels:
@@ -136,17 +133,12 @@ if os.path.exists("channels.txt"):
             channel_id = int(line.strip())
             active_channels.add(channel_id)
       
-@bot.hybrid_command(name='bonk')
-async def _bonk(ctx):
-    bonk()
-    await ctx.send('Ugh my head hurts')
-    
-@bot.hybrid_command(name='clear')
-async def _bonk(ctx):
+@bot.hybrid_command(name="bonk", description="Clear bots memory")
+async def bonk(ctx):
     bonk()
     await ctx.send('What did you just say? baby yoda?')
     
-@bot.hybrid_command()
+@bot.hybrid_command(name="welp", description="Get all other commands!")
 async def welp(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
     embed.add_field(name="!pfp [image_url]", value="Change the bot's profile picture", inline=False)
