@@ -26,15 +26,17 @@ git clone https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free
 cd Discord-Chatbot-Gpt4Free
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [here](https://discord.com/developers/applications)
+For more info [click here](https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free/blob/main/discord_token.md#select-application)
+
+### Step 4. 🔑 Get hugging face Access Tokens from [here](https://huggingface.co/settings/tokens)
 
 
-
-### Step 4. 🔐 Rename `example.env` to `.env` and put the discord token. It will look like this:
+### Step 5. 🔐 Rename `example.env` to `.env` and put the discord token. It will look like this:
 ```
+HUGGING_FACE_API=hf_access_token_from_step_4
 DISCORD_TOKEN=token_from_step_3
 ```
-![image](https://user-images.githubusercontent.com/91066601/235554576-74e9e1e5-40ed-49d8-b815-dfecf890892d.png)
-### Step 5. ⚙️ Install all the dependencies
+### Step 6. ⚙️ Install all the dependencies
 #### Windows:
 - If you dont have pip already. Run `python get-pip.py` on windows
 ```
@@ -44,7 +46,7 @@ pip install -r requirements.txt
 ```
 pip3 install -r requirements.txt
 ```
-### Step 6. 🚀 Run the bot
+### Step 7. 🚀 Run the bot
 #### Windows :
 ```
 py main.py
@@ -61,7 +63,7 @@ or
 ```
 python3 main.py
 ```
-### Step 7. Invite the bot
+### Step 8. Invite the bot
 ![image](https://user-images.githubusercontent.com/91066601/236211332-7ed404aa-6b25-40d9-b3df-516432508043.png)
 
 ### 🏁 Finally talk to the bot
@@ -89,11 +91,11 @@ sudo docker-compose up --build
 ### Using replit to run ☁️
 - Follow all the steps except `step 1`
 - Have a replit account
-- Please note `.env` is found in secrets tab of replit :
+- Please note `.env` found in secrets tab of replit :
 
 ![image](https://user-images.githubusercontent.com/91066601/235810871-5d4c1469-35fd-42d2-a3a2-3382002877cb.png)
 
-- Config `.env` in replit like this :
+- Config `secrets` in replit like this :
 
 ![image](https://user-images.githubusercontent.com/91066601/235811115-689c40e8-660a-448d-83dd-194631324436.png)
 
