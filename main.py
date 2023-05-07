@@ -3,6 +3,7 @@ import re
 import theb
 import aiohttp
 import discord
+import httpx
 from keep_alive import keep_alive
 from discord import app_commands
 from discord.ext import commands
