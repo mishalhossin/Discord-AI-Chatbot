@@ -66,6 +66,7 @@ async def on_message(message):
         async with message.channel.typing():
             response = generate_response(prompt)
         await message.reply(content=response)
+        is_busy = False
 
     await bot.process_commands(message)
 
