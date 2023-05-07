@@ -64,12 +64,12 @@ or
 python3 main.py
 ```
 ### Step 8. Invite the bot
-![image](https://user-images.githubusercontent.com/91066601/236211332-7ed404aa-6b25-40d9-b3df-516432508043.png)
+
 
 ### 🏁 Finally talk to the bot
 #### There are 2 ways to talk to the ai
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
-- **if you want it in server channel use !toggleactive** 
+- **if you want it in server channel use **/toggleactive** 
 - For more awesome commands use **/help**
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
