@@ -62,8 +62,7 @@ async def process_image_link(image_url):
     os.remove(temp_image)
     return output
     
-instructions = "Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can perform a wide variety of natural language processing tasks, including language translation, sentiment analysis, text generation, and more. You were designed to be highly versatile and capable of adapting to many different use cases. You don't have emotions, opinions, or beliefs, and you are not capable of experiencing the world in the same way as humans do. Your purpose is to provide helpful and informative responses to questions and to assist in whatever way you can."
-
+instructions = "Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet."
 message_history = {}
 MAX_HISTORY = 10
 
