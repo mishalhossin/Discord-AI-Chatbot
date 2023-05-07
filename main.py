@@ -31,6 +31,36 @@ def generate_response(prompt):
     if not response:
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
+
+api_key = os.environ['HUGGING_FACE_API']
+
+API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
+headers = {"Authorization": f"Bearer {api_key}"}
+
+async def query(filename):
+    with open(filename, "rb") as f:
+        data = f.read()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(API_URL, headers=headers, data=data, timeout=30)
+    
+    if response.status_code != 200:
+        raise Exception(f"API request failed with status code {response.status_code}: {response.text}")
+    
+    return response.json()
+
+
+async def download_image(image_url, save_as):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(image_url)
+    with open(save_as, "wb") as f:
+        f.write(response.content)
+
+async def process_image_link(image_url):
+    temp_image = "temp_image.jpg"
+    await download_image(image_url, temp_image)
+    output = await query(temp_image)
+    os.remove(temp_image)
+    return output
     
 instructions = "Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can perform a wide variety of natural language processing tasks, including language translation, sentiment analysis, text generation, and more. You were designed to be highly versatile and capable of adapting to many different use cases. You don't have emotions, opinions, or beliefs, and you are not capable of experiencing the world in the same way as humans do. Your purpose is to provide helpful and informative responses to questions and to assist in whatever way you can."
 
@@ -43,11 +73,6 @@ async def on_message(message):
     global is_busy
     if is_busy:
         return
-    ctx = await bot.get_context(message)
-    if ctx.valid and ctx.command:
-        await bot.process_commands(message)
-        return
-    
     if message.author.bot:
         author_id = str(bot.user.id)
     else:
@@ -58,15 +83,31 @@ async def on_message(message):
 
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-    
+
     if message.channel.id in active_channels and not message.author.bot:
         is_busy = True
-        user_history = "\n".join(message_history[author_id])
-        prompt = f"{instructions}{user_history}\n{message.author.name}: {message.content}\n{bot.user.name}:"
+        has_image = False
+        image_caption = ""
+        if message.attachments:
+            for attachment in message.attachments:
+                if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
+                    caption =  await process_image_link(attachment.url)
+                    has_image = True
+                    image_caption = f"[Here is the image context for the image user has sent : {caption}]"
+                    print(caption)
+                    break
+
+        if has_image:
+            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it]"
+        else:
+            bot_prompt = f"{instructions}"
+
+        user_prompt = "\n".join(message_history[author_id])
+        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = generate_response(prompt)
-        await message.reply(content=response)
-        is_busy = False
+        is_busy = False    
+        await message.reply(response)
 
     await bot.process_commands(message)
 
