@@ -59,7 +59,7 @@ python main.py
 
 ### Using docker to run :whale:
 - Have a working bot token
-- Follow up-to step 4 
+- Follow up-to step 5
 #### Install docker compose on linux machine :
 ```
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
