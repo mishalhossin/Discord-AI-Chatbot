@@ -37,31 +37,12 @@ HUGGING_FACE_API=hf_access_token_from_step_4
 DISCORD_TOKEN=token_from_step_3
 ```
 ### Step 6. ⚙️ Install all the dependencies
-#### Windows:
-- If you dont have pip already. Run `python get-pip.py` on windows
 ```
 pip install -r requirements.txt
 ```
-#### Linux :
-```
-pip3 install -r requirements.txt
-```
 ### Step 7. 🚀 Run the bot
-#### Windows :
-```
-py main.py
-```
-or
 ```
 python main.py
-```
-#### Linux :
-```
-python main.py
-```
-or
-```
-python3 main.py
 ```
 ### Step 8. Invite the bot
 
