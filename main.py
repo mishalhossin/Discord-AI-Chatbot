@@ -41,7 +41,7 @@ def generate_response(prompt):
 
 api_key = os.environ['HUGGING_FACE_API']
 
-API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base"
+API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base" #Use this if slow https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning
 headers = {"Authorization": f"Bearer {api_key}"}
 
 async def query(filename):
