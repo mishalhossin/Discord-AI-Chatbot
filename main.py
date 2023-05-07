@@ -37,9 +37,12 @@ instructions = "Roleplay as a large language model developed by OpenAI. You are 
 message_history = {}
 MAX_HISTORY = 10
 
-
+is_busy = False
 @bot.event
 async def on_message(message):
+    global is_busy
+    if is_busy:
+        return
     ctx = await bot.get_context(message)
     if ctx.valid and ctx.command:
         await bot.process_commands(message)
@@ -57,6 +60,7 @@ async def on_message(message):
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
     
     if message.channel.id in active_channels and not message.author.bot:
+        is_busy = True
         user_history = "\n".join(message_history[author_id])
         prompt = f"{instructions}{user_history}\n{message.author.name}: {message.content}\n{bot.user.name}:"
         async with message.channel.typing():
