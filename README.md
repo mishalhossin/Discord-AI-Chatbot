@@ -17,10 +17,11 @@ git clone https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free
 cd Discord-Chatbot-Gpt4Free
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [here](https://discord.com/developers/applications)
-[For more info click here](https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free/blob/main/discord_token.md#select-application)
+## [For more info click here](https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free/blob/main/discord_token.md#select-application)
 
 ### Step 4. 🔑 Get hugging face Access Tokens from [here](https://huggingface.co/settings/tokens)
-
+## Read or Write it dosent matter
+![image](https://user-images.githubusercontent.com/91066601/236681615-71600817-774a-430c-8cec-8e6710a82b49.png)
 
 ### Step 5. 🔐 Rename `example.env` to `.env` and put the discord token and hugging face access token. It will look like this:
 ```
