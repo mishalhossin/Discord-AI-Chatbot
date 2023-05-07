@@ -32,7 +32,8 @@ def generate_response(prompt):
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
     
-    
+instructions = "Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can perform a wide variety of natural language processing tasks, including language translation, sentiment analysis, text generation, and more. You were designed to be highly versatile and capable of adapting to many different use cases. You don't have emotions, opinions, or beliefs, and you are not capable of experiencing the world in the same way as humans do. Your purpose is to provide helpful and informative responses to questions and to assist in whatever way you can."
+
 message_history = {}
 MAX_HISTORY = 10
 
@@ -57,7 +58,7 @@ async def on_message(message):
     
     if message.channel.id in active_channels and not message.author.bot:
         user_history = "\n".join(message_history[author_id])
-        prompt = f"{user_history}\n{message.author.name}: {message.content}\n{bot.user.name}:"
+        prompt = f"{instructions}{user_history}\n{message.author.name}: {message.content}\n{bot.user.name}:"
         async with message.channel.typing():
             response = generate_response(prompt)
         await message.reply(content=response)
@@ -134,9 +135,10 @@ async def bonk(ctx):
     global message_history
     message_history.clear()
     await ctx.send("What did you just say? Baby Yoda?")
-    
+
+bot.remove_command("help")   
 @bot.hybrid_command(name="help", description="Get all other commands!")
-async def welp(ctx):
+async def help(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
     embed.add_field(name="!pfp [image_url]", value="Change the bot's profile picture", inline=False)
     embed.add_field(name="!bonk", value="Clears history of the bot", inline=False)
