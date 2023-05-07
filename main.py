@@ -25,6 +25,12 @@ async def on_ready():
     await bot.tree.sync()
     await bot.change_presence(activity=discord.Game(name="Coded by Mishal#1916"))
     print(f"{bot.user.name} has connected to Discord!")
+    invite_link = discord.utils.oauth_url(
+        bot.user.id,
+        permissions=discord.Permissions(administrator=True),
+        scopes=("bot", "applications.commands")
+    )
+    print(f"Invite link: {invite_link}")
 
 def generate_response(prompt):
     response = theb.Completion.create(prompt)
