@@ -90,6 +90,7 @@ async def on_message(message):
         if message.attachments:
             for attachment in message.attachments:
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
+                    is_busy = False
                     caption =  await process_image_link(attachment.url)
                     has_image = True
                     image_caption = f"[Here is the image context for the image user has sent : {caption}]"
