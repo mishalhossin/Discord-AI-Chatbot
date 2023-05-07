@@ -70,7 +70,7 @@ async def process_image_link(image_url):
     
 instructions = "Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet."
 message_history = {}
-MAX_HISTORY = 10
+MAX_HISTORY = 5 ######## EDIT THIS IF YOU NEED #########
 
 is_busy = False
 @bot.event
