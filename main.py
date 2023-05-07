@@ -41,7 +41,7 @@ def generate_response(prompt):
 
 api_key = os.environ['HUGGING_FACE_API']
 
-API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
+API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base"
 headers = {"Authorization": f"Bearer {api_key}"}
 
 async def query(filename):
@@ -90,7 +90,7 @@ async def on_message(message):
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
 
-    if message.channel.id in active_channels and not message.author.bot:
+    if (message.channel.id in active_channels or allow_dm) and not message.author.bot:
         is_busy = True
         has_image = False
         image_caption = ""
