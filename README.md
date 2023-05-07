@@ -7,22 +7,22 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 ## Commands ⚙️⚙️
 
-- Toggle active channel for a server by using `!toggleactive` command. ⚠️
+- Toggle active channel for a server by using `/toggleactive` command. ⚠️
 
 ![image](https://user-images.githubusercontent.com/91066601/235982560-d7c068d6-d35f-4153-9723-923a8c31546d.png)
 
 
-- Toggle if dm should be active or not by using `!toggledm` ⚠️
+- Toggle if dm should be active or not by using `/toggledm` ⚠️
 
 ![image](https://user-images.githubusercontent.com/91066601/235982180-d9926bb6-b6f9-44de-a0f7-045fce0dbda1.png)
 
-- Changes its profile picture with the `!pfp [url or attachment]` command.
+- Changes its profile picture with the `/pfp [url]` command.
 
-- Provides latency information with the `!ping` command.
+- Provides latency information with the `/ping` command.
 
-- Changes its username with the `!changeusr [New username]` command.
+- Changes its username with the `/changeusr [New username]` command.
 
-- If anything gose wrong use `!bonk` to clear history ⚠️
+- If anything gose wrong use `/bonk` to clear history ⚠️
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
@@ -85,7 +85,7 @@ python3 main.py
 #### There are 2 ways to talk to the ai
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
 - **if you want it in server channel use !toggleactive** 
-- For more awesome commands use **!welp**
+- For more awesome commands use **/help**
 
 ![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
 
