@@ -34,7 +34,7 @@ async def on_ready():
     )
     print(f"Invite link: {invite_link}")
 
-def generate_response(prompt):
+async def generate_response(prompt):
     response = theb.Completion.create(prompt)
     if not response:
         response = "I couldn't generate a response. Please try again."
@@ -145,7 +145,7 @@ async def on_message(message):
         user_prompt = "\n".join(message_history[author_id])
         prompt = f"{bot_prompt}\n{user_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
-            response = generate_response(prompt)
+            response = await generate_response(prompt)
 
         is_busy = False
 
