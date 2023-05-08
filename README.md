@@ -2,7 +2,7 @@
 This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `theb` from [GPT4FREE](https://github.com/xtekky/gpt4free) for generating responses based on conversation history.
 
 # Preview 👀
-![image](https://user-images.githubusercontent.com/91066601/235470838-cad26039-c843-4497-8ba7-fc88c66dab49.png)
+![image](https://user-images.githubusercontent.com/91066601/236717679-96b60947-13dc-4206-b95a-e4c2ba72c996.png)
 
 
 ## Commands ⚙️⚙️
