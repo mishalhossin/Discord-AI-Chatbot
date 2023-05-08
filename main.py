@@ -91,6 +91,7 @@ MAX_HISTORY = 5 ######## EDIT THIS IF YOU NEED #########
 is_busy = False
 @bot.event
 async def on_message(message):
+    await bot.process_commands(message)
     global is_busy
     if is_busy:
         return
@@ -131,7 +132,7 @@ async def on_message(message):
         is_busy = False    
         await message.reply(response)
 
-    await bot.process_commands(message)
+    
 
 
 @bot.hybrid_command(name="pfp", description="Change pfp")
