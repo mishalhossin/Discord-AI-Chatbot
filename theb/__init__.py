@@ -2,10 +2,10 @@ from json import loads
 from queue import Queue, Empty
 from re import findall
 from threading import Thread
+from typing import Generator, Optional
 
 from curl_cffi import requests
 from fake_useragent import UserAgent
-from typing import Generator, Optional
 
 
 class Completion:
@@ -29,11 +29,11 @@ class Completion:
         }
 
         proxies = {'http': 'http://' + proxy, 'https': 'http://' + proxy} if proxy else None
-
+        
         options = {}
         if Completion.last_msg_id:
             options['parentMessageId'] = Completion.last_msg_id
-
+        
         requests.post(
             'https://chatbot.theb.ai/api/chat-process',
             headers=headers,
@@ -46,9 +46,10 @@ class Completion:
         Completion.stream_completed = True
 
     @staticmethod
+
     def create(prompt: str, proxy: Optional[str] = None) -> Generator[str, None, None]:
         Completion.stream_completed = False
-
+        
         Thread(target=Completion.request, args=[prompt, proxy]).start()
 
         while not Completion.stream_completed or not Completion.message_queue.empty():

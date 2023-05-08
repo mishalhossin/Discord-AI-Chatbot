@@ -1,4 +1,4 @@
-from theb import Completion
+import usesless
 
 message_id = ""
 while True:
@@ -6,7 +6,7 @@ while True:
     if prompt == "!stop":
         break
 
-    req = Completion.create(prompt=prompt, parentMessageId=message_id)
+    req = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
 
     print(f"Answer: {req['text']}")
-    message_id = req["id"]
+    message_id = req["id"

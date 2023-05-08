@@ -1,9 +1,7 @@
+from flask import Flask, render_template_string
 from threading import Thread
 
-from flask import Flask, render_template_string
-
 app = Flask(__name__)
-
 
 @app.route('/')
 def main():
@@ -56,10 +54,10 @@ def main():
         <h1>Created by Mishal</h1>
         <div class="commands-container">
             <h2>GPT4FREE Chatbot Commands</h2>
-            <p class="command">!pfp [image_url] - Change the bots profile picture</p>
-            <p class="command">!changeusr [new_username] - Change the bots username</p>
+            <p class="command">!pfp [image_url] - Change the bot's profile picture</p>
+            <p class="command">!changeusr [new_username] - Change the bot's username</p>
             <p class="command">!ping - Pong</p>
-            <p class="command">!clear or !bonk - Clear bots message history</p>
+            <p class="command">!clear or !bonk - Clear bot's message history</p>
             <p class="command">!toggleactive - Makes the bot active in the channel</p>
             <p class="command">!toggledm - Turn on or off DMs/p>
             <div style="text-align: center; margin-top: 20px;">
@@ -72,10 +70,8 @@ def main():
 
     return render_template_string(html)
 
-
 def run():
     app.run(host='0.0.0.0', port=3000)
-
 
 def keep_alive():
     server = Thread(target=run)

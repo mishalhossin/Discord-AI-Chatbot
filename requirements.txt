@@ -2,6 +2,7 @@ aiohttp
 asyncio
 discord.py
 pynacl
+requests
 flask
 discord
 fake-useragent
