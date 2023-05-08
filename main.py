@@ -1,6 +1,7 @@
 import os
 import re
 import theb
+import asyncio
 import aiohttp
 import discord
 import httpx
@@ -41,19 +42,30 @@ def generate_response(prompt):
 
 api_key = os.environ['HUGGING_FACE_API']
 
-API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base" #Use this if slow https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning
+API_URLS = [
+    "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large",
+    "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base",
+    "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",
+]
 headers = {"Authorization": f"Bearer {api_key}"}
 
-async def query(filename):
-    with open(filename, "rb") as f:
-        data = f.read()
-    async with httpx.AsyncClient() as client:
-        response = await client.post(API_URL, headers=headers, data=data, timeout=30)
+async def fetch_response(client, api_url, data):
+    response = await client.post(api_url, headers=headers, data=data, timeout=30)
     
     if response.status_code != 200:
         raise Exception(f"API request failed with status code {response.status_code}: {response.text}")
     
     return response.json()
+
+async def query(filename):
+    with open(filename, "rb") as f:
+        data = f.read()
+
+    async with httpx.AsyncClient() as client:
+        tasks = [fetch_response(client, api_url, data) for api_url in API_URLS]
+        responses = await asyncio.gather(*tasks)
+
+    return responses
 
 
 async def download_image(image_url, save_as):
