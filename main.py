@@ -63,9 +63,10 @@ async def query(filename):
 
     async with httpx.AsyncClient() as client:
         tasks = [fetch_response(client, api_url, data) for api_url in API_URLS]
-        responses = await asyncio.gather(*tasks)
+        responses = await asyncio.gather(*tasks, return_exceptions=True)
 
     return responses
+
 
 
 async def download_image(image_url, save_as):
@@ -114,7 +115,7 @@ async def on_message(message):
                     is_busy = False
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"[Here is 3 possible image caption from 3 models : {caption}]"
+                    image_caption = f"[Here is 3 possible image caption from 3 models please note last model may not be accurate as its a fallback model : {caption}]"
                     print(caption)
                     break
 
