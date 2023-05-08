@@ -63,6 +63,7 @@ API_URLS = [
     "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large",
     "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base",
     "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",
+    "https://api-inference.huggingface.co/models/ydshieh/vit-gpt2-coco-en"
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
 
