@@ -40,6 +40,23 @@ def generate_response(prompt):
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
 
+def split_response(response, max_length=1900):
+    words = response.split()
+    chunks = []
+    current_chunk = []
+
+    for word in words:
+        if len(" ".join(current_chunk)) + len(word) + 1 > max_length:
+            chunks.append(" ".join(current_chunk))
+            current_chunk = [word]
+        else:
+            current_chunk.append(word)
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+
+    return chunks
+
 api_key = os.environ['HUGGING_FACE_API']
 
 API_URLS = [
@@ -129,10 +146,13 @@ async def on_message(message):
         prompt = f"{bot_prompt}\n{user_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = generate_response(prompt)
-        is_busy = False    
-        await message.reply(response)
 
-    
+        is_busy = False
+
+        chunks = split_response(response)
+
+        for chunk in chunks:
+            await message.reply(chunk)
 
 
 @bot.hybrid_command(name="pfp", description="Change pfp")
