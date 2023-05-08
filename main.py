@@ -104,56 +104,43 @@ instructions = "System : Roleplay as a large language model developed by OpenAI.
 # You can use dan prompt here lol
 
 message_history = {}
-MAX_HISTORY = 5 ######## EDIT THIS IF YOU NEED #########
+MAX_HISTORY = 8
 
-is_busy = False
 @bot.event
 async def on_message(message):
-    await bot.process_commands(message)
-    global is_busy
-    if is_busy:
-        return
     if message.author.bot:
-        author_id = str(bot.user.id)
-    else:
-        author_id = str(message.author.id)
-
+      return
+    author_id = str(message.author.id)
     if author_id not in message_history:
         message_history[author_id] = []
 
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
 
-    if (message.channel.id in active_channels or (allow_dm and message.channel.type == discord.ChannelType.private)) and not message.author.bot:
-        is_busy = True
+    if message.channel.id in active_channels:
         has_image = False
         image_caption = ""
         if message.attachments:
             for attachment in message.attachments:
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
-                    is_busy = False
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"\n[System : This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so ignore that if any error happens. Here is the image captions for the image user has sent :{caption}]"
+                    image_caption = f"\n[System : This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so it can result in a error ignore that pls. Here is the image captions for the image user has sent :{caption}]"
                     print(caption)
                     break
 
         if has_image:
-            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it]"
+            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it and dont mention about how images get there context also dont mention about things that dont have any chance]"
         else:
             bot_prompt = f"{instructions}"
-
         user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{bot_prompt}\n{user_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
+        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
-            response = await generate_response(prompt)
-
-        is_busy = False
-
-        chunks = split_response(response)
-
+            response = await generate_response(prompt)     
+        chunks = split_response(response)  
         for chunk in chunks:
             await message.reply(chunk)
+            
 
 
 @bot.hybrid_command(name="pfp", description="Change pfp")
