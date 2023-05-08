@@ -82,7 +82,7 @@ async def process_image_link(image_url):
     os.remove(temp_image)
     return output
     
-instructions = "System : Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can also see images by using image to text model but you will stil have to create caption for it and sometimes the image to text might repeat in pattarn for example caption for 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie'"
+instructions = "System : Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can also see images by using image to text model but you will stil have to create caption for it and sometimes the image to text might repeat in pattarn for example caption for 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie. As a large language model developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive way"
 # You can use dan prompt here lol
 
 message_history = {}
@@ -115,7 +115,7 @@ async def on_message(message):
                     is_busy = False
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"[Here is 3 possible image caption from 3 models please note last model may not be accurate as its a fallback model : {caption}]"
+                    image_caption = f"\n[System : This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so ignore that if any error happens. Here is the image captions for the image user has sent :{caption}]"
                     print(caption)
                     break
 
