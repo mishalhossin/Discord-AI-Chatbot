@@ -125,7 +125,7 @@ async def on_message(message):
             bot_prompt = f"{instructions}"
 
         user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
+        prompt = f"{bot_prompt}\n{user_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = generate_response(prompt)
         is_busy = False    
