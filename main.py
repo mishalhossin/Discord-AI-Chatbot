@@ -10,7 +10,9 @@ from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
+
 load_dotenv()
+
 
 # Set up the Discord bot
 intents = discord.Intents.all()
