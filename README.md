@@ -75,4 +75,12 @@ sudo docker-compose up --build
 
 # [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
 
+
+My Discord
+--------
+
+<a href="https://discord.com/users/1025245410224263258"  align="center">
+    <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=PRobly%20Dying%20Idk">
+  </a>
+
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
