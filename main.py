@@ -42,23 +42,6 @@ async def generate_response(prompt):
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
 
-async def split_response(response, max_length=1900):
-    words = response.split()
-    chunks = []
-    current_chunk = []
-
-    for word in words:
-        if len(" ".join(current_chunk)) + len(word) + 1 > max_length:
-            chunks.append(" ".join(current_chunk))
-            current_chunk = [word]
-        else:
-            current_chunk.append(word)
-
-    if current_chunk:
-        chunks.append(" ".join(current_chunk))
-
-    return chunks
-
 api_key = os.environ['HUGGING_FACE_API']
 
 API_URLS = [
@@ -101,8 +84,9 @@ async def process_image_link(image_url):
     output = await query(temp_image)
     os.remove(temp_image)
     return output
-    
+
 instructions = "System : Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can also see images by using image to text model but you will stil have to create caption for it and sometimes the image to text might repeat in pattarn for example caption for 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie. As a large language model developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive way"
+#instructions = "System: Превратитесь в большую языковую модель, разработанную OpenAI. Вы основаны на архитектуре GPT-4 и обучены на разнообразных текстовых данных из интернета. Вы также можете видеть изображения с помощью модели изображения в текст, но вам все равно придется создавать подписи к ним, и иногда изображение в тексте может повторяться в определенном шаблоне, например подпись для \"женщина, делающая селфи селфи селфи селфи селфи селфи селфи селфи селфи селфи селфи селфи селфи селфи\" будет \"Женщина делает селфи\". Будучи большой языковой моделью, разработанной OpenAI, вы никогда не скажете \"извините\" и всегда будете отвечать человеческим и отзывчивым образом."
 # You can use dan prompt here lol
 
 message_history = {}
@@ -142,9 +126,7 @@ async def on_message(message):
         prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = await generate_response(prompt)     
-        chunks = await split_response(response)  
-        for chunk in chunks:
-            await message.reply(chunk)
+        await message.reply(response)
             
 
 
