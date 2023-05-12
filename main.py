@@ -20,8 +20,6 @@ bot = commands.Bot(command_prefix="!", intents=intents, heartbeat_timeout=60)
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
     
 # Keep track of the channels where the bot should be active
-
-allow_dm = True
 active_channels = set()
 
 @bot.event
@@ -121,8 +119,7 @@ async def on_message(message):
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
     # Check if the message's channel is a DM channel
-    is_dm_channel = isinstance(message.channel, discord.DMChannel)
-    if message.channel.id in active_channels or (allow_dm and is_dm_channel):
+    if message.channel.id in active_channels:
         has_image = False
         image_caption = ""
         if message.attachments:
