@@ -20,6 +20,8 @@ bot = commands.Bot(command_prefix="!", intents=intents, heartbeat_timeout=60)
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
     
 # Keep track of the channels where the bot should be active
+
+allow_dm = True
 active_channels = set()
 
 @bot.event
@@ -39,6 +41,23 @@ async def generate_response(prompt):
     if not response:
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
+
+async def split_response(response, max_length=1900):
+    words = response.split()
+    chunks = []
+    current_chunk = []
+
+    for word in words:
+        if len(" ".join(current_chunk)) + len(word) + 1 > max_length:
+            chunks.append(" ".join(current_chunk))
+            current_chunk = [word]
+        else:
+            current_chunk.append(word)
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+
+    return chunks
 
 api_key = os.environ['HUGGING_FACE_API']
 
@@ -91,40 +110,42 @@ MAX_HISTORY = 8
 
 @bot.event
 async def on_message(message):
-
+    if message.author.bot:
+      author_id = str(message.author.id)
     if message.reference and message.reference.resolved.author != bot.user:
-      return None
+      return  # Ignore replies to messages not from the bot
     author_id = str(message.author.id)
     if author_id not in message_history:
         message_history[author_id] = []
-        
+
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-    if message.author.bot:
-      return
-
-    if message.channel.id in active_channels:
+    # Check if the message's channel is a DM channel
+    is_dm_channel = isinstance(message.channel, discord.DMChannel)
+    if message.channel.id in active_channels or (allow_dm and is_dm_channel):
         has_image = False
         image_caption = ""
         if message.attachments:
             for attachment in message.attachments:
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
-                    message.channel.typing
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"\n[System :USER HAS SENT A IMAGE .This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so it can result in a error ignore that pls. Here is the image captions and filename for the image user has Caption:```\n {caption} ``` And filename: ```\n{attachment.filename}``` and note filename will be more accurate than CAPTION if its note generic"
+                    image_caption = f"\n[System : First note that some large image to text models will take time to load and may give out a timeout error but use the fallback models or the one that works.This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so it can result in a error ignore that pls. Here is the image captions for the image user has sent :{caption}]"
                     print(caption)
                     break
 
         if has_image:
-            bot_prompt = f"{instructions}"
+            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it and dont mention about how images get there context also dont mention about things that dont have any chance]"
         else:
             bot_prompt = f"{instructions}"
         user_prompt = "\n".join(message_history[author_id])
         prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
-          response = await generate_response(prompt)    
-        await message.reply(response)
+            response = await generate_response(prompt)     
+        chunks = await split_response(response)  
+        for chunk in chunks:
+            await message.reply(chunk)
+            
 
 
 @bot.hybrid_command(name="pfp", description="Change pfp")
@@ -159,7 +180,13 @@ async def changeusr(ctx, new_username):
         await bot.user.edit(username=new_username)
     except discord.errors.HTTPException as e:
         await ctx.send("".join(e.text.split(":")[1:]))
-        
+
+@bot.hybrid_command(name="toggledm", description="Toggle dm for chatting")
+async def toggledm(ctx):
+    global allow_dm
+    allow_dm = not allow_dm
+    await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
+    
 @bot.hybrid_command(name="toggleactive", description="Toggle active channels")
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
