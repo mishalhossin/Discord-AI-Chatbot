@@ -1,3 +1,10 @@
+My Discord
+--------
+
+<a href="https://discord.com/users/1025245410224263258"  align="center">
+    <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=PRobly%20Dying%20Idk">
+  </a>
+
 # Gpt4Free-Chat-bot 🤖
 This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `theb` from [GPT4FREE](https://github.com/xtekky/gpt4free) for generating responses based on conversation history.
 
@@ -74,13 +81,5 @@ sudo docker-compose up --build
 ![image](https://user-images.githubusercontent.com/91066601/235811115-689c40e8-660a-448d-83dd-194631324436.png)
 
 # [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-Chatbot-Gpt4Free)
-
-
-My Discord
---------
-
-<a href="https://discord.com/users/1025245410224263258"  align="center">
-    <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=PRobly%20Dying%20Idk">
-  </a>
 
 ###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord)
