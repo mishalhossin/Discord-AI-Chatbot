@@ -113,7 +113,7 @@ async def on_message(message):
     if message.author.bot:
       return
     if message.reference and message.reference.resolved.author != bot.user:
-      return  # Ignore replies to messages not from the bot
+      return None # Ignore replies to messages not from the bot
     author_id = str(message.author.id)
     if author_id not in message_history:
         message_history[author_id] = []
