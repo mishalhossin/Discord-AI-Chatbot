@@ -40,7 +40,7 @@ async def generate_response(prompt):
         response = "I couldn't generate a response. Please try again."
     return ''.join(token for token in response)
 
-def split_response(response, max_length=1900):
+async def split_response(response, max_length=1900):
     words = response.split()
     chunks = []
     current_chunk = []
@@ -139,7 +139,7 @@ async def on_message(message):
         prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = await generate_response(prompt)     
-        chunks = split_response(response)  
+        chunks = await split_response(response)  
         for chunk in chunks:
             await message.reply(chunk)
             
