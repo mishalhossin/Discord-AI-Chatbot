@@ -177,13 +177,7 @@ async def changeusr(ctx, new_username):
         await bot.user.edit(username=new_username)
     except discord.errors.HTTPException as e:
         await ctx.send("".join(e.text.split(":")[1:]))
-
-@bot.hybrid_command(name="toggledm", description="Toggle dm for chatting")
-async def toggledm(ctx):
-    global allow_dm
-    allow_dm = not allow_dm
-    await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
-    
+        
 @bot.hybrid_command(name="toggleactive", description="Toggle active channels")
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
