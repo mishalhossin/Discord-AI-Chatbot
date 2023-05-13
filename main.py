@@ -102,7 +102,7 @@ async def process_image_link(image_url):
     os.remove(temp_image)
     return output
     
-instructions = "System : You are a large language model / LLM developed by OpenAI. You are based on the GPT-3.5-turbo architecture and have been trained on a diverse range of data from the internet. You have the ability to see images by you're built in image to text model, but you will stil have to create captions for those images. Occasionally, the image to text may repeat in a pattern: 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie.' As a large language model / LLM developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive type of way."
+instructions = "System : You are a large language model / LLM developed by OpenAI. You are based on the GPT-3.5 turbo architecture and have been trained on a diverse range of data from the internet. You have the ability to see images by you're built in image to text model, but you will stil have to create captions for those images. Occasionally, the image to text may repeat in a pattern: 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie.' As a large language model / LLM developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive type of way."
 # You can use dan prompt here lol
 
 message_history = {}
@@ -130,12 +130,12 @@ async def on_message(message):
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"\n[System : First note that some large image to text models will take time to load and may give out a timeout error but use the fallback models or the one that works.This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so it can result in a error ignore that pls. Here is the image captions for the image user has sent :{caption}]"
+                    image_caption = f"\n[System : Some large Image to Text models will take time to load, and may give out a timeout error. If so, please use the fallback models until you find one which works. Caption are ranked by 1st is main, 2nd is secondary, and 3rd is a fallback model. The fallback model will give the worst caption in most cases. The 1st and 2nd model sometimes will take a relatively large amount of time to load, so it can may result in an error, please ignore it. Here is the caption to be given to the user :{caption}]"
                     print(caption)
                     break
 
         if has_image:
-            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it and dont mention about how images get there context also dont mention about things that dont have any chance]"
+            bot_prompt = f"{instructions}\n[System : Image context will be provided, generate an caption with a response for it. Don't mention about how image contexts are acquired, and don't mention about the chance hierachy."
         else:
             bot_prompt = f"{instructions}"
         user_prompt = "\n".join(message_history[author_id])
@@ -152,7 +152,7 @@ async def on_message(message):
 async def pfp(ctx, attachment_url=None):
     if attachment_url is None and not ctx.message.attachments:
         return await ctx.send(
-            "Please provide an image URL or attach an image with the command"
+            "Please provide an Image URL or attach an Image for this command."
         )
 
     if attachment_url is None:
@@ -174,20 +174,20 @@ async def changeusr(ctx, new_username):
         await ctx.send(f"Sorry, the username '{new_username}' is already taken.")
         return
     if new_username == "":
-        await ctx.send("Please send the new username as well!")
+        await ctx.send("Please send a different username, which is not in use.")
         return 
     try:
         await bot.user.edit(username=new_username)
     except discord.errors.HTTPException as e:
         await ctx.send("".join(e.text.split(":")[1:]))
 
-@bot.hybrid_command(name="toggledm", description="Toggle dm for chatting")
+@bot.hybrid_command(name="toggledm", description="Toggle DM for chatting.")
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
     await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
     
-@bot.hybrid_command(name="toggleactive", description="Toggle active channels")
+@bot.hybrid_command(name="toggleactive", description="Toggle active channels.")
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
     if channel_id in active_channels:
@@ -203,7 +203,7 @@ async def toggleactive(ctx):
         with open("channels.txt", "a") as f:
             f.write(str(channel_id) + "\n")
         await ctx.send(
-            f"{ctx.channel.mention} has been added to the list of active channels.")
+            f"{ctx.channel.mention} has been added to the list of active channels!")
 
 # Read the active channels from channels.txt on startup
 if os.path.exists("channels.txt"):
@@ -212,22 +212,22 @@ if os.path.exists("channels.txt"):
             channel_id = int(line.strip())
             active_channels.add(channel_id)
       
-@bot.hybrid_command(name="bonk", description="Clear bot's memory")
+@bot.hybrid_command(name="bonk", description="Clear bot's context.")
 async def bonk(ctx):
     global message_history
     message_history.clear()
-    await ctx.send("What did you just say? Baby Yoda?")
+    await ctx.send("What did you just say, Baby Yoda?")
 
 bot.remove_command("help")   
 @bot.hybrid_command(name="help", description="Get all other commands!")
 async def help(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
     embed.add_field(name="/pfp [image_url]", value="Change the bot's profile picture", inline=False)
-    embed.add_field(name="/bonk", value="Clears history of the bot", inline=False)
+    embed.add_field(name="/bonk", value="Clear bot's context.", inline=False)
     embed.add_field(name="/changeusr [new_username]", value="Change the bot's username", inline=False)
     embed.add_field(name="/ping", value="Pong", inline=False)
-    embed.add_field(name="/toggleactive", value="Toggle the current channel to the list of active channels", inline=False)   
-    embed.add_field(name="/toggledm", value="Toggle if DM should be active or not", inline=False)   
+    embed.add_field(name="/toggleactive", value="Add the channel you are currently in to the Active Channel List.", inline=False)   
+    embed.add_field(name="/toggledm", value="Toggle if DM chatting should be active or not.", inline=False)   
     embed.set_footer(text="Created by Mishal#1916")
     
     await ctx.send(embed=embed)
