@@ -112,8 +112,6 @@ MAX_HISTORY = 8
 async def on_message(message):
     if message.author.bot:
       return
-    if message.reference and message.reference.resolved.author != bot.user:
-      return  # Ignore replies to messages not from the bot
     author_id = str(message.author.id)
     if author_id not in message_history:
         message_history[author_id] = []
@@ -121,8 +119,7 @@ async def on_message(message):
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
     
-    is_dm_channel = isinstance(message.channel, discord.DMChannel)
-    if message.channel.id in active_channels or (allow_dm and is_dm_channel):
+    if message.channel.id in active_channels or (allow_dm and message.channel.type == 'private'):
         has_image = False
         image_caption = ""
         if message.attachments:
