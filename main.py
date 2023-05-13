@@ -102,7 +102,7 @@ async def process_image_link(image_url):
     os.remove(temp_image)
     return output
     
-instructions = "System : Roleplay as a large language model developed by OpenAI. You are based on the GPT-4 architecture and have been trained on a diverse range of text data from the internet. You can also see images by using image to text model but you will stil have to create caption for it and sometimes the image to text might repeat in pattarn for example caption for 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie. As a large language model developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive way"
+instructions = "System : You are a large language model / LLM developed by OpenAI. You are based on the GPT-3.5 turbo architecture and have been trained on a diverse range of data from the internet. You have the ability to see images by you're built in image to text model, but you will stil have to create captions for those images. Occasionally, the image to text may repeat in a pattern: 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie.' As a large language model / LLM developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive type of way."
 # You can use dan prompt here lol
 
 message_history = {}
@@ -112,8 +112,6 @@ MAX_HISTORY = 8
 async def on_message(message):
     if message.author.bot:
       return
-    if message.reference and message.reference.resolved.author != bot.user:
-      return  # Ignore replies to messages not from the bot
     author_id = str(message.author.id)
     if author_id not in message_history:
         message_history[author_id] = []
@@ -121,9 +119,7 @@ async def on_message(message):
     message_history[author_id].append(message.content)
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
 
-    # Check if the message's channel is a DM channel
-    is_dm_channel = isinstance(message.channel, discord.DMChannel)
-    if message.channel.id in active_channels or (allow_dm and is_dm_channel):
+    if message.channel.id in active_channels:
         has_image = False
         image_caption = ""
         if message.attachments:
