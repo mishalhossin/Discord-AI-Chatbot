@@ -5,7 +5,7 @@ My Discord
     <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=15%20year%20old%20solo%20dev">
   </a>
 
-# Gpt4Free-Chat-bot 🤖
+# Discord-Chat-bot 🤖
 This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `usesless` from [GPT4FREE](https://github.com/xtekky/gpt4free) for generating responses based on conversation history.
 
 # Preview 👀
