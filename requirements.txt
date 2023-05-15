@@ -9,3 +9,7 @@ fake-useragent
 curl_cffi
 python-dotenv
 httpx
+tls-client
+pydantic
+pycryptodome
+PyYAML
