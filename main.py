@@ -1,18 +1,16 @@
 import os
 import re
-import theb
 import asyncio
 import aiohttp
 import discord
 import httpx
+import usesless
 from keep_alive import keep_alive
 from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-
 load_dotenv()
-
 
 # Set up the Discord bot
 intents = discord.Intents.all()
@@ -36,11 +34,12 @@ async def on_ready():
     )
     print(f"Invite link: {invite_link}")
 
+message_id = ""
 async def generate_response(prompt):
-    response = theb.Completion.create(prompt)
+    response = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
     if not response:
         response = "I couldn't generate a response. Please try again."
-    return ''.join(token for token in response)
+    return (f"{response['text']}")
 
 def split_response(response, max_length=1900):
     words = response.split()
@@ -139,7 +138,7 @@ async def on_message(message):
         else:
             bot_prompt = f"{instructions}"
         user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
+        prompt = f"{user_prompt}\n{bot_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = await generate_response(prompt)     
         chunks = split_response(response)  
