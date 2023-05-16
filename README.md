@@ -13,17 +13,30 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 # Preview 👀
 ![image](https://user-images.githubusercontent.com/91066601/236717834-e3f6939f-3641-425c-b9f7-424a38f86ac4.png)
 
+# Features ✨
+[x] Uses slash commands and normal command (hybrid) ⚙️
+[x] Free LLM model 🤖
+[x] Always responds when bot is mention or the bots name is in message ⚙
+[x] Ignores message if you are replying to another user to avoid confusion 😕
+[x] Make the bot always respond in a channel using `/toggleactive` ⚙️
+[x] Gpt-3.5-turbo model 🤖
+[x] Image detection model using huggingface api 🤗
+[x] Uses environment for credentials management and security 🔑
+[x] Made with love ❤️
+[ ] Web acesss 🌐
 
 ## Commands ⚙️⚙️
 - For all commands use `/help` in discord 
+- Enable the bot using `/toggleactive`
+- and more..
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
 ```
-git clone https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free
+git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 ```
 ### Step 2. 📁 Changing directory to cloned directory
 ```
-cd Discord-Chatbot-Gpt4Free
+cd Discord-AI-Chatbot
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [here](https://discord.com/developers/applications)
 ## [For more info click here](https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free/blob/main/discord_token.md#select-application) ⚠️⚠️⚠️⚠️⚠️ IMPORTENT ⚠️⚠️⚠️⚠️⚠️
@@ -84,6 +97,5 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 ```
 sudo docker-compose up --build
 ```
-
 
 # Want to run as selfbot ? then check this out: [SELF-GPT](https://github.com/mishalhossin/Self-AI-Chatbot)
