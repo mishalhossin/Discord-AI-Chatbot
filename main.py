@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import asyncio
 import aiohttp
 import discord
@@ -12,6 +13,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+with open('config.json') as config_file:
+    config = json.load(config_file)
 
 # Set up the Discord bot
 chatbase = Model()
@@ -23,6 +26,7 @@ instructions = "System : You are a large language model / LLM developed by OpenA
 
 allow_dm = True
 active_channels = set()
+trigger_words = config['TRIGGER']
 
 @bot.event
 async def on_ready():
@@ -110,7 +114,13 @@ async def on_message(message):
       return  # Ignore replies to messages not from the bot
     
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
-    if message.channel.id in active_channels or (allow_dm and is_dm_channel):
+    is_active_channel = message.channel.id in active_channels
+    is_allowed_dm = allow_dm and is_dm_channel
+    contains_trigger_word = any(word in message.content for word in trigger_words)
+    is_bot_mentioned = bot.user.mentioned_in(message)
+    bot_name_in_message = bot.user.name.lower() in message.content.lower()
+    
+    if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or bot_name_in_message:
         has_image = False
         image_caption = ""
         if message.attachments:
