@@ -102,22 +102,12 @@ async def process_image_link(image_url):
     os.remove(temp_image)
     return output
 
-
-message_history = {}
-MAX_HISTORY = 8
-
 @bot.event
 async def on_message(message):
     if message.author.bot:
       return
     if message.reference and message.reference.resolved.author != bot.user:
       return  # Ignore replies to messages not from the bot
-    author_id = str(message.author.id)
-    if author_id not in message_history:
-        message_history[author_id] = []
-
-    message_history[author_id].append(message.content)
-    message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
     
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     if message.channel.id in active_channels or (allow_dm and is_dm_channel):
@@ -136,8 +126,7 @@ async def on_message(message):
             bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it and dont mention about how images get there context also dont mention about things that dont have any chance]"
         else:
             bot_prompt = f"{instructions}"
-        user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
+        prompt = f"{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = await generate_response(prompt)     
         chunks = split_response(response)  
