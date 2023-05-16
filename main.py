@@ -37,7 +37,6 @@ async def on_ready():
     print(f"Invite link: {invite_link}")
 
 async def generate_response(prompt):
-    usesless.SetupConversation(prompt)
     response = (chatbase.GetAnswer(prompt=prompt, model="gpt-4"))
     if not response:
         response = "I couldn't generate a response. Please try again."
