@@ -4,13 +4,14 @@ import asyncio
 import aiohttp
 import discord
 import httpx
-import usesless
+from opengpt.models.completion.chatbase.model import Model
 from keep_alive import keep_alive
 from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
+chatbase = Model()
 
 # Set up the Discord bot
 intents = discord.Intents.all()
@@ -36,10 +37,10 @@ async def on_ready():
 
 message_id = ""
 async def generate_response(prompt):
-    response = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
+    response = chatbase.GetAnswer(prompt=prompt, model="gpt-4")
     if not response:
         response = "I couldn't generate a response. Please try again."
-    return (f"{response['text']}")
+    return response
 
 def split_response(response, max_length=1900):
     words = response.split()
@@ -100,9 +101,7 @@ async def process_image_link(image_url):
     output = await query(temp_image)
     os.remove(temp_image)
     return output
-    
-instructions = "System : You are a large language model / LLM developed by OpenAI. You are based on the GPT-3.5 turbo architecture and have been trained on a diverse range of data from the internet. You have the ability to see images by you're built in image to text model, but you will stil have to create captions for those images. Occasionally, the image to text may repeat in a pattern: 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie.' As a large language model / LLM developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive type of way."
-# You can use dan prompt here lol
+
 
 message_history = {}
 MAX_HISTORY = 8
@@ -134,9 +133,9 @@ async def on_message(message):
                     break
 
         if has_image:
-            bot_prompt = f"{instructions}\n[System : Image context will be provided, generate an caption with a response for it. Don't mention about how image contexts are acquired, and don't mention about the chance hierachy."
+            bot_prompt = f"\n[System : Image context will be provided, generate an caption with a response for it. Don't mention about how image contexts are acquired, and don't mention about the chance hierachy."
         else:
-            bot_prompt = f"{instructions}"
+            bot_prompt = f""
         user_prompt = "\n".join(message_history[author_id])
         prompt = f"{user_prompt}\n{bot_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
