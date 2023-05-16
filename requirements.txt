@@ -12,3 +12,4 @@ httpx
 tls-client
 pydantic
 pycryptodome
+yaml
