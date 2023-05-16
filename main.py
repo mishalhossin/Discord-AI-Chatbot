@@ -208,19 +208,12 @@ if os.path.exists("channels.txt"):
         for line in f:
             channel_id = int(line.strip())
             active_channels.add(channel_id)
-      
-@bot.hybrid_command(name="bonk", description="Clear bot's context.")
-async def bonk(ctx):
-    global message_history
-    message_history.clear()
-    await ctx.send("What did you just say, Baby Yoda?")
 
 bot.remove_command("help")   
 @bot.hybrid_command(name="help", description="Get all other commands!")
 async def help(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x00ff00)
     embed.add_field(name="/pfp [image_url]", value="Change the bot's profile picture", inline=False)
-    embed.add_field(name="/bonk", value="Clear bot's context.", inline=False)
     embed.add_field(name="/changeusr [new_username]", value="Change the bot's username", inline=False)
     embed.add_field(name="/ping", value="Pong", inline=False)
     embed.add_field(name="/toggleactive", value="Add the channel you are currently in to the Active Channel List.", inline=False)   
