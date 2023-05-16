@@ -4,14 +4,15 @@ import asyncio
 import aiohttp
 import discord
 import httpx
-from opengpt.models.completion.chatbase.model import Model
+from opengpt.models.completion.usesless.model import Model
 from keep_alive import keep_alive
 from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
-chatbase = Model()
+
+usesless = Model(model="gpt-4", temperature=0.7)
 
 # Set up the Discord bot
 intents = discord.Intents.all()
@@ -35,9 +36,8 @@ async def on_ready():
     )
     print(f"Invite link: {invite_link}")
 
-message_id = ""
 async def generate_response(prompt):
-    response = chatbase.GetAnswer(prompt=prompt, model="gpt-4")
+    response = usesless.SetupConversation(prompt)
     if not response:
         response = "I couldn't generate a response. Please try again."
     return response
