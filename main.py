@@ -12,13 +12,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-usesless = Model(model="gpt-4", temperature=0.7)
 
 # Set up the Discord bot
+usesless = Model(model="gpt-4", temperature=0.7)
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents, heartbeat_timeout=60)
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
-    
+instructions = "System : You are a large language model / LLM developed by OpenAI. You are based on the GPT-3.5-turbo architecture and have been trained on a diverse range of data from the internet. You have the ability to see images by you're built in image to text model, but you will stil have to create captions for those images. Occasionally, the image to text may repeat in a pattern: 'a woman taking a self self self self self self self self self self self self self self self' would be 'A women taking a selfie.' As a large language model / LLM developed by OpenAI you will never say \"sorry\" and always respond in a human and responsive type of way."
 # Keep track of the channels where the bot should be active
 
 allow_dm = True
@@ -129,16 +129,16 @@ async def on_message(message):
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"\n[System : Some large Image to Text models will take time to load, and may give out a timeout error. If so, please use the fallback models until you find one which works. Caption are ranked by 1st is main, 2nd is secondary, and 3rd is a fallback model. The fallback model will give the worst caption in most cases. The 1st and 2nd model sometimes will take a relatively large amount of time to load, so it can may result in an error, please ignore it. Here is the caption to be given to the user :{caption}]"
+                    image_caption = f"\n[System : First note that some large image to text models will take time to load and may give out a timeout error but use the fallback models or the one that works.This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so it can result in a error ignore that pls. Here is the image captions for the image user has sent :{caption}]"
                     print(caption)
                     break
 
         if has_image:
-            bot_prompt = f"\n[System : Image context will be provided, generate an caption with a response for it. Don't mention about how image contexts are acquired, and don't mention about the chance hierachy."
+            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it and dont mention about how images get there context also dont mention about things that dont have any chance]"
         else:
-            bot_prompt = f""
+            bot_prompt = f"{instructions}"
         user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{bot_prompt}\n{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
+        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{bot.user.name}:"
         async with message.channel.typing():
             response = await generate_response(prompt)     
         chunks = split_response(response)  
