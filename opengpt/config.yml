@@ -1,0 +1,13 @@
+models:
+  completion:
+    forefront:
+      state: incomplete
+      bugs:
+        - X-Signature Error
+    italygpt:
+      state: stable
+      bugs: []
+  image:
+    hotpot:
+      state: stable
+      bugs: []
