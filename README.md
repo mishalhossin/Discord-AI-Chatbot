@@ -59,8 +59,6 @@ python main.py
 
 # ✨✨✨  Other ways to run ✨✨✨
 ### Using replit to run ☁️
-![image](https://user-images.githubusercontent.com/91066601/235811115-689c40e8-660a-448d-83dd-194631324436.png)
-
 # [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
 
 - Follow all the steps except `step 1`
@@ -70,6 +68,7 @@ python main.py
 ![image](https://user-images.githubusercontent.com/91066601/235810871-5d4c1469-35fd-42d2-a3a2-3382002877cb.png)
 
 - Config `secrets` in replit like this :
+![image](https://user-images.githubusercontent.com/91066601/235811115-689c40e8-660a-448d-83dd-194631324436.png)
 
 
 ### Using docker to run :whale:
