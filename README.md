@@ -86,4 +86,4 @@ sudo docker-compose up --build
 ```
 
 
-###### Want something nsfw ? then check this out: [SEX-GPT](https://github.com/mishalhossin/Gpt3-sexbot-discord) (KInda outdated rn)
+# Want to run as selfbot ? then check this out: [SELF-GPT](https://github.com/mishalhossin/Self-AI-Chatbot)
