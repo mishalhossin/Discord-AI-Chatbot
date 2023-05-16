@@ -23,7 +23,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [x] Image Detection Model: The bot can detect objects in images using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: The bot keeps your credentials secure using top-secret environment variables. 🔑
 - [x] Crafted with Care: Made with lots of love and attention to detail. ❤️
-- [ ] Web Access: Coming soon! Get ready to unlock a whole new level of awesomeness with a web interface. 🌐
+- [ ] Web Access: Coming soon! Get ready to unlock a whole new level of awesomeness. 🌐
 
 ## Commands ⚙️⚙️
 - For all commands use `/help` in discord 
