@@ -14,16 +14,16 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 ![image](https://user-images.githubusercontent.com/91066601/236717834-e3f6939f-3641-425c-b9f7-424a38f86ac4.png)
 
 # Features ✨
-[x] Uses slash commands and normal command (hybrid) ⚙️
-[x] Free LLM model 🤖
-[x] Always responds when bot is mention or the bots name is in message ⚙
-[x] Ignores message if you are replying to another user to avoid confusion 😕
-[x] Make the bot always respond in a channel using `/toggleactive` ⚙️
-[x] Gpt-3.5-turbo model 🤖
-[x] Image detection model using huggingface api 🤗
-[x] Uses environment for credentials management and security 🔑
-[x] Made with love ❤️
-[ ] Web acesss 🌐
+- [x] Hybrid Command System: Get the best of both worlds with slash commands and normal commands. It's like having options on a buffet! ⚙️
+- [x] Free LLM Model: No wallet? No problem! Enjoy the powerful capabilities of this language model without spending a dime. It's like finding a pot of gold at the end of a rainbow! 🤖
+- [x] Intelligent Mention Recognition: Hey, no need to shout! The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
+- [x] Advanced Message Handling: Oops, no accidental interruptions! The bot knows when you're replying to someone else, so it won't jump in and cause confusion. It's like having a mind reader in your server! 🪄
+- [x] Channel-Specific Responses: Want the bot to chill in a specific channel? Just use the nifty `/toggleactive` command, and it'll be there, adding some spice to the conversation! ⚙️
+- [x] GPT-3.5-Turbo Model: This bot runs on turbo power! It's powered by the lightning-fast GPT-3.5-Turbo language model, making conversations smooth and snappy. It's like having a Formula 1 car for your chats! 🤖
+- [x] Image Detection Model: Say cheese! The bot can detect objects in images using a fancy Hugging Face API. It's like having a virtual Sherlock Holmes with a knack for visual puzzles! 🕵️‍♂️
+- [x] Secure Credential Management: Your secrets are locked up tight! The bot keeps your credentials secure using top-secret environment variables. It's like having a secret agent guarding your sensitive info! 🔑
+- [x] Crafted with Care: Made with lots of love and attention to detail. You'll feel the warm and fuzzy vibes when using this bot. It's like having a trusty sidekick who's always there to brighten your day! ❤️
+- [ ] Web Access: Coming soon! Get ready to unlock a whole new level of awesomeness with a web interface. It's like giving the bot a shiny new outfit and access to the internet's wildest adventures! 🌐
 
 ## Commands ⚙️⚙️
 - For all commands use `/help` in discord 
