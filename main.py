@@ -4,7 +4,7 @@ import asyncio
 import aiohttp
 import discord
 import httpx
-from opengpt.models.completion.usesless.model import Model
+from opengpt.models.completion.chatbase.model import Model
 from keep_alive import keep_alive
 from discord import app_commands
 from discord.ext import commands
@@ -14,7 +14,7 @@ load_dotenv()
 
 
 # Set up the Discord bot
-usesless = Model(model="gpt-4", temperature=0.7)
+chatbase = Model()
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents, heartbeat_timeout=60)
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
@@ -38,10 +38,10 @@ async def on_ready():
 
 async def generate_response(prompt):
     usesless.SetupConversation(prompt)
-    response = usesless.SendConversation()
+    response = (chatbase.GetAnswer(prompt=prompt, model="gpt-4"))
     if not response:
         response = "I couldn't generate a response. Please try again."
-    return ''.join(r.choices[0].delta.content for r in response)
+    return response
 
 def split_response(response, max_length=1900):
     words = response.split()
