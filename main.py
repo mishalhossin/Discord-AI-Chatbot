@@ -37,10 +37,11 @@ async def on_ready():
     print(f"Invite link: {invite_link}")
 
 async def generate_response(prompt):
-    response = usesless.SetupConversation(prompt)
+    usesless.SetupConversation(prompt)
+    response = usesless.SendConversation()
     if not response:
         response = "I couldn't generate a response. Please try again."
-    return response
+    return ''.join(r.choices[0].delta.content for r in response)
 
 def split_response(response, max_length=1900):
     words = response.split()
