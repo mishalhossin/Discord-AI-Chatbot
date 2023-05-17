@@ -24,6 +24,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Crafted with Care: Made with lots of love and attention to detail. ❤️
 - [ ] Web Access: Coming soon! Get ready to unlock a whole new level of awesomeness. 🌐
+- [ ] Speech recognition : Coming soon! Get ready to for a LLM powered voice assistant
 
 ## Commands ⚙️⚙️
 - `/pfp [image_url]`: Change the bot's profile picture.
