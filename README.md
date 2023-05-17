@@ -21,7 +21,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
 - [x] GPT-3.5-Turbo Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-Turbo language model. 🤖
-- [x] Image Detection Model: The bot can detect objects in images using a fancy Hugging Face API. 🕵️‍♂️
+- [x] Image Detection Model: The bot can detect objects and text in images with a OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Crafted with Care: Made with lots of love and attention to detail. ❤️
 - [ ] Web Access: Coming soon! Get ready to unlock a whole new level of awesomeness. 🌐
