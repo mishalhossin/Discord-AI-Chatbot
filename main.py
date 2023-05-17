@@ -36,7 +36,7 @@ async def on_ready():
 
     invite_link = discord.utils.oauth_url(
         bot.user.id,
-        permissions=discord.Permissions(administrator=True),
+        permissions=discord.Permissions(),
         scopes=("bot", "applications.commands")
     )
     print(f"Invite link: {invite_link}")
