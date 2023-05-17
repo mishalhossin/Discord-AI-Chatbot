@@ -11,7 +11,8 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 # If you want to use `Replit` or `Docker` check this [Here](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
 # Preview 👀
-![image](https://user-images.githubusercontent.com/91066601/236717834-e3f6939f-3641-425c-b9f7-424a38f86ac4.png)
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
+
 
 # Features ✨
 - [x] Hybrid Command System: Get the best of slash and normal commands. It's like a buffet! ⚙️
@@ -73,7 +74,8 @@ python main.py
 - if you want it in server channel use **/toggleactive** 
 - For more awesome commands use **/help**
 
-![image](https://user-images.githubusercontent.com/91066601/235474066-d805b10b-168b-4965-b623-6b37470ca6bb.png)
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
+
 
 # ✨✨✨  Other ways to run ✨✨✨
 ### Using replit to run ☁️
