@@ -77,7 +77,7 @@ def split_response(response, max_length=1900):
 api_key = os.environ['HUGGING_FACE_API']
 
 API_URLS = [
-    "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base",
+    "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed",
     "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
@@ -149,12 +149,12 @@ async def on_message(message):
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"\n[System : First note that some large image to text models will take time to load and may give out a timeout error but use the fallback models or the one that works.This how the caption is ranked 1st is main 2nd is secondary and 3rd is fallback model which  will gives worst caption one some cases. 1st and 2nd model sometimes takes a while to load so it can result in a error ignore that pls. Here is the image captions for the image user has sent :{caption}]"
+                    image_caption = f"""\n[System: Large image-to-text models may take time to load, possibly resulting in timeout errors. Fallback models or functional ones should be used. Captions for the provided image are categorized as OCR (1st), general image detection (2nd), and fallback model (3rd), which may yield less accurate captions. Image captions: {caption}.]"""
                     print(caption)
                     break
 
         if has_image:
-            bot_prompt = f"{instructions}\n[System : Image context will be provided. Generate an caption with a response for it and dont mention about how images get there context also dont mention about things that dont have any chance]"
+            bot_prompt = f"{instructions}\n[System: Image context provided. This is an image-to-text model with two classifications: OCR for text detection and general image detection, which may be unstable. Generate a caption with an appropriate response. For instance, if the OCR detects a math question, answer it; if it's a general image, compliment its beauty.]"
         else:
             bot_prompt = f"{instructions}"
 
