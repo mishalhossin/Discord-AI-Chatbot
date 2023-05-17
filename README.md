@@ -26,9 +26,13 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [ ] Web Access: Coming soon! Get ready to unlock a whole new level of awesomeness. 🌐
 
 ## Commands ⚙️⚙️
-- For all commands use `/help` in discord 
-- Enable the bot using `/toggleactive`
-- and more..
+- `/pfp [image_url]`: Change the bot's profile picture.
+- `/changeusr [new_username]`: Change the bot's username.
+- `/ping`: Get a "Pong" response from the bot.
+- `/bonk`: Clear the bot's memory.
+- `/toggleactive`: Add the current channel to the Active Channel List.
+- `/toggledm`: Toggle if DM chatting should be active or not.
+
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
 ```
