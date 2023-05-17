@@ -87,7 +87,7 @@ python main.py
 
 - Config `secrets` in replit like this :
 
-![image](https://user-images.githubusercontent.com/91066601/235811115-689c40e8-660a-448d-83dd-194631324436.png)
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/2898567b-7d8a-422d-93e2-a4b3bec0ff18)
 
 
 ### Using docker to run :whale:
