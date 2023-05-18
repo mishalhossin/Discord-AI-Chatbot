@@ -36,7 +36,6 @@ statusList = ["Answering your queries", "Solving problems",
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.change_presence(activity=discord.Game(name=random.choice(statusList)))
     print(f"{bot.user} aka {bot.user.name} has connected to Discord!")
 
     invite_link = discord.utils.oauth_url(
