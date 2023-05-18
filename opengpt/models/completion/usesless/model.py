@@ -3,6 +3,7 @@ from .tools.typing.response import UseslessResponse
 import requests
 import json
 
+debug = False # For debuging
 
 class Model:
     @classmethod
@@ -39,12 +40,14 @@ class Model:
             data = json.loads(chunk.decode("utf-8"))
             if "detail" in data:
                 # Logs added to output
-                print(f"Here is the data structure expected: {data}")
+                if debug:
+                    print(f"Here is the data structure expected: {data}")
                 detail = data["detail"]
                 if all(detail.get(field) is not None for field in ['id', 'object', 'created', 'model', 'choices']):
                     yield UseslessResponse.parse_obj(detail)
             else:
                 # Logs added to output
-                print(f"Here is the data structure expected: {data}")
+                if debug:
+                    print(f"Here is the data structure expected: {data}")
                 if all(data.get(field) is not None for field in ['id', 'object', 'created', 'model', 'choices']):
                     yield UseslessResponse.parse_obj(data)
