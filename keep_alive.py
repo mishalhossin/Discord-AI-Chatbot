@@ -8,7 +8,7 @@ def main():
     return 'I\'m alive!'
 
 def run():
-    app.run(host='0.0.0.0', port=300, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=3000, debug=False, use_reloader=False)
 
 def keep_alive():
     server = Thread(target=run)
