@@ -5,6 +5,7 @@ import asyncio
 import aiohttp
 import discord
 import httpx
+import random  # Used for the status update function.
 from opengpt.models.completion.chatbase.model import Model
 from collections import deque
 from keep_alive import keep_alive
@@ -28,11 +29,14 @@ allow_dm = True
 active_channels = set()
 trigger_words = config['TRIGGER']
 
+statusList = ["Answering your queries", "Solving problems",
+              "Powered by you!", "At your service! <3"]
+
 
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.change_presence(activity=discord.Game(name="At your service! <3"))
+    await bot.change_presence(activity=discord.Game(name=random.choice(statusList)))
     print(f"{bot.user} aka {bot.user.name} has connected to Discord!")
 
     invite_link = discord.utils.oauth_url(
@@ -41,6 +45,15 @@ async def on_ready():
         scopes=("bot", "applications.commands")
     )
     print(f"Invite link: {invite_link}")
+
+    async def statusUpdate():
+        while True:
+            status = random.choice(statusList)
+            await bot.change_presence(activity=discord.Game(name=status))
+            print(f"Status update job ran. New status: {status}")
+            await asyncio.sleep(300)
+
+    bot.loop.create_task(statusUpdate())
 
 # Set up the Chat bot
 
