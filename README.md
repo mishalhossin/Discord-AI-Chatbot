@@ -33,7 +33,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [x] `/ping`: Get a "Pong" response from the bot.
 - [x] `/toggleactive`: Add the current channel to the Active Channel List.
 - [x] `/toggledm`: Toggle if DM chatting should be active or not.
-- [ ] `/bonk`: Clear the bot's memory.
+- [x] `/bonk`: Clear the bot's memory.
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
