@@ -79,7 +79,6 @@ def split_response(response, max_length=1900):
     return chunks
 
 async def search(prompt):
-    internet_access = True  # Assuming internet access is available
     if internet_access:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
@@ -96,7 +95,7 @@ async def search(prompt):
 
         return blob
     else:
-        return "Internet access is not available."
+        return None
 
 api_key = os.environ['HUGGING_FACE_API']
 
