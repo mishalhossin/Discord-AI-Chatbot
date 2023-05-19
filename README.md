@@ -17,6 +17,8 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
 ## Youtube video summary
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/554045b8-bbdd-4b4e-82f5-27f852786d2d)
+## Imagine generation
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/28ef4734-e4c8-4afe-9c72-8a16cbaf521d)
 
 
 # Features ✨
