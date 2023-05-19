@@ -13,3 +13,4 @@ tls-client
 pydantic
 pycryptodome
 PyYAML
+youtube-transcript-api
