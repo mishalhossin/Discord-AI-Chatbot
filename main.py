@@ -261,6 +261,31 @@ async def bonk(ctx):
     message_history.clear()  # Reset the message history dictionary
     await ctx.send("Message history has been cleared!")
 
+@bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
+async def images(ctx, *, prompt):
+    url = "https://imagine.mishal0legit.repl.co"
+    json_data = {"prompt": prompt}
+
+    try:
+        temp_message = await ctx.send("Sending post request to end point...")
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=json_data) as response:
+                if response.status == 200:
+                    gen_img_msg await ctx.send("\nGenerating image....")
+                    data = await response.json()
+                    image_url = data.get("image_url")
+                    if image_url:
+                        await temp_message.edit(content=image_url)
+                        await ctx.reply("Finished Image Generation")
+                    else:
+                        await temp_message.edit(content="An error occurred during image generation.")
+                else:
+                    await temp_message.edit(content="An error occurred with the server request.")
+    except aiohttp.ClientError as e:
+        await temp_message.edit(content=f"An error occurred while sending the request: {str(e)}")
+    except Exception as e:
+        await temp_message.edit(content=f"An error occurred: {str(e)}")
+
 @bot.hybrid_command(name="toggleactive", description="Toggle active channels.")
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
