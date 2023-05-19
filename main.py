@@ -7,6 +7,7 @@ import discord
 import httpx
 from datetime import datetime
 from opengpt.models.completion.usesless.model import Model
+from youtube_transcript_api import YouTubeTranscriptApi
 from collections import deque
 from keep_alive import keep_alive
 from discord import app_commands
@@ -78,6 +79,28 @@ def split_response(response, max_length=1900):
 
     return chunks
 
+async def get_transcript_from_message(message_content):
+    def extract_video_id(message_content):
+        youtube_link_pattern = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')
+        match = youtube_link_pattern.search(message_content)
+        if match:
+            return match.group(6)
+        else:
+            return
+    
+    video_id = extract_video_id(message_content)
+
+    if not video_id:
+        return
+
+    try:
+        transcript = YouTubeTranscriptApi.get_transcript(video_id)
+    except Exception as e:
+        return
+
+    formatted_transcript = "\n".join([f"{entry['start']:.2f} - {entry['text']}" for entry in transcript])
+    return f"[System : Create a summary or any additional information based on the gathered content. Here is the transcript for youtube video that user has sent  :\n\n{formatted_transcript}\n\n\n End of video transcript. Now, please provide a summary or any additional information based on the gathered content.]"
+
 async def search(prompt):
     if internet_access:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -95,7 +118,7 @@ async def search(prompt):
 
         return blob
     else:
-        return "Internet access is not available."
+        return
 
 api_key = os.environ['HUGGING_FACE_API']
 
@@ -144,10 +167,11 @@ MAX_HISTORY = 10
 
 @bot.event
 async def on_message(message):
+    
     if message.author.bot:
       return
     if message.reference and message.reference.resolved.author != bot.user:
-      return  # Ignore replies to messages not from the bot
+      return  # Ignore replies to messages
 
     author_id = str(message.author.id)
     if author_id not in message_history:
@@ -181,8 +205,9 @@ async def on_message(message):
         else:
             bot_prompt = f"{instructions}"
         search_results = await search(message.content)
+        yt_transcript = await get_transcript_from_message(message.content)
         user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{search_results}\n{bot.user.name}:"
+        prompt = f"{user_prompt}\n{bot_prompt}{message.author.name}: {message.content}\n{image_caption}\n{search_results}\n{yt_transcript}\n\n{bot.user.name}:"
         async with message.channel.typing():
             response = await generate_response(prompt)
         message_history[author_id].append(f"\n{bot.user.name} : {response}") 
