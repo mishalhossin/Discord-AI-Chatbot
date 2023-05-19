@@ -23,6 +23,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 # Features ✨
 - [x] Hybrid Command System: Get the best of slash and normal commands. It's like a buffet! ⚙️
+- [x] Imagine generation : Make you imagination come true for free 🤖
 - [x] Free LLM Model: Enjoy the powerful capabilities of this language model without spending a dime. 🤖
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
