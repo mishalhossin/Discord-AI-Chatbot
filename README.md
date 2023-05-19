@@ -1,5 +1,8 @@
-My Discord
---------
+<div align="center">
+  <h2>My Discord</h2>
+  <hr>
+</div>
+
 
 <p align="center">
   <a href="https://discord.com/users/1025245410224263258">
