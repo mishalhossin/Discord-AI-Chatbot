@@ -265,18 +265,21 @@ async def bonk(ctx):
 async def images(ctx, *, prompt):
     url = "https://imagine.mishal0legit.repl.co"
     json_data = {"prompt": prompt}
-
+    
     try:
         temp_message = await ctx.send("Sending post request to end point...")
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=json_data) as response:
                 if response.status == 200:
-                    gen_img_msg await ctx.send("\nGenerating image....")
                     data = await response.json()
                     image_url = data.get("image_url")
+                    image_name = f"{prompt}.jpeg"
                     if image_url:
-                        await temp_message.edit(content=image_url)
-                        await ctx.reply("Finished Image Generation")
+                        await download_image(image_url, image_name)
+                        with open(image_name, 'rb') as file:
+                            await temp_message.edit(content="Finished Image Generation")
+                            await ctx.reply(file=discord.File(file))
+                        os.remove(image_name)
                     else:
                         await temp_message.edit(content="An error occurred during image generation.")
                 else:
