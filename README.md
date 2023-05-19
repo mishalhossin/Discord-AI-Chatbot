@@ -10,11 +10,13 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 # If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
-# Preview 👀
+# Feature review 👀
 ## OCR for images
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 ## Web access using duckduckgo
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
+## Youtube video summary
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/554045b8-bbdd-4b4e-82f5-27f852786d2d)
 
 
 # Features ✨
