@@ -19,6 +19,7 @@ with open('config.json') as config_file:
 
 
 # Set up the Discord bot
+
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
 TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
@@ -27,6 +28,10 @@ TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
 allow_dm = True
 active_channels = set()
 trigger_words = config['TRIGGER']
+
+# Internet access
+
+internet_access = True
 
 @bot.event
 async def on_ready():
@@ -73,6 +78,22 @@ def split_response(response, max_length=1900):
         chunks.append(" ".join(current_chunk))
 
     return chunks
+
+async def search(prompt):
+    if internet_access:
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        search = requests.get('https://ddg-api.herokuapp.com/search', params={
+            'query': prompt,
+            'limit': 3,
+        })
+
+        blob = f"[System:Search results for '{prompt}' at {current_time}:\n\n"
+        for index, result in enumerate(search.json()):
+            blob += f'[{index}] "{result["snippet"]}"\nURL: {result["link"]}\n]'
+
+        return blob
+    else:
+        return "Internet access is not available."
 
 api_key = os.environ['HUGGING_FACE_API']
 
