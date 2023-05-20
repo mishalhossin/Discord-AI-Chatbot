@@ -1,9 +1,11 @@
 import asyncio
+import aiohttp
 
 async def GetAnswer(prompt):
     url = "https://www.kato.to/advancedApi/ai/chat"
     headers = {
-        "content-type": "application/json"
+        "content-type": "application/json",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
     }
     payload = [
         {
