@@ -343,27 +343,29 @@ async def nekos(ctx, category):
                         'smug', 'stare', 'think', 'thumbsup', 'tickle', 'wave', 'wink', 'yeet']
 
     if category not in valid_categories:
-        await ctx.send("Invalid category provided. Valid categories are: ```" + ', '.join(valid_categories)+"```")
+        await ctx.send(f"Invalid category provided. Valid categories are: ```{', '.join(valid_categories)}```")
         return
 
     url = base_url + category
 
-    response = requests.get(url)
-    if response.status_code != 200:
-        await ctx.send("Failed to fetch the image.")
-        return
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status != 200:
+                await ctx.send("Failed to fetch the image.")
+                return
 
-    json_data = response.json()
-    results = json_data.get("results")
-    if not results:
-        await ctx.send("No image found.")
-        return
+            json_data = await response.json()
 
-    image_url = results[0].get("url")
+            results = json_data.get("results")
+            if not results:
+                await ctx.send("No image found.")
+                return
 
-    embed = Embed(colour=Colour.blue())
-    embed.set_image(url=image_url)
-    await ctx.send(embed=embed)
+            image_url = results[0].get("url")
+
+            embed = Embed(colour=Colour.blue())
+            embed.set_image(url=image_url)
+            await ctx.send(embed=embed)
 
 bot.remove_command("help")
 
