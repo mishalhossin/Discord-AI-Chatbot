@@ -101,7 +101,7 @@ async def get_transcript_from_message(message_content):
         return
 
     formatted_transcript = "\n".join([f"{entry['start']:.2f} - {entry['text']}" for entry in transcript])
-    return f"[System : Create a summary or any additional information based on the gathered content. Here is the transcript for youtube video that user has sent  :\n\n{formatted_transcript}\n\n\n End of video transcript. Now, please provide a summary or any additional information based on the gathered content.]"
+    return f"[System : A transcript of User's video is :\n\n{formatted_transcript}\n\n\n End of video transcript. Now, please provide a summary or any additional information based on the gathered content.]"
 
 async def search(prompt):
     if not internet_access:
