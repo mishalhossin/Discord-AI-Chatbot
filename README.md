@@ -1,12 +1,11 @@
-                                                My Discord
------------------------------------------------------------------------------------------------------------------------------
+# Discord-Chat-bot 🤖
+This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `usesless` model from [OpenGPT](https://github.com/uesleibros/OpenGPT) for generating responses based on conversation history.
+
+## My Discord
   <a href="https://discord.com/users/1025245410224263258">
     <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=15%20year%20old%20solo%20dev">
   </a>
 </p>
-
-# Discord-Chat-bot 🤖
-This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `usesless` model from [OpenGPT](https://github.com/uesleibros/OpenGPT) for generating responses based on conversation history.
 
 # If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
