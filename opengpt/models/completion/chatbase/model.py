@@ -4,7 +4,7 @@ import asyncio
 class Model:
     captcha_code = "hadsa"
 
-    async def get_answer(self, prompt: str, model: str = "gpt-4"):
+    async def GetAnswer(self, prompt: str, model: str = "gpt-4"):
         if model == "gpt-4":
             chat_id = "quran---tafseer-saadi-pdf-wbgknt7zn"
         elif model == "gpt-3.5-turbo":
@@ -16,12 +16,6 @@ class Model:
                 "https://www.chatbase.co/api/fe/chat",
                 json={"chatId": chat_id, "captchaCode": self.captcha_code, "messages": messages}
             )
-            result = await response.text()
+            r = await response.text()
 
-        return result
-   
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
-    
+        return r
