@@ -107,7 +107,7 @@ async def search(prompt):
     if not internet_access:
         return
 
-    wh_words = ['who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how']
+    wh_words = ['search','find','who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how']
     first_word = prompt.split()[0].lower()
 
     if not any(first_word.startswith(wh_word) for wh_word in wh_words):
