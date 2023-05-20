@@ -63,19 +63,21 @@ async def generate_response(prompt):
     return response
 
 def split_response(response, max_length=1900):
-    words = response.split()
+    lines = response.splitlines()
     chunks = []
-    current_chunk = []
+    current_chunk = ""
 
-    for word in words:
-        if len(" ".join(current_chunk)) + len(word) + 1 > max_length:
-            chunks.append(" ".join(current_chunk))
-            current_chunk = [word]
+    for line in lines:
+        if len(current_chunk) + len(line) + 1 > max_length:
+            chunks.append(current_chunk.strip())
+            current_chunk = line
         else:
-            current_chunk.append(word)
+            if current_chunk:
+                current_chunk += "\n"
+            current_chunk += line
 
     if current_chunk:
-        chunks.append(" ".join(current_chunk))
+        chunks.append(current_chunk.strip())
 
     return chunks
 
@@ -100,11 +102,6 @@ async def get_transcript_from_message(message_content):
 
     formatted_transcript = "\n".join([f"{entry['start']:.2f} - {entry['text']}" for entry in transcript])
     return f"[System : Create a summary or any additional information based on the gathered content. Here is the transcript for youtube video that user has sent  :\n\n{formatted_transcript}\n\n\n End of video transcript. Now, please provide a summary or any additional information based on the gathered content.]"
-
-
-def md_response(text):
-    modified_text = re.sub(r'(\d\.)', r'\n\1', text)
-    return modified_text
 
 async def search(prompt):
     if not internet_access:
@@ -216,14 +213,14 @@ async def on_message(message):
         yt_transcript = await get_transcript_from_message(message.content)
         user_prompt = "\n".join(message_history[author_id])
         prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n{yt_transcript}\n\n{bot.user.name}:"
-        print(prompt)
         async def generate_response_in_thread(prompt):
             response = await generate_response(prompt)
+            print(response)
             message_history[author_id].append(f"\n{bot.user.name} : {response}")
             chunks = split_response(response)
             print(message_history)
             for chunk in chunks:
-                await message.reply(md_response(chunk))
+                await message.reply(chunk)
         async with message.channel.typing():
             asyncio.create_task(generate_response_in_thread(prompt))
             
