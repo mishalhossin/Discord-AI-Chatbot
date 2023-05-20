@@ -38,14 +38,13 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [ ] Speech recognition : Coming soon! Get ready to for a LLM powered voice assistant
 
 ## Commands ⚙️⚙️
-- [x] `/pfp [image_url]`: Change the bot's profile picture.
+- [x] `/pfp [image_url]`: Change the bot's actual profile picture.
 - [x] `/changeusr [new_username]`: Change the bot's username.
 - [x] `/ping`: Get a "Pong" response from the bot.
 - [x] `/toggleactive`: Toggle active channels.
 - [x] `/toggledm`: Toggle DM for chatting.
 - [x] `/bonk`: Clear the message history.
 - [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.
-- [x] `/changeusr`: Change the bot's actual username.
 - [x] `/help`: Get all other commands.
 - [x] `/imagine`: Generate image using an endpoint.
 
