@@ -121,7 +121,7 @@ async def search(prompt):
 
     blob = f"[System: Search results for '{prompt}' at {current_time}:\n\n"
     for index, result in enumerate(search):
-        blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n\nPlease note that the user does not have access to the URLs; only you can provide the link.\n]'
+        blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n\nThese links were provided by system not the user so you have send the link to the user\n]'
     return blob
 
 
