@@ -141,6 +141,8 @@ async def fetch_response(client, api_url, data):
     
     return response.json()
 
+
+
 async def query(filename):
     with open(filename, "rb") as f:
         data = f.read()
@@ -270,29 +272,35 @@ async def bonk(ctx):
     message_history.clear()  # Reset the message history dictionary
     await ctx.send("Message history has been cleared!")
 
+from discord import Embed, Colour
+
 @bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
 async def images(ctx, *, prompt):
     url = "https://imagine.mishal0legit.repl.co"
     json_data = {"prompt": prompt}
-    
+
     try:
-        temp_message = await ctx.send("Sending post request to end point...")
+        temp_message = await ctx.send("Generating image avg: 6 seconds")
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=json_data) as response:
                 if response.status == 200:
                     data = await response.json()
                     image_url = data.get("image_url")
-                    image_name = f"{prompt}.jpeg"
                     if image_url:
-                        await download_image(image_url, image_name)
+                        image_name = f"{prompt}.jpeg"
+                        await download_image(image_url, image_name)  # Assuming you have a download_image function defined
                         with open(image_name, 'rb') as file:
-                            await temp_message.edit(content="Finished Image Generation")
-                            await ctx.reply(file=discord.File(file))
+                            
+                            await ctx.send(
+                                f"Prompt by {ctx.author.mention} : `{prompt}\n\n`",
+                                file=discord.File(file, filename=f"{image_name}")
+                            )
+                        await temp_message.edit(content="Finished Image Generation")
                         os.remove(image_name)
                     else:
                         await temp_message.edit(content="An error occurred during image generation.")
                 else:
-                    await temp_message.edit(content="An error occurred with the server request.")
+                    await temp_message.edit(content="Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system.")
     except aiohttp.ClientError as e:
         await temp_message.edit(content=f"An error occurred while sending the request: {str(e)}")
     except Exception as e:
