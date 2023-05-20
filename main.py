@@ -331,6 +331,40 @@ if os.path.exists("channels.txt"):
             channel_id = int(line.strip())
             active_channels.add(channel_id)
 
+@bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
+async def nekos(ctx, category):
+    base_url = "https://nekos.best/api/v2/"
+
+    valid_categories = ['husbando', 'kitsune', 'neko', 'waifu',
+                        'baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance',
+                        'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug',
+                        'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke',
+                        'pout', 'punch', 'shoot', 'shrug', 'slap', 'sleep', 'smile',
+                        'smug', 'stare', 'think', 'thumbsup', 'tickle', 'wave', 'wink', 'yeet']
+
+    if category not in valid_categories:
+        await ctx.send("Invalid category provided. Valid categories are: ```" + ', '.join(valid_categories)+"```")
+        return
+
+    url = base_url + category
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        await ctx.send("Failed to fetch the image.")
+        return
+
+    json_data = response.json()
+    results = json_data.get("results")
+    if not results:
+        await ctx.send("No image found.")
+        return
+
+    image_url = results[0].get("url")
+
+    embed = Embed(colour=Colour.blue())
+    embed.set_image(url=image_url)
+    await ctx.send(embed=embed)
+
 bot.remove_command("help")
 
 @bot.hybrid_command(name="help", description="Get all other commands!")
