@@ -278,7 +278,6 @@ from discord import Embed, Colour
 async def images(ctx, *, prompt):
     url = "https://imagine.mishal0legit.repl.co"
     json_data = {"prompt": prompt}
-
     try:
         temp_message = await ctx.send("Generating image avg: 6 seconds")
         async with aiohttp.ClientSession() as session:
@@ -292,7 +291,7 @@ async def images(ctx, *, prompt):
                         with open(image_name, 'rb') as file:
                             
                             await ctx.send(
-                                f"Prompt by {ctx.author.mention} : `{prompt}\n\n`",
+                                f"Prompt by {ctx.author.mention} : `{prompt}`",
                                 file=discord.File(file, filename=f"{image_name}")
                             )
                         await temp_message.edit(content="Finished Image Generation")
