@@ -7,7 +7,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
   </a>
 </p>
 
-##### If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
+#### If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
 <details>
 <summary><strong>Feature Showcase 👀 (all for free btw)</strong></summary>
