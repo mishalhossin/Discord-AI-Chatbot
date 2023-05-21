@@ -8,8 +8,8 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 </p>
 
 # If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
-
-# Feature showcase 👀 (all for free btw)
+<details>
+<summary><strong>Feature showcase 👀 (all for free btw)</strong></summary>
 ## Imagine generation using DALL-E
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/0aa3fc13-8023-47fe-b21c-3066d4ecc817)
 ## OCR for images (Needs hugging face api key)
@@ -18,26 +18,31 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
 ## Youtube video summary
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/554045b8-bbdd-4b4e-82f5-27f852786d2d)
+</details>
 
 
 
+<details>
+<summary><strong>Features ✨</strong></summary>
 
-# Features ✨
 - [x] Hybrid Command System: Get the best of slash and normal commands. It's like a buffet! ⚙️
-- [x] Imagine generation : Make you imagination come true for free 🤖
+- [x] Imagine generation: Make your imagination come true for free 🤖
 - [x] Free LLM Model: Enjoy the powerful capabilities of this language model without spending a dime. 🤖
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
 - [x] GPT-3.5-Turbo Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-Turbo language model. 🤖
-- [x] Image Detection Model: The bot can detect objects and text in images with a OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
+- [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Crafted with Care: Made with lots of love and attention to detail. ❤️
-- [x] Web Access : Web Access is now available! Unlock a whole new level of awesomeness. 🌐
-- [x] YouTube Video Summarizer : This is a a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
-- [ ] Speech recognition : Coming soon! Get ready to for a LLM powered voice assistant
+- [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
+- [x] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
+- [ ] Speech recognition: Coming soon! Get ready for an LLM-powered voice assistant.
 
-## Commands ⚙️⚙️
+</details>
+
+<details>
+<summary><strong>Commands ⚙️⚙️</strong></summary>
 - [x] `/pfp [image_url]`: Change the bot's actual profile picture.
 - [x] `/changeusr [new_username]`: Change the bot's username.
 - [x] `/ping`: Get a "Pong" response from the bot.
@@ -47,6 +52,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.
 - [x] `/help`: Get all other commands.
 - [x] `/imagine`: Generate image using an endpoint.
+</details>
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
