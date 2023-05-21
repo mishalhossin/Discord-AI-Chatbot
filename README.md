@@ -123,7 +123,8 @@ python main.py
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/2898567b-7d8a-422d-93e2-a4b3bec0ff18)
 
 
-### Using docker to run :whale:
+### Using docker to run
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 - Have a working bot token
 - Follow up-to step 5
 #### Install docker compose on linux machine :
