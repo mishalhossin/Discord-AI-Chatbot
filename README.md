@@ -9,7 +9,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 # If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
-# Feature showcase 👀
+# Feature showcase 👀 (all for free btw)
 ## Imagine generation using DALL-E
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/0aa3fc13-8023-47fe-b21c-3066d4ecc817)
 ## OCR for images (Good for text not symbols)
