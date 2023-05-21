@@ -1,5 +1,4 @@
 # Discord-Chat-bot 🤖
-[Uptime Robot Stats](https://stats.uptimerobot.com/7yYPVszB3q)
 This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `text-davinci-003` model from [Dalle-GPT3-Endpoint](https://github.com/mishalhossin/Dalle-GPT3-endpoint) for generating responses based on conversation history.
 
 ## My Discord
