@@ -6,7 +6,7 @@ This is a Python-based Discord chat bot that uses the discord.py library. It can
 The bot has various features, including image generation using DALL-E, OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
 
 
-##### Dall-e Image generation endpoint status :
+##### Dall-e Image generation free endpoint status :
 <a href="https://imagine.mishal0legit.repl.co">
   <img src="https://img.shields.io/website?down_message=Aww%20man%20its%20down&label=endpoint&style=for-the-badge&up_message=Up%20and%20running&url=https%3A%2F%2Fimagine.mishal0legit.repl.co" alt="Endpoint Status">
 </a>
