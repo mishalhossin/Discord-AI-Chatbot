@@ -117,5 +117,3 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 ```
 sudo docker-compose up --build
 ```
-
-######[ You may join my discord](https://discord.gg/AvPpJKNWYA)
