@@ -132,3 +132,9 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 ```
 sudo docker-compose up --build
 ```
+
+### Contributors
+
+<a href="https://github.com/mishalhossin/Discord-AI-Chatbot/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=mishalhossin/Discord-AI-Chatbot" />
+</a>
