@@ -7,17 +7,23 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
   </a>
 </p>
 
-# If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
+##### If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
+
 <details>
-<summary><strong>Feature showcase 👀 (all for free btw)</strong></summary>
+<summary><strong>Feature Showcase 👀 (all for free btw)</strong></summary>
+
 ## Imagine generation using DALL-E
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/0aa3fc13-8023-47fe-b21c-3066d4ecc817)
-## OCR for images (Needs hugging face api key)
+
+## OCR for images (Needs Hugging Face API key)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
-## Web access using duckduckgo
+
+## Web access using DuckDuckGo
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
-## Youtube video summary
+
+## YouTube video summary
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/554045b8-bbdd-4b4e-82f5-27f852786d2d)
+
 </details>
 
 
