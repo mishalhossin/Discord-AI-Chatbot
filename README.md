@@ -1,5 +1,10 @@
 # Discord-Chat-bot 🤖
-This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `chatbase` model from [OpenGPT](https://github.com/uesleibros/OpenGPT) for generating responses based on conversation history.
+
+
+This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, change its profile picture, and provide latency information. It also utilizes the `chatbase` model from [OpenGPT](https://github.com/uesleibros/OpenGPT) for generating responses based on conversation history.
+
+The bot has various features, including image generation using DALL-E, OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
+
 
 ##### Dall-e Image generation endpoint status :
 <a href="https://imagine.mishal0legit.repl.co">
