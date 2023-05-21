@@ -94,7 +94,7 @@ async def get_transcript_from_message(message_content):
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
     formatted_transcript = ". ".join([entry['text'] for entry in transcript])
     formatted_transcript = formatted_transcript[:1936]
-    response = f"[System: Summarize the following in 20 bullet points:\n\n{formatted_transcript}\n\n\n. Provide a summary or additional information based on the content.]"
+    response = f"[System: Summarize the following in 14 bullet points:\n\n{formatted_transcript}\n\n\n. Provide a summary or additional information based on the content.]"
 
     return response
 
