@@ -43,6 +43,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 <details>
 <summary><strong>Commands ⚙️⚙️</strong></summary>
+
 - [x] `/pfp [image_url]`: Change the bot's actual profile picture.
 - [x] `/changeusr [new_username]`: Change the bot's username.
 - [x] `/ping`: Get a "Pong" response from the bot.
@@ -51,8 +52,10 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 - [x] `/bonk`: Clear the message history.
 - [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.
 - [x] `/help`: Get all other commands.
-- [x] `/imagine`: Generate image using an endpoint.
+- [x] `/imagine`: Generate an image using an endpoint.
+
 </details>
+
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
