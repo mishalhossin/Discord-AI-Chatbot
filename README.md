@@ -2,7 +2,9 @@
 This is a [Python](https://www.python.org)-based Discord bot using the `discord.py` library. The bot responds to messages, can change its profile picture, and provide latency information. Additionally, it uses the `chatbase` model from [OpenGPT](https://github.com/uesleibros/OpenGPT) for generating responses based on conversation history.
 
 ##### Dall-e Image generation endpoint status :
-![image](https://img.shields.io/website?down_message=Aww%20man%20its%20down&label=endpoint&style=for-the-badge&up_message=Up%20and%20running&url=https%3A%2F%2Fimagine.mishal0legit.repl.co)
+<a href="https://imagine.mishal0legit.repl.co">
+  <img src="https://img.shields.io/website?down_message=Aww%20man%20its%20down&label=endpoint&style=for-the-badge&up_message=Up%20and%20running&url=https%3A%2F%2Fimagine.mishal0legit.repl.co" alt="Endpoint Status">
+</a>
 
 ## My Discord
   <a href="https://discord.com/users/1025245410224263258">
