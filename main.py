@@ -88,19 +88,20 @@ async def get_transcript_from_message(message_content):
         if match:
             return match.group(6)
         else:
-            return
-    
+            return None
+
     video_id = extract_video_id(message_content)
 
     if not video_id:
-        return
+        return None
 
     try:
         transcript = YouTubeTranscriptApi.get_transcript(video_id)
     except Exception as e:
-        return
+        return None
 
-    formatted_transcript = "\n".join([f"{entry['start']:.2f} - {entry['text']}" for entry in transcript])
+    formatted_transcript = ". ".join([entry['text'] for entry in transcript])
+    
     return f"[System : Summarize the following in 10 bullet points :\n\n{formatted_transcript}\n\n\n End of video transcript. Now, please provide a summary or any additional information based on the gathered content.]"
 
 async def search(prompt):
@@ -170,7 +171,7 @@ async def process_image_link(image_url):
 
 
 message_history = {}
-MAX_HISTORY = 10
+MAX_HISTORY = 8
 
 @bot.event
 async def on_message(message):
@@ -262,50 +263,14 @@ async def changeusr(ctx, new_username):
         await ctx.send("".join(e.text.split(":")[1:]))
 
 @bot.hybrid_command(name="toggledm", description="Toggle DM for chatting.")
+@commands.has_permissions(administrator=True)
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
     await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
 
-@bot.hybrid_command(name="bonk", description="Clear message history.")
-async def bonk(ctx):
-    message_history.clear()  # Reset the message history dictionary
-    await ctx.send("Message history has been cleared!")
-
-from discord import Embed, Colour
-
-@bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
-async def images(ctx, *, prompt):
-    url = "https://imagine.mishal0legit.repl.co"
-    json_data = {"prompt": prompt}
-    try:
-        temp_message = await ctx.send("Generating image avg: 6 seconds")
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=json_data) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    image_url = data.get("image_url")
-                    if image_url:
-                        image_name = f"{prompt}.jpeg"
-                        await download_image(image_url, image_name)  # Assuming you have a download_image function defined
-                        with open(image_name, 'rb') as file:
-                            
-                            await ctx.send(
-                                f"Prompt by {ctx.author.mention} : `{prompt}`",
-                                file=discord.File(file, filename=f"{image_name}")
-                            )
-                        await temp_message.edit(content="Finished Image Generation")
-                        os.remove(image_name)
-                    else:
-                        await temp_message.edit(content="An error occurred during image generation.")
-                else:
-                    await temp_message.edit(content="Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system.")
-    except aiohttp.ClientError as e:
-        await temp_message.edit(content=f"An error occurred while sending the request: {str(e)}")
-    except Exception as e:
-        await temp_message.edit(content=f"An error occurred: {str(e)}")
-
 @bot.hybrid_command(name="toggleactive", description="Toggle active channels.")
+@commands.has_permissions(administrator=True)
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
     if channel_id in active_channels:
@@ -329,6 +294,46 @@ if os.path.exists("channels.txt"):
         for line in f:
             channel_id = int(line.strip())
             active_channels.add(channel_id)
+            
+            
+@bot.hybrid_command(name="bonk", description="Clear message history.")
+async def bonk(ctx):
+    message_history.clear()  # Reset the message history dictionary
+    await ctx.send("Message history has been cleared!")
+
+from discord import Embed, Colour
+
+@bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
+async def images(ctx, *, prompt):
+    url = "https://imagine.mishal0legit.repl.co"
+    json_data = {"prompt": prompt}
+    try:
+        temp_message = await ctx.send("Generating image avg: 6 seconds")
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=json_data) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    image_url = data.get("image_url")
+                    if image_url:
+                        image_name = f"{prompt}.jpeg"
+                        await download_image(image_url, image_name)
+                        with open(image_name, 'rb') as file:
+                            
+                            await ctx.send(
+                                f"Prompt by {ctx.author.mention} : `{prompt}`",
+                                file=discord.File(file, filename=f"{image_name}")
+                            )
+                        await temp_message.edit(content="Finished Image Generation")
+                        os.remove(image_name)
+                    else:
+                        await temp_message.edit(content="An error occurred during image generation.")
+                else:
+                    await temp_message.edit(content="Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system.")
+    except aiohttp.ClientError as e:
+        await temp_message.edit(content=f"An error occurred while sending the request: {str(e)}")
+    except Exception as e:
+        await temp_message.edit(content=f"An error occurred: {str(e)}")
+
 
 @bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
 async def nekos(ctx, category):
@@ -382,7 +387,14 @@ async def help(ctx):
     embed.set_footer(text="Created by Mishal#1916")
 
     await ctx.send(embed=embed)
-            
+
+    
+    
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You do not have permission to use this command.")
+    
 keep_alive()
 
 bot.run(TOKEN)
