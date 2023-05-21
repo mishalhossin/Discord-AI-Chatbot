@@ -26,8 +26,8 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 
 </details>
 
-
-
+#### Dall-e Image generation endpoint status
+![image](https://img.shields.io/website?down_message=Aww%20man%20its%20down&style=for-the-badge&up_message=Up%20and%20running&url=https%3A%2F%2Fimagine.mishal0legit.repl.co)
 <details>
 <summary><strong>Features ✨</strong></summary>
 
