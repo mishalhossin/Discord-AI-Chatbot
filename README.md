@@ -48,7 +48,6 @@ The bot has various features, including image generation using DALL-E, OCR for i
 - [x] GPT-3.5-Turbo Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-Turbo language model. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
-- [x] Crafted with Care: Made with lots of love and attention to detail. ❤️
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
 - [x] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
 - [ ] Speech recognition: Coming soon! Get ready for an LLM-powered voice assistant.
