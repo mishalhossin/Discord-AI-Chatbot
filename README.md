@@ -12,7 +12,7 @@ This is a [Python](https://www.python.org)-based Discord bot using the `discord.
 <details>
 <summary><strong>Feature Showcase 👀 (all for free btw)</strong></summary>
 
-## Imagine generation using DALL-E
+## Image generation using DALL-E
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/0aa3fc13-8023-47fe-b21c-3066d4ecc817)
 
 ## OCR for images (Needs Hugging Face API key)
