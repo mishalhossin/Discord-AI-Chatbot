@@ -118,4 +118,4 @@ apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install do
 sudo docker-compose up --build
 ```
 
-###### Want to run as selfbot ? then check this out: [SELF-GPT](https://github.com/mishalhossin/Self-AI-Chatbot)
+######[ You may join my discord](https://discord.gg/AvPpJKNWYA)
