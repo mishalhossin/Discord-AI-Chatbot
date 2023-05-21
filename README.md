@@ -110,7 +110,7 @@ python main.py
 
 # ✨✨✨  Other ways to run ✨✨✨
 ### Using replit to run ☁️
-# [![Try on repl.it](https://repl-badge.jajoosam.repl.co/try.png)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
+# [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
 
 - Follow all the steps except `step 1`
 - Have a replit account
