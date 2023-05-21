@@ -85,24 +85,17 @@ async def get_transcript_from_message(message_content):
     def extract_video_id(message_content):
         youtube_link_pattern = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')
         match = youtube_link_pattern.search(message_content)
-        if match:
-            return match.group(6)
-        else:
-            return None
+        return match.group(6) if match else None
 
     video_id = extract_video_id(message_content)
-
     if not video_id:
         return None
 
     try:
         transcript = YouTubeTranscriptApi.get_transcript(video_id)
-    except Exception as e:
-        return None
-
-    formatted_transcript = ". ".join([entry['text'] for entry in transcript])
-    
-    return f"[System : Summarize the following in 10 bullet points :\n\n{formatted_transcript}\n\n\n End of video transcript. Now, please provide a summary or any additional information based on the gathered content.]"
+        formatted_transcript = ". ".join([entry['text'] for entry in transcript])
+        formatted_transcript = formatted_transcript[:1936]
+        return f"[System: Summarize the following in 20 bullet points:\n\n{formatted_transcript}\n\n\n. Provide a summary or additional information based on the content.]"
 
 async def search(prompt):
     if not internet_access:
@@ -215,7 +208,10 @@ async def on_message(message):
         search_results = await search(message.content)
         yt_transcript = await get_transcript_from_message(message.content)
         user_prompt = "\n".join(message_history[author_id])
-        prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n{yt_transcript}\n\n{bot.user.name}:"
+        if yt_transcript is not None:
+            prompt = f"{yt_transcript}"
+        else:
+            prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n\n{bot.user.name}:"
         async def generate_response_in_thread(prompt):
             response = await generate_response(prompt)
             print(response)
