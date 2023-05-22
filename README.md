@@ -75,10 +75,16 @@ The bot has various features, including image generation using DALL-E, OCR for i
 ```
 git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 ```
+
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/a5137a58-bc0f-4eea-9927-33d9c0b45a73)
+
 ### Step 2. 📁 Changing directory to cloned directory
 ```
 cd Discord-AI-Chatbot
 ```
+
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/91af0ef7-0baf-461c-abb9-c715b299615c)
+
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [HERE](https://discord.com/developers/applications)
 <details>
 <summary><strong>More info... ⚠️</strong></summary>
@@ -107,10 +113,18 @@ DISCORD_TOKEN=token_from_step_3
 ```
 pip install -r requirements.txt
 ```
+
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/30e9b521-299c-4ff2-b21b-febb965fdc0a)
+
+
 ### Step 7. 🚀 Run the bot
 ```
 python main.py
 ```
+
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/e2b5711d-57a9-4f45-8790-2556c46586f4)
+
+
 ### Step 8. Invite the bot
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
 
