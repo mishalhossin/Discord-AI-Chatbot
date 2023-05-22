@@ -146,3 +146,5 @@ sudo docker-compose up --build
 <a href="https://github.com/mishalhossin/Discord-AI-Chatbot/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=mishalhossin/Discord-AI-Chatbot" />
 </a>
+
+### Crafted with Care: Made with lots of love and attention to detail. ❤️
