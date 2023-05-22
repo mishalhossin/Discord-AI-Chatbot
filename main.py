@@ -121,7 +121,7 @@ async def search(prompt):
     return blob
 
 
-api_key = os.environ['HUGGING_FACE_API']
+api_key = os.getenv('HUGGING_FACE_API')
 
 API_URLS = [
     "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed",
@@ -131,10 +131,10 @@ headers = {"Authorization": f"Bearer {api_key}"}
 
 async def fetch_response(client, api_url, data):
     response = await client.post(api_url, headers=headers, data=data, timeout=30)
-    
+
     if response.status_code != 200:
         raise Exception(f"API request failed with status code {response.status_code}: {response.text}")
-    
+
     return response.json()
 
 
@@ -170,7 +170,7 @@ MAX_HISTORY = 8
 
 @bot.event
 async def on_message(message):
-    
+
     if message.author.bot:
       return
     if message.reference and message.reference.resolved.author != bot.user:
@@ -190,7 +190,7 @@ async def on_message(message):
     contains_trigger_word = any(word in message.content for word in trigger_words)
     is_bot_mentioned = bot.user.mentioned_in(message)
     bot_name_in_message = bot.user.name.lower() in message.content.lower()
-    
+
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
         has_image = False
         image_caption = ""
@@ -224,7 +224,7 @@ async def on_message(message):
                 await message.reply(chunk)
         async with message.channel.typing():
             asyncio.create_task(generate_response_in_thread(prompt))
-            
+
 
 
 @bot.hybrid_command(name="pfp", description="Change pfp using a image url")
@@ -254,7 +254,7 @@ async def changeusr(ctx, new_username):
         return
     if new_username == "":
         await ctx.send("Please send a different username, which is not in use.")
-        return 
+        return
     try:
         await bot.user.edit(username=new_username)
     except discord.errors.HTTPException as e:
@@ -292,8 +292,8 @@ if os.path.exists("channels.txt"):
         for line in f:
             channel_id = int(line.strip())
             active_channels.add(channel_id)
-            
-            
+
+
 @bot.hybrid_command(name="bonk", description="Clear message history.")
 async def bonk(ctx):
     message_history.clear()  # Reset the message history dictionary
@@ -315,7 +315,7 @@ async def images(ctx, *, prompt):
                         image_name = f"{prompt}.jpeg"
                         await download_image(image_url, image_name)
                         with open(image_name, 'rb') as file:
-                            
+
                             await ctx.send(
                                 f"Prompt by {ctx.author.mention} : `{prompt}`",
                                 file=discord.File(file, filename=f"{image_name}")
@@ -380,18 +380,18 @@ async def help(ctx):
             continue
         command_description = command.description or "No description available"
         embed.add_field(name=command.name, value=command_description, inline=False)
-    
+
     embed.set_footer(text="Created by Mishal#1916")
 
     await ctx.send(embed=embed)
 
-    
-    
+
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("You do not have permission to use this command.")
-    
+
 keep_alive()
 
 bot.run(TOKEN)
