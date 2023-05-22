@@ -302,7 +302,7 @@ async def bonk(ctx):
 
 @bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
 async def images(ctx, *, prompt):
-    url = "https://dalle-endpoint.zapto.org/image"
+    url = "https://imagine.mishal0legit.repl.co/image"
     json_data = {"prompt": prompt}
     try:
         temp_message = await ctx.send("Generating image avg: 3 seconds")
