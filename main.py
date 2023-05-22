@@ -11,6 +11,7 @@ from opengpt.models.completion.chatbase.model import Model as Model2
 from youtube_transcript_api import YouTubeTranscriptApi
 from collections import deque
 from keep_alive import keep_alive
+from discord import Embed, Colour
 from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -298,7 +299,6 @@ async def bonk(ctx):
     message_history.clear()  # Reset the message history dictionary
     await ctx.send("Message history has been cleared!")
 
-from discord import Embed, Colour
 
 @bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
 async def images(ctx, *, prompt):
