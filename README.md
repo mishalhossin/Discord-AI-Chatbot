@@ -81,7 +81,9 @@ cd Discord-AI-Chatbot
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [HERE](https://discord.com/developers/applications)
 <details>
-<summary><strong>More info...</strong></summary>
+<summary><strong>More info... ⚠️</strong></summary>
+
+
 ##### Select [application](https://discord.com/developers/applications)
 ![image](https://user-images.githubusercontent.com/91066601/235554871-a5f98345-4197-4b55-91d7-1aef0d0680f0.png)
 
