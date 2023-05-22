@@ -302,10 +302,10 @@ from discord import Embed, Colour
 
 @bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
 async def images(ctx, *, prompt):
-    url = "https://imagine.mishal0legit.repl.co/image"
+    url = "https://dalle-endpoint.zapto.org/image"
     json_data = {"prompt": prompt}
     try:
-        temp_message = await ctx.send("Generating image avg: 6 seconds")
+        temp_message = await ctx.send("Generating image avg: 3 seconds")
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=json_data) as response:
                 if response.status == 200:
