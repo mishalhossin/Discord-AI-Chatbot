@@ -166,6 +166,7 @@ sudo zypper update -y && sudo zypper install -y docker-compose
 ```
 
 </details>
+
 #### Start the bot in docker container :
 
 ```
