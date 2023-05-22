@@ -3,8 +3,11 @@ import re
 import json
 import asyncio
 import aiohttp
+import aiofiles
+import urllib.parse
 import discord
 import httpx
+import random
 from datetime import datetime
 from opengpt.models.completion.usesless.model import Model
 from opengpt.models.completion.chatbase.model import Model as Model2
@@ -300,36 +303,40 @@ async def bonk(ctx):
     await ctx.send("Message history has been cleared!")
 
 
-@bot.hybrid_command(name="imagine", description="Generate image using an endpoint")
-async def images(ctx, *, prompt):
-    url = "https://imagine.mishal0legit.repl.co/image"
-    json_data = {"prompt": prompt}
-    try:
-        temp_message = await ctx.send("Generating image avg: 3 seconds")
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=json_data) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    image_url = data.get("image_url")
-                    if image_url:
-                        image_name = f"{prompt}.jpeg"
-                        await download_image(image_url, image_name)
-                        with open(image_name, 'rb') as file:
+@bot.hybrid_command(name="imagine", description="Generate image using pollinations")
+async def imagine(ctx, *, prompt: str):
+    encoded_prompt = urllib.parse.quote(prompt)
+    images = []
 
-                            await ctx.send(
-                                f"Prompt by {ctx.author.mention} : `{prompt}`",
-                                file=discord.File(file, filename=f"{image_name}")
-                            )
-                        await temp_message.edit(content="Finished Image Generation")
-                        os.remove(image_name)
-                    else:
-                        await temp_message.edit(content="An error occurred during image generation.")
-                else:
-                    await temp_message.edit(content="Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system.")
-    except aiohttp.ClientError as e:
-        await temp_message.edit(content=f"An error occurred while sending the request: {str(e)}")
-    except Exception as e:
-        await temp_message.edit(content=f"An error occurred: {str(e)}")
+    temp_message = await ctx.send("Generating images...")
+    i = 0
+    while len(images) < 4:
+        seed = random.randint(1, 100000)  # Generate a random seed
+        image_url = f'https://image.pollinations.ai/prompt/{encoded_prompt}{seed}'
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(image_url) as response:
+                try:
+                    image_data = await response.read()
+                    filename = f'{ctx.author.id}_{ctx.message.id}_{i}.png'
+
+                    async with aiofiles.open(filename, 'wb') as f:
+                        await f.write(image_data)
+
+                    images.append(filename)
+                    i += 1
+                except (aiohttp.ClientError, ValueError, KeyError) as e:
+                    print(f"Error generating image: {e}")
+
+    await temp_message.edit(content="Finished Image Generation for {ctx.author.mention} with prompt : `{prompt}` ")
+
+    if images:
+        image_files = [discord.File(image) for image in images]
+        await ctx.send(files=image_files)
+        for image in image_files:
+            os.remove(image.filename)
+    else:
+        await ctx.send("Error generating images. Please try again later.")
 
 
 @bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
