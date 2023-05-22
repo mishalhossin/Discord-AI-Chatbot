@@ -144,9 +144,28 @@ python main.py
 - Have a working bot token
 - Follow up-to step 5
 #### Install docker compose on linux machine :
+For Debian-based distributions (such as Ubuntu):
 ```
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
 ```
+<details>
+<summary><strong>Other linux distro</strong></summary>
+  
+ 
+For Red Hat-based distributions (such as CentOS and Fedora):
+```
+sudo yum update -y && sudo yum install -y docker-compose
+```
+For Arch-based distributions (such as Arch Linux):
+```
+sudo pacman -Syu --noconfirm && sudo pacman -S --noconfirm docker-compose
+```
+For SUSE-based distributions (such as openSUSE):
+```
+sudo zypper update -y && sudo zypper install -y docker-compose
+```
+
+</details>
 #### Start the bot in docker container :
 
 ```
