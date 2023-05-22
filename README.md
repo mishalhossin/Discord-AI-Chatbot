@@ -80,7 +80,17 @@ git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 cd Discord-AI-Chatbot
 ```
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [HERE](https://discord.com/developers/applications)
-## [For more info click here](https://github.com/mishalhossin/Discord-Chatbot-Gpt4Free/blob/main/discord_token.md#select-application) ⚠⚠️ IMPORTANT ⚠️⚠
+<details>
+<summary><strong>More info...</strong></summary>
+##### Select [application](https://discord.com/developers/applications)
+![image](https://user-images.githubusercontent.com/91066601/235554871-a5f98345-4197-4b55-91d7-1aef0d0680f0.png)
+
+##### Enable intents
+![image](https://user-images.githubusercontent.com/91066601/235555012-e8427bfe-cffc-4761-bbc0-d1467ca1ff4d.png)
+
+##### Get the token !!! by clicking copy
+![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
+</details>
 
 ### Step 4. 🔑 Get hugging face Access Tokens from [HEREE](https://huggingface.co/settings/tokens)
 ## Read or Write it dosent matter (I use Write)
