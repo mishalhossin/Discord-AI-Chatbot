@@ -328,7 +328,7 @@ async def imagine(ctx, *, prompt: str):
                 except (aiohttp.ClientError, ValueError, KeyError) as e:
                     print(f"Error generating image: {e}")
 
-    await temp_message.edit(content="Finished Image Generation for {ctx.author.mention} with prompt : `{prompt}` ")
+    await temp_message.edit(content=f"Finished Image Generation for {ctx.author.mention} with prompt : `{prompt}` ")
 
     if images:
         image_files = [discord.File(image) for image in images]
