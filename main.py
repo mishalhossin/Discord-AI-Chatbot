@@ -1,13 +1,14 @@
 import os
 import re
 import json
+import uuid
 import asyncio
 import aiohttp
 import aiofiles
 import urllib.parse
 import discord
 import httpx
-import random
+from imaginepy import Imagine, Style, Ratio
 from datetime import datetime
 from opengpt.models.completion.usesless.model import Model
 from opengpt.models.completion.chatbase.model import Model as Model2
@@ -15,7 +16,6 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from collections import deque
 from keep_alive import keep_alive
 from discord import Embed, Colour
-from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -132,6 +132,29 @@ API_URLS = [
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
 
+
+
+def generate_image(image_prompt):
+    imagine = Imagine()
+    filename = str(uuid.uuid4()) + ".png"
+    img_data = imagine.sdprem(
+        prompt=image_prompt,
+        style=Style.ANIME_V2,
+        ratio=Ratio.RATIO_16X9
+    )
+    if img_data is None:
+        print("An error occurred while generating the image.")
+        return
+
+    try:
+        with open(filename, mode="wb") as img_file:
+            img_file.write(img_data)
+    except Exception as e:
+        print(f"An error occurred while writing the image to file: {e}")
+        return None
+
+    return filename
+
 async def fetch_response(client, api_url, data):
     response = await client.post(api_url, headers=headers, data=data, timeout=30)
 
@@ -219,8 +242,10 @@ async def on_message(message):
             prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n\n{bot.user.name}:"
         async def generate_response_in_thread(prompt):
             response = await generate_response(prompt)
+            print(response)
             message_history[author_id].append(f"\n{bot.user.name} : {response}")
             chunks = split_response(response)
+            print(message_history)
             for chunk in chunks:
                 await message.reply(chunk)
         async with message.channel.typing():
@@ -301,41 +326,13 @@ async def bonk(ctx):
     await ctx.send("Message history has been cleared!")
 
 
-@bot.hybrid_command(name="imagine", description="Generate image using pollinations")
+@bot.hybrid_command(name="imagine", description="Generate image")
 async def imagine(ctx, *, prompt: str):
-    encoded_prompt = urllib.parse.quote(prompt)
-    images = []
-
-    temp_message = await ctx.send("Generating images...")
-    i = 0
-    while len(images) < 4:
-        seed = random.randint(1, 100000)  # Generate a random seed
-        image_url = f'https://image.pollinations.ai/prompt/{encoded_prompt}{seed}'
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(image_url) as response:
-                try:
-                    image_data = await response.read()
-                    filename = f'{ctx.author.id}_{ctx.message.id}_{i}.png'
-
-                    async with aiofiles.open(filename, 'wb') as f:
-                        await f.write(image_data)
-
-                    images.append(filename)
-                    i += 1
-                except (aiohttp.ClientError, ValueError, KeyError) as e:
-                    print(f"Error generating image: {e}")
-
-    await temp_message.edit(content=f"Finished Image Generation for {ctx.author.mention} with prompt : `{prompt}` ")
-
-    if images:
-        image_files = [discord.File(image) for image in images]
-        await ctx.send(files=image_files)
-        for image in image_files:
-            os.remove(image.filename)
-    else:
-        await ctx.send("Error generating images. Please try again later.")
-
+    temp_message = await ctx.send("Generating image...")
+    filename = generate_image(prompt)
+    await ctx.send(file=discord.File(filename))
+    os.remove(filename)
+    await temp_message.edit(content=f"Finished Image Generation for {ctx.author.mention} with prompt: `{prompt}`")
 
 @bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
 async def nekos(ctx, category):
