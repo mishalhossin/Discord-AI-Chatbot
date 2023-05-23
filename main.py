@@ -95,10 +95,16 @@ async def get_transcript_from_message(message_content):
     if not video_id:
         return None
 
-    transcript = YouTubeTranscriptApi.get_transcript(video_id)
-    formatted_transcript = ". ".join([entry['text'] for entry in transcript])
-    formatted_transcript = formatted_transcript[:1936]
-    response = f"[System: Summarize the following in 14 bullet points:\n\n{formatted_transcript}\n\n\n. Provide a summary or additional information based on the content.]"
+    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+    first_transcript = next(iter(transcript_list), None)
+    if not first_transcript:
+        return None
+
+    translated_transcript = first_transcript.translate('en')
+    formatted_transcript = ". ".join([entry['text'] for entry in translated_transcript.fetch()])
+    formatted_transcript = formatted_transcript[:2000]
+
+    response = f"[System: Asisst me by Summarizing the following in 10 bullet points :\n\n{formatted_transcript}\n\n\n. Provide a summary or additional information based on the content.]"
 
     return response
 
