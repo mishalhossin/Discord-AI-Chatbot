@@ -102,7 +102,7 @@ async def get_transcript_from_message(message_content):
 
     translated_transcript = first_transcript.translate('en')
     formatted_transcript = ". ".join([entry['text'] for entry in translated_transcript.fetch()])
-    formatted_transcript = formatted_transcript[:2000]
+    formatted_transcript = formatted_transcript[:2500]
 
     response = f"[System: Asisst me by Summarizing the following in 10 bullet points :\n\n{formatted_transcript}\n\n\n. Provide a summary or additional information based on the content.]"
 
