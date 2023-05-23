@@ -53,7 +53,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
-<details>
+<details open>
 <summary><strong>Commands ⚙️⚙️</strong></summary>
 
 - [x] `/pfp [image_url]`: Change the bot's actual profile picture.
