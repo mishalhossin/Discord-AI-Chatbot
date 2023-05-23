@@ -13,7 +13,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 #### If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
-<details>
+<details open>
 <summary><strong>Feature Showcase 👀 (all for free btw)</strong></summary>
 
 ## Image generation
@@ -35,7 +35,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
-<details>
+<details open>
 <summary><strong>Features ✨</strong></summary>
 
 - [x] Hybrid Command System: Get the best of slash and normal commands. It's like a buffet! ⚙️
