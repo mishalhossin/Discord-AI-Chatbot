@@ -16,9 +16,9 @@ The bot has various features, including image generation using DALL-E, OCR for i
 <details>
 <summary><strong>Feature Showcase 👀 (all for free btw)</strong></summary>
 
-## Image generation using Pollination
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/de22dde4-08ba-4a3a-a899-4fca8942b331)
-
+## Image generation
+  
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/db8cd63d-b4c7-46f0-bc0d-463d0edd7d04)
 
 ## OCR for images (Needs Hugging Face API key)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
