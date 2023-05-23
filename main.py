@@ -330,10 +330,12 @@ async def bonk(ctx):
 async def imagine(ctx, *, prompt: str):
     temp_message = await ctx.send("Generating image...")
     filename = generate_image(prompt)
-    await ctx.send(file=discord.File(filename))
+    await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
     os.remove(filename)
-    await temp_message.edit(content=f"Finished Image Generation for {ctx.author.mention} with prompt: `{prompt}`")
-
+    await temp_message.edit(content=f"Finished Image Generation")
+    await asyncio.sleep(2)
+    await temp_message.delete()
+    
 @bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
 async def nekos(ctx, category):
     base_url = "https://nekos.best/api/v2/"
