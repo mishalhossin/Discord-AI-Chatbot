@@ -1,12 +1,23 @@
-import usesless
+from imaginepy import Imagine, Style, Ratio
 
-message_id = ""
-while True:
-    prompt = input("Question: ")
-    if prompt == "!stop":
-        break
+def main():
+    imagine = Imagine()
 
-    req = usesless.Completion.create(prompt=prompt, parentMessageId=message_id)
+    img_data = imagine.sdprem(
+        prompt="Woman sitting on a table, looking at the sky, seen from behind",
+        style=Style.ANIME_V2,
+        ratio=Ratio.RATIO_16X9
+    )
 
-    print(f"Answer: {req['text']}")
-    message_id = req["id"
+    if img_data is None:
+        print("An error occurred while generating the image.")
+        return
+
+    try:
+        with open("example.png", mode="wb") as img_file:
+            img_file.write(img_data)
+    except Exception as e:
+        print(f"An error occurred while writing the image to file: {e}")
+
+if __name__ == "__main__":
+    main()
