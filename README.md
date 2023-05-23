@@ -20,14 +20,16 @@ The bot has various features, including image generation using DALL-E, OCR for i
   
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/db8cd63d-b4c7-46f0-bc0d-463d0edd7d04)
 
+## YouTube video summary (Any language)
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
+
 ## OCR for images (Needs Hugging Face API key)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 
 ## Web access using DuckDuckGo
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
 
-## YouTube video summary
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/554045b8-bbdd-4b4e-82f5-27f852786d2d)
+
 
 </details>
 
