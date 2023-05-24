@@ -364,8 +364,6 @@ async def bonk(ctx):
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str]):
-    print(style.value)
-    print(ratio.value)
     temp_message = await ctx.send("Generating image...")
     filename = generate_image(prompt, style.value, ratio.value)
     await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
