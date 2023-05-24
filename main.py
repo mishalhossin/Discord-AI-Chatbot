@@ -354,16 +354,16 @@ async def bonk(ctx):
     app_commands.Choice(name='Japanese Art', value='JAPANESE_ART'),
     app_commands.Choice(name='Steampunk', value='STEAMPUNK'),
     app_commands.Choice(name='Sketch', value='SKETCH'),
-    app_commands.Choice(name='Comic Book', value='COMIC_BOOK')
-    app_commands.Choice(name='Imagine V4 creative', value='V4_CREATIVE')
-    app_commands.Choice(name='Imagine V3', value='IMAGINE_V3')
-    app_commands.Choice(name='Cosmic', value='COMIC_V2')
-    app_commands.Choice(name='Logo', value='LOGO')
-    app_commands.Choice(name='Pixel art', value='PIXEL_ART')
-    app_commands.Choice(name='Interior', value='INTERIOR')
-    app_commands.Choice(name='Mystical', value='MYSTICAL')
-    app_commands.Choice(name='Super realism', value='SURREALISM')
-    app_commands.Choice(name='Minecraft', value='MINECRAFT')
+    app_commands.Choice(name='Comic Book', value='COMIC_BOOK'),
+    app_commands.Choice(name='Imagine V4 creative', value='V4_CREATIVE'),
+    app_commands.Choice(name='Imagine V3', value='IMAGINE_V3'),
+    app_commands.Choice(name='Cosmic', value='COMIC_V2'),
+    app_commands.Choice(name='Logo', value='LOGO'),
+    app_commands.Choice(name='Pixel art', value='PIXEL_ART'),
+    app_commands.Choice(name='Interior', value='INTERIOR'),
+    app_commands.Choice(name='Mystical', value='MYSTICAL'),
+    app_commands.Choice(name='Super realism', value='SURREALISM'),
+    app_commands.Choice(name='Minecraft', value='MINECRAFT'),
     app_commands.Choice(name='Dystopian', value='DYSTOPIAN')
 ])
 @app_commands.choices(ratio=[
