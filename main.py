@@ -369,8 +369,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
-    await asyncio.sleep(2)
-    await temp_message.delete()
     
 @bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
 async def nekos(ctx, category):
