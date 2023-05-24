@@ -284,16 +284,16 @@ async def changeusr(ctx, new_username):
     temp_message = await ctx.send(f"Trying to change username....")
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
-        await temp_message.edit(f"Sorry, the username '{new_username}' is already taken.")
+        await temp_message.edit(content=f"Sorry, the username '{new_username}' is already taken.")
         return
     if new_username == "":
-        await temp_message.edit("Please send a different username, which is not in use.")
+        await temp_message.edit(content="Please send a different username, which is not in use.")
         return
     try:
         await bot.user.edit(username=new_username)
         await temp_message.edit(content=f"Username changed to '{new_username}' successfully!")
     except discord.errors.HTTPException as e:
-        await temp_message.edit("".join(e.text.split(":")[1:]))
+        await temp_message.edit(content="".join(e.text.split(":")[1:]))
 
 
 @bot.hybrid_command(name="toggledm", description="Toggle DM for chatting.")
