@@ -247,13 +247,13 @@ async def on_message(message):
         else:
             prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n\n{bot.user.name}:"
         async def generate_response_in_thread(prompt):
+            temp_message = await message.channel.send("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             response = await generate_response(prompt)
-            print(response)
             message_history[author_id].append(f"\n{bot.user.name} : {response}")
             chunks = split_response(response)
-            print(message_history)
             for chunk in chunks:
                 await message.reply(chunk)
+            await temp_message.delete()
         async with message.channel.typing():
             asyncio.create_task(generate_response_in_thread(prompt))
 
