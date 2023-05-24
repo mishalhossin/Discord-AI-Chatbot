@@ -194,4 +194,3 @@ sudo docker-compose up --build
 </a>
 
 ### Crafted with Care: Made with lots of love and attention to detail. ❤️
- <iframe src="https://yikuansun.github.io/patreonbutton/widget?uname=mishalhossin" width="180" height="36" style="border: 5;"></iframe> <br> 
