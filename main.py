@@ -279,6 +279,7 @@ async def ping(ctx):
     await ctx.send(f"Pong! Latency: {latency:.2f} ms")
 
 @bot.hybrid_command(name="changeusr", description="Change bot's actual username")
+@commands.is_owner()
 async def changeusr(ctx, new_username):
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
@@ -289,8 +290,10 @@ async def changeusr(ctx, new_username):
         return
     try:
         await bot.user.edit(username=new_username)
+        await ctx.send(f"Username changed to '{new_username}' successfully!")
     except discord.errors.HTTPException as e:
         await ctx.send("".join(e.text.split(":")[1:]))
+
 
 @bot.hybrid_command(name="toggledm", description="Toggle DM for chatting.")
 @commands.has_permissions(administrator=True)
