@@ -15,7 +15,7 @@ from opengpt.models.completion.chatbase.model import Model as Model2
 from youtube_transcript_api import YouTubeTranscriptApi
 from collections import deque
 from keep_alive import keep_alive
-from discord import Embed, Colour
+from discord import Embed, Colour, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
