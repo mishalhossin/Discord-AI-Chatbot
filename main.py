@@ -140,7 +140,7 @@ headers = {"Authorization": f"Bearer {api_key}"}
 
 
 
-def generate_image(image_prompt, style_value = None, ratio_value = None):
+def generate_image(image_prompt, style_value, ratio_value):
     imagine = Imagine()
     filename = str(uuid.uuid4()) + ".png"
     style_enum = Style[style_value]
@@ -363,9 +363,11 @@ async def bonk(ctx):
     app_commands.Choice(name='4x3', value='RATIO_4X3'),
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str] = None, ratio: app_commands.Choice[str] = None):
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str]):
+    print(style.value)
+    print(ratio.value)
     temp_message = await ctx.send("Generating image...")
-    filename = generate_image(prompt)
+    filename = generate_image(prompt, style.value, ratio.value)
     await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
