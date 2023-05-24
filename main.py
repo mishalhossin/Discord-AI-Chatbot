@@ -145,7 +145,7 @@ def generate_image(image_prompt):
     filename = str(uuid.uuid4()) + ".png"
     img_data = imagine.sdprem(
         prompt=image_prompt,
-        style=Style.ANIME_V2,
+        style=Style.IMAGINE_V4_Beta,
         ratio=Ratio.RATIO_16X9
     )
     if img_data is None:
