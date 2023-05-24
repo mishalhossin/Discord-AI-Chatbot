@@ -16,3 +16,4 @@ pycryptodome
 PyYAML
 youtube-transcript-api
 langdetect
+requests-toolbelt
