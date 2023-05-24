@@ -194,7 +194,3 @@ sudo docker-compose up --build
 </a>
 
 ### Crafted with Care: Made with lots of love and attention to detail. ❤️
-  <a href="https://www.patreon.com/mishalhossin">
-    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3mishalhossin%26type%3Dpatrons&style=for-the-badge">
-  </a>
-</p>
