@@ -37,6 +37,7 @@ trigger_words = config['TRIGGER']
 
 # Internet access
 internet_access = True
+
 @bot.event
 async def on_ready():
     await bot.tree.sync()
