@@ -140,13 +140,15 @@ headers = {"Authorization": f"Bearer {api_key}"}
 
 
 
-def generate_image(image_prompt):
+def generate_image(image_prompt, style_value = None, ratio_value = None):
     imagine = Imagine()
     filename = str(uuid.uuid4()) + ".png"
+    style_enum = Style[style_value]
+    ratio_enum = Ratio[ratio_value]
     img_data = imagine.sdprem(
         prompt=image_prompt,
-        style=Style.IMAGINE_V4_Beta,
-        ratio=Ratio.RATIO_16X9
+        style=style_enum,
+        ratio=ratio_enum
     )
     if img_data is None:
         print("An error occurred while generating the image.")
@@ -337,7 +339,31 @@ async def bonk(ctx):
 
 
 @bot.hybrid_command(name="imagine", description="Generate image")
-async def imagine(ctx, *, prompt: str):
+@app_commands.choices(style=[
+    app_commands.Choice(name='Imagine V4 Beta', value='IMAGINE_V4_Beta'),
+    app_commands.Choice(name='Realistic', value='REALISTIC'),
+    app_commands.Choice(name='Anime', value='ANIME_V2'),
+    app_commands.Choice(name='Disney', value='DISNEY'),
+    app_commands.Choice(name='Studio Ghibli', value='STUDIO_GHIBLI'),
+    app_commands.Choice(name='Graffiti', value='GRAFFITI'),
+    app_commands.Choice(name='Medieval', value='MEDIEVAL'),
+    app_commands.Choice(name='Fantasy', value='FANTASY'),
+    app_commands.Choice(name='Neon', value='NEON'),
+    app_commands.Choice(name='Cyberpunk', value='CYBERPUNK'),
+    app_commands.Choice(name='Landscape', value='LANDSCAPE'),
+    app_commands.Choice(name='Japanese Art', value='JAPANESE_ART'),
+    app_commands.Choice(name='Steampunk', value='STEAMPUNK'),
+    app_commands.Choice(name='Sketch', value='SKETCH'),
+    app_commands.Choice(name='Comic Book', value='COMIC_BOOK')
+])
+@app_commands.choices(ratio=[
+    app_commands.Choice(name='1x1', value='RATIO_1X1'),
+    app_commands.Choice(name='9x16', value='RATIO_9X16'),
+    app_commands.Choice(name='16x9', value='RATIO_16X9'),
+    app_commands.Choice(name='4x3', value='RATIO_4X3'),
+    app_commands.Choice(name='3x2', value='RATIO_3X2')
+])
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str] = None, ratio: app_commands.Choice[str] = None):
     temp_message = await ctx.send("Generating image...")
     filename = generate_image(prompt)
     await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
