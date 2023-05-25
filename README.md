@@ -7,7 +7,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 ## My Discord
   <a href="https://discord.com/users/1025245410224263258">
-    <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=15%20year%20old%20solo%20dev">
+    <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=15%20year%20old%20dev">
   </a>
 </p>
 
@@ -18,8 +18,8 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 ## Image generation
   
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/db8cd63d-b4c7-46f0-bc0d-463d0edd7d04)
-
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/3919e006-8e7b-400d-8559-9985fc2bddf4)
+  
 ## YouTube video summary (Any language)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
   
