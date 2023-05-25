@@ -138,6 +138,8 @@ API_URLS = [
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
 
+
+
 async def generate_image(image_prompt, style_value, ratio_value):
     imagine = AsyncImagine()
     filename = str(uuid.uuid4()) + ".png"
@@ -148,13 +150,17 @@ async def generate_image(image_prompt, style_value, ratio_value):
         style=style_enum,
         ratio=ratio_enum
     )
+    if img_data is None:
+        print("An error occurred while generating the image.")
+        return
+
     try:
         with open(filename, mode="wb") as img_file:
             img_file.write(img_data)
     except Exception as e:
         print(f"An error occurred while writing the image to file: {e}")
         return None
-
+    
     await imagine.close()
 
     return filename
@@ -369,10 +375,10 @@ async def bonk(ctx):
     app_commands.Choice(name='4x3', value='RATIO_4X3'),
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], upscale: app_commands.Choice[str]):
-    temp_message = await ctx.send("Generating image...")
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str]):
+    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
     filename = await generate_image(prompt, style.value, ratio.value)
-    await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
+    await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style :`{style.name}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
     
@@ -428,8 +434,6 @@ async def help(ctx):
     embed.set_footer(text="Created by Mishal#1916")
 
     await ctx.send(embed=embed)
-
-
 
 @bot.event
 async def on_command_error(ctx, error):
