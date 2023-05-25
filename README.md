@@ -14,7 +14,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 #### If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
 
 <details>
-<summary><strong>Feature Showcase 👀 (all for free btw)</strong></summary>
+<summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
 
 ## Image generation
   
