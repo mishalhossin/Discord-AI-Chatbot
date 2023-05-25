@@ -391,9 +391,9 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     temp_message = await ctx.send("Generating image...")
     filename = await generate_image(prompt, style.value, ratio.value, upscale.value)
     if upscale.value == "True":
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`\n\n ⚠️ Upscaling only makes a noticeable difference if you click on the image and choose 'Open in Browser' because Discord lowers the image quality.\n​", file=discord.File(filename))
+        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`\n\n ⚠️ Upscaling only makes a noticeable difference if you click on the image and choose 'Open in Browser' because Discord lowers the image quality.", file=discord.File(filename))
     else:
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`\n​", file=discord.File(filename))
+        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
     
