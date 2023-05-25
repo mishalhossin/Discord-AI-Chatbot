@@ -1,8 +1,8 @@
-import requests, time, ast, json
+import requests, ast, json
 from bs4 import BeautifulSoup
 from hashlib import sha256
 
-class Model:
+class ItalyGPTModel:
     # answer is returned with html formatting
     next_id = None
     messages = []
@@ -11,7 +11,7 @@ class Model:
     def __init__(self):
         r = requests.get("https://italygpt.it")
         soup = BeautifulSoup(r.text, "html.parser")
-        self.next_id = soup.find("input", {"name": "next_id"})["value"]
+        self.next_id = soup.find("input", {"name": "next_id"}).get("value")
 
     def GetAnswer(self, prompt: str, messages: list = []):
         r = requests.get("https://italygpt.it/question", params={"hash": sha256(self.next_id.encode()).hexdigest(), "prompt": prompt, "raw_messages": json.dumps(messages)}, stream=True)

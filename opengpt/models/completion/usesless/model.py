@@ -5,7 +5,7 @@ import json
 
 debug = False # For debuging
 
-class Model:
+class UselessModel:
     @classmethod
     def __init__(self: type, model: Optional[str] = "gpt-3.5-turbo", temperature: Optional[int] = 1) -> None:
         self.__session: requests.Session = requests.Session()

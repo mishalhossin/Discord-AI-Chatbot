@@ -1,7 +1,6 @@
 import aiohttp
-import asyncio
 
-class Model:
+class ChatbaseModel:
     captcha_code = "hadsa"
 
     async def GetAnswer(self, prompt: str, model: str = "gpt-4"):

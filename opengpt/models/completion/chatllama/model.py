@@ -1,6 +1,6 @@
 import requests
 
-class Model:
+class ChatllamaModel:
     @staticmethod
     def GetAnswer(prompt: str):
         headers = {

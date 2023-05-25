@@ -1,17 +1,17 @@
-from .tools.typing.response import ForeFrontResponse
-from .tools.system.signature import Encrypt
-from .attributes.conversation import Conversation
-from libraries.colorama import init, Fore, Style
-from typing import Optional, Union, Generator, Dict, List
-from base64 import b64encode
-import fake_useragent
-import requests
 import json
 import logging
 
+import fake_useragent
+import requests
+from opengpt.libraries.colorama import init, Fore, Style
+from typing import Optional, Union, Generator, Dict, List
+
+from .attributes.conversation import Conversation
+from .tools.typing.response import ForeFrontResponse
+
 init()
 
-class Model:
+class ForefronteModel:
 	@classmethod
 	def __init__(self: object, sessionID: str, client: str, model: Optional[str] = "gpt-3.5-turbo", 
 		conversationID: Optional[Union[str, None]] = None
@@ -88,7 +88,7 @@ class Model:
 		jwt_token: Dict[str, str] = {}
 		jwt_status: int = 0
 
-		jwt_token = self._session.post(f"https://clerk.forefront.ai/v1/client/sessions/{self._SESSION_ID}/tokens?_clerk_js_version=4.38.4", headers=self._JWT_HEADERS)
+		jwt_token = self._session.post(f"https://clerk.forefront.ai/v1/client/sessions/{self._SESSION_ID}/tokens?_clerk_js_version=4.38.4", headers=self._JWT_HEADERS, timeout=10)
 		jwt_status = jwt_token.status_code
 
 		if jwt_status == 401:

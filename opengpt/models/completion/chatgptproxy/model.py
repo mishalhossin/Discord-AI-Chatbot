@@ -2,7 +2,7 @@ import requests, random, time
 
 chars="abcdefghijklmnopqrstuvwxyz1234567890"
 
-class Model:
+class ChatGPTProxyModel:
     session_id = "".join([random.choice(chars) for i in range(32)])
     user_fake_id = "".join([random.choice(chars) for i in range(16)])
     chat_id = "0"
