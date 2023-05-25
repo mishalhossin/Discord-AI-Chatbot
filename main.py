@@ -138,12 +138,7 @@ API_URLS = [
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
 
-async def generate_image(image_prompt, style_value, ratio_value, upscaleStatus):
-    if upscaleStatus == "True":
-        upscale = True
-    else:
-        upscale = False
-    
+async def generate_image(image_prompt, style_value, ratio_value):
     imagine = AsyncImagine()
     filename = str(uuid.uuid4()) + ".png"
     style_enum = Style[style_value]
@@ -376,7 +371,7 @@ async def bonk(ctx):
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], upscale: app_commands.Choice[str]):
     temp_message = await ctx.send("Generating image...")
-    filename = await generate_image(prompt, style.value, ratio.value, upscale.value)
+    filename = await generate_image(prompt, style.value, ratio.value)
     await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
