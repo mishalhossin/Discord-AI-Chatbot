@@ -8,7 +8,7 @@ import aiofiles
 import urllib.parse
 import discord
 import httpx
-from imaginepy import Imagine, Style, Ratio
+from imaginepy import AsyncImagine, Style, Ratio
 from datetime import datetime
 from opengpt.models.completion.usesless.model import Model
 from opengpt.models.completion.chatbase.model import Model as Model2
