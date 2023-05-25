@@ -153,15 +153,6 @@ async def generate_image(image_prompt, style_value, ratio_value, upscaleStatus):
         style=style_enum,
         ratio=ratio_enum
     )
-    if img_data is None:
-        print("An error occurred while generating the image.")
-        return
-    if upscale:
-        img_data = await imagine.upscale(image=img_data)
-
-        if img_data is None:
-            print("An error occurred while upscaling the image.")
-            return
     try:
         with open(filename, mode="wb") as img_file:
             img_file.write(img_data)
@@ -383,17 +374,10 @@ async def bonk(ctx):
     app_commands.Choice(name='4x3', value='RATIO_4X3'),
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
-@app_commands.choices(upscale=[
-    app_commands.Choice(name='Yes', value='True'),
-    app_commands.Choice(name='No', value='False'),
-])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], upscale: app_commands.Choice[str]):
     temp_message = await ctx.send("Generating image...")
     filename = await generate_image(prompt, style.value, ratio.value, upscale.value)
-    if upscale.value == "True":
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`\n\n ⚠️ Upscaling only makes a noticeable difference if you click on the image and choose 'Open in Browser' because Discord lowers the image quality.", file=discord.File(filename))
-    else:
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
+    await ctx.send(content=f"Here is the generated image for {ctx.author.mention} with prompt: `{prompt}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
     
