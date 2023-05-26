@@ -71,16 +71,10 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 # Steps to install and run 🚩 :
 ### Step 1. 🎬 Git clone repository
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/a5137a58-bc0f-4eea-9927-33d9c0b45a73)
-
 ```
 git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 ```
 ### Step 2. 📁 Changing directory to cloned directory
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/91af0ef7-0baf-461c-abb9-c715b299615c)
-
 ```
 cd Discord-AI-Chatbot
 ```
@@ -102,33 +96,17 @@ cd Discord-AI-Chatbot
 
 ### Step 4. 🔑 Get hugging face Access Tokens from [HEREE](https://huggingface.co/settings/tokens)
 ## Read or Write it dosent matter (I use Write)
-![image](https://user-images.githubusercontent.com/91066601/236681615-71600817-774a-430c-8cec-8e6710a82b49.png)
-
 ### Step 5. 🔐 Rename `example.env` to `.env` and put the discord token and hugging face access token. It will look like this:
 ```
 HUGGING_FACE_API=hf_access_token_from_step_4
 DISCORD_TOKEN=token_from_step_3
 ```
-### Step 6. ⚙️ Install all the dependencies
-
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/30e9b521-299c-4ff2-b21b-febb965fdc0a)
-
-```
-pip install -r requirements.txt
-```
-
-### Step 7. 🚀 Run the bot
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/e2b5711d-57a9-4f45-8790-2556c46586f4)
-
+### Step 6. 🚀 Run the bot
 ```
 python main.py
 ```
 ### Step 8. Invite the bot
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
-
-
 ### 🏁 Finally talk to the bot
 #### There are 2 ways to talk to the ai
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
@@ -137,14 +115,11 @@ python main.py
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
 
-
 # ✨✨✨  Other ways to run ✨✨✨
 ### Using replit to run ☁️
 # [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
-
-- Follow all the steps except `step 1`
 - Have a replit account
-- Please note `.env` found in secrets tab of replit :
+- Please note `.env` found in`Secrets` from `Tools` tab of replit :
 
 ![image](https://user-images.githubusercontent.com/91066601/235810871-5d4c1469-35fd-42d2-a3a2-3382002877cb.png)
 
