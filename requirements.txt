@@ -1,6 +1,10 @@
+packaging==20.9
+poetry
 aiohttp
+urllib3
 aiofiles
 asyncio
+requests-toolbelt=0.9.1
 discord.py
 pynacl
 requests
