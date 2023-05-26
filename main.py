@@ -1,4 +1,5 @@
-# Auto install requirements
+from package_checker import check_and_install_packages
+check_and_install_packages()
 import setup
 import os
 import re
