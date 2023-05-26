@@ -4,6 +4,7 @@ asyncio
 discord.py
 pynacl
 requests
+flask
 discord
 fake-useragent
 curl_cffi
@@ -16,4 +17,3 @@ PyYAML
 youtube-transcript-api
 langdetect
 requests-toolbelt
-imaginepy
