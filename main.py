@@ -7,7 +7,6 @@ import uuid
 import asyncio
 import aiohttp
 import aiofiles
-import urllib.parse
 import discord
 import httpx
 from imaginepy import AsyncImagine, Style, Ratio
