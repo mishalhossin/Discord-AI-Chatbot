@@ -1,10 +1,8 @@
 aiohttp
-aiofiles
 asyncio
 discord.py
 pynacl
 requests
-flask
 discord
 fake-useragent
 curl_cffi
