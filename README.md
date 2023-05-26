@@ -78,7 +78,6 @@ git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 ```
 cd Discord-AI-Chatbot
 ```
-
 ### Step 3. 🔑 Getting discord bot token and enabling intents from [HERE](https://discord.com/developers/applications)
 <details>
 <summary><strong>Read more... ⚠️</strong></summary>
