@@ -1,5 +1,4 @@
 packaging==20.9
-poetry
 aiohttp
 urllib3
 aiofiles
