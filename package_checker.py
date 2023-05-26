@@ -1,6 +1,12 @@
 import subprocess
+import os
 
 def check_and_install_packages(requirements_file='requirements.txt'):
+    # Check if a flag file exists indicating the first run
+    first_run_flag = '.first_run.flag'
+    if os.path.isfile(first_run_flag):
+        return
+
     def check_packages():
         with open(requirements_file, 'r') as file:
             packages = [line.strip() for line in file]
@@ -27,5 +33,11 @@ def check_and_install_packages(requirements_file='requirements.txt'):
             print("Installing", package)
             install_package(package)
         print("All required packages installed.")
+
+        # Create a flag file to indicate the first run
+        with open(first_run_flag, 'w') as flag_file:
+            pass
     else:
         print("All required packages are already installed.")
+
+check_and_install_packages()
