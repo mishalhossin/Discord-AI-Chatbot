@@ -1,3 +1,5 @@
+# Auto install requirements
+import setup
 import os
 import re
 import json
