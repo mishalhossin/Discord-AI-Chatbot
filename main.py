@@ -22,7 +22,6 @@ load_dotenv()
 with open('config.json') as config_file:
     config = json.load(config_file)
 
-    
 
 # Set up the Discord bot
 intents = discord.Intents.all()
@@ -183,7 +182,7 @@ async def query(filename):
     async with aiohttp.ClientSession() as client:
         tasks = [fetch_response(client, api_url, data) for api_url in API_URLS]
         responses = await asyncio.gather(*tasks, return_exceptions=True)
-
+    await client.close()
     return responses
 
 
