@@ -1,5 +1,5 @@
 from package_checker import check_and_install_packages
-check_and_install_packages('requirements.txt')
+check_and_install_packages()
 import os
 import re
 import json
