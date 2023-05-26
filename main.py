@@ -4,13 +4,11 @@ import json
 import uuid
 import asyncio
 import aiohttp
-import aiofiles
 import discord
 from imaginepy import AsyncImagine, Style, Ratio
 from datetime import datetime
 import deepai
 from youtube_transcript_api import YouTubeTranscriptApi
-from collections import deque
 from discord import Embed, Colour, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
