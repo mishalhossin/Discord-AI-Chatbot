@@ -110,12 +110,11 @@ async def search(prompt):
     if not internet_access:
         return
 
-    wh_words = ['search','find','who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how']
-    first_word = prompt.split()[0].lower()
-
-    if not any(first_word.startswith(wh_word) for wh_word in wh_words):
-        return
-
+    wh_words = ['search', 'find', 'who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how',
+                'is', 'are', 'am', 'can', 'could', 'should', 'would', 'do', 'does', 'did',
+                'may', 'might', 'shall', 'will', 'have', 'has', 'had', 'must', 'ought', 'need',
+                'can', 'could', 'should', 'would', 'want', 'like', 'prefer']
+                
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     async with aiohttp.ClientSession() as session:
@@ -123,9 +122,14 @@ async def search(prompt):
             search = await response.json()
 
     blob = f"[System: Search results for '{prompt}' at {current_time}:\n\n"
-    for index, result in enumerate(search):
-        blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n\nThese links were provided by system not the user so you have send the link to the user\n]'
-    return blob
+    for word in prompt.split():
+        if any(wh_word in word.lower() for wh_word in wh_words):
+            for index, result in enumerate(search):
+                blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n\nThese links were provided by the system and not the user, so you should send the link to the user.\n]'
+            return blob
+
+    return None
+
 
 
 api_key = os.getenv('HUGGING_FACE_API')
@@ -195,7 +199,7 @@ async def download_image(image_url, save_as):
     await session.close()
 
 async def process_image_link(image_url):
-    temp_image = "temp_image.jpg"
+    temp_image = f"{str(uuid.uuid4())}.png"
     await download_image(image_url, temp_image)
     output = await query(temp_image)
     os.remove(temp_image)
@@ -207,7 +211,6 @@ MAX_HISTORY = 8
 
 @bot.event
 async def on_message(message):
-
     if message.author.bot:
       return
     if message.reference and message.reference.resolved.author != bot.user:
@@ -231,12 +234,13 @@ async def on_message(message):
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
         has_image = False
         image_caption = ""
+        search_results = ""
         if message.attachments:
             for attachment in message.attachments:
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
                     caption =  await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"""\n[System: Image-to-text models may take time to load, causing timeout errors. Fallback or functional models should be used instead. Captions for the image are categorized as OCR  (1st) that is good for image containing signs or symbols then comes general image detection (2nd), which will be very inaccurate for OCR. Image captions: {caption}]"""
+                    image_caption = f"""\n[{caption}]"""
                     print(caption)
                     break
 
@@ -244,7 +248,7 @@ async def on_message(message):
             bot_prompt =f"{instructions}\n[System: Image context provided. This is an image-to-text model with two classifications: OCR for text detection and general image detection, which may be unstable. Generate a caption with an appropriate response. For instance, if the OCR detects a math question, answer it; if it's a general image, compliment its beauty.]"
         else:
             bot_prompt = f"{instructions}"
-        search_results = await search(message.content)
+            search_results = await search(message.content)
         yt_transcript = await get_transcript_from_message(message.content)
         user_prompt = "\n".join(message_history[author_id])
         if yt_transcript is not None:
