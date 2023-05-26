@@ -68,7 +68,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
-### Easy Installation with the Installation Helper
+# Easy Installation with the Installation Helper
 
 If you find the following steps challenging, we've got you covered! You can refer to our [Installation Helper repository](https://github.com/mishalhossin/installation-helper) to simplify the process. Now, even beginners can effortlessly run this bot and get started in no time! 🤭
 
