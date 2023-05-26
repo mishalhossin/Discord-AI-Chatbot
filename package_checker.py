@@ -2,7 +2,10 @@ import subprocess
 import os
 
 def check_and_install_packages(requirements_file='requirements.txt'):
-    # Check if a flag file exists indicating the first run
+    # Avoid replit because it already can do it
+    if os.path.isfile("replit.nix") or os.path.isfile(".replit"):
+      subprocess.call(['pip', 'install', "imaginepy"])
+      return
     first_run_flag = '.first_run.flag'
     if os.path.isfile(first_run_flag):
         return
