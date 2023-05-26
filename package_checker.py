@@ -2,7 +2,6 @@ import subprocess
 import os
 
 def check_and_install_packages(requirements_file='requirements.txt'):
-    # Avoid replit because it already can do it
     if os.path.isfile("replit.nix") or os.path.isfile(".replit"):
       subprocess.call(['pip', 'install', "imaginepy"])
       return
