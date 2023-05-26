@@ -14,7 +14,6 @@ from opengpt.models.completion.usesless.model import Model
 from opengpt.models.completion.chatbase.model import Model as Model2
 from youtube_transcript_api import YouTubeTranscriptApi
 from collections import deque
-from keep_alive import keep_alive
 from discord import Embed, Colour, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -378,26 +377,13 @@ async def bonk(ctx):
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None):
     temp_message = await ctx.send("https://cdn.discordapp.com/emojis/842555048973172756.gif?size=96&quality=lossless")
     filename = await generate_image(prompt, style.value, ratio.value, negative)
-    if filename == "Error":
-        await temp_message.edit(content=f"Generation went wrong... :x:")
+    if negative is not None:
+        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n- Negative : `{negative}`", file=discord.File(filename))
     else:
-        # Build the embed
-        embed = discord.Embed(title="‎", color=0x008bd1)
-        embed.set_author(name="ImaginePy",
-                         icon_url=bot.user.avatar.url)
-        embed.add_field(
-            name="Prompt", value=f"{prompt} ‎‎‎‎‎‎‎‎‎‎‎‎", inline=True)
-        embed.add_field(name="Style Used", value=style.name, inline=True)
-
-        if negative is not None:
-            embed.add_field(
-                name="Negative", value=f"{negative} ‎‎‎‎‎‎‎‎‎‎‎‎", inline=False)
-
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text=f"Imagined by {ctx.author.name}")
-        await ctx.send(content=f"Here is your image {ctx.author.mention}.\n", file=discord.File(filename), embed=embed)
-        os.remove(filename)
-        await temp_message.edit(content=f"Generation is completed and delivered to {ctx.author.mention}")
+        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`", file=discord.File(filename))
+    os.remove(filename)
+    await temp_message.edit(content=f"Finished Image Generation")
+    
     
 @bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
 async def nekos(ctx, category):
@@ -457,6 +443,23 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("You do not have permission to use this command.")
 
-keep_alive()
+def detect_replit():
+    if os.path.isfile("replit.nix") or os.path.isfile(".replit"):
+        print("""\033[1;31m ⚠️ Warning: Looks like you are running this project on Replit\033[0m
+\033[1;33mPlease note that the .env file cannot exist on Replit.
+Instead, create environment variables (e.g., DISCORD_TOKEN and HUGGING_FACE_API) in the "Secrets" tab under "Tools".\033[0m""")
+        from flask import Flask
+
+        app = Flask("keepalive")
+
+        @app.route('/', methods=['GET', 'POST', 'CONNECT', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'TRACE', 'HEAD'])
+        def main():
+            return 'Replit: Where code comes to life, dreams take shape, and possibilities are infinite'
+
+        app.run(host='0.0.0.0', port=3000, debug=False, use_reloader=False)
+    else:
+        return
+
+detect_replit()
 
 bot.run(TOKEN)
