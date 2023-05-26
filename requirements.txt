@@ -1,5 +1,4 @@
 aiohttp
-aiofiles
 asyncio
 discord.py
 pynacl
