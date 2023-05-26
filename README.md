@@ -68,8 +68,11 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
+### Easy Installation with the Installation Helper
 
-# Steps to install and run 🚩 :
+If you find the following steps challenging, we've got you covered! You can refer to our [Installation Helper repository](https://github.com/mishalhossin/installation-helper) to simplify the process. Now, even beginners can effortlessly run this bot and get started in no time! 🤭
+
+# Installation steps  🚩 :
 ### Step 1. 🎬 Git clone repository
 ```
 git clone https://github.com/mishalhossin/Discord-AI-Chatbot
@@ -106,12 +109,10 @@ python main.py
 ```
 ### Step 8. Invite the bot
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
-### 🏁 Finally talk to the bot
-#### There are 2 ways to talk to the ai
+#### There are 2 ways to talk to the AI
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
 - if you want it in server channel use **/toggleactive** 
 - For more awesome commands use **/help**
-
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
 
 # ✨✨✨  Other ways to run ✨✨✨
