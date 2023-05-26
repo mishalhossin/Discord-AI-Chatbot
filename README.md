@@ -11,7 +11,11 @@ The bot has various features, including image generation using DALL-E, OCR for i
   </a>
 </p>
 
-#### If you want to use `Replit` or `Docker` [check this](https://github.com/mishalhossin/Discord-AI-Chatbot#--other-ways-to-run-)
+# Supporters
+  <a href="https://www.patreon.com/mishalhossin">
+    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
+  </a>
+</p>
 
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
@@ -169,7 +173,3 @@ sudo docker-compose up --build
 </a>
 
 ### Crafted with Care: Made with lots of love and attention to detail. ❤️
-  <a href="https://www.patreon.com/mishalhossin">
-    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
-  </a>
-</p>
