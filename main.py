@@ -6,7 +6,6 @@ import asyncio
 import aiohttp
 import aiofiles
 import discord
-import httpx
 from imaginepy import AsyncImagine, Style, Ratio
 from datetime import datetime
 from opengpt.models.completion.usesless.model import Model
@@ -136,8 +135,6 @@ API_URLS = [
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
 
-
-
 async def generate_image(image_prompt, style_value, ratio_value, negative):
     imagine = AsyncImagine()
     filename = str(uuid.uuid4()) + ".png"
@@ -164,12 +161,12 @@ async def generate_image(image_prompt, style_value, ratio_value, negative):
     return filename
 
 async def fetch_response(client, api_url, data):
-    response = await client.post(api_url, headers=headers, data=data, timeout=30)
+    headers = {"Content-Type": "application/json"}
+    async with client.post(api_url, headers=headers, data=data, timeout=30) as response:
+        if response.status != 200:
+            raise Exception(f"API request failed with status code {response.status}: {await response.text()}")
 
-    if response.status_code != 200:
-        raise Exception(f"API request failed with status code {response.status_code}: {response.text}")
-
-    return response.json()
+        return await response.json()
 
 
 
@@ -177,7 +174,7 @@ async def query(filename):
     with open(filename, "rb") as f:
         data = f.read()
 
-    async with httpx.AsyncClient() as client:
+    async with aiohttp.ClientSession() as client:
         tasks = [fetch_response(client, api_url, data) for api_url in API_URLS]
         responses = await asyncio.gather(*tasks, return_exceptions=True)
 
@@ -186,10 +183,15 @@ async def query(filename):
 
 
 async def download_image(image_url, save_as):
-    async with httpx.AsyncClient() as client:
-        response = await client.get(image_url)
-    with open(save_as, "wb") as f:
-        f.write(response.content)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(image_url) as response:
+            with open(save_as, "wb") as f:
+                while True:
+                    chunk = await response.content.read(1024)
+                    if not chunk:
+                        break
+                    f.write(chunk)
+    await session.close()
 
 async def process_image_link(image_url):
     temp_image = "temp_image.jpg"
