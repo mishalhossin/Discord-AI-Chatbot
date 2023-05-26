@@ -22,6 +22,7 @@ load_dotenv()
 with open('config.json') as config_file:
     config = json.load(config_file)
 
+    
 
 # Set up the Discord bot
 intents = discord.Intents.all()
