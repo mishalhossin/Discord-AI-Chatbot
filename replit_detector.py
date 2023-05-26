@@ -1,3 +1,5 @@
+import os
+
 def detect_replit():
     if os.path.isfile("replit.nix") or os.path.isfile(".replit"):
         print("""\033[1;31m ⚠️ Warning: Looks like you are running this project on Replit\033[0m
