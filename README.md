@@ -70,7 +70,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 # Easy Installation with the Installation Helper
 
-If the following steps seem too daunting for you, don't worry! We have the perfect solution. Introducing our [Installation Helper](https://github.com/mishalhossin/installation-helper)!! It's like having a tech-savvy genie at your fingertips, ready to grant all your installation wishes. Just remember, if it starts demanding three wishes and a magic lamp, you might be in the wrong folder! <img src="https://cdn.discordapp.com/emojis/736173369745080372.gif" alt="Emoji" width="20"height="20">
+If the following steps seem too daunting for you, don't worry! We have the perfect solution. Introducing our [Installation Helper](https://github.com/mishalhossin/installation-helper)!! It's like having a tech-savvy genie at your fingertips, ready to grant all your installation wishes. Just remember, if it starts demanding three wishes and a magic lamp, you might be in the wrong folder!<img src="https://cdn.discordapp.com/emojis/736173369745080372.gif" alt="Emoji" width="20" height="20">
 
 # Installation steps  🚩 :
 ### Step 1. 🎬 Git clone repository
