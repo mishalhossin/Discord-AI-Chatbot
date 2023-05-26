@@ -14,8 +14,8 @@ def check_and_install_packages(requirements_file='requirements.txt'):
 
         return missing_packages
 
-    def install_packages():
-        subprocess.call(['pip', 'install', '-r', requirements_file])
+    def install_package(package):
+        subprocess.call(['pip', 'install', package])
 
     missing_packages = check_packages()
 
@@ -23,7 +23,9 @@ def check_and_install_packages(requirements_file='requirements.txt'):
         print("The following packages are missing:")
         print('\n'.join(missing_packages))
         print("Installing missing packages...")
-        install_packages()
+        for package in missing_packages:
+            print("Installing", package)
+            install_package(package)
         print("All required packages installed.")
     else:
         print("All required packages are already installed.")
