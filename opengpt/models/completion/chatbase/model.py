@@ -4,7 +4,7 @@ import asyncio
 class Model:
     captcha_code = "hadsa"
 
-    async def GetAnswer(self, prompt: str, model: str = "gpt-4"):
+    async def GetAnswer(self, prompt: str, model: str = "gpt-3.5-turbo"):
         if model == "gpt-4":
             chat_id = "quran---tafseer-saadi-pdf-wbgknt7zn"
         elif model == "gpt-3.5-turbo":
