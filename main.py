@@ -378,9 +378,9 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     temp_message = await ctx.send("https://cdn.discordapp.com/emojis/842555048973172756.gif?size=96&quality=lossless")
     filename = await generate_image(prompt, style.value, ratio.value, negative)
     if negative is not None:
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n-Ratio :`{ratio.value}` \n- Negative : `{negative}`", file=discord.File(filename))
+        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n- Ratio :`{ratio.value}` \n- Negative : `{negative}`", file=discord.File(filename))
     else:
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n-Ratio :`{ratio.value}`", file=discord.File(filename))
+        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n- Ratio :`{ratio.value}`", file=discord.File(filename))
     os.remove(filename)
     await temp_message.edit(content=f"Finished Image Generation")
     
