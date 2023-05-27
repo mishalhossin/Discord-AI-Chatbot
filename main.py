@@ -7,7 +7,7 @@ import aiohttp
 import discord
 from imaginepy import AsyncImagine, Style, Ratio
 from datetime import datetime
-import deepai
+import model
 from youtube_transcript_api import YouTubeTranscriptApi
 from discord import Embed, Colour, app_commands
 from discord.ext import commands
@@ -79,7 +79,7 @@ async def generate_response(history, search, yt_transcript, image_caption, botna
     ]
 
     while True:
-        response = await deepai.ChatCompletion.create(messages)
+        response = await model.ChatCompletion.create(messages)
         if response :
             return response
         else:
