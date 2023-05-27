@@ -11,7 +11,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
   </a>
 </p>
 
-### Support the growth of this project by considering a donation on my Patreon. Your contribution plays a crucial role in its sustainability. Without your support, the future of this project may be at risk.
+#### Please support this project on Patreon. Your donation is crucial for its sustainability. Without your help, the project's future is at risk. Thank you.
   <a href="https://www.patreon.com/mishalhossin">
     <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
   </a>
