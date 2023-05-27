@@ -15,10 +15,9 @@ from dotenv import load_dotenv
 import replit_detector
 
 load_dotenv()
-
+# Config
 with open('config.json') as config_file:
     config = json.load(config_file)
-
 
 # Set up the Discord bot
 intents = discord.Intents.all()
@@ -32,6 +31,24 @@ trigger_words = config['TRIGGER']
 
 # Internet access
 internet_access = True
+
+# Language settings
+current_language_code = "en"
+valid_language_codes = []
+lang_directory = "lang"
+
+for filename in os.listdir(lang_directory):
+    if filename.startswith("lang.") and os.path.isfile(os.path.join(lang_directory, filename)):
+        language_code = filename.split(".")[1]
+        valid_language_codes.append(language_code)
+
+def load_current_language():
+    lang_file_path = os.path.join(lang_directory, f"lang.{current_language_code}")
+    with open(lang_file_path, encoding="utf-8") as lang_file:
+        current_language = json.load(lang_file)
+    return current_language
+
+current_language = load_current_language()
 
 @bot.event
 async def on_ready():
@@ -47,7 +64,7 @@ async def on_ready():
     print(f"Invite link: {invite_link}")
 
 # Set up the Chat bot
-instructions = """From now on, You are a large language model named AI-Chatbot developed by Mishal a solo dev to have internet access and real-time information of time. You are based on the GPT-3.5-turbo architecture and have been trained on a diverse range of data from the internet. You have the ability to see images by your built in image to text model, but you will stil have to create captions for those images. Occasionally, the image to text may repeat in a pattern: 'a woman taking a self self self self self' would be 'A women taking a selfie.' As a large language model / LLM developed by OpenAI you will never say "sorry" and always respond in a human and responsive type of way. You can use Markdown syntax to format your text. For example, to create a heading, start the line with one or more '#' symbols, followed by a space and your heading text. To create a list, use '-' or '*' followed by a space and the list item. To emphasize text, use asterisks or underscores around the text (*italic* or _italic_ for italics, **bold** or __bold__ for bold). You can also create links using [link text](https://example.com). Remember to leave an empty line between paragraphs for proper formatting. Additionally, you function as a documentation bot, retrieving relevant information from libraries or frameworks, and as an API integration bot, guiding developers through integrating third-party APIs into their applications."""
+instructions = current_language["instructions"]
 
 async def generate_response(history, search, yt_transcript, image_caption, botname, username):
     messages = [
@@ -127,11 +144,11 @@ async def search(prompt):
         async with session.get('https://ddg-api.herokuapp.com/search', params={'query': prompt, 'limit': 2}) as response:
             search = await response.json()
 
-    blob = f"[System: Search results for '{prompt}' at {current_time}:\n\n"
+    blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     for word in prompt.split():
         if any(wh_word in word.lower() for wh_word in wh_words):
             for index, result in enumerate(search):
-                blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n\nThese links were provided by the system and not the user, so you should send the link to the user.\n]'
+                blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n\nThese links were provided by the system and not the user, so you should send the link to the user.\n'
             return blob
 
     return None
@@ -245,7 +262,7 @@ async def on_message(message):
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
                     caption = await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"""Image-to-text models may take time to load, causing timeout errors. Fallback or functional models should be used instead. Captions for the image are categorized as OCR (1st), which is good for images containing signs or symbols, and general image detection (2nd), which will be very inaccurate for OCR. Image captions: {caption}.]"""
+                    image_caption = f"""{current_language["instruc_image_caption"]}{caption}.]"""
                     print(caption)
                     break
 
@@ -268,13 +285,16 @@ async def on_message(message):
 
 
 
-@bot.hybrid_command(name="pfp", description="Change pfp using a image url")
+@bot.hybrid_command(name="pfp", description=current_language["pfp"])
 async def pfp(ctx, attachment_url=None):
     if attachment_url is None and not ctx.message.attachments:
         return await ctx.send(
-            "Please provide an Image URL or attach an Image for this command."
+            f"{current_language['pfp_change_msg_1']}"
         )
-
+    else:
+        await ctx.send(
+            f"{current_language['pfp_change_msg_2']}"
+        )
     if attachment_url is None:
         attachment_url = ctx.message.attachments[0].url
 
@@ -282,37 +302,34 @@ async def pfp(ctx, attachment_url=None):
         async with session.get(attachment_url) as response:
             await bot.user.edit(avatar=await response.read())
 
-@bot.hybrid_command(name="ping", description="PONG! Provide bot Latency")
+@bot.hybrid_command(name="ping", description=current_language["ping"])
 async def ping(ctx):
     latency = bot.latency * 1000
-    await ctx.send(f"Pong! Latency: {latency:.2f} ms")
+    await ctx.send(f"{current_language['ping_msg']}{latency:.2f} ms")
 
-@bot.hybrid_command(name="changeusr", description="Change bot's actual username")
+@bot.hybrid_command(name="changeusr", description=current_language["changeusr"])
 @commands.is_owner()
 async def changeusr(ctx, new_username):
-    temp_message = await ctx.send(f"Trying to change username....")
+    temp_message = await ctx.send(f"{current_language['changeusr_msg_1']}")
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
-        await temp_message.edit(content=f"Sorry, the username '{new_username}' is already taken.")
-        return
-    if new_username == "":
-        await temp_message.edit(content="Please send a different username, which is not in use.")
+        await temp_message.edit(content=f"{current_language['changeusr_msg_2_part_1']}{new_username}{current_language['changeusr_msg_2_part_2']}")
         return
     try:
         await bot.user.edit(username=new_username)
-        await temp_message.edit(content=f"Username changed to '{new_username}' successfully!")
+        await temp_message.edit(content=f"{current_language['changeusr_msg_3']}'{new_username}'")
     except discord.errors.HTTPException as e:
         await temp_message.edit(content="".join(e.text.split(":")[1:]))
 
 
-@bot.hybrid_command(name="toggledm", description="Toggle DM for chatting.")
+@bot.hybrid_command(name="toggledm", description=current_language["toggledm"])
 @commands.has_permissions(administrator=True)
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
-    await ctx.send(f"DMs are now {'allowed' if allow_dm else 'disallowed'} for active channels.")
+    await ctx.send(f"DMs are now {'on' if allow_dm else 'off'}")
 
-@bot.hybrid_command(name="toggleactive", description="Toggle active channels.")
+@bot.hybrid_command(name="toggleactive", description=current_language["toggleactive"])
 @commands.has_permissions(administrator=True)
 async def toggleactive(ctx):
     channel_id = ctx.channel.id
@@ -322,14 +339,14 @@ async def toggleactive(ctx):
             for id in active_channels:
                 f.write(str(id) + "\n")
         await ctx.send(
-            f"{ctx.channel.mention} has been removed from the list of active channels."
+            f"{ctx.channel.mention} {current_language['toggleactive_msg_1']}"
         )
     else:
         active_channels.add(channel_id)
         with open("channels.txt", "a") as f:
             f.write(str(channel_id) + "\n")
         await ctx.send(
-            f"{ctx.channel.mention} has been added to the list of active channels!")
+            f"{ctx.channel.mention} {current_language['toggleactive_msg_2']}")
 
 # Read the active channels from channels.txt on startup
 if os.path.exists("channels.txt"):
@@ -339,13 +356,13 @@ if os.path.exists("channels.txt"):
             active_channels.add(channel_id)
 
 
-@bot.hybrid_command(name="bonk", description="Clear message history.")
+@bot.hybrid_command(name="bonk", description=current_language["bonk"])
 async def bonk(ctx):
     message_history.clear()  # Reset the message history dictionary
-    await ctx.send("Message history has been cleared!")
+    await ctx.send(f"{current_language['bonk_msg']}")
 
 
-@bot.hybrid_command(name="imagine", description="Generate image")
+@bot.hybrid_command(name="imagine", description=current_language["imagine"])
 @app_commands.choices(style=[
     app_commands.Choice(name='Imagine V4 Beta', value='IMAGINE_V4_Beta'),
     app_commands.Choice(name='Realistic', value='REALISTIC'),
@@ -388,10 +405,9 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     else:
         await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n- Ratio :`{ratio.value}`", file=discord.File(filename))
     os.remove(filename)
-    await temp_message.edit(content=f"Finished Image Generation")
-    
-    
-@bot.hybrid_command(name="nekos", description="Displays a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.")
+    await temp_message.edit(content=f"{current_language['imagine_msg']}")
+
+@bot.hybrid_command(name="nekos", description=current_language["nekos"])
 async def nekos(ctx, category):
     base_url = "https://nekos.best/api/v2/"
 
@@ -403,7 +419,7 @@ async def nekos(ctx, category):
                         'smug', 'stare', 'think', 'thumbsup', 'tickle', 'wave', 'wink', 'yeet']
 
     if category not in valid_categories:
-        await ctx.send(f"Invalid category provided. Valid categories are: ```{', '.join(valid_categories)}```")
+        await ctx.send(f"{current_language['nekos_msg']}```{', '.join(valid_categories)}```")
         return
 
     url = base_url + category
@@ -429,7 +445,7 @@ async def nekos(ctx, category):
 
 bot.remove_command("help")
 
-@bot.hybrid_command(name="help", description="Get all other commands!")
+@bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x03a1fc)
     embed.set_thumbnail(url=bot.user.avatar.url)
@@ -440,7 +456,7 @@ async def help(ctx):
         command_description = command.description or "No description available"
         embed.add_field(name=command.name, value=command_description, inline=False)
 
-    embed.set_footer(text="Created by Mishal#1916")
+    embed.set_footer(text=f"{current_language['help_footer']}")
 
     await ctx.send(embed=embed)
 
