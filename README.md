@@ -1,5 +1,5 @@
 # Discord-Chat-bot 🤖
-
+## ⚠️ This uses GPT-4 so it will be slow on response
 
 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, change its profile picture, and provide latency information. It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images.
 
