@@ -7,7 +7,7 @@ import aiohttp
 import discord
 from imaginepy import AsyncImagine, Style, Ratio
 from datetime import datetime
-import model
+from model import Model
 from youtube_transcript_api import YouTubeTranscriptApi
 from discord import Embed, Colour, app_commands
 from discord.ext import commands
@@ -65,7 +65,7 @@ async def on_ready():
 
 # Set up the Chat bot
 instructions = current_language["instructions"]
-
+evagpt4 = Model()
 async def generate_response(history, search, yt_transcript, image_caption, botname, username):
     messages = [
         {"role": "system", "content": f"{instructions}. And your name is {botname} and users name is{username}. And only respond in the language the user is speaking, e.g., Vietnamese or English, etc."},
@@ -77,17 +77,8 @@ async def generate_response(history, search, yt_transcript, image_caption, botna
                        f"Additionally, here is any attachment captioning: {image_caption} if its None then user hasnt provided it "
         }
     ]
-    retries = 0
-    while retries < 3:
-        response = await model.ChatCompletion.create(messages)
-        if response :
-            return response
-        else:
-            print("Retrying........")
-            retries += 1
-            await asyncio.sleep(0.2)
-            
-    return None
+    response = await evagpt4.ChatCompletion(messages)
+    return response
 
 def split_response(response, max_length=1900):
     lines = response.splitlines()
