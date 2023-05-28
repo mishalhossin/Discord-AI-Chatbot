@@ -143,7 +143,7 @@ For Debian-based distributions (such as Ubuntu):
 apt update -y ; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt install docker-compose -y
 ```
 <details>
-<summary><strong>Other linux distro</strong></summary>
+<summary><strong>Other linux distro (Click to expand)</strong></summary>
   
  
 For Red Hat-based distributions (such as CentOS and Fedora):
