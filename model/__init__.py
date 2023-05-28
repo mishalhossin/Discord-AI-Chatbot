@@ -40,4 +40,7 @@ class Model:
                 async for line in response.content:
                     await self._process_line(line)
 
-        return self.accumulated_content
+        accumulated_content = self.accumulated_content
+        self.accumulated_content = ""
+
+        return accumulated_content
