@@ -19,6 +19,9 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
+# Reversed GPT4 Model
+
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/c1e09fba-b0c4-4642-9f10-16c8885fcce1)
 
 ## Image generation
   
@@ -34,9 +37,6 @@ The bot has various features, including image generation using DALL-E, OCR for i
 ## OCR for images (Needs Hugging Face API key)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 
-
-
-
 </details>
 
 <details open>
@@ -48,7 +48,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
-- [x] GPT-3.5-Turbo Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-Turbo language model. 🤖
+- [x] GPT-4 Model: This bot runs on turbo power! Powered by the lightning-fast GPT-4 language model. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
