@@ -7,7 +7,8 @@ import aiohttp
 import discord
 from imaginepy import AsyncImagine, Style, Ratio
 from datetime import datetime
-from model import Model
+from model.eva import Model
+from model import deepai
 from youtube_transcript_api import YouTubeTranscriptApi
 from discord import Embed, Colour, app_commands
 from discord.ext import commands
@@ -77,7 +78,9 @@ async def generate_response(history, search, yt_transcript, image_caption, botna
                        f"Additionally, here is any attachment captioning: {image_caption} if its None then user hasnt provided it "
         }
     ]
-    response = await evagpt4.ChatCompletion(messages)
+    response = await deepai.ChatCompletion.create(messages)
+    if not response:
+        response = await evagpt4.ChatCompletion(messages)
     return response
 
 def split_response(response, max_length=1900):
