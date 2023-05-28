@@ -19,6 +19,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
+
 # Reversed GPT4 Model
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/c1e09fba-b0c4-4642-9f10-16c8885fcce1)
