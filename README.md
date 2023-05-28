@@ -1,5 +1,4 @@
 # Discord-Chat-bot 🤖
-## ⚠️ This utilizes GPT-4, which may result in slightly slower response times.
 
 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, change its profile picture, and provide latency information. It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images.
 
@@ -20,7 +19,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
 
-# Reversed GPT4 Model
+# Reversed GPT4 Model (Not default)
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/c1e09fba-b0c4-4642-9f10-16c8885fcce1)
 
@@ -49,7 +48,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
-- [x] GPT-4 Model: This bot runs on turbo power! Powered by the lightning-fast GPT-4 language model. 🤖
+- [x] GPT-4 Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-turbo language model. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
