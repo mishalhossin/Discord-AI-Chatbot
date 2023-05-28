@@ -1,52 +1,43 @@
-import json
-import hashlib
-import random
-import string
-from fake_useragent import UserAgent
 import aiohttp
+import asyncio
+import json
 
-class ChatCompletion:
-    @classmethod
-    def md5(cls, text):
-        return hashlib.md5(text.encode()).hexdigest()[::-1]
-
-    @classmethod
-    def get_api_key(cls, user_agent):
-        part1 = str(random.randint(0, 10**11))
-        part2 = cls.md5(user_agent + cls.md5(user_agent + cls.md5(user_agent + part1 + "x")))
-        return f"tryit-{part1}-{part2}"
-
-    @classmethod
-    async def create(cls, messages):
-        user_agent = UserAgent().random
-        api_key = cls.get_api_key(user_agent)
-        headers = {
-            "api-key": api_key,
-            "user-agent": user_agent
+class Model:
+    def __init__(self):
+        self.url = "https://ava-alpha-api.codelink.io/api/chat"
+        self.headers = {
+            "content-type": "application/json"
         }
-        files = {
-            "chat_style": (None, "chat"),
-            "chatHistory": (None, json.dumps(messages))
+        self.payload = {
+            "model": "gpt-4",
+            "temperature": 0.6,
+            "stream": True
         }
+        self.accumulated_content = ""
+
+    async def _process_line(self, line):
+        line_text = line.decode("utf-8").strip()
+        if line_text.startswith("data:"):
+            data = line_text[len("data:"):]
+            try:
+                data_json = json.loads(data)
+                if "choices" in data_json:
+                    choices = data_json["choices"]
+                    for choice in choices:
+                        if "finish_reason" in choice and choice["finish_reason"] == "stop":
+                            break
+                        if "delta" in choice and "content" in choice["delta"]:
+                            content = choice["delta"]["content"]
+                            self.accumulated_content += content
+            except json.JSONDecodeError as e:
+                return
+
+    async def ChatCompletion(self, messages):
+        self.payload["messages"] = messages
 
         async with aiohttp.ClientSession() as session:
-            async with session.post("https://api.deepai.org/chat_response", headers=headers, data=files) as response:
-                response.raise_for_status()
-                full_response = ""
-                while True:
-                    chunk = await response.content.read()
-                    if not chunk:
-                        break
-                    full_response += chunk.decode()
+            async with session.post(self.url, headers=self.headers, data=json.dumps(self.payload)) as response:
+                async for line in response.content:
+                    await self._process_line(line)
 
-                return full_response
-
-class Completion:
-    @classmethod
-    async def create(cls, prompt):
-        return await ChatCompletion.create([
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ])
+        return self.accumulated_content
