@@ -39,12 +39,12 @@ valid_language_codes = []
 lang_directory = "lang"
 
 for filename in os.listdir(lang_directory):
-    if filename.startswith("lang.") and os.path.isfile(os.path.join(lang_directory, filename)):
+    if filename.startswith("lang.") and filename.endswith(".json") and os.path.isfile(os.path.join(lang_directory, filename)):
         language_code = filename.split(".")[1]
         valid_language_codes.append(language_code)
 
 def load_current_language():
-    lang_file_path = os.path.join(lang_directory, f"lang.{current_language_code}")
+    lang_file_path = os.path.join(lang_directory, f"lang.{current_language_code}.json")
     with open(lang_file_path, encoding="utf-8") as lang_file:
         current_language = json.load(lang_file)
     return current_language
@@ -150,10 +150,10 @@ async def search(prompt):
 
     return None
 
-api_key = os.getenv('HUGGING_FACE_API')
+
+api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX" # A random string with hf_ prefix
 
 API_URLS = [
-    "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed",
     "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
@@ -185,13 +185,11 @@ async def generate_image(image_prompt, style_value, ratio_value, negative):
 
 async def fetch_response(client, api_url, data):
     headers = {"Content-Type": "application/json"}
-    async with client.post(api_url, headers=headers, data=data, timeout=20) as response:
+    async with client.post(api_url, headers=headers, data=data, timeout=10) as response:
         if response.status != 200:
             raise Exception(f"API request failed with status code {response.status}: {await response.text()}")
 
         return await response.json()
-
-
 
 async def query(filename):
     with open(filename, "rb") as f:
@@ -259,7 +257,7 @@ async def on_message(message):
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
                     caption = await process_image_link(attachment.url)
                     has_image = True
-                    image_caption = f"""{current_language["instruc_image_caption"]}{caption}.]"""
+                    image_caption = f"""User has sent a image{current_language["instruc_image_caption"]}{caption}.]"""
                     print(caption)
                     break
 
@@ -394,15 +392,24 @@ async def bonk(ctx):
     app_commands.Choice(name='4x3', value='RATIO_4X3'),
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
+
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None):
-    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/842555048973172756.gif?size=96&quality=lossless")
+    
     filename = await generate_image(prompt, style.value, ratio.value, negative)
+
+    embed = Embed()
+    embed.set_author(name="Generated Image")
+    embed.add_field(name="Prompt", value=f"`{prompt}`", inline=False)
+    embed.add_field(name="Style", value=f"`{style.name}`", inline=False)
+    embed.add_field(name="Ratio", value=f"`{ratio.value}`", inline=False)
+    embed.set_image(url=f"attachment://{filename}")
+    await defer(ephemeral=False, thinking=True)
     if negative is not None:
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n- Ratio :`{ratio.value}` \n- Negative : `{negative}`", file=discord.File(filename))
-    else:
-        await ctx.send(content=f"Here is the generated image for {ctx.author.mention} \n- Prompt : `{prompt}`\n- Style : `{style.name}`\n- Ratio :`{ratio.value}`", file=discord.File(filename))
+        embed.add_field(name="Negative", value=f"`{negative}`", inline=False)
+
+    await ctx.send(content=f"Here is the generated image for {ctx.author.mention}", embed=embed)
+
     os.remove(filename)
-    await temp_message.edit(content=f"{current_language['imagine_msg']}")
 
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])
 async def nekos(ctx, category):
