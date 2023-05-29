@@ -100,18 +100,15 @@ cd Discord-AI-Chatbot
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 </details>
 
-### Step 4. 🔑 Get hugging face Access Tokens from [HEREE](https://huggingface.co/settings/tokens)
-## Read or Write it dosent matter (I use Write)
-### Step 5. 🔐 Rename `example.env` to `.env` and put the discord token and hugging face access token. It will look like this:
+### Step 4. 🔐 Rename `example.env` to `.env` and put the discord token and hugging face access token. It will look like this:
 ```
-HUGGING_FACE_API=hf_access_token_from_step_4
 DISCORD_TOKEN=token_from_step_3
 ```
-### Step 6. 🚀 Run the bot
+### Step 5. 🚀 Run the bot
 ```
 python main.py
 ```
-### Step 8. Invite the bot
+### Step 6. Invite the bot
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
 #### There are 2 ways to talk to the AI
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
@@ -135,7 +132,7 @@ python main.py
 ### Using docker to run
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 - Have a working bot token
-- Follow up-to step 5
+- Follow up-to step 4
 #### Install docker compose on linux machine :
 For Debian-based distributions (such as Ubuntu):
 ```
