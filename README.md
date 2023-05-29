@@ -25,7 +25,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 ## Image generation
   
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/3919e006-8e7b-400d-8559-9985fc2bddf4)
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/f66ad320-96c5-41ed-92d1-da607b2f5852)
   
 ## YouTube video summary (Any language)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
