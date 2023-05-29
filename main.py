@@ -23,7 +23,7 @@ with open('config.json') as config_file:
 # Set up the Discord bot
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
-TOKEN = os.getenv('DISCORD_TOKEN') # Loads Discord bot token from env
+TOKEN = os.getenv('DISCORD_TOKEN')  # Loads Discord bot token from env
 
 # Keep track of the channels where the bot should be active
 allow_dm = True
@@ -43,13 +43,17 @@ for filename in os.listdir(lang_directory):
         language_code = filename.split(".")[1]
         valid_language_codes.append(language_code)
 
+
 def load_current_language():
-    lang_file_path = os.path.join(lang_directory, f"lang.{current_language_code}.json")
+    lang_file_path = os.path.join(
+        lang_directory, f"lang.{current_language_code}.json")
     with open(lang_file_path, encoding="utf-8") as lang_file:
         current_language = json.load(lang_file)
     return current_language
 
+
 current_language = load_current_language()
+
 
 @bot.event
 async def on_ready():
@@ -67,6 +71,8 @@ async def on_ready():
 # Set up the Chat bot
 instructions = current_language["instructions"]
 evagpt4 = Model()
+
+
 async def generate_response(history, search, yt_transcript, image_caption, botname, username):
     messages = [
         {"role": "system", "content": f"{instructions}. And your name is {botname} and users name is{username}. And only respond in the language the user is speaking, e.g., Vietnamese or English, etc."},
@@ -82,6 +88,7 @@ async def generate_response(history, search, yt_transcript, image_caption, botna
     if not response:
         response = await evagpt4.ChatCompletion(messages)
     return response
+
 
 def split_response(response, max_length=1900):
     lines = response.splitlines()
@@ -102,9 +109,11 @@ def split_response(response, max_length=1900):
 
     return chunks
 
+
 async def get_transcript_from_message(message_content):
     def extract_video_id(message_content):
-        youtube_link_pattern = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')
+        youtube_link_pattern = re.compile(
+            r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')
         match = youtube_link_pattern.search(message_content)
         return match.group(6) if match else None
 
@@ -118,23 +127,25 @@ async def get_transcript_from_message(message_content):
         return None
 
     translated_transcript = first_transcript.translate('en')
-    formatted_transcript = ". ".join([entry['text'] for entry in translated_transcript.fetch()])
+    formatted_transcript = ". ".join(
+        [entry['text'] for entry in translated_transcript.fetch()])
     formatted_transcript = formatted_transcript[:2500]
 
     response = f"Summarizing the following in 10 bullet points ::\n\n{formatted_transcript}\n\n\n.Provide a summary or additional information based on the content."
 
     return response
 
+
 async def search(prompt):
     if not internet_access:
         return
 
     wh_words = ['search', 'find', 'who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how',
-         'is', 'are', 'am', 'can', 'could', 'should', 'would', 'do', 'does', 'did',
-         'may', 'might', 'shall', 'will', 'have', 'has', 'had', 'must', 'ought', 'need',
-         'want', 'like', 'prefer', 'tìm', 'tìm kiếm', 'làm sao', 'khi nào', 'hỏi', 'nào', 'google',
-         'muốn hỏi', 'phải làm', 'cho hỏi']
-                
+                'is', 'are', 'am', 'can', 'could', 'should', 'would', 'do', 'does', 'did',
+                'may', 'might', 'shall', 'will', 'have', 'has', 'had', 'must', 'ought', 'need',
+                'want', 'like', 'prefer', 'tìm', 'tìm kiếm', 'làm sao', 'khi nào', 'hỏi', 'nào', 'google',
+                'muốn hỏi', 'phải làm', 'cho hỏi']
+
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     async with aiohttp.ClientSession() as session:
@@ -151,12 +162,14 @@ async def search(prompt):
     return None
 
 
-api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX" # A random string with hf_ prefix
+# A random string with hf_ prefix
+api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX"
 
 API_URLS = [
     "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
+
 
 async def generate_image(image_prompt, style_value, ratio_value, negative):
     imagine = AsyncImagine()
@@ -183,6 +196,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative):
 
     return filename
 
+
 async def fetch_response(client, api_url, data):
     headers = {"Content-Type": "application/json"}
     async with client.post(api_url, headers=headers, data=data, timeout=10) as response:
@@ -190,6 +204,7 @@ async def fetch_response(client, api_url, data):
             raise Exception(f"API request failed with status code {response.status}: {await response.text()}")
 
         return await response.json()
+
 
 async def query(filename):
     with open(filename, "rb") as f:
@@ -202,7 +217,6 @@ async def query(filename):
     return responses
 
 
-
 async def download_image(image_url, save_as):
     async with aiohttp.ClientSession() as session:
         async with session.get(image_url) as response:
@@ -213,6 +227,7 @@ async def download_image(image_url, save_as):
                         break
                     f.write(chunk)
     await session.close()
+
 
 async def process_image_link(image_url):
     image_type = image_url.split('.')[-1]
@@ -227,6 +242,7 @@ async def process_image_link(image_url):
 message_history = {}
 MAX_HISTORY = 8
 
+
 @bot.event
 async def on_message(message):
     if message.author.bot:
@@ -238,14 +254,16 @@ async def on_message(message):
     if author_id not in message_history:
         message_history[author_id] = []
 
-    message_history[author_id].append({"role": "user", "content": message.content})
+    message_history[author_id].append(
+        {"role": "user", "content": message.content})
     message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
 
     is_replied = message.reference and message.reference.resolved.author == bot.user
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     is_active_channel = message.channel.id in active_channels
     is_allowed_dm = allow_dm and is_dm_channel
-    contains_trigger_word = any(word in message.content for word in trigger_words)
+    contains_trigger_word = any(
+        word in message.content for word in trigger_words)
     is_bot_mentioned = bot.user.mentioned_in(message)
     bot_name_in_message = bot.user.name.lower() in message.content.lower()
 
@@ -270,14 +288,15 @@ async def on_message(message):
         async def generate_response_in_thread(history, yt_transcript, image_caption, botname, username):
             temp_message = await message.channel.send("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             response = await generate_response(history, search_results, yt_transcript, image_caption, botname, username)
-            message_history[author_id].append({"role": "assistant", "content": response})
+            message_history[author_id].append(
+                {"role": "assistant", "content": response})
             chunks = split_response(response)
             for chunk in chunks:
                 await message.reply(chunk)
             await temp_message.delete()
         async with message.channel.typing():
-            asyncio.create_task(generate_response_in_thread(history, yt_transcript, image_caption, botname, username))
-
+            asyncio.create_task(generate_response_in_thread(
+                history, yt_transcript, image_caption, botname, username))
 
 
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])
@@ -297,10 +316,12 @@ async def pfp(ctx, attachment_url=None):
         async with session.get(attachment_url) as response:
             await bot.user.edit(avatar=await response.read())
 
+
 @bot.hybrid_command(name="ping", description=current_language["ping"])
 async def ping(ctx):
     latency = bot.latency * 1000
     await ctx.send(f"{current_language['ping_msg']}{latency:.2f} ms")
+
 
 @bot.hybrid_command(name="changeusr", description=current_language["changeusr"])
 @commands.is_owner()
@@ -323,6 +344,7 @@ async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
     await ctx.send(f"DMs are now {'on' if allow_dm else 'off'}")
+
 
 @bot.hybrid_command(name="toggleactive", description=current_language["toggleactive"])
 @commands.has_permissions(administrator=True)
@@ -392,24 +414,28 @@ async def bonk(ctx):
     app_commands.Choice(name='4x3', value='RATIO_4X3'),
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
-
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None):
-    
+    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1090374670559236188.gif")
+
     filename = await generate_image(prompt, style.value, ratio.value, negative)
 
-    embed = Embed()
+    file = discord.File(filename, filename="image.png")
+
+    embed = Embed(color=0x008bd1)
     embed.set_author(name="Generated Image")
-    embed.add_field(name="Prompt", value=f"`{prompt}`", inline=False)
-    embed.add_field(name="Style", value=f"`{style.name}`", inline=False)
-    embed.add_field(name="Ratio", value=f"`{ratio.value}`", inline=False)
-    embed.set_image(url=f"attachment://{filename}")
-    await defer(ephemeral=False, thinking=True)
+    embed.add_field(name="Prompt", value=f"{prompt}", inline=True)
+    embed.add_field(name="Style", value=f"{style.name}", inline=True)
+    embed.add_field(name="Ratio", value=f"{ratio.value}`", inline=True)
+    embed.set_image(url="attachment://image.png")
+
     if negative is not None:
         embed.add_field(name="Negative", value=f"`{negative}`", inline=False)
 
-    await ctx.send(content=f"Here is the generated image for {ctx.author.mention}", embed=embed)
+    await ctx.send(content=f"Generated image for {ctx.author.mention}", file=file, embed=embed)
+    await temp_message.edit(content=f"{current_language['imagine_msg']}")
 
     os.remove(filename)
+
 
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])
 async def nekos(ctx, category):
@@ -449,6 +475,7 @@ async def nekos(ctx, category):
 
 bot.remove_command("help")
 
+
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x03a1fc)
@@ -458,11 +485,13 @@ async def help(ctx):
         if command.hidden:
             continue
         command_description = command.description or "No description available"
-        embed.add_field(name=command.name, value=command_description, inline=False)
+        embed.add_field(name=command.name,
+                        value=command_description, inline=False)
 
     embed.set_footer(text=f"{current_language['help_footer']}")
 
     await ctx.send(embed=embed)
+
 
 @bot.event
 async def on_command_error(ctx, error):
