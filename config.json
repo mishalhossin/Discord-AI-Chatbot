@@ -1,3 +1,13 @@
 {
-    "TRIGGER": ["bot nickname", "bot alias", "bot name", "Other bot alias..."]
+
+    "TRIGGER": ["bot nickname", "bot alias", "bot name", "Other bot alias..."],
+    "//comment TRIGGER": "Triggers where bot should respond to",
+
+    "LANGUAGE" : "en",
+    "//comment LANGUAGE": "Check for valid Language code in 'lang' folder",
+
+    "INSTRUCTIONS" : "assist",
+    "//comment INSTRUCTIONS": "Check for valid instruction prompts in the instruction folder, such as 'assist,' 'girlfriend,'",
+    "//comment2 INSTRUCTIONS": "To add more prompts in instructions folder create a .txt file like custom.txt but you will need to set INSTRUCTIONS as custom on line 9"
+    
 }
