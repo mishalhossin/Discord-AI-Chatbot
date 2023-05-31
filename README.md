@@ -16,12 +16,17 @@ The bot has various features, including image generation using DALL-E, OCR for i
   </a>
 </p>
 
+
+# Custom personality
+
+To create a custom personality, follow these steps:
+1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
+2. Add the the way you want to bot to act in `custom.txt`
+3. Open the `config.json` file and locate line 9.
+4. Set the value of line 9 as `"custom"` to specify the custom persona.
+
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
-
-# Reversed GPT4 Model (Not default)
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/c1e09fba-b0c4-4642-9f10-16c8885fcce1)
 
 ## Image generation
   
@@ -30,7 +35,6 @@ The bot has various features, including image generation using DALL-E, OCR for i
 ## YouTube video summary (Any language)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
   
-
 ## Web access using DuckDuckGo
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
 
@@ -48,7 +52,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
-- [x] GPT-4 Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-turbo language model. 🤖
+- [x] GPT-3.5 Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-turbo language model. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
