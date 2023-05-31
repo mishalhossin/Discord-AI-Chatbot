@@ -348,7 +348,9 @@ async def changeusr(ctx, new_username):
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
-    await ctx.send(f"DMs are now {'on' if allow_dm else 'off'}")
+    message = await ctx.send(f"DMs are now {'on' if allow_dm else 'off'}")
+    await asyncio.sleep(3)
+    await message.delete()
 
 
 @bot.hybrid_command(name="toggleactive", description=current_language["toggleactive"])
@@ -360,15 +362,19 @@ async def toggleactive(ctx):
         with open("channels.txt", "w") as f:
             for id in active_channels:
                 f.write(str(id) + "\n")
-        await ctx.send(
+        message = await ctx.send(
             f"{ctx.channel.mention} {current_language['toggleactive_msg_1']}"
         )
+        await asyncio.sleep(3)
+        await message.delete()
     else:
         active_channels.add(channel_id)
         with open("channels.txt", "a") as f:
             f.write(str(channel_id) + "\n")
-        await ctx.send(
+        message = await ctx.send(
             f"{ctx.channel.mention} {current_language['toggleactive_msg_2']}")
+        await asyncio.sleep(3)
+        await message.delete()
 
 # Read the active channels from channels.txt on startup
 if os.path.exists("channels.txt"):
@@ -381,7 +387,9 @@ if os.path.exists("channels.txt"):
 @bot.hybrid_command(name="bonk", description=current_language["bonk"])
 async def bonk(ctx):
     message_history.clear()  # Reset the message history dictionary
-    await ctx.send(f"{current_language['bonk_msg']}")
+    message = await ctx.send(f"{current_language['bonk_msg']}")
+    await asyncio.sleep(3)
+    await message.delete()
 
 
 @bot.hybrid_command(name="imagine", description=current_language["imagine"])
