@@ -68,7 +68,7 @@ current_language = load_current_language()
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.change_presence(activity=discord.Game(name="Coded by Mishal#1916"))
+    await bot.change_presence(activity=discord.Game(name=config['PRESENCE']))
     print(f"{bot.user} aka {bot.user.name} has connected to Discord!")
 
     invite_link = discord.utils.oauth_url(
