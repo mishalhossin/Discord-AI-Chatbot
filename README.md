@@ -67,7 +67,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
-# Custom personality
+# Custom personality 😋
 
 To create a custom personality, follow these steps:
 1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
