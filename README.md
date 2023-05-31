@@ -16,15 +16,6 @@ The bot has various features, including image generation using DALL-E, OCR for i
   </a>
 </p>
 
-
-# Custom personality
-
-To create a custom personality, follow these steps:
-1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
-2. Add the the way you want to bot to act in `custom.txt`
-3. Open the `config.json` file and locate line 9.
-4. Set the value of line 9 as `"custom"` to specify the custom persona.
-
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
 
@@ -43,8 +34,8 @@ To create a custom personality, follow these steps:
 
 </details>
 
-<details open>
-<summary><strong>Features ✨</strong></summary>
+<details>
+<summary><strong>Features ✨ (Click to expand) </strong></summary>
 
 - [x] Hybrid Command System: Get the best of slash and normal commands. It's like a buffet! ⚙️
 - [x] Imagine generation: Make your imagination come true for free 🤖
@@ -61,8 +52,8 @@ To create a custom personality, follow these steps:
 
 </details>
 
-<details open>
-<summary><strong>Commands ⚙️⚙️</strong></summary>
+<details>
+<summary><strong>Commands ⚙️⚙️ (Click to expand) </strong></summary>
 
 - [x] `/pfp [image_url]`: Change the bot's actual profile picture.
 - [x] `/changeusr [new_username]`: Change the bot's username.
@@ -79,6 +70,14 @@ To create a custom personality, follow these steps:
 # Easy Installation with the Installation Helper
 
 If the following steps seem too daunting for you, don't worry! We have the perfect solution. Introducing our ⚡blazing fast [Installation Helper](https://github.com/mishalhossin/installation-helper)!! (Supports windows and linux) It's like having a tech-savvy genie at your fingertips, ready to grant all your installation wishes. Just remember, if it starts demanding three wishes and a magic lamp, you might be in the wrong folder! <img src="https://cdn.discordapp.com/emojis/929956006363009034.webp?size=96&quality=lossless" alt="Emoji" width="20" height="20">
+
+# Custom personality
+
+To create a custom personality, follow these steps:
+1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
+2. Add the the way you want to bot to act in `custom.txt`
+3. Open the `config.json` file and locate line 9.
+4. Set the value of line 9 as `"custom"` to specify the custom persona.
 
 # Installation steps  🚩 :
 ### Step 1. 🎬 Git clone repository
