@@ -289,7 +289,7 @@ async def on_message(message):
         if yt_transcript is not None:
             prompt = f"{yt_transcript}"
         else:
-            prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}"
+            prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n\n{bot.user.name}:"
         async def generate_response_in_thread(prompt):
             temp_message = await message.channel.send("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             response = await generate_response(prompt)
