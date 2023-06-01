@@ -4,7 +4,7 @@
     "//comment TRIGGER": "Triggers to which bot should respond",
 
     "PRESENCE": "Coded by Mishal#1916",
-    "//comment PRESENCE": "What Discord will say the bot is playing",
+    "//comment PRESENCE": "Change PRESENCE on Discord, e.g.: Playing Coded by Mishal#1916",
 
     "LANGUAGE" : "en",
     "//comment LANGUAGE": "Check for valid Language code in 'lang' folder",
