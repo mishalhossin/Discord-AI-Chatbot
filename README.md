@@ -4,9 +4,16 @@ This is a Python-based Discord chat bot that uses the discord.py library. It can
 
 The bot has various features, including image generation using DALL-E, OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
 
-### Please support this project on Patreon. Your donation is crucial for its sustainability. Without your help, the project's future is at risk. Thank you.
+### Your donation is crucial for its sustainability. Without your help, the project's future is at risk. Thank you.
   <a href="https://www.patreon.com/mishalhossin">
     <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
+  </a>
+</p>
+
+# Support server
+
+  <a href="[https://www.patreon.com/mishalhossin](https://discord.gg/3V5TcfsE8C)">
+    <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
   </a>
 </p>
 
@@ -179,12 +186,6 @@ sudo zypper update -y && sudo zypper install -y docker-compose
 ```
 sudo docker-compose up --build
 ```
-## My Discord
-
-  <a href="https://discord.com/users/1025245410224263258">
-    <img src="https://lanyard.cnrad.dev/api/1025245410224263258?theme=dark&bg=171515&borderRadius=5px&animated=true&idleMessage=15%20year%20old%20dev">
-  </a>
-</p>
 
 ### Lovely Contributors : 
 
