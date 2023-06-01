@@ -252,13 +252,6 @@ async def on_message(message):
     if message.reference and message.reference.resolved.author != bot.user:
       return  # Ignore replies to messages
 
-    author_id = str(message.author.id)
-    if author_id not in message_history:
-        message_history[author_id] = []
-
-    message_history[author_id].append(f"{message.author.name} : {message.content}")
-    message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-
     is_replied = message.reference and message.reference.resolved.author == bot.user
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     is_active_channel = message.channel.id in active_channels
@@ -268,6 +261,15 @@ async def on_message(message):
     bot_name_in_message = bot.user.name.lower() in message.content.lower()
 
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
+        
+        
+        author_id = str(message.author.id)
+        if author_id not in message_history:
+            message_history[author_id] = []
+
+        message_history[author_id].append(f"{message.author.name} : {message.content}")
+        message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
+        
         has_image = False
         image_caption = ""
         if message.attachments:
