@@ -38,7 +38,7 @@ instruction = {}
 for file_name in os.listdir("instructions"):
     if file_name.endswith('.txt'):
         file_path = os.path.join("instructions", file_name)
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             file_content = file.read()
             variable_name = file_name.split('.')[0]  # Use the file name without extension as the variable name
             instruction[variable_name] = file_content
