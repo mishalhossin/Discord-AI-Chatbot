@@ -12,7 +12,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 # Support server
 
-  <a href="[https://www.patreon.com/mishalhossin](https://discord.gg/3V5TcfsE8C)">
+  <a href="https://discord.gg/3V5TcfsE8C">
     <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
   </a>
 </p>
