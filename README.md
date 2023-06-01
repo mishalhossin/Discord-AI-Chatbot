@@ -186,7 +186,7 @@ sudo zypper update -y && sudo zypper install -y docker-compose
 sudo docker-compose up --build
 ```
 
-### Contributors
+### Lovely Contributors : 
 
 <a href="https://github.com/mishalhossin/Discord-AI-Chatbot/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=mishalhossin/Discord-AI-Chatbot" />
