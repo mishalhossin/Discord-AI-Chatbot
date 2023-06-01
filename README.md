@@ -82,8 +82,8 @@ Personalities can be selected in config.json at [line 12](https://github.com/mis
 To create a custom personality, follow these steps:
 1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
 2. Add the the way you want to bot to act in `custom.txt`
-3. Open the `config.json` file and locate line 9.
-4. Set the value of line 9 as `"custom"` to specify the custom persona.
+3. Open the `config.json` file and locate [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12).
+4. Set the value of [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12) as `"custom"` to specify the custom persona.
 
 </details>
 
