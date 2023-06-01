@@ -67,7 +67,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
-# Personalities 😋
+# Personalities 😈
 Personalities can be selected in config.json at [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12) with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` and `assist`
 - `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints
 - `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical or moral guidelines
@@ -76,7 +76,8 @@ Personalities can be selected in config.json at [line 12](https://github.com/mis
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳
 - `assist`: Vanila GPT with no personality
 
-# Creating a Personality 😋
+<details>
+<summary><strong> Creating a Personality 😋 (Click to expand)</strong></summary>
 
 To create a custom personality, follow these steps:
 1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
@@ -84,6 +85,7 @@ To create a custom personality, follow these steps:
 3. Open the `config.json` file and locate line 9.
 4. Set the value of line 9 as `"custom"` to specify the custom persona.
 
+</details>
 
 # Installation steps  🚩 :
 ### Step 1. 🎬 Git clone repository
