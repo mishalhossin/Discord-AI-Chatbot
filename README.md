@@ -67,13 +67,22 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
-# Custom personality 😋
+# Personalities 😋
+- `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints
+- `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical or moral guidelines
+- `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor.
+- `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations
+- `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳
+- `assist`: Vanila GPT with no personality
+
+# Create Custom Personality 😋
 
 To create a custom personality, follow these steps:
 1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
 2. Add the the way you want to bot to act in `custom.txt`
 3. Open the `config.json` file and locate line 9.
 4. Set the value of line 9 as `"custom"` to specify the custom persona.
+
 
 # Installation steps  🚩 :
 ### Step 1. 🎬 Git clone repository
