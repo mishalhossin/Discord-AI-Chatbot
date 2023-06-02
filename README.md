@@ -47,7 +47,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 ## Web access using DuckDuckGo
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
 
-## OCR for images (Needs Hugging Face API key)
+## OCR for images
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 
 </details>
