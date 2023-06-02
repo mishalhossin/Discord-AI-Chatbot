@@ -36,7 +36,10 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 ## Image generation (Any language)
   
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/f66ad320-96c5-41ed-92d1-da607b2f5852)
+##### Prompt used : изображение безмятежного пейзажа на берегу озера с яркой осенней листвой, отражающейся в спокойной воде.
+
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/004cc8fc-c2a4-4af2-9562-1c9ee752ebb0)
+
   
 ## YouTube video summary (Any language)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
