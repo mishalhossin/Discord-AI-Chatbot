@@ -419,9 +419,11 @@ async def bonk(ctx):
 
 @bot.hybrid_command(name="imagine", description=current_language["imagine"])
 @app_commands.choices(style=[
+    app_commands.Choice(name='Imagine V3', value='IMAGINE_V3'),
     app_commands.Choice(name='Imagine V4 Beta', value='IMAGINE_V4_Beta'),
-    app_commands.Choice(name='Realistic', value='REALISTIC'),
+    app_commands.Choice(name='Imagine V4 creative', value='V4_CREATIVE'),
     app_commands.Choice(name='Anime', value='ANIME_V2'),
+    app_commands.Choice(name='Realistic', value='REALISTIC'),
     app_commands.Choice(name='Disney', value='DISNEY'),
     app_commands.Choice(name='Studio Ghibli', value='STUDIO_GHIBLI'),
     app_commands.Choice(name='Graffiti', value='GRAFFITI'),
@@ -434,8 +436,6 @@ async def bonk(ctx):
     app_commands.Choice(name='Steampunk', value='STEAMPUNK'),
     app_commands.Choice(name='Sketch', value='SKETCH'),
     app_commands.Choice(name='Comic Book', value='COMIC_BOOK'),
-    app_commands.Choice(name='Imagine V4 creative', value='V4_CREATIVE'),
-    app_commands.Choice(name='Imagine V3', value='IMAGINE_V3'),
     app_commands.Choice(name='Cosmic', value='COMIC_V2'),
     app_commands.Choice(name='Logo', value='LOGO'),
     app_commands.Choice(name='Pixel art', value='PIXEL_ART'),
