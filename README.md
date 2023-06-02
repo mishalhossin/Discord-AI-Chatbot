@@ -85,6 +85,20 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 </details>
 
+
+<details>
+<summary><strong>🌐 Language Selection (Click to Expand)</strong></summary>
+To select a Language, set the value of "LANGUAGE" at Line 9 to one of config.json with the valid ISO Codes listed below:
+
+- en - English 🇺🇸
+- es - Español 🇪🇸
+- vn - Vietnamese 🇻🇳
+- cn - Chinese 🇨🇳
+- ru - Russian 🇷🇺
+- ua - Ukrainian 🇺🇦
+
+</details>
+
 <details>
 <summary><strong> Selecting Personalities 😈 (Click to expand)</strong></summary>
 To select one of the Personalities set the values of "INSTRUCTIONS" at line 12 
