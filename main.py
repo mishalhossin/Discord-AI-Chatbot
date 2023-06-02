@@ -475,23 +475,16 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
 
     os.remove(filename)
 
-
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])
-async def nekos(ctx, category):
+@app_commands.choices(category=[
+    app_commands.Choice(name=category.capitalize(), value=category)
+    for category in ['baka', 'husbando', 'kitsune', 'neko', 'waifu',
+                     'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance']
+])
+async def nekos(ctx, category: app_commands.Choice[str]):
     base_url = "https://nekos.best/api/v2/"
 
-    valid_categories = ['husbando', 'kitsune', 'neko', 'waifu',
-                        'baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance',
-                        'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug',
-                        'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke',
-                        'pout', 'punch', 'shoot', 'shrug', 'slap', 'sleep', 'smile',
-                        'smug', 'stare', 'think', 'thumbsup', 'tickle', 'wave', 'wink', 'yeet']
-
-    if category not in valid_categories:
-        await ctx.send(f"{current_language['nekos_msg']}```{', '.join(valid_categories)}```")
-        return
-
-    url = base_url + category
+    url = base_url + category.value
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
@@ -511,7 +504,6 @@ async def nekos(ctx, category):
             embed = Embed(colour=Colour.blue())
             embed.set_image(url=image_url)
             await ctx.send(embed=embed)
-
 
 bot.remove_command("help")
 
