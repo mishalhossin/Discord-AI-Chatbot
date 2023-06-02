@@ -115,7 +115,7 @@ You don't explicitly need use the name `custom` for persona name and set it in c
   
 </details>
 
-# Installation steps  🚩 :
+# Installation steps  🚩
 ### Step 1. 🎬 Git clone repository
 ```
 git clone https://github.com/mishalhossin/Discord-AI-Chatbot
