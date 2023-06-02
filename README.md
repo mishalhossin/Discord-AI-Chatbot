@@ -104,6 +104,9 @@ To create a custom personality, follow these steps:
 3. Open the `config.json` file and locate [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12).
 4. Set the value of INSTRUCTIONS at [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12) as `"custom"` to specify the custom persona.
 
+  
+You don't explicitly need use the name `custom` for persona name and set it in config.json
+  
 </details>
 
 # Installation steps  🚩 :
