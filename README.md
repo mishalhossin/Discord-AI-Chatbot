@@ -87,7 +87,7 @@ The bot has various features, including image generation using DALL-E, OCR for i
 
 
 <details>
-<summary><strong>🌐 Language Selection (Click to Expand)</strong></summary>
+<summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
 
 To select a Language, set the value of "LANGUAGE" at Line 9 of `config.json` with the valid ISO Codes listed below:
 
@@ -98,6 +98,8 @@ To select a Language, set the value of "LANGUAGE" at Line 9 of `config.json` wit
 - `ru` - Russian 🇷🇺
 - `ua` - Ukrainian 🇺🇦
 
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/a4357cb3e4a22931923ac137aec34af7e95b7234/config.json#L9  
+  
 Your language not listed? Create an issue.
 
 </details>
