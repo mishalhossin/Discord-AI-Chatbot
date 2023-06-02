@@ -1,15 +1,16 @@
-import aiohttp
 import json
+
+import aiohttp
 
 
 class Completion:
     @staticmethod
     async def create(
-        systemMessage: str = "You are a helpful assistant",
-        prompt: str = "",
-        parentMessageId: str = "",
-        temperature: float = 0.8,
-        top_p: float = 1,
+            systemMessage: str = "You are a helpful assistant",
+            prompt: str = "",
+            parentMessageId: str = "",
+            temperature: float = 0.8,
+            top_p: float = 1,
     ):
         json_data = {
             "prompt": prompt,

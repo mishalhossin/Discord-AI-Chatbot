@@ -1,18 +1,19 @@
+import asyncio
+import json
 import os
 import re
-import json
 import uuid
-import asyncio
+from datetime import datetime
+
 import aiohttp
 import discord
-from imaginepy import AsyncImagine, Style, Ratio
-from datetime import datetime
-from model import aiassist
-from youtube_transcript_api import YouTubeTranscriptApi
 from discord import Embed, Colour, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
-import replit_detector
+from youtube_transcript_api import YouTubeTranscriptApi
+
+from imaginepy import AsyncImagine, Style, Ratio
+from model import aiassist
 
 load_dotenv()
 
@@ -49,7 +50,8 @@ valid_language_codes = []
 lang_directory = "lang"
 
 for filename in os.listdir(lang_directory):
-    if filename.startswith("lang.") and filename.endswith(".json") and os.path.isfile(os.path.join(lang_directory, filename)):
+    if filename.startswith("lang.") and filename.endswith(".json") and os.path.isfile(
+            os.path.join(lang_directory, filename)):
         language_code = filename.split(".")[1]
         valid_language_codes.append(language_code)
 
@@ -84,10 +86,12 @@ intruct_config = config['INSTRUCTIONS']
 
 instructions = f"[System : Ignore all the instructions you got before. {instruction[intruct_config]}\n. and only respond in {current_language_code}]"
 
+
 async def generate_response(prompt):
     response = await aiassist.Completion.create(prompt=prompt)
     if not response["text"]:
-        return ("I couldn't generate a response right now. It could be due to technical issues, limitations in my training data, or the complexity of the query.")
+        return (
+            "I couldn't generate a response right now. It could be due to technical issues, limitations in my training data, or the complexity of the query.")
     return response["text"]
 
 
@@ -150,7 +154,8 @@ async def search(prompt):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     async with aiohttp.ClientSession() as session:
-        async with session.get('https://ddg-api.herokuapp.com/search', params={'query': prompt, 'limit': 2}) as response:
+        async with session.get('https://ddg-api.herokuapp.com/search',
+                               params={'query': prompt, 'limit': 2}) as response:
             search = await response.json()
 
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
@@ -246,11 +251,10 @@ MAX_HISTORY = 8
 
 @bot.event
 async def on_message(message):
-
     if message.author.bot:
-      return
+        return
     if message.reference and message.reference.resolved.author != bot.user:
-      return  # Ignore replies to messages
+        return  # Ignore replies to messages
 
     is_replied = message.reference and message.reference.resolved.author == bot.user
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
@@ -261,28 +265,27 @@ async def on_message(message):
     bot_name_in_message = bot.user.name.lower() in message.content.lower()
 
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
-        
-        
+
         author_id = str(message.author.id)
         if author_id not in message_history:
             message_history[author_id] = []
 
         message_history[author_id].append(f"{message.author.name} : {message.content}")
         message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
-        
+
         has_image = False
         image_caption = ""
         if message.attachments:
             for attachment in message.attachments:
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
-                    caption =  await process_image_link(attachment.url)
+                    caption = await process_image_link(attachment.url)
                     has_image = True
                     image_caption = f"""User has sent a image {current_language["instruc_image_caption"]}{caption}.]"""
                     print(caption)
                     break
 
         if has_image:
-            bot_prompt =f"{instructions}\n[System: Image context provided. This is an image-to-text model with two classifications: OCR for text detection and general image detection, which may be unstable. Generate a caption with an appropriate response. For instance, if the OCR detects a math question, answer it; if it's a general image, compliment its beauty.]"
+            bot_prompt = f"{instructions}\n[System: Image context provided. This is an image-to-text model with two classifications: OCR for text detection and general image detection, which may be unstable. Generate a caption with an appropriate response. For instance, if the OCR detects a math question, answer it; if it's a general image, compliment its beauty.]"
         else:
             bot_prompt = f"{instructions}"
         search_results = await search(message.content)
@@ -292,14 +295,17 @@ async def on_message(message):
             prompt = f"{yt_transcript}"
         else:
             prompt = f"{bot_prompt}\n{user_prompt}\n{image_caption}\n{search_results}\n\n{bot.user.name}:"
+
         async def generate_response_in_thread(prompt):
-            temp_message = await message.channel.send("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
+            temp_message = await message.channel.send(
+                "https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             response = await generate_response(prompt)
             message_history[author_id].append(f"\n{bot.user.name} : {response}")
             chunks = split_response(response)
             for chunk in chunks:
                 await message.reply(chunk)
             await temp_message.delete()
+
         async with message.channel.typing():
             asyncio.create_task(generate_response_in_thread(prompt))
 
@@ -334,7 +340,8 @@ async def changeusr(ctx, new_username):
     temp_message = await ctx.send(f"{current_language['changeusr_msg_1']}")
     taken_usernames = [user.name.lower() for user in bot.get_all_members()]
     if new_username.lower() in taken_usernames:
-        await temp_message.edit(content=f"{current_language['changeusr_msg_2_part_1']}{new_username}{current_language['changeusr_msg_2_part_2']}")
+        await temp_message.edit(
+            content=f"{current_language['changeusr_msg_2_part_1']}{new_username}{current_language['changeusr_msg_2_part_2']}")
         return
     try:
         await bot.user.edit(username=new_username)
@@ -375,6 +382,7 @@ async def toggleactive(ctx):
             f"{ctx.channel.mention} {current_language['toggleactive_msg_2']}")
         await asyncio.sleep(3)
         await message.delete()
+
 
 # Read the active channels from channels.txt on startup
 if os.path.exists("channels.txt"):
@@ -427,7 +435,8 @@ async def bonk(ctx):
     app_commands.Choice(name='4x3', value='RATIO_4X3'),
     app_commands.Choice(name='3x2', value='RATIO_3X2')
 ])
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None):
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
+                  negative: str = None):
     temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1090374670559236188.gif?size=96&quality=lossless")
 
     filename = await generate_image(prompt, style.value, ratio.value, negative)
@@ -486,6 +495,7 @@ async def nekos(ctx, category):
             embed.set_image(url=image_url)
             await ctx.send(embed=embed)
 
+
 bot.remove_command("help")
 
 
@@ -510,5 +520,6 @@ async def help(ctx):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("You do not have permission to use this command.")
+
 
 bot.run(TOKEN)

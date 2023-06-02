@@ -1,6 +1,7 @@
-from langdetect import detect
-import aiohttp
 import io
+
+import aiohttp
+from langdetect import detect
 
 from .constants import *
 
@@ -33,18 +34,18 @@ class AsyncImagine:
     def get_style_url(self, style: Style = Style.IMAGINE_V1) -> str:
         """Get link of style thumbnail"""
         return f"{self.asset}/appStuff/imagine-fncisndcubnsduigfuds//assets/{style.value[2]}/{style.value[1]}.webp"
-    
-    def bytes_to_io(self, data:bytes, filename:str) -> io.BytesIO:
+
+    def bytes_to_io(self, data: bytes, filename: str) -> io.BytesIO:
         """Convert bytes to io.BytesIO with name for sending"""
         bio = io.BytesIO(data)
-        bio.name=filename
+        bio.name = filename
         return bio
-    
+
     async def assets(self, style: Style = Style.IMAGINE_V1) -> bytes:
         """Gets the assets."""
         async with self.session.get(
-            url=self.get_style_url(style=style)
-            ) as resp:
+                url=self.get_style_url(style=style)
+        ) as resp:
             return await resp.read()
 
     async def variate(self, image: bytes, prompt: str, style: Style = Style.IMAGINE_V1) -> bytes:
@@ -57,10 +58,12 @@ class AsyncImagine:
                     "style_id": str(style.value[0]),
                     "image": self.bytes_to_io(image, "image.png")
                 }
-            ) as resp:
+        ) as resp:
             return await resp.read()
 
-    async def sdprem(self, prompt: str, negative: str = None, priority: str = None, steps: str = None, high_res_results: str = None, style: Style = Style.IMAGINE_V1, seed: str = None, ratio: Ratio = Ratio.RATIO_1X1, cfg: float = 9.5) -> bytes:
+    async def sdprem(self, prompt: str, negative: str = None, priority: str = None, steps: str = None,
+                     high_res_results: str = None, style: Style = Style.IMAGINE_V1, seed: str = None,
+                     ratio: Ratio = Ratio.RATIO_1X1, cfg: float = 9.5) -> bytes:
         """Generates AI Art."""
         try:
             validated_cfg = validate_cfg(cfg)
@@ -84,12 +87,11 @@ class AsyncImagine:
                         "priority": priority or "0",
                         "high_res_results": high_res_results or "0"
                     }
-                ) as resp:
+            ) as resp:
                 return await resp.read()
         except Exception as e:
             print(f"An error occurred while making the request: {e}")
             return None
-
 
     async def upscale(self, image: bytes) -> bytes:
         """Upscales the image."""
@@ -100,12 +102,11 @@ class AsyncImagine:
                         "model_version": self.version,
                         "image": self.bytes_to_io(image, "test.png")
                     }
-                ) as resp:
+            ) as resp:
                 return await resp.read()
         except Exception as e:
             print(f"An error occurred while making the request: {e}")
             return None
-
 
     async def translate(self, prompt: str) -> str:
         """Translates the prompt."""
@@ -116,9 +117,8 @@ class AsyncImagine:
                     "source": detect(prompt),
                     "target": "en"
                 }
-            ) as resp:
+        ) as resp:
             return (await resp.json())["translatedText"]
-
 
     async def interrogator(self, image: bytes) -> str:
         """Generates a prompt."""
@@ -126,11 +126,10 @@ class AsyncImagine:
                 url=f"{self.api}/interrogator",
                 data={
                     "model_version": str(self.version),
-                    "image": self.bytes_to_io(image,"prompt_generator_temp.png")
+                    "image": self.bytes_to_io(image, "prompt_generator_temp.png")
                 }
-            ) as resp:
+        ) as resp:
             return await resp.text()
-
 
     async def sdimg(self, image: bytes, prompt: str, negative: str = None, seed: str = None, cfg: float = 9.5) -> bytes:
         """Performs inpainting."""
@@ -144,11 +143,12 @@ class AsyncImagine:
                     "cfg": validate_cfg(cfg),
                     "image": self.bytes_to_io(image, "image.png")
                 }
-            ) as resp:
+        ) as resp:
             return await resp.read()
 
-
-    async def controlnet(self, image: bytes, prompt: str, negative: str = None, cfg: float = 9.5, control: Control = Control.SCRIBBLE, style: Style = Style.IMAGINE_V1, seed: str = None) -> bytes:
+    async def controlnet(self, image: bytes, prompt: str, negative: str = None, cfg: float = 9.5,
+                         control: Control = Control.SCRIBBLE, style: Style = Style.IMAGINE_V1,
+                         seed: str = None) -> bytes:
         """Performs image remix."""
         async with self.session.post(
                 url=f"{self.api}/controlnet",
@@ -163,6 +163,5 @@ class AsyncImagine:
                     "seed": seed or "",
                     "image": self.bytes_to_io(image, "image.png")
                 }
-            ) as resp:
+        ) as resp:
             return await resp.read()
-
