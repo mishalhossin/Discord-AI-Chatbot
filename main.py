@@ -7,7 +7,7 @@ from datetime import datetime
 
 import aiohttp
 import discord
-from discord import Embed, Colour, app_commands
+from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 from youtube_transcript_api import YouTubeTranscriptApi
