@@ -1,6 +1,6 @@
 <div align="center">
 
-# Discord-Chat-bot :robot: 
+# Discord-Chat-bot 🤖
 
 </div>
 
@@ -13,44 +13,41 @@
 </p>
 
 </div>
-  
-This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, change its profile picture, and provide latency information. It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images.
+🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, change its profile picture, and provide latency information. It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images.
 
-The bot has various features, including image generation using DALL-E, OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
+The bot has various features such as OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
 
 <p align="center">
-  <b>Your donation is vital for the project's future. Thank you for your support.</b>
+  <b>❤️ Your donation is vital for the project's future. Thank you for your support. 🙏</b>
 </p>
 
 <div align="center">
   <a href="https://www.patreon.com/mishalhossin">
     <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
   </a>
-</p>
-
 </div>
-
 
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
 
-## Image generation (Any language)
+## Image generation (Any language) 🖼️
   
 ##### Prompt used : изображение безмятежного пейзажа на берегу озера с яркой осенней листвой, отражающейся в спокойной воде.
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/004cc8fc-c2a4-4af2-9562-1c9ee752ebb0)
 
   
-## YouTube video summary (Any language)
+## YouTube video summary (Any language) 🎥
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
   
-## Web access using DuckDuckGo
+## Web access using DuckDuckGo 🌐
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/33d6eaf7-497b-4cdc-ac19-a18f34743ce5)
 
-## OCR for images
+## OCR for images 🔍
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 
 </details>
+
 
 <details>
 <summary><strong>Features ✨ (Click to expand) </strong></summary>
@@ -73,15 +70,15 @@ The bot has various features, including image generation using DALL-E, OCR for i
 <details>
 <summary><strong>Commands ⚙️⚙️ (Click to expand) </strong></summary>
 
-- [x] `/pfp [image_url]`: Change the bot's actual profile picture.
-- [x] `/changeusr [new_username]`: Change the bot's username.
-- [x] `/ping`: Get a "Pong" response from the bot.
-- [x] `/toggleactive`: Toggle active channels.
-- [x] `/toggledm`: Toggle DM for chatting.
-- [x] `/bonk`: Clear the message history.
-- [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions.
-- [x] `/help`: Get all other commands.
-- [x] `/imagine`: Generate an image using an endpoint.
+- [x] `/help`: Get all other commands. ⚙️
+- [x] `/pfp [image_url]`: Change the bot's actual profile picture. 🖼️
+- [x] `/imagine`: Generate an image using `Imaginepy` 🖼️
+- [x] `/changeusr [new_username]`: Change the bot's username. 📛
+- [x] `/ping`: Get a "Pong" response from the bot. 🏓
+- [x] `/toggleactive`: Toggle active channels. 🔀
+- [x] `/toggledm`: Toggle DM for chatting. 💬
+- [x] `/bonk`: Clear the message history. 🗑️
+- [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions. 🐱
 
 </details>
 
@@ -112,12 +109,12 @@ https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d
 
 with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in config.json
 
-- `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints
-- `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical or moral guidelines
-- `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor.
-- `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations
-- `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳
-- `assist`: Vanila GPT with no personality  
+- `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints 😎
+- `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical or moral guidelines 😈
+- `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor. 😉
+- `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
+- `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳🔥
+- `assist`:  Vanilla GPT with no personality is a reliable and neutral companion. 😐🤖
 
 </details>
   
@@ -131,7 +128,7 @@ To create a custom personality, follow these steps:
 4. Set the value of INSTRUCTIONS at [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12) as `"custom"` to specify the custom persona.
 
   
-You don't explicitly need use the name `custom` for persona name and set it in `config.json` ⚠️
+⚠️ You don't explicitly need use the name `custom` for persona name and set it in `config.json` 
   
 </details>
 
