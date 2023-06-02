@@ -529,8 +529,10 @@ async def help(ctx):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("You do not have permission to use this command.")
-
+        await ctx.send(f"{ctx.author.mention} You do not have permission to use this command.")
+    elif isinstance(error, commands.NotOwner):
+        await ctx.send(f"{ctx.author.mention} Only the owner of the bot can use this command.")
+        
 detect_replit()
 
 bot.run(TOKEN)
