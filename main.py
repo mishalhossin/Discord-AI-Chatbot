@@ -328,6 +328,7 @@ async def on_message(message):
 
 
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])
+@commands.is_owner()
 async def pfp(ctx, attachment_url=None):
     if attachment_url is None and not ctx.message.attachments:
         return await ctx.send(
