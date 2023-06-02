@@ -26,4 +26,5 @@ Instead, create environment variables (e.g., DISCORD_TOKEN and HUGGING_FACE_API)
         return False
 
 
-running_on_replit = detect_replit()
+if __name__ == "__main__":
+    detect_replit()
