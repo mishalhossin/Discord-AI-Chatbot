@@ -3,16 +3,14 @@
 # Discord-Chat-bot 🤖
 
 </div>
-
 <div align="center">
-
 <img src="https://counter.seku.su/cmoe?name=discordaichat&theme=r34" /><br>
   <a href="https://discord.gg/3V5TcfsE8C">
     <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
   </a>
 </p>
-
 </div>
+
 🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
 
