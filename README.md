@@ -163,8 +163,10 @@ DISCORD_TOKEN=token_from_step_3
 ```
 python main.py
 ```
-### Step 6. Invite the bot
+### Step 6. 🔗 Invite the bot 
+You can Invite your bot using the link in console
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
+
 #### There are 2 ways to talk to the AI
 - Invite your bot and DM (Direct message) it | ⚠️ Make sure you have DM enabled
 - if you want it in server channel use **/toggleactive** 
