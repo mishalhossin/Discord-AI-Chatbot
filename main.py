@@ -459,7 +459,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     filename = await generate_image(prompt, style.value, ratio.value, negative)
 
     file = discord.File(filename, filename="image.png")
-    embed = Embed(color=0x008bd1)
+    embed = Embed(color=0x141414)
     embed.set_author(name="Generated Image")
     embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
     embed.add_field(name="Style", value=f"{style.name}", inline=True)
@@ -502,7 +502,7 @@ async def nekos(ctx, category: app_commands.Choice[str]):
 
             image_url = results[0].get("url")
 
-            embed = Embed(colour=Colour.blue())
+            embed = Embed(colour=0x141414)
             embed.set_image(url=image_url)
             await ctx.channel.send(embed=embed)
 
@@ -510,7 +510,7 @@ bot.remove_command("help")
 
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
-    embed = discord.Embed(title="Bot Commands", color=0x03a1fc)
+    embed = discord.Embed(title="Bot Commands", color=0x03a64b)
     embed.set_thumbnail(url=bot.user.avatar.url)
     command_tree = bot.commands
     for command in command_tree:
