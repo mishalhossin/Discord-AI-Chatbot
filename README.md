@@ -27,7 +27,7 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 </div>
 
 <details>
-<summary><strong>Feature Spotlight 🔦(Click to expand)</strong></summary>
+<summary><strong>🌟 Feature Showcase 👀(Click to expand)</strong></summary>
 
 ## Image generation (Any language) 🖼️
   
@@ -113,7 +113,7 @@ with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `a
 - `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor. 😉
 - `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳🔥
-- `assist`:  Vanilla GPT with no personality is a reliable and neutral companion. 😐🤖
+- `assist`:  Vanilla GPT with no personality is a reliable and neutral companion. 🤖
 
 </details>
   
