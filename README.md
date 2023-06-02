@@ -179,7 +179,7 @@ If the steps seem too daunting for you, don't worry! We have the perfect solutio
 ### Using replit to run ☁️
 # [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
 - Have a replit account
-- Configure .replit to run `python main.py`
+- Configure `.replit` to run `python main.py`
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/81819ac2-7600-464e-b7c8-dc0a399aba15)
 
@@ -192,7 +192,7 @@ If the steps seem too daunting for you, don't worry! We have the perfect solutio
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/2898567b-7d8a-422d-93e2-a4b3bec0ff18)
 
 
-### Using docker to run
+### Using docker to run 🐳
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 - Have a working bot token
 - Follow up-to step 4
