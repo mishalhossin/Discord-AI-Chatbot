@@ -1,17 +1,11 @@
 aiohttp
 asyncio
 discord.py
-pynacl
 requests
 flask
 discord
 fake-useragent
-curl_cffi
 python-dotenv
-httpx
-tls-client
-pydantic
-pycryptodome
 PyYAML
 youtube-transcript-api
 langdetect
