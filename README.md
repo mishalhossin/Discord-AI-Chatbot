@@ -163,15 +163,15 @@ If the following steps seem too daunting for you, don't worry! We have the perfe
 ### Using replit to run ☁️
 # [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
 - Have a replit account
-- Configure .replit to run `python main.py` :
+- Configure .replit to run `python main.py`
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/81819ac2-7600-464e-b7c8-dc0a399aba15)
 
-- Please note `.env` found in`Secrets` from `Tools` tab of replit :
+- Please note enviorments variables of `.env` needs to be set in`Secrets` from `Tools` tab of replit
 
 ![image](https://user-images.githubusercontent.com/91066601/235810871-5d4c1469-35fd-42d2-a3a2-3382002877cb.png)
 
-- Config `secrets` in replit like this :
+- Config `secrets` in replit like this
 
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/2898567b-7d8a-422d-93e2-a4b3bec0ff18)
 
