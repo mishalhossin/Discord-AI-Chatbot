@@ -22,9 +22,10 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 
 <div align="center">
   <a href="https://www.patreon.com/mishalhossin">
-    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
+    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge" width="250">
   </a>
 </div>
+
 
 <details>
 <summary><strong>🌟 Feature Showcase 👀(Click to expand)</strong></summary>
