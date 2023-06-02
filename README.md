@@ -1,5 +1,15 @@
-# Discord-Chat-bot 🤖
+<div align="center">
 
+# Discord-Chat-bot :robot: 
+
+</div>
+
+<div align="center">
+
+<img src="https://counter.seku.su/cmoe?name=discordaichat&theme=r34" /><br>
+
+</div>
+  
 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, change its profile picture, and provide latency information. It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images.
 
 The bot has various features, including image generation using DALL-E, OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
