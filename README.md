@@ -7,6 +7,12 @@
 <div align="center">
 
 <img src="https://counter.seku.su/cmoe?name=discordaichat&theme=r34" /><br>
+  
+  
+  <a href="https://discord.gg/3V5TcfsE8C">
+    <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
+  </a>
+</p>
 
 </div>
   
@@ -14,18 +20,18 @@ This is a Python-based Discord chat bot that uses the discord.py library. It can
 
 The bot has various features, including image generation using DALL-E, OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses.
 
-### Your donation is crucial for its sustainability. Without your help, the project's future is at risk. Thank you.
+<p align="center">
+  <b>Your donation is vital for the project's future. Thank you for your support.</b>
+</p>
+
+<div align="center">
   <a href="https://www.patreon.com/mishalhossin">
     <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge">
   </a>
 </p>
 
-# Support server
+</div>
 
-  <a href="https://discord.gg/3V5TcfsE8C">
-    <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
-  </a>
-</p>
 
 <details>
 <summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
