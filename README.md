@@ -27,7 +27,7 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 </div>
 
 <details>
-<summary><strong>Feature Showcase 👀 (Click to expand)</strong></summary>
+<summary><strong>Feature Spotlight 🔦(Click to expand)</strong></summary>
 
 ## Image generation (Any language) 🖼️
   
