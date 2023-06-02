@@ -504,7 +504,7 @@ async def nekos(ctx, category: app_commands.Choice[str]):
 
             embed = Embed(colour=0x141414)
             embed.set_image(url=image_url)
-            await ctx.channel.send(embed=embed)
+            await ctx.send(embed=embed)
 
 bot.remove_command("help")
 
