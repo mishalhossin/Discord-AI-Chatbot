@@ -14,6 +14,8 @@ from youtube_transcript_api import YouTubeTranscriptApi
 
 from imaginepy import AsyncImagine, Style, Ratio
 from model import aiassist
+from replit_detector import detect_replit
+
 
 load_dotenv()
 
@@ -521,5 +523,6 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("You do not have permission to use this command.")
 
+detect_replit()
 
 bot.run(TOKEN)
