@@ -459,7 +459,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     filename = await generate_image(prompt, style.value, ratio.value, negative)
 
     file = discord.File(filename, filename="image.png")
-
     embed = Embed(color=0x008bd1)
     embed.set_author(name="Generated Image")
     embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
@@ -470,8 +469,10 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     if negative is not None:
         embed.add_field(name="Negative", value=f"`{negative}`", inline=False)
 
-    await ctx.send(content=f"Generated image for {ctx.author.mention}", file=file, embed=embed)
+    await ctx.channel.send(content=f"Generated image for{ctx.author.mention}", file=file, embed=embed)
     await temp_message.edit(content=f"{current_language['imagine_msg']}")
+    await asyncio.sleep(3)
+    await temp_message.delete()
 
     os.remove(filename)
 
@@ -489,24 +490,23 @@ async def nekos(ctx, category: app_commands.Choice[str]):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status != 200:
-                await ctx.send("Failed to fetch the image.")
+                await ctx.channel.send("Failed to fetch the image.")
                 return
 
             json_data = await response.json()
 
             results = json_data.get("results")
             if not results:
-                await ctx.send("No image found.")
+                await ctx.channel.send("No image found.")
                 return
 
             image_url = results[0].get("url")
 
             embed = Embed(colour=Colour.blue())
             embed.set_image(url=image_url)
-            await ctx.send(embed=embed)
+            await ctx.channel.send(embed=embed)
 
 bot.remove_command("help")
-
 
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
