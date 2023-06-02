@@ -117,7 +117,7 @@ with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `a
 - `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor.
 - `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳
-- `assist`: Vanila GPT with no personality
+- `assist`: Vanila GPT with no personality  
 
 </details>
   
@@ -131,7 +131,7 @@ To create a custom personality, follow these steps:
 4. Set the value of INSTRUCTIONS at [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12) as `"custom"` to specify the custom persona.
 
   
-You don't explicitly need use the name `custom` for persona name and set it in config.json
+You don't explicitly need use the name `custom` for persona name and set it in `config.json` ⚠️
   
 </details>
 
