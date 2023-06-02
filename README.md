@@ -1,6 +1,6 @@
 <div align="center">
 
-# Discord-Chat-bot 🤖
+# Discord AI Chatbot 🤖
 
 </div>
 <div align="center">
