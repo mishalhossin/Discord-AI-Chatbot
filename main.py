@@ -179,13 +179,28 @@ API_URLS = [
 headers = {"Authorization": f"Bearer {api_key}"}
 
 
+async def translate_text(text):
+    url = "https://api.mishal0legit.repl.co/translate"
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.post(url, json={"text": text}) as response:
+                if response.status == 200:
+                    translated_text = await response.text()
+                    return translated_text
+                else:
+                    return text
+        except aiohttp.ClientError as e:
+            print(f"An error occurred during translation: {e}")
+            return None
+
 async def generate_image(image_prompt, style_value, ratio_value, negative):
+    translated_prompt = await translate_text(image_prompt)
     imagine = AsyncImagine()
     filename = str(uuid.uuid4()) + ".png"
     style_enum = Style[style_value]
     ratio_enum = Ratio[ratio_value]
     img_data = await imagine.sdprem(
-        prompt=image_prompt,
+        prompt=translated_prompt,
         style=style_enum,
         ratio=ratio_enum,
         priority="1",
