@@ -178,29 +178,13 @@ API_URLS = [
 ]
 headers = {"Authorization": f"Bearer {api_key}"}
 
-
-async def translate_text(text):
-    url = "https://api.mishal0legit.repl.co/translate"
-    async with aiohttp.ClientSession() as session:
-        try:
-            async with session.post(url, json={"text": text}) as response:
-                if response.status == 200:
-                    translated_text = await response.text()
-                    return translated_text
-                else:
-                    return text
-        except aiohttp.ClientError as e:
-            print(f"An error occurred during translation: {e}")
-            return None
-
 async def generate_image(image_prompt, style_value, ratio_value, negative):
-    translated_prompt = await translate_text(image_prompt)
     imagine = AsyncImagine()
     filename = str(uuid.uuid4()) + ".png"
     style_enum = Style[style_value]
     ratio_enum = Ratio[ratio_value]
     img_data = await imagine.sdprem(
-        prompt=translated_prompt,
+        prompt=image_prompt,
         style=style_enum,
         ratio=ratio_enum,
         priority="1",
@@ -466,16 +450,17 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     embed.add_field(name="Style", value=f"{style.name}", inline=True)
     embed.add_field(name="Ratio", value=f"{ratio.value}`", inline=True)
     embed.set_image(url="attachment://image.png")
+    embed.set_footer(text="To create more images use /imagine")
 
     if negative is not None:
-        embed.add_field(name="Negative", value=f"`{negative}`", inline=False)
+        embed.add_field(name="Negative", value=f"{negative}", inline=False)
 
     await ctx.channel.send(content=f"Generated image for{ctx.author.mention}", file=file, embed=embed)
+    os.remove(filename)
+
     await temp_message.edit(content=f"{current_language['imagine_msg']}")
     await asyncio.sleep(3)
     await temp_message.delete()
-
-    os.remove(filename)
 
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])
 @app_commands.choices(category=[
