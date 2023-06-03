@@ -93,7 +93,7 @@ async def generate_response(prompt):
     response = await aiassist.Completion.create(prompt=prompt)
     if not response["text"]:
         return (
-            "I couldn't generate a response right now. It could be due to technical issues, limitations in my training data, or the complexity of the query.")
+            "I couldn't generate a response right now. It could be due to technical issues or the complexity of the query.")
     return response["text"]
 
 
