@@ -4,7 +4,6 @@
 
 </div>
 <div align="center">
-<img src="https://counter.seku.su/cmoe?name=discordaichat&theme=r34" /><br>
   <a href="https://discord.gg/3V5TcfsE8C">
     <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
   </a>
