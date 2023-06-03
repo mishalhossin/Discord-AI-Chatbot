@@ -102,6 +102,7 @@ Your language not listed? Create an issue.
 
 <details>
 <summary><strong> Selecting Personalities 😈 (Click to expand)</strong></summary>
+
 To select one of the Personalities set the values of "INSTRUCTIONS" at line 12 
 with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in config.json
   
