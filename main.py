@@ -455,7 +455,7 @@ async def bonk(ctx):
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
                   negative: str = None):
-    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1090374670559236188.gif?size=96&quality=lossless")
+    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1114422813344944188.gif")
 
     filename = await generate_image(prompt, style.value, ratio.value, negative)
 
