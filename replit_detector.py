@@ -1,6 +1,5 @@
 import os
 import threading
-
 from flask import Flask
 
 
@@ -19,11 +18,9 @@ def detect_replit():
         print("""\033[1;31m ⚠️ Warning: Looks like you are running this project on Replit\033[0m
 \033[1;33mPlease note that the .env file cannot exist on Replit.
 Instead, create environment variables (e.g., DISCORD_TOKEN and HUGGING_FACE_API) in the "Secrets" tab under "Tools".\033[0m""")
-        flask_thread = threading.Thread(target=run_flask_app)
-        flask_thread.start()
+        threading.Thread(target=run_flask_app).start()
         return True
-    else:
-        return False
+    return False
 
 
 if __name__ == "__main__":
