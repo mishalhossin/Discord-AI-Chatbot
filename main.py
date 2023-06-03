@@ -448,7 +448,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     embed.set_author(name="Generated Image")
     embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
     embed.add_field(name="Style", value=f"{style.name}", inline=True)
-    embed.add_field(name="Ratio", value=f"{ratio.value}`", inline=True)
+    embed.add_field(name="Ratio", value=f"{ratio.value}", inline=True)
     embed.set_image(url="attachment://image.png")
     embed.set_footer(text="To create more images use /imagine")
 
