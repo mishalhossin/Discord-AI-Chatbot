@@ -110,7 +110,7 @@ https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d
 with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in config.json
 
 - `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints 😎
-- `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical or moral guidelines 😈
+- `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical guidelines 😈
 - `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor. 😉
 - `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳🔥
