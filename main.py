@@ -459,7 +459,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     os.remove(filename)
 
     await temp_message.edit(content=f"{current_language['imagine_msg']}")
-    await asyncio.sleep(3)
+    await asyncio.sleep(8)
     await temp_message.delete()
 
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])
