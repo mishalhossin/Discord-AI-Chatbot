@@ -163,6 +163,7 @@ DISCORD_TOKEN=token_from_step_3
 ```
 python main.py
 ```
+#### You may need to run as admin if you are on windows
 ### Step 6. 🔗 Invite the bot 
 You can Invite your bot using the link in console
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
