@@ -1,10 +1,14 @@
 {
 
     "TRIGGER": ["bot nickname", "bot alias", "bot name", "Other bot alias..."],
-    "//comment TRIGGER": "Triggers to which bot should respond",
+    "//comment TRIGGER": "Triggers where bot should respond to",
 
-    "PRESENCE": "Coded by Mishal#1916",
-    "//comment PRESENCE": "Change PRESENCE on Discord, e.g.: Playing Coded by Mishal#1916",
+    "PRESENCES": [
+        "Coded by Mishal#1916",
+        "Playing a game",
+        "Listening to music"
+    ],
+    "//comment PRESENCES": "List of different presences to be used",
 
     "LANGUAGE" : "en",
     "//comment LANGUAGE": "Check for valid Language code in 'lang' folder",
