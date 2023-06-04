@@ -28,6 +28,33 @@ intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
 TOKEN = os.getenv('DISCORD_TOKEN')  # Loads Discord bot token from env
 
+async def check_token():
+    try:
+        client = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
+        await client.login(TOKEN)
+        print("\033[32mAnd Discord Token in `.env` is valid\033[0m")
+    except discord.LoginFailure:
+        print("\033[31mBut Discord Token is in `.env` is invalid\033[0m")
+        status = "invalid"
+        return status
+
+
+def get_discord_token():
+    print("\033[31mLooks like you haven't properly set up a Discord token in the `.env` file.\033[0m")
+    print("\033[33mNote: If you don't have a Discord token in the `.env` file, you will have to input it every time. \033[0m")
+    TOKEN = input("Please enter your Discord token: ")
+    return TOKEN
+
+if TOKEN is None:
+    TOKEN = get_discord_token()
+    
+else:
+    print("\033[33mLooks like the `.env` file exists...\033[0m")
+    token_status = asyncio.run(check_token())
+    if token_status is not None:
+        TOKEN = get_discord_token()
+
+
 # Keep track of the channels where the bot should be active
 allow_dm = True
 active_channels = set()
