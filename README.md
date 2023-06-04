@@ -155,7 +155,7 @@ cd Discord-AI-Chatbot
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 </details>
 
-### Step 4. 🔐 Rename `example.env` to `.env` and put the discord token and hugging face access token. It will look like this:
+### Step 4. 🔐 Rename `example.env` to `.env` and put the Discord bot token It will look like this:
 ```
 DISCORD_TOKEN=token_from_step_3
 ```
