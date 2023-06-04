@@ -1,4 +1,5 @@
 {
+  "language_name": "Spanish",
   "instruc_image_caption": "Los modelos de imagen a texto pueden tardar en cargarse, lo que puede causar errores de tiempo de espera. En su lugar, se deben utilizar modelos de respaldo o funcionales. Las descripciones de las imágenes se dividen en OCR (1.º), que es bueno para imágenes que contienen señales o símbolos, y detección general de imágenes (2.º), que será muy inexacta para OCR. Subtítulos de las imágenes:",
   "pfp": "Cambiar la foto de perfil del bot usando una URL de imagen",
   "pfp_change_msg_1": "Por favor, proporciona una URL de imagen o adjunta una imagen para este comando",

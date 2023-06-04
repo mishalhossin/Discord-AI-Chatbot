@@ -1,4 +1,5 @@
 {
+  "language_name": "Vietnamese",
   "instruc_image_caption": "Các mô hình chuyển hình ảnh thành văn bản có thể mất thời gian để tải, gây ra lỗi thời gian chờ. Thay vì đó, nên sử dụng các mô hình dự phòng hoặc chức năng. Chú thích cho hình ảnh được phân loại thành OCR (1), tốt cho hình ảnh chứa biển báo hoặc ký hiệu, và nhận dạng hình ảnh chung (2), sẽ rất không chính xác đối với OCR. Chú thích cho hình ảnh:",
   "pfp": "Thay đổi hình đại diện của bot bằng URL hình ảnh",
   "pfp_change_msg_1": "Vui lòng cung cấp URL hình ảnh hoặc đính kèm một hình ảnh cho lệnh này",

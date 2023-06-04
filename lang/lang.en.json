@@ -1,4 +1,5 @@
 {
+  "language_name": "English",
   "instruc_image_caption": "Image-to-text models may take time to load, causing timeout errors. Fallback or functional models should be used instead. Captions for the image are categorized as OCR (1st), which is good for images containing signs or symbols, and general image detection (2nd), which will be very inaccurate for OCR. Image captions:",
   "pfp": "Change bot's pfp using an image URL",
   "pfp_change_msg_1": "Please provide an Image URL or attach an Image for this command",
