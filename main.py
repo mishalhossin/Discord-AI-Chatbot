@@ -4,6 +4,7 @@ import os
 import re
 import uuid
 from datetime import datetime
+from itertools import cycle
 
 import aiohttp
 import discord
@@ -97,11 +98,12 @@ def load_current_language():
 
 current_language = load_current_language()
 
+presences = config["PRESENCES"]
 
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.change_presence(activity=discord.Game(name=config['PRESENCE']))
+    presence_cycle = cycle(presences)
     print(f"{bot.user} aka {bot.user.name} has connected to Discord!")
 
     invite_link = discord.utils.oauth_url(
@@ -111,6 +113,14 @@ async def on_ready():
     )
     print(f"Invite link: {invite_link}")
 
+    while True:
+        presence = next(presence_cycle)
+
+        guild_count = len(bot.guilds)
+        presence_with_count = presence.replace("{guild_count}", str(guild_count))  #replace {guild_count} with number of servers
+
+        await bot.change_presence(activity=discord.Game(name=presence_with_count))
+        await asyncio.sleep(30) #30 seconds
 
 # Set up the Chat bot
 instruct_config = config['INSTRUCTIONS']
