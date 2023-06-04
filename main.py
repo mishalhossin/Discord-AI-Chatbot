@@ -31,13 +31,12 @@ TOKEN = os.getenv('DISCORD_TOKEN')  # Loads Discord bot token from env
 async def check_token():
     try:
         client = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
-        await client.login(TOKEN)
-        print("\033[32mAnd Discord Token in `.env` is valid\033[0m")
+        print("\033[32mDiscord Token in `.env` is valid\033[0m")
+        await client.close()
     except discord.LoginFailure:
-        print("\033[31mBut Discord Token is in `.env` is invalid\033[0m")
+        print("\033[31mDiscord Token in `.env` is invalid\033[0m")
         status = "invalid"
         return status
-
 
 def get_discord_token():
     print("\033[31mLooks like you haven't properly set up a Discord token in the `.env` file.\033[0m")
