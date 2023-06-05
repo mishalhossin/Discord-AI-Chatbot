@@ -59,12 +59,12 @@ else:
 
 
 # Keep track of the channels where the bot should be active
-allow_dm = True
+allow_dm = config['ALLOW_DM']
 active_channels = set()
 trigger_words = config['TRIGGER']
 
 # Internet access
-internet_access = True
+internet_access = config['INTERNET_ACCESS']
 ### Instructions Load ##
 instruction = {}
 
@@ -183,9 +183,8 @@ async def get_transcript_from_message(message_content):
 
 
 async def search(prompt):
-    if not internet_access:
+    if internet_access != "True":
         return
-
     wh_words = ['search', 'find', 'who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how',
                 'is', 'are', 'am', 'can', 'could', 'should', 'would', 'do', 'does', 'did',
                 'may', 'might', 'shall', 'will', 'have', 'has', 'had', 'must', 'ought', 'need',
@@ -299,7 +298,7 @@ async def on_message(message):
     is_replied = message.reference and message.reference.resolved.author == bot.user
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     is_active_channel = message.channel.id in active_channels
-    is_allowed_dm = allow_dm and is_dm_channel
+    is_allowed_dm = allow_dm == "True" and is_dm_channel
     contains_trigger_word = any(word in message.content for word in trigger_words)
     is_bot_mentioned = bot.user.mentioned_in(message)
     bot_name_in_message = bot.user.name.lower() in message.content.lower()

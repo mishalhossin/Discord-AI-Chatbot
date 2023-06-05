@@ -1,5 +1,9 @@
 {
 
+    "INTERNET_ACCESS": "True",
+    "ALLOW_DM": "True",
+    "//comment ALLOW_DM and INTERNET_ACCESS": "You can set them to True or False to enable or disable them",
+
     "TRIGGER": ["bot nickname", "bot alias", "bot name", "Other bot alias..."],
     "//comment TRIGGER": "Triggers where bot should respond to",
     
