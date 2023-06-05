@@ -1,27 +1,74 @@
-from os import environ
 import threading
 from flask import Flask
+import os
+import sys
+import logging
 
+app = Flask("keepalive")
+
+@app.route('/', methods=['GET', 'POST', 'CONNECT', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'TRACE', 'HEAD'])
+def main():
+    repl_owner = os.environ.get('REPL_OWNER')
+    return f'''<!DOCTYPE html>
+<html>
+<head>
+    <title>Discord AI Chatbot</title>
+    <style>
+        body {{
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }}
+        
+        h1 {{
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 4vw;
+            text-align: center;
+            text-shadow: 0 0 10px white;
+            animation: glowingText 2s ease-in-out infinite;
+        }}
+        
+        @keyframes glowingText {{
+            0%, 100% {{ text-shadow: 0 0 10px white; }}
+            50% {{ text-shadow: 0 0 20px white; }}
+        }}
+    </style>
+</head>
+<body>
+    <h1>Hey there, {repl_owner}! Are we going to create a custom persona for the Chatbot, or should we stick with the default, like DAN and others?</h1>
+</body>
+</html>
+'''
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+app.logger.disabled = True
+cli = sys.modules['flask.cli']
+cli.show_server_banner = lambda *x: None
 
 def run_flask_app():
-    app = Flask("keepalive")
-
-    @app.route('/', methods=['GET', 'POST', 'CONNECT', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'TRACE', 'HEAD'])
-    def main():
-        return 'Replit: Where code comes to life, dreams take shape, and possibilities are infinite'
-
     app.run(host='0.0.0.0', port=3000, debug=False, use_reloader=False)
 
 def detect_replit():
-    if "REPL_OWNER" in environ:
-        print(f"""\033[1;31m ⚠️ Warning: Looks like you are running this project on Replit\033[0m
+    if "REPL_OWNER" in os.environ:
+        print(f"""\033[1;31m⚠️ Looks like you are running this project on Replit\033[0m
+        
 \033[1;33mPlease note that the .env file cannot exist on Replit.
 Instead, create environment variables (e.g., DISCORD_TOKEN and HUGGING_FACE_API) in the "Secrets" tab under "Tools".\033[0m
 
-\033[1;32mTake care {environ['REPL_OWNER']} ❤️\033[0m""")
-        threading.Thread(target=run_flask_app).start()
+\033[1;32mTake care {os.environ['REPL_OWNER']} ❤️\033[0m
+""")
         return True
     return False
 
+def detect_and_run():
+  if detect_replit() is True:
+    threading.Thread(target=run_flask_app).start()
+  else:
+    return
+
 if __name__ == "__main__":
-    detect_replit()
+    detect_and_run()
