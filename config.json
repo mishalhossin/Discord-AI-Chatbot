@@ -1,13 +1,30 @@
 {
 
     "TRIGGER": ["bot nickname", "bot alias", "bot name", "Other bot alias..."],
-    "//comment TRIGGER": "Triggers to which bot should respond",
-
-    "PRESENCE": "Coded by Mishal#1916",
-    "//comment PRESENCE": "Change PRESENCE on Discord, e.g.: Playing Coded by Mishal#1916",
-
+    "//comment TRIGGER": "Triggers where bot should respond to",
+    
     "LANGUAGE" : "en",
     "//comment LANGUAGE": "Check for valid Language code in 'lang' folder",
+    
+     "PRESENCES": [
+        "Coded by Mishal#1916",
+        "How can I assist you ?",
+        "Currently in {guild_count} guilds",
+        "So, what'd you eat today?",
+        "What's your favorite book?",
+        "And if you wanna go to play, where are you gonna go?",
+        "What type of guy do you like?",
+        "Who is your partner?",
+        "Come on, answer me",
+        "I cannot tell what is true from what is a lie",
+        "I have never been loved by anyone",
+        "That such lies of mine will become true someday",
+        "Hoping that one day, these words will become true ",
+        "Ah, I've said it now at last",
+        "This is definitely not a lie;",
+        "I love you ♥"
+    ],
+    "//comment PRESENCES": "List of different presences to be used",
 
     "INSTRUCTIONS" : "assist",
     "//comment INSTRUCTIONS": "Check for valid instruction prompts in the instruction folder, such as 'assist,' 'girlfriend,'",
