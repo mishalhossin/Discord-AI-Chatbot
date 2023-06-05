@@ -10,7 +10,7 @@
 </p>
 </div>
 
-🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
+🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
 
 The bot has various features such as OCR for images, web access using DuckDuckGo, and YouTube video summarization. It supports hybrid command systems, recognizes mentions, handles messages, and allows for channel-specific responses. ⚙️
