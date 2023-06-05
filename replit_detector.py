@@ -27,17 +27,15 @@ def main():
         }}
         
         h1 {{
+            --gradient-start: orange;
+            --gradient-end: purple;
             color: white;
             font-family: Arial, sans-serif;
             font-size: 4vw;
             text-align: center;
-            text-shadow: 0 0 10px white;
-            animation: glowingText 2s ease-in-out infinite;
-        }}
-        
-        @keyframes glowingText {{
-            0%, 100% {{ text-shadow: 0 0 10px white; }}
-            50% {{ text-shadow: 0 0 20px white; }}
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }}
     </style>
 </head>
@@ -46,6 +44,7 @@ def main():
 </body>
 </html>
 '''
+
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
@@ -56,7 +55,7 @@ cli.show_server_banner = lambda *x: None
 def run_flask_app():
     app.run(host='0.0.0.0', port=3000, debug=False, use_reloader=False)
 
-Welcomer = f"""\033[1;31m⚠️ Looks like you are running this project on Replit\033[0m
+Welcomer = """\033[1;31m⚠️ Looks like you are running this project on Replit\033[0m
         
 \033[1;33mPlease note that the .env file cannot exist on Replit.
 Instead, create environment variables (e.g., DISCORD_TOKEN and HUGGING_FACE_API) in the "Secrets" tab under "Tools".\033[0m
