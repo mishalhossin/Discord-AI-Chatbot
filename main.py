@@ -15,7 +15,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 
 from imaginepy import AsyncImagine, Style, Ratio
 from model import aiassist
-from replit_detector import detect_replit
+from replit_detector import detect_replit_and_run
 
 
 load_dotenv()
@@ -554,6 +554,6 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.NotOwner):
         await ctx.send(f"{ctx.author.mention} Only the owner of the bot can use this command.")
         
-detect_replit()
+detect_replit_and_run()
 
 bot.run(TOKEN)
