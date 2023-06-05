@@ -12,6 +12,10 @@ def main():
     return f'''<!DOCTYPE html>
 <html>
 <head>
+    <meta content="A Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3, It also utilizes the Imaginepy for generating midjourney like images" property="og:description" />
+    <meta content="https://replit.com/public/icons/favicon-prompt-192.png" property="og:image" />
+    <meta content="#fcba03" data-react-helmet="true" name="theme-color" />
+    <link rel="icon" href="https://replit.com/public/icons/favicon-prompt-192.png" type="image/png">
     <title>Discord AI Chatbot</title>
     <style>
         body {{
