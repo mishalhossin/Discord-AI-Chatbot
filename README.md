@@ -94,7 +94,7 @@ To select a Language, set the value of "LANGUAGE" at Line 9 of `config.json` wit
 - `cn` - Chinese 🇨🇳
 - `ru` - Russian 🇷🇺
 - `ua` - Ukrainian 🇺🇦
-- `pt` - Português 🇵🇹🇧🇷
+- `pt` - Português 🇧🇷
 
 https://github.com/mishalhossin/Discord-AI-Chatbot/blob/a4357cb3e4a22931923ac137aec34af7e95b7234/config.json#L9  
   
