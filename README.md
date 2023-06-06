@@ -85,15 +85,16 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
 
-To select a Language, set the value of "LANGUAGE" at Line 9 of `config.json` with the valid ISO Codes listed below:
+To select a Language, set the value of "LANGUAGE" at Line 9 of `config.json` with the valid Language Codes listed below:
 
+- `tr` - Türkçe 🇹🇷  
 - `en` - English 🇺🇸
 - `es` - Español 🇪🇸
 - `vn` - Vietnamese 🇻🇳
 - `cn` - Chinese 🇨🇳
 - `ru` - Russian 🇷🇺
 - `ua` - Ukrainian 🇺🇦
-- `pt` - 🇵🇹 Português
+- `pt` - Português 🇵🇹🇧🇷
 
 https://github.com/mishalhossin/Discord-AI-Chatbot/blob/a4357cb3e4a22931923ac137aec34af7e95b7234/config.json#L9  
   
