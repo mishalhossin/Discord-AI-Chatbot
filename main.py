@@ -285,7 +285,7 @@ async def process_image_link(image_url):
 
 
 message_history = {}
-MAX_HISTORY = 8
+MAX_HISTORY = 10
 
 
 @bot.event
@@ -293,10 +293,8 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    referenced_message = await message.channel.fetch_message(message.reference.message_id)
-
-    if message.reference and (message.reference.resolved.author != bot.user or referenced_message.embeds):
-        return  # Ignore replies to messages
+    if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
+        return  # Ignore replies to messages and embeds
 
     is_replied = message.reference and message.reference.resolved.author == bot.user
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
