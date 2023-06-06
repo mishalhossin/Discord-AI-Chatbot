@@ -1,6 +1,7 @@
 <div align="center">
 
 # Discord AI Chatbot 🤖
+###### It just works
 
 </div>
 <div align="center">
