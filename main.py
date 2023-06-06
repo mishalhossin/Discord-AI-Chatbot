@@ -292,7 +292,10 @@ MAX_HISTORY = 8
 async def on_message(message):
     if message.author.bot:
         return
-    if message.reference and message.reference.resolved.author != bot.user:
+
+    referenced_message = await message.channel.fetch_message(message.reference.message_id)
+
+    if message.reference and (message.reference.resolved.author != bot.user or referenced_message.embeds):
         return  # Ignore replies to messages
 
     is_replied = message.reference and message.reference.resolved.author == bot.user
