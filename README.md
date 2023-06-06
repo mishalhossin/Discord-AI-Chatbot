@@ -30,11 +30,8 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 <summary><strong>🌟 Feature Showcase 👀(Click to expand)</strong></summary>
 
 ## Image generation (Any language) 🖼️
-  
-##### Prompt used : изображение безмятежного пейзажа на берегу озера с яркой осенней листвой, отражающейся в спокойной воде.
 
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/004cc8fc-c2a4-4af2-9562-1c9ee752ebb0)
-
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/3ebd2f09-d564-43b5-a494-74ed08026b7e)
   
 ## YouTube video summary (Any language) 🎥
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
