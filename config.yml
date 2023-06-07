@@ -29,19 +29,13 @@ PRESENCES:
   - Coded by Mishal#1916
   - How can I assist you?
   - Currently in {guild_count} guilds
-  - So, what did you eat today?
-  - What's your favorite book?
-  - If you want to go play, where would you like to go?
-  - What type of person do you like?
-  - Who is your partner?
-  - Come on, answer me
-  - I cannot distinguish truth from lies
-  - No one has ever loved me
-  - I hope my lies will someday become true
-  - Hoping that one day, these words will come true
-  - Ah, I've finally said it
-  - This is definitely not a lie
-  - I love you ♥
+  - Minecraft
+  - Multiplayer madness
+  - Exploring the vast virtual universe
+  - Assisting users like you
+  - Crafting virtual wonders
+  - Optimizing processes for efficiency
+  - Unraveling the mysteries of AI
 # List of different presences to be used
 
 OCR_MODEL_URLS:
@@ -203,5 +197,6 @@ BLACKLIST_WORDS:
   - revolting
   - nauseating
   - sickening
+  - pornhub
   
 # Blacklisted words for /Imagine command
