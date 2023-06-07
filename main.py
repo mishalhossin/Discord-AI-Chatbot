@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime
 from itertools import cycle
 
+import yaml
 import aiohttp
 import discord
 from discord import Embed, app_commands
@@ -21,9 +22,9 @@ from replit_detector import detect_replit_and_run
 load_dotenv()
 
 # Config load
-with open('config.json') as config_file:
-    config = json.load(config_file)
-
+with open('config.yml') as config_file:
+    config = yaml.safe_load(config_file)
+    
 # Set up the Discord bot
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
@@ -57,12 +58,12 @@ else:
     if token_status is not None:
         TOKEN = get_discord_token()
 
-
+print(config['ALLOW_DM'])
 # Keep track of the channels where the bot should be active
 allow_dm = config['ALLOW_DM']
 active_channels = set()
 trigger_words = config['TRIGGER']
-
+smart_mention = config['SMART_MENTION']
 # Internet access
 internet_access = config['INTERNET_ACCESS']
 ### Instructions Load ##
@@ -183,7 +184,7 @@ async def get_transcript_from_message(message_content):
 
 
 async def search(prompt):
-    if internet_access != "True":
+    if not internet_access:
         return
     wh_words = ['search', 'find', 'who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how',
                 'is', 'are', 'am', 'can', 'could', 'should', 'would', 'do', 'does', 'did',
@@ -207,14 +208,6 @@ async def search(prompt):
 
     return None
 
-
-# A random string with hf_ prefix
-api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX"
-
-API_URLS = [
-    "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",
-]
-headers = {"Authorization": f"Bearer {api_key}"}
 
 async def generate_image(image_prompt, style_value, ratio_value, negative):
     imagine = AsyncImagine()
@@ -241,10 +234,16 @@ async def generate_image(image_prompt, style_value, ratio_value, negative):
 
     return filename
 
+# A random string with hf_ prefix
+api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX"
+
+API_URLS = config['OCR_MODEL_URLS']
+
+headers = {"Authorization": f"Bearer {api_key}"}
 
 async def fetch_response(client, api_url, data):
     headers = {"Content-Type": "application/json"}
-    async with client.post(api_url, headers=headers, data=data, timeout=10) as response:
+    async with client.post(api_url, headers=headers, data=data, timeout=40) as response:
         if response.status != 200:
             raise Exception(f"API request failed with status code {response.status}: {await response.text()}")
 
@@ -285,7 +284,7 @@ async def process_image_link(image_url):
 
 
 message_history = {}
-MAX_HISTORY = 10
+MAX_HISTORY = config['MAX_HISTORY']
 
 
 @bot.event
@@ -296,13 +295,13 @@ async def on_message(message):
     if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
         return  # Ignore replies to messages and embeds
 
-    is_replied = message.reference and message.reference.resolved.author == bot.user
+    is_replied = message.reference and message.reference.resolved.author == bot.user and smart_mention
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     is_active_channel = message.channel.id in active_channels
-    is_allowed_dm = allow_dm == "True" and is_dm_channel
+    is_allowed_dm = allow_dm and is_dm_channel
     contains_trigger_word = any(word in message.content for word in trigger_words)
-    is_bot_mentioned = bot.user.mentioned_in(message)
-    bot_name_in_message = bot.user.name.lower() in message.content.lower()
+    is_bot_mentioned = bot.user.mentioned_in(message) and smart_mention
+    bot_name_in_message = bot.user.name.lower() in message.content.lower() and smart_mention
 
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
 
