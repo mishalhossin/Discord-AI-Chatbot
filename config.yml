@@ -10,13 +10,16 @@ SMART_MENTION: true
 MAX_HISTORY: 10
 # Set the maximum message history
 
+MAX_SEARCH_RESULTS: 2
+# Set the maximum search results
+
 TRIGGER:
   - chatgpt
   - bot nickname
   - bot alias
   - bot name
   - Other bot alias...
-# Define the triggers that the bot should respond to
+# Define the triggers that the bot should always respond to when in message
 
 LANGUAGE: en
 # Specify the language code (check 'lang' folder for valid codes)
@@ -42,54 +45,6 @@ OCR_MODEL_URLS:
   - "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed"
   - "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
 # List of URLs for OCR models
-
-SEARCH_TRIGGERS:
-  - search
-  - find
-  - who
-  - what
-  - when
-  - where
-  - why
-  - which
-  - whom
-  - whose
-  - how
-  - is
-  - are
-  - am
-  - can
-  - could
-  - should
-  - would
-  - do
-  - does
-  - did
-  - may
-  - might
-  - shall
-  - will
-  - have
-  - has
-  - had
-  - must
-  - ought
-  - need
-  - want
-  - like
-  - prefer
-  - tìm
-  - tìm kiếm
-  - làm sao
-  - khi nào
-  - hỏi
-  - nào
-  - google
-  - muốn hỏi
-  - phải làm
-  - cho hỏi
-
-# Words that trigger searches
 
 BLACKLIST_WORDS:
   - naked
