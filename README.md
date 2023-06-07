@@ -79,6 +79,13 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 
 </details>
 
+<summary><strong>Enabling internet access 🌐🔍 (Click to expand)</strong></summary>
+
+To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
+
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/754c1db5aff357b53e3d7f01681ac86c001de6b9/config.yml#LL1C1-L1C1
+
+</details>
 
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
@@ -94,18 +101,18 @@ To select a Language, set the value of "LANGUAGE" of `config.yml` with the valid
 - `ua` - Ukrainian 🇺🇦
 - `pt` - Português 🇧🇷
 
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/a4357cb3e4a22931923ac137aec34af7e95b7234/config.json#L9  
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c020cdfb0bde2339cc3cf8bd2314afb98df17b8d/config.yml#L24
   
 Your language not listed? Create an issue.
-
+  
 </details>
 
 <details>
 <summary><strong> Selecting Personalities 😈 (Click to expand)</strong></summary>
 
-To select one of the Personalities set the values of "INSTRUCTIONS" with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in `config.yml`
+To select one of the pre-existing Personalities set the values of "INSTRUCTIONS" with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in `config.yml`
   
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12 
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c020cdfb0bde2339cc3cf8bd2314afb98df17b8d/config.yml#LL27C16-L27C16
 
 - `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints 😎
 - `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical guidelines 😈
@@ -113,6 +120,8 @@ https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d
 - `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳🔥
 - `assist`:  Vanilla GPT with no personality is a reliable and neutral companion. 🤖
+
+⚠️ To enhance the responsiveness, please disable the internet access in the config.yml file.
 
 </details>
   
