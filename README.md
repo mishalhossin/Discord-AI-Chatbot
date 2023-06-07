@@ -107,7 +107,7 @@ To select a Language, set the value of "LANGUAGE" of `config.yml` with the valid
 - `ua` - Ukrainian 🇺🇦
 - `pt` - Português 🇧🇷
 
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c020cdfb0bde2339cc3cf8bd2314afb98df17b8d/config.yml#L24
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c20f26b0b8f1b6bba2fae8f6d7da3efcafaf157c/config.yml#L23
   
 Your language not listed? Create an issue.
   
@@ -118,7 +118,7 @@ Your language not listed? Create an issue.
 
 To select one of the pre-existing Personalities set the values of "INSTRUCTIONS" with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in `config.yml`
   
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c020cdfb0bde2339cc3cf8bd2314afb98df17b8d/config.yml#LL27C16-L27C16
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c20f26b0b8f1b6bba2fae8f6d7da3efcafaf157c/config.yml#L26
 
 - `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints 😎
 - `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical guidelines 😈
