@@ -12,8 +12,6 @@ SMART_MENTION: true
 MAX_HISTORY: 10
 # Set the maximum message history
 
-
-
 TRIGGER:
   - chatgpt
   - bot nickname
