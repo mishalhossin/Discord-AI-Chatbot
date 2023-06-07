@@ -100,6 +100,7 @@ To select a Language, set the value of "LANGUAGE" of `config.yml` with the valid
 
 - `tr` - Türkçe 🇹🇷  
 - `en` - English 🇺🇸
+- `fr` - Français 🇫🇷
 - `es` - Español 🇪🇸
 - `vn` - Vietnamese 🇻🇳
 - `cn` - Chinese 🇨🇳
