@@ -27,6 +27,9 @@ INSTRUCTIONS: assist
 # Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
 # To add custom prompts, create a .txt file like 'custom.txt' and set INSTRUCTIONS as 'custom'
 
+PRESENCES_CHANGE_DELAY: 60
+# Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
+
 PRESENCES:
   - Coded by Mishal#1916
   - How can I assist you?

@@ -124,9 +124,11 @@ async def on_ready():
 
         guild_count = len(bot.guilds)
         presence_with_count = presence.replace("{guild_count}", str(guild_count))  #replace {guild_count} with number of servers
+        
+        delay = config['PRESENCES_CHANGE_DELAY']
 
         await bot.change_presence(activity=discord.Game(name=presence_with_count))
-        await asyncio.sleep(8) # 8 seconds
+        await asyncio.sleep(delay)
 
 # Set up the Chat bot
 instruct_config = config['INSTRUCTIONS']
