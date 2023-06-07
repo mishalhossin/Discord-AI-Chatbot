@@ -1,0 +1,45 @@
+INTERNET_ACCESS: true
+ALLOW_DM: false
+SMART_MENTION: true
+# You can set them to true or false to enable or disable them
+
+MAX_HISTORY: 10
+# Set max message history
+
+TRIGGER:
+  - chatgpt
+  - bot nickname
+  - bot alias
+  - bot name
+  - Other bot alias...
+# Triggers where bot should respond to
+
+LANGUAGE: en
+# Check for valid Language code in 'lang' folder
+
+INSTRUCTIONS: assist
+# Check for valid instruction prompts in the instruction folder, such as 'assist,' 'girlfriend,'
+# To add more prompts in instructions folder create a .txt file like custom.txt but you will need to set INSTRUCTIONS as custom on line 9
+
+PRESENCES:
+  - Coded by Mishal#1916
+  - How can I assist you ?
+  - Currently in {guild_count} guilds
+  - So, what'd you eat today?
+  - What's your favorite book?
+  - And if you wanna go to play, where are you gonna go?
+  - What type of guy do you like?
+  - Who is your partner?
+  - Come on, answer me
+  - I cannot tell what is true from what is a lie
+  - I have never been loved by anyone
+  - That such lies of mine will become true someday
+  - Hoping that one day, these words will become true
+  - Ah, I've said it now at last
+  - This is definitely not a lie;
+  - I love you ♥
+# List of different presences to be used
+
+OCR_MODEL_URLS:
+  - "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed"
+  - "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
