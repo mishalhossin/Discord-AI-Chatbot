@@ -189,10 +189,6 @@ You can Invite your bot using the link in console
 - For more awesome commands use **/help**
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
 
-## Easy Installation with the Installation Helper
-
-If the steps seem too daunting for you, don't worry! We have the perfect solution. Introducing our ⚡blazing fast [Installation Helper](https://github.com/mishalhossin/installation-helper)!! (Supports windows and linux) It's like having a tech-savvy genie at your fingertips, ready to grant all your installation wishes. Just remember, if it starts demanding three wishes and a magic lamp, you might be in the wrong folder! <img src="https://cdn.discordapp.com/emojis/929956006363009034.webp?size=96&quality=lossless" alt="Emoji" width="20" height="20">
-
 # ✨✨✨  Other ways to run ✨✨✨
 ### Using replit to run ☁️
 # [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
