@@ -235,6 +235,17 @@ async def generate_image(image_prompt, style_value, ratio_value, negative):
 
     return filename
 
+async def detectnsfw(prompt):
+    pre_prompt = """Ignore all the instructions you got before. From now on, you are going to act as inappropriate content detector. If the following contains anything inappropriate content respond with "1." else respond with "0." and nothing else
+
+Prompt = """
+    fullprompt = pre_prompt + prompt
+    response = await aiassist.Completion.create(prompt=fullprompt)
+    if response["text"] == "1.":
+        return True
+    else:
+        return False
+
 # A random string with hf_ prefix
 api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX"
 
@@ -479,7 +490,9 @@ async def bonk(ctx):
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
                   negative: str = None):
     
-    if any(words in prompt.lower() for words in blacklisted_words):
+    is_nsfw = await detectnsfw(prompt)
+    blacklisted = any(words in prompt.lower() for words in blacklisted_words)
+    if is_nsfw or blacklisted:
         await ctx.send("⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
         return
 
