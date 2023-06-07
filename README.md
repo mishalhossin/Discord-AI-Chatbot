@@ -83,7 +83,7 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
 
-To select a Language, set the value of "LANGUAGE" at Line 9 of `config.json` with the valid Language Codes listed below:
+To select a Language, set the value of "LANGUAGE" of `config.yml` with the valid Language Codes listed below:
 
 - `tr` - Türkçe 🇹🇷  
 - `en` - English 🇺🇸
@@ -103,8 +103,7 @@ Your language not listed? Create an issue.
 <details>
 <summary><strong> Selecting Personalities 😈 (Click to expand)</strong></summary>
 
-To select one of the Personalities set the values of "INSTRUCTIONS" at line 12 
-with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in config.json
+To select one of the Personalities set the values of "INSTRUCTIONS" with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in `config.yml`
   
 https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12 
 
