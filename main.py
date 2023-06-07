@@ -215,7 +215,7 @@ Current Message : """
         return None
 
 async def search(prompt):
-    if not internet_access:
+    if not internet_access or len(prompt) > 200:
         return
 
     search_results_limit = config['MAX_SEARCH_RESULTS'] 
