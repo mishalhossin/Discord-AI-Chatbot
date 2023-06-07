@@ -1,7 +1,7 @@
 <div align="center">
 
 # Discord AI Chatbot 🤖
-###### It just works
+###### Your All-in-One Discord AI Companion!
 
 </div>
 <div align="center">
