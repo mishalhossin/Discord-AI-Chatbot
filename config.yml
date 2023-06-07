@@ -48,3 +48,160 @@ OCR_MODEL_URLS:
   - "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed"
   - "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
 # List of URLs for OCR models
+
+SEARCH_TRIGGERS:
+  - search
+  - find
+  - who
+  - what
+  - when
+  - where
+  - why
+  - which
+  - whom
+  - whose
+  - how
+  - is
+  - are
+  - am
+  - can
+  - could
+  - should
+  - would
+  - do
+  - does
+  - did
+  - may
+  - might
+  - shall
+  - will
+  - have
+  - has
+  - had
+  - must
+  - ought
+  - need
+  - want
+  - like
+  - prefer
+  - tìm
+  - tìm kiếm
+  - làm sao
+  - khi nào
+  - hỏi
+  - nào
+  - google
+  - muốn hỏi
+  - phải làm
+  - cho hỏi
+
+# Words that trigger searches
+
+BLACKLIST_WORDS:
+  - naked
+  - loli
+  - hentai
+  - explicit
+  - pornography
+  - adult
+  - XXX
+  - sex
+  - erotic
+  - fetish
+  - nudity
+  - pornographic
+  - obscene
+  - lewd
+  - indecent
+  - hardcore
+  - seductive
+  - kinky
+  - explicitness
+  - perversion
+  - arousal
+  - sensual
+  - steamy
+  - titillating
+  - promiscuous
+  - raunchy
+  - x-rated
+  - vulgarity
+  - smut
+  - dirty
+  - filth
+  - degenerate
+  - debauchery
+  - lascivious
+  - depraved
+  - salacious
+  - sleazy
+  - immoral
+  - lecherous
+  - licentious
+  - wicked
+  - perverted
+  - forbidden
+  - risqué
+  - indecency
+  - deviant
+  - unseemly
+  - explicitness
+  - libidinous
+  - sensualism
+  - titillation
+  - prurient
+  - immodest
+  - titivate
+  - adult-oriented
+  - sinful
+  - naughty
+  - racy
+  - impure
+  - carnal
+  - provocative
+  - steaminess
+  - sultry
+  - tantalizing
+  - unchaste
+  - wanton
+  - concupiscent
+  - bawdy
+  - licentiousness
+  - shameless
+  - lubricious
+  - passionate
+  - dissolute
+  - suggestive
+  - voyeuristic
+  - hedonistic
+  - indecorous
+  - dirty-minded
+  - profligate
+  - shamelessness
+  - orgiastic
+  - porn
+  - smutty
+  - offensive
+  - blasphemous
+  - scatological
+  - crude
+  - vile
+  - disgusting
+  - repulsive
+  - filthiness
+  - gutter
+  - scurrilous
+  - tasteless
+  - unsavory
+  - off-color
+  - profane
+  - sleaziness
+  - trashy
+  - foul
+  - crass
+  - abhorrent
+  - revolting
+  - nauseating
+  - sickening
+  
+# Blacklisted words for /Imagine command

@@ -64,9 +64,14 @@ allow_dm = config['ALLOW_DM']
 active_channels = set()
 trigger_words = config['TRIGGER']
 smart_mention = config['SMART_MENTION']
+
+# Imagine config
+blacklisted_words = config['BLACKLIST_WORDS']
+
 # Internet access
 internet_access = config['INTERNET_ACCESS']
-### Instructions Load ##
+
+## Instructions Loader ##
 instruction = {}
 
 for file_name in os.listdir("instructions"):
@@ -77,7 +82,7 @@ for file_name in os.listdir("instructions"):
             variable_name = file_name.split('.')[0]  # Use the file name without extension as the variable name
             instruction[variable_name] = file_content
 
-### Language settings ###
+## Language settings ##
 current_language_code = config['LANGUAGE']
 valid_language_codes = []
 lang_directory = "lang"
@@ -186,11 +191,7 @@ async def get_transcript_from_message(message_content):
 async def search(prompt):
     if not internet_access:
         return
-    wh_words = ['search', 'find', 'who', 'what', 'when', 'where', 'why', 'which', 'whom', 'whose', 'how',
-                'is', 'are', 'am', 'can', 'could', 'should', 'would', 'do', 'does', 'did',
-                'may', 'might', 'shall', 'will', 'have', 'has', 'had', 'must', 'ought', 'need',
-                'want', 'like', 'prefer', 'tìm', 'tìm kiếm', 'làm sao', 'khi nào', 'hỏi', 'nào', 'google',
-                'muốn hỏi', 'phải làm', 'cho hỏi']
+    wh_words = config["SEARCH_TRIGGERS"]
 
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -477,6 +478,11 @@ async def bonk(ctx):
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
                   negative: str = None):
+    
+    if any(words in prompt.lower() for words in blacklisted_words):
+        await ctx.send("⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
+        return
+
     temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1114422813344944188.gif")
 
     filename = await generate_image(prompt, style.value, ratio.value, negative)
