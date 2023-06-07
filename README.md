@@ -27,6 +27,8 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 </div>
 
 
+## Features and commands
+
 <details>
 <summary><strong>🌟 Feature Preview 👀(Click to expand)</strong></summary>
 
@@ -78,14 +80,15 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 
 </details>
 
+## Additional configuration
+
 <details>
-<summary><strong>Enabling Internet access 🌐
-🔍(Click to Expand)</strong></summary>
+<summary><strong>Enabling Internet access 🌐🔍(Click to Expand)</strong></summary>
 
 To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
 
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/754c1db5aff357b53e3d7f01681ac86c001de6b9/config.yml#LL1C1-L1C1
-  
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/5bcb2c9b471e2a9cbf9a7d50882a897ce5d5890b/config.yml#L1
+
 You can also set the maximum search results
   
 </details>
