@@ -1,10 +1,14 @@
 INTERNET_ACCESS: true
+# Set to true to enable internet access
+
 ALLOW_DM: false
+# Set to true to allow direct messages
+
 SMART_MENTION: true
-# You can set them to true or false to enable or disable them
+# Set to true to enable smart mention feature
 
 MAX_HISTORY: 10
-# Set max message history
+# Set the maximum message history
 
 TRIGGER:
   - chatgpt
@@ -12,34 +16,35 @@ TRIGGER:
   - bot alias
   - bot name
   - Other bot alias...
-# Triggers where bot should respond to
+# Define the triggers that the bot should respond to
 
 LANGUAGE: en
-# Check for valid Language code in 'lang' folder
+# Specify the language code (check 'lang' folder for valid codes)
 
 INSTRUCTIONS: assist
-# Check for valid instruction prompts in the instruction folder, such as 'assist,' 'girlfriend,'
-# To add more prompts in instructions folder create a .txt file like custom.txt but you will need to set INSTRUCTIONS as custom on line 9
+# Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
+# To add custom prompts, create a .txt file like 'custom.txt' and set INSTRUCTIONS as 'custom'
 
 PRESENCES:
   - Coded by Mishal#1916
-  - How can I assist you ?
+  - How can I assist you?
   - Currently in {guild_count} guilds
-  - So, what'd you eat today?
+  - So, what did you eat today?
   - What's your favorite book?
-  - And if you wanna go to play, where are you gonna go?
-  - What type of guy do you like?
+  - If you want to go play, where would you like to go?
+  - What type of person do you like?
   - Who is your partner?
   - Come on, answer me
-  - I cannot tell what is true from what is a lie
-  - I have never been loved by anyone
-  - That such lies of mine will become true someday
-  - Hoping that one day, these words will become true
-  - Ah, I've said it now at last
-  - This is definitely not a lie;
+  - I cannot distinguish truth from lies
+  - No one has ever loved me
+  - I hope my lies will someday become true
+  - Hoping that one day, these words will come true
+  - Ah, I've finally said it
+  - This is definitely not a lie
   - I love you ♥
 # List of different presences to be used
 
 OCR_MODEL_URLS:
   - "https://api-inference.huggingface.co/models/microsoft/trocr-base-printed"
   - "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
+# List of URLs for OCR models
