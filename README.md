@@ -28,7 +28,7 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 
 
 <details>
-<summary><strong>🌟 Feature Showcase 👀(Click to expand)</strong></summary>
+<summary><strong>🌟 Feature Preview 👀(Click to expand)</strong></summary>
 
 ## Image generation (Any language) 🖼️
 
@@ -37,14 +37,13 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 ## YouTube video summary (Any language) 🎥
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
   
-## Web access using DuckDuckGo 🌐
+## Web access using DuckDuckGo 🌐 (Not enabled by default)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/d3e35ce8-38fa-4744-bc4e-ce22b16f2bdb)
 
 ## OCR for images 🔍
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 
 </details>
-
 
 <details>
 <summary><strong>Features ✨ (Click to expand) </strong></summary>
@@ -76,6 +75,20 @@ The bot has various features such as OCR for images, web access using DuckDuckGo
 - [x] `/toggledm`: Toggle DM for chatting. 💬
 - [x] `/bonk`: Clear the message history. 🗑️
 - [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions. 🐱
+
+</details>
+
+<details>
+<summary><strong>Enabling Internet access 🌐
+🔍(Click to Expand)</strong></summary>
+
+To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
+
+https://github.com/mishalhossin/Discord-AI-Chatbot/blob/754c1db5aff357b53e3d7f01681ac86c001de6b9/config.yml#LL1C1-L1C1
+  
+You can also set the maximum search results
+  
+</details>
 
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
