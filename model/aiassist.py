@@ -9,8 +9,8 @@ class Completion:
             systemMessage: str = "You are a helpful assistant",
             prompt: str = "",
             parentMessageId: str = "",
-            temperature: float = 0.8,
-            top_p: float = 0.7,
+            temperature: float = 0.7,
+            top_p: float = 0.9,
     ):
         json_data = {
             "prompt": prompt,
