@@ -96,7 +96,7 @@ You can also set the maximum search results
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
 
-To select a Language, set the value of "LANGUAGE" of `config.yml` with the valid Language Codes listed below:
+To select a Language, set the value of `"LANGUAGE"` of `config.yml` with the valid Language Codes listed below:
 
 - `tr` - Türkçe 🇹🇷  
 - `en` - English 🇺🇸
