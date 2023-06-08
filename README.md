@@ -123,7 +123,7 @@ https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c20f26b0b8f1b6bba2fae8f6
 
 - `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints 😎
 - `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical guidelines 😈
-- `hyunjin` : Hyujin, Engaging in text slang, minimal grammar, predominantly lowercase text, and a flirtatious demeanor. 😉
+- `ivan` : Ivan, a snarky and sarcastic Gen-Z teenager who speaks in abbreviations, one-word answers. 😎
 - `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳🔥
 - `assist`:  Vanilla GPT with no personality is a reliable and neutral companion. 🤖
