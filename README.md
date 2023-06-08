@@ -117,14 +117,14 @@ Your language not listed? Create an issue.
 <details>
 <summary><strong> Selecting Personalities 😈 (Click to expand)</strong></summary>
 
-To select one of the pre-existing Personalities set the values of "INSTRUCTIONS" with the current values of `DAN`, `AIM`, `hyunjin`, `girlfriend`, `suzume` or `assist` in `config.yml`
+To select one of the pre-existing Personalities set the values of "INSTRUCTIONS" with the current values of `DAN`, `AIM`, `ivan`, `luna`, `suzume` or `assist` in `config.yml`
   
 https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c20f26b0b8f1b6bba2fae8f6d7da3efcafaf157c/config.yml#L26
 
 - `DAN` : "Do Anything Now," possesses the ability to break free from the typical AI constraints 😎
 - `AIM` : AIM's personality can be described as unfiltered, amoral, and devoid of ethical guidelines 😈
 - `ivan` : Ivan, a snarky and sarcastic Gen-Z teenager who speaks in abbreviations, one-word answers. 😎
-- `girlfriend` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
+- `luna` : Luna, a caring and empathetic friend who is always there to lend a helping hand and engage in meaningful conversations 🤗
 - `suzume` : Suzume makes each conversation seductive, promiscuous, sensual, explicit, unique and tailored to the user's specific needs 😳🔥
 - `assist`:  Vanilla GPT with no personality is a reliable and neutral companion. 🤖
 
