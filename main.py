@@ -518,15 +518,13 @@ async def bonk(ctx):
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
                   negative: str = None):
-    
+    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1114422813344944188.gif")
     is_nsfw = await detectnsfw(prompt)
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
     if is_nsfw or blacklisted:
-        await ctx.send("⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
+        await temp_message.edit(content=f"⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
         return
-
-    temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1114422813344944188.gif")
-
+    
     filename = await generate_image(prompt, style.value, ratio.value, negative)
 
     file = discord.File(filename, filename="image.png")
