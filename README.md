@@ -13,7 +13,7 @@
 
 🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
-Now, let's talk about the bot's features. It has **OCR** for images, so it can read text from images. It can also do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 🔎📺
+Now, let's talk about the bot's features. It has **OCR** for images, so it can read text from images. It can also do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 
 
 <p align="center">
   <b>❤️ Your donation is vital for the project's future. Thank you for your support. 🙏</b>
