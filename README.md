@@ -203,8 +203,7 @@ You can Invite your bot using the link in console
 
 - Config `secrets` in replit like this
 
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/3c7fdc73-5218-4b15-b978-c2b871a4bdc9)
-
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/d629e97a-60d9-4ba4-b4fb-8fc6a8a97831)
 
 ### Using docker to run 🐳
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
