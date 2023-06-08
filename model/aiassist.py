@@ -31,6 +31,10 @@ class Completion:
     @classmethod
     def __load_json(cls, content) -> dict:
         decode_content = str(content.decode("utf-8"))
-        split = decode_content.rsplit("\n", 1)[1]
-        to_json = json.loads(split)
-        return to_json
+        split = decode_content.rsplit("\n", 1)
+        if len(split) > 1:
+            to_json = json.loads(split[1])
+            return to_json
+        else:
+            return {}
+

@@ -59,8 +59,6 @@ else:
         TOKEN = get_discord_token()
 # Replit
 detect_replit_and_run()
-
-print(config['ALLOW_DM'])
 # Keep track of the channels where the bot should be active
 allow_dm = config['ALLOW_DM']
 active_channels = set()
@@ -330,11 +328,15 @@ MAX_HISTORY = config['MAX_HISTORY']
 
 @bot.event
 async def on_message(message):
+    if message.mentions: # Update mentions in message
+        for mention in message.mentions:
+            message.content = message.content.replace(f'<@{mention.id}>', f'@{mention.display_name}')
+
     if message.author.bot:
         return
 
     if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
-        return  # Ignore replies to messages and embeds
+        return
 
     is_replied = message.reference and message.reference.resolved.author == bot.user and smart_mention
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
@@ -345,8 +347,8 @@ async def on_message(message):
     bot_name_in_message = bot.user.name.lower() in message.content.lower() and smart_mention
 
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
-
         author_id = str(message.author.id)
+
         if author_id not in message_history:
             message_history[author_id] = []
 
