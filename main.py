@@ -57,6 +57,8 @@ else:
     token_status = asyncio.run(check_token())
     if token_status is not None:
         TOKEN = get_discord_token()
+# Replit
+detect_replit_and_run()
 
 print(config['ALLOW_DM'])
 # Keep track of the channels where the bot should be active
@@ -599,6 +601,4 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.NotOwner):
         await ctx.send(f"{ctx.author.mention} Only the owner of the bot can use this command.")
         
-detect_replit_and_run()
-
 bot.run(TOKEN)
