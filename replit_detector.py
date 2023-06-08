@@ -58,7 +58,7 @@ def run_flask_app():
 Welcomer = """\033[1;31m⚠️ Looks like you are running this project on Replit\033[0m
         
 \033[1;33mPlease note that the .env file cannot exist on Replit.
-Instead, create environment variables (e.g., DISCORD_TOKEN and HUGGING_FACE_API) in the "Secrets" tab under "Tools".\033[0m
+Instead, create environment variable DISCORD_TOKEN in the "Secrets" tab under "Tools".\033[0m
 """
             
 def detect_replit():
