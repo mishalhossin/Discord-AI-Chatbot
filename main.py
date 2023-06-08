@@ -383,6 +383,7 @@ async def on_message(message):
             message_history[author_id].append(f"\{search_results}\n{bot.user.name} : {response}")
             chunks = split_response(response)
             for chunk in chunks:
+                chunk = chunk.replace('@everyone', '@\u200beveryone').replace('@here', '@\u200bhere')
                 await message.reply(chunk)
             await temp_message.delete()
 
