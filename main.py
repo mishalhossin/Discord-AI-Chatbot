@@ -22,7 +22,7 @@ from replit_detector import detect_replit_and_run
 load_dotenv()
 
 # Config load
-with open('config.yml') as config_file:
+with open('config.yml', 'r', encoding='utf-8') as config_file:
     config = yaml.safe_load(config_file)
     
 # Set up the Discord bot
@@ -237,7 +237,7 @@ async def search(prompt):
         
     return blob
 
-async def generate_image(image_prompt, style_value, ratio_value, negative):
+async def generate_image(image_prompt, style_value, ratio_value, negative, upscale):
     imagine = AsyncImagine()
     filename = str(uuid.uuid4()) + ".png"
     style_enum = Style[style_value]
@@ -251,6 +251,10 @@ async def generate_image(image_prompt, style_value, ratio_value, negative):
         steps="70",
         negative=negative
     )
+
+    if upscale:
+        img_data = await imagine.upscale(image=img_data) 
+    
     try:
         with open(filename, mode="wb") as img_file:
             img_file.write(img_data)
@@ -513,31 +517,45 @@ async def bonk(ctx):
     app_commands.Choice(name='Dystopian', value='DYSTOPIAN')
 ])
 @app_commands.choices(ratio=[
-    app_commands.Choice(name='1x1', value='RATIO_1X1'),
-    app_commands.Choice(name='9x16', value='RATIO_9X16'),
-    app_commands.Choice(name='16x9', value='RATIO_16X9'),
-    app_commands.Choice(name='4x3', value='RATIO_4X3'),
-    app_commands.Choice(name='3x2', value='RATIO_3X2')
+    app_commands.Choice(name='Square (1:1)', value='RATIO_1X1'),
+    app_commands.Choice(name='Vertical (9:16)', value='RATIO_9X16'),
+    app_commands.Choice(name='Horizontal (16:9)', value='RATIO_16X9'),
+    app_commands.Choice(name='Standard (4:3)', value='RATIO_4X3'),
+    app_commands.Choice(name='Classic (3:2)', value='RATIO_3X2')
+])
+@app_commands.choices(upscale=[
+    app_commands.Choice(name='Yea sure', value='True'),
+    app_commands.Choice(name='No thanks', value='False')
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
-                  negative: str = None):
+                  negative: str = None, upscale: app_commands.Choice[str] = None):
+    
+    if upscale is not None and upscale.value == 'True':
+        upscale_status = True
+    else:
+        upscale_status = False
+
     temp_message = await ctx.send("https://cdn.discordapp.com/emojis/1114422813344944188.gif")
     is_nsfw = await detectnsfw(prompt)
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
     if is_nsfw or blacklisted:
         await temp_message.edit(content=f"⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
         return
-    
-    filename = await generate_image(prompt, style.value, ratio.value, negative)
+
+    filename = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
 
     file = discord.File(filename, filename="image.png")
     embed = Embed(color=0x141414)
     embed.set_author(name="Generated Image")
     embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
     embed.add_field(name="Style", value=f"{style.name}", inline=True)
-    embed.add_field(name="Ratio", value=f"{ratio.value}", inline=True)
+    embed.add_field(name="Ratio", value=f"{ratio.name}", inline=True)
     embed.set_image(url="attachment://image.png")
-    embed.set_footer(text="To create more images use /imagine")
+    
+    if upscale_status:
+        embed.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
+    else:
+        embed.set_footer(text="To create more images use /imagine")
 
     if negative is not None:
         embed.add_field(name="Negative", value=f"{negative}", inline=False)
