@@ -11,9 +11,9 @@
 </p>
 </div>
 
-🤖 This awesome Discord chat bot is built using Python and relies on the amazing discord.py library. It's thanks to GPT3. Plus, it's got a neat feature that uses [Imaginepy](https://github.com/ItsCEED/Imaginepy) to generate awesome mid-journey-like images. 🖼️
+🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
-But wait, there's more! This bot has a bunch of other cool stuff too. It can do OCR for images, giving it the ability to read text from pictures. It can even help you with web searches using DuckDuckGo. And if that's not enough, it can summarize YouTube videos for you. How cool is that? It's also smart enough to recognize when someone mentions it. Talk about flexibility! ⚙️
+Now, let's talk about the bot's features. It has **OCR** for images, so it can read text from images. It can also do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 🔎📺
 
 <p align="center">
   <b>❤️ Your donation is vital for the project's future. Thank you for your support. 🙏</b>
