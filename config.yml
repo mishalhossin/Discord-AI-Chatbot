@@ -1,4 +1,4 @@
-ALWAYS_GPT4: true
+ALWAYS_GPT4: false
 # Set this to true if you want to always use GPT4 for response
 
 INTERNET_ACCESS: true
