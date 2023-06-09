@@ -218,19 +218,33 @@ async def get_query(prompt):
 Example 1 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
-Example 2 :
+
+Example 2
+Message : Hey gpt who made you ?
+Query: False
+
+Example 3 :
+Message: What is the latest donald trump scandal?
+Query: Donald Trump scandal latest news
+
+Example 4 :
 Message : How are you doing today ?
 Query: False
+
+Example 5 
+Message : Who won in 2022 world cup ?
+Query: 2022 FIFA World Cup final
 
 Current Message : """
 
     fullprompt = preprompt + prompt
     response = await aiassist.Completion.create(prompt=fullprompt)
+    if not response:
+        return None
     index = response["text"].find(':')
     if index != -1:
         striped_response = response["text"][index + 1:].strip()
         if striped_response == "False" or response["text"] == "False":
-            print(f"\nSearching DDG for : {striped_response}\n")
             return None
         else:
             return striped_response
@@ -240,13 +254,13 @@ Current Message : """
 async def search(prompt):
     if not internet_access or len(prompt) > 200:
         return
-
     search_results_limit = config['MAX_SEARCH_RESULTS'] 
     search_query = await get_query(prompt)
 
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     if search_query is not None:
+        print(f"\n\nSearching for : {search_query}\n\n")
         async with aiohttp.ClientSession() as session:
             async with session.get('https://ddg-api.herokuapp.com/search',
                                 params={'query': prompt, 'limit': search_results_limit}) as response:
@@ -354,7 +368,7 @@ MAX_HISTORY = config['MAX_HISTORY']
 
 @bot.event
 async def on_message(message):
-    if message.mentions: # Update mentions in message
+    if message.mentions:
         for mention in message.mentions:
             message.content = message.content.replace(f'<@{mention.id}>', f'@{mention.display_name}')
 
@@ -373,13 +387,13 @@ async def on_message(message):
     bot_name_in_message = bot.user.name.lower() in message.content.lower() and smart_mention
 
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
-        author_id = str(message.author.id)
+        key = f"{message.author.id}-{channel_id}"
 
-        if author_id not in message_history:
-            message_history[author_id] = []
+        if key not in message_history:
+            message_history[key] = []
 
-        message_history[author_id].append(f"{message.author.name} : {message.content}")
-        message_history[author_id] = message_history[author_id][-MAX_HISTORY:]
+        message_history[key].append(f"{message.author.name} : {message.content}")
+        message_history[key] = message_history[key][-MAX_HISTORY:]
 
         has_image = False
         image_caption = ""
@@ -398,7 +412,7 @@ async def on_message(message):
             bot_prompt = f"{instructions}"
         search_results = await search(message.content)
         yt_transcript = await get_transcript_from_message(message.content)
-        user_prompt = "\n".join(message_history[author_id])
+        user_prompt = "\n".join(message_history[key])
         if yt_transcript is not None:
             prompt = f"{yt_transcript}"
         else:
@@ -408,7 +422,7 @@ async def on_message(message):
             temp_message = await message.reply(
                 "https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             response = await generate_response(prompt)
-            message_history[author_id].append(f"\{search_results}\n{bot.user.name} : {response}")
+            message_history[key].append(f"\{search_results}\n{bot.user.name} : {response}")
             chunks = split_response(response)
             for chunk in chunks:
                 chunk = chunk.replace("@", "@\u200B")
