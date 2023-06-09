@@ -354,7 +354,7 @@ async def on_message(message):
     if message.author.bot:
         return
 
-     if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
+    if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
         return
 
     is_replied = message.reference and message.reference.resolved.author == bot.user and smart_mention
