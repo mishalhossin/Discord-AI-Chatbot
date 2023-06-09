@@ -149,14 +149,21 @@ def generate_gpt4_response(prompt):
     return response
 
 async def generate_response(prompt):
+    
     if always_gpt4:
-        gpt4_response = await asyncio.to_thread(generate_gpt4_response, prompt)
-        return gpt4_response
+        try:
+            gpt4_response = await asyncio.to_thread(generate_gpt4_response, prompt)
+            return gpt4_response
+        except Exception as e:
+            response = await aiassist.Completion.create(prompt=prompt)
+            return response
     else:
-        response = await aiassist.Completion.create(prompt=prompt)
-        return response["text"]
-        
-    return ("I couldn't generate a response right now. It could be due to technical issues or the complexity of the query.")
+        try:
+            response = await aiassist.Completion.create(prompt=prompt)
+            return response["text"]
+        except Exception as e:
+            print(f"Error generating AI Assist response: {e}")
+            return "Damn son you got rate limited"
 
 
 def split_response(response, max_length=1900):
