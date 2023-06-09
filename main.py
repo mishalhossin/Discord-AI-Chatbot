@@ -354,9 +354,8 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    if message.reference and message.reference.resolved:
-        if message.reference.resolved.author != bot.user or message.reference.resolved.embeds:
-          return
+     if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
+        return
 
     is_replied = message.reference and message.reference.resolved.author == bot.user and smart_mention
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
