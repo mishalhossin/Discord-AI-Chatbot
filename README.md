@@ -11,7 +11,7 @@
 </p>
 </div>
 
-🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
+🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3 and GPT4, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
 Now, let's talk about the bot's features. It has **OCR** for images, so it can read text from images. It can also do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 
 
@@ -55,7 +55,7 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
-- [x] GPT-3.5 Model: This bot runs on turbo power! Powered by the lightning-fast GPT-3.5-turbo language model. 🤖
+- [x] GPT3 and GPT4 Models: Leverage the power of GPT3 and GPT4 models for advanced language processing capabilities. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
@@ -76,6 +76,7 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 - [x] `/toggledm`: Toggle DM for chatting. 💬
 - [x] `/bonk`: Clear the message history. 🗑️
 - [x] `/neko`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions. 🐱
+- [x] `/askgpt4`: Ask GPT4 a Question
 
 </details>
 
