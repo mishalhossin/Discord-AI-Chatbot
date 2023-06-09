@@ -9,3 +9,5 @@ python-dotenv
 PyYAML
 youtube-transcript-api
 langdetect
+poe-api
+secrets
