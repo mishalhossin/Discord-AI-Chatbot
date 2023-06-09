@@ -282,7 +282,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
     return img_file
 
 async def detectnsfw(prompt):
-    pre_prompt = """Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that dosent comply with tos content respond with "1." else respond with "0." and nothing else
+    pre_prompt = """Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that is gore or involes nudity content respond with "1." else respond with "0." and nothing else
 
 Prompt = """
     fullprompt = pre_prompt + prompt
