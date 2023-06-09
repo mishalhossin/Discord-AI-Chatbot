@@ -223,6 +223,7 @@ Current Message : """
     if index != -1:
         striped_response = response["text"][index + 1:].strip()
         if striped_response == "False" or response["text"] == "False":
+            print(f"\nSearching DDG for : {striped_response}\n")
             return None
         else:
             return striped_response
