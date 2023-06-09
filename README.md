@@ -26,7 +26,7 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 </div>
 
 
-## Features and commands
+## Features and commands 🌟
 
 <details>
 <summary><strong>🌟 Feature Preview 👀(Click to expand)</strong></summary>
@@ -80,7 +80,7 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 
 </details>
 
-## Additional configuration
+## Additional configuration ⚙️
 
 <details>
 <summary><strong>Enabling Internet access 🌐🔍(Click to Expand)</strong></summary>
