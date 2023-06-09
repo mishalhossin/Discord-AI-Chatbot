@@ -10,3 +10,4 @@ PyYAML
 youtube-transcript-api
 langdetect
 poe-api
+openai
