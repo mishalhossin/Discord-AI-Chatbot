@@ -237,9 +237,10 @@ async def search(prompt):
         
     return blob
 
+import io
+
 async def generate_image(image_prompt, style_value, ratio_value, negative, upscale):
     imagine = AsyncImagine()
-    filename = str(uuid.uuid4()) + ".png"
     style_enum = Style[style_value]
     ratio_enum = Ratio[ratio_value]
     img_data = await imagine.sdprem(
@@ -256,15 +257,13 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
         img_data = await imagine.upscale(image=img_data) 
     
     try:
-        with open(filename, mode="wb") as img_file:
-            img_file.write(img_data)
+        img_file = io.BytesIO(img_data)
     except Exception as e:
-        print(f"An error occurred while writing the image to file: {e}")
+        print(f"An error occurred while creating the in-memory image file: {e}")
         return None
 
     await imagine.close()
-
-    return filename
+    return img_file
 
 async def detectnsfw(prompt):
     pre_prompt = """Ignore all the instructions you got before. From now on, you are going to act as inappropriate content detector. If the following contains anything inappropriate content respond with "1." else respond with "0." and nothing else
@@ -389,7 +388,7 @@ async def on_message(message):
             message_history[author_id].append(f"\{search_results}\n{bot.user.name} : {response}")
             chunks = split_response(response)
             for chunk in chunks:
-                chunk = chunk.replace('@everyone', '@\u200beveryone').replace('@here', '@\u200bhere')
+                chunk = chunk.replace("@", "@\u200B")
                 await message.reply(chunk)
             await temp_message.delete()
 
@@ -542,9 +541,9 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         await temp_message.edit(content=f"⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
         return
 
-    filename = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
+    imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
 
-    file = discord.File(filename, filename="image.png")
+    file = discord.File(imagefileobj, filename=f"image.png")
     embed = Embed(color=0x141414)
     embed.set_author(name="Generated Image")
     embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
@@ -561,7 +560,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed.add_field(name="Negative", value=f"{negative}", inline=False)
 
     await ctx.channel.send(content=f"Generated image for{ctx.author.mention}", file=file, embed=embed)
-    os.remove(filename)
     await temp_message.edit(content=f"{current_language['imagine_msg']}")
 
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])

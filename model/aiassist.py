@@ -1,16 +1,43 @@
 import json
-
 import aiohttp
 
-
 class Completion:
+    @staticmethod
+    async def createStreaming(
+            systemMessage: str = "You are a helpful assistant",
+            prompt: str = "",
+            parentMessageId: str = "",
+            temperature: float = 0.7,
+            top_p: float = 1,
+    ):
+        json_data = {
+            "prompt": prompt,
+            "options": {"parentMessageId": parentMessageId},
+            "systemMessage": systemMessage,
+            "temperature": temperature,
+            "top_p": top_p,
+        }
+
+        url = "http://43.153.7.56:8080/api/chat-process"
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=json_data) as response:
+                buffer = ""
+                async for chunk in response.content.iter_any():
+                    chunk = chunk.decode("utf-8")
+                    buffer += chunk
+                    while "\n" in buffer:
+                        line, buffer = buffer.split("\n", 1)
+                        if line.strip():
+                            data = json.loads(line)
+                            text = data["text"]
+                            yield text
     @staticmethod
     async def create(
             systemMessage: str = "You are a helpful assistant",
             prompt: str = "",
             parentMessageId: str = "",
             temperature: float = 0.7,
-            top_p: float = 0.9,
+            top_p: float = 1,
     ):
         json_data = {
             "prompt": prompt,
@@ -37,4 +64,3 @@ class Completion:
             return to_json
         else:
             return {}
-
