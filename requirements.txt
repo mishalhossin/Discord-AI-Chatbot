@@ -1,6 +1,7 @@
 aiohttp
 asyncio
 discord.py
+git+https://github.com/Rapptz/discord.py
 requests
 flask
 discord
