@@ -40,7 +40,7 @@ def main():
     </style>
 </head>
 <body>
-    <h1>Hey there, {repl_owner}! Are we going to create a custom persona for the Chatbot, or should we stick with the default, like DAN and others?</h1>
+    <h1>Hey there, {repl_owner}! To keep your Replit running continuously, you'll need to use an uptime monitoring service like UptimeRobot.</h1>
 </body>
 </html>
 '''

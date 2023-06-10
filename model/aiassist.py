@@ -1,9 +1,9 @@
-import json
 import aiohttp
+import json
 
 class Completion:
     @staticmethod
-    async def createStreaming(
+    async def createStatic(
             systemMessage: str = "You are a helpful assistant",
             prompt: str = "",
             parentMessageId: str = "",
@@ -22,6 +22,7 @@ class Completion:
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=json_data) as response:
                 buffer = ""
+                accumulated_content = ""
                 async for chunk in response.content.iter_any():
                     chunk = chunk.decode("utf-8")
                     buffer += chunk
@@ -30,7 +31,10 @@ class Completion:
                         if line.strip():
                             data = json.loads(line)
                             text = data["text"]
-                            yield text
+                            accumulated_content += text + "\n"
+                
+                return accumulated_content
+
     @staticmethod
     async def create(
             systemMessage: str = "You are a helpful assistant",
