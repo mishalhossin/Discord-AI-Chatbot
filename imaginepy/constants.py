@@ -14,7 +14,7 @@ class Style(Enum):
     IMAGINE_V3 = (28, "thumbv1_27", "styles_v1", ", 4k, high quality, hdr")
     IMAGINE_V1 = (27, "thumb-63", "styles_v4", None)
     PORTRAIT = (26, "thumb-65", "styles_v4", None)
-    REALISTIC = (29, "thumb-66", "styles_v4", None)
+    REALISTIC = (30, "Imagine_V3.5", "styles_v4", None)
     ANIME = (21, "thumb_20", "styles", None)
     ANIME_V2 = (28, "thumb_37", "styles_v1",
                 ", anime atmospheric, atmospheric anime, anime character; full body art, digital anime art, beautiful anime art style, anime picture, anime arts, beautiful anime style, digital advanced anime art, anime painting, anime artwork, beautiful anime art, detailed digital anime art, anime epic artwork")

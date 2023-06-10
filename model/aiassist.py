@@ -4,7 +4,7 @@ import json
 class Completion:
     @staticmethod
     async def createStatic(
-            systemMessage: str = "You are a helpful assistant",
+            systemMessage: str = "",
             prompt: str = "",
             parentMessageId: str = "",
             temperature: float = 0.7,
@@ -37,7 +37,7 @@ class Completion:
 
     @staticmethod
     async def create(
-            systemMessage: str = "You are a helpful assistant",
+            systemMessage: str = "",
             prompt: str = "",
             parentMessageId: str = "",
             temperature: float = 0.7,
