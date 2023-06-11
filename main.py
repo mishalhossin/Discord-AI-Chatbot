@@ -152,7 +152,6 @@ async def generate_response(prompt):
     partial_prompt = prompt[-remaining_length:]
     full_prompt = instructions + partial_prompt
     response = await aiassist.Completion.create(prompt=full_prompt)
-    print(full_prompt)
     if not response["text"]:
         one_word_answer = await aiassist.Completion.createStatic(prompt=partial_prompt)
         return one_word_answer
