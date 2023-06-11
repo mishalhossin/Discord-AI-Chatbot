@@ -1,4 +1,4 @@
-INTERNET_ACCESS: true
+INTERNET_ACCESS: false
 # Set to true to enable internet access
 
 MAX_SEARCH_RESULTS: 2
