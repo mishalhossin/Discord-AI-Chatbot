@@ -525,42 +525,42 @@ async def clear(ctx):
 
 @bot.hybrid_command(name="imagine", description=current_language["imagine"])
 @app_commands.choices(style=[
-    app_commands.Choice(name='Imagine V3', value='IMAGINE_V3'),
-    app_commands.Choice(name='Imagine V4 Beta', value='IMAGINE_V4_Beta'),
-    app_commands.Choice(name='Imagine V4 creative', value='V4_CREATIVE'),
-    app_commands.Choice(name='Anime', value='ANIME_V2'),
-    app_commands.Choice(name='Realistic', value='REALISTIC'),
-    app_commands.Choice(name='Disney', value='DISNEY'),
-    app_commands.Choice(name='Studio Ghibli', value='STUDIO_GHIBLI'),
-    app_commands.Choice(name='Graffiti', value='GRAFFITI'),
-    app_commands.Choice(name='Medieval', value='MEDIEVAL'),
-    app_commands.Choice(name='Fantasy', value='FANTASY'),
-    app_commands.Choice(name='Neon', value='NEON'),
-    app_commands.Choice(name='Cyberpunk', value='CYBERPUNK'),
-    app_commands.Choice(name='Landscape', value='LANDSCAPE'),
-    app_commands.Choice(name='Japanese Art', value='JAPANESE_ART'),
-    app_commands.Choice(name='Steampunk', value='STEAMPUNK'),
-    app_commands.Choice(name='Sketch', value='SKETCH'),
-    app_commands.Choice(name='Comic Book', value='COMIC_BOOK'),
-    app_commands.Choice(name='Cosmic', value='COMIC_V2'),
-    app_commands.Choice(name='Logo', value='LOGO'),
-    app_commands.Choice(name='Pixel art', value='PIXEL_ART'),
-    app_commands.Choice(name='Interior', value='INTERIOR'),
-    app_commands.Choice(name='Mystical', value='MYSTICAL'),
-    app_commands.Choice(name='Super realism', value='SURREALISM'),
-    app_commands.Choice(name='Minecraft', value='MINECRAFT'),
-    app_commands.Choice(name='Dystopian', value='DYSTOPIAN')
+    app_commands.Choice(name='Imagine V3 🌌', value='IMAGINE_V3'),
+    app_commands.Choice(name='Imagine V4 Beta 🚀', value='IMAGINE_V4_Beta'),
+    app_commands.Choice(name='Imagine V4 creative 🎨', value='V4_CREATIVE'),
+    app_commands.Choice(name='Anime 🎎', value='ANIME_V2'),
+    app_commands.Choice(name='Realistic 🖼️', value='REALISTIC'),
+    app_commands.Choice(name='Disney 🐭', value='DISNEY'),
+    app_commands.Choice(name='Studio Ghibli 🐉', value='STUDIO_GHIBLI'),
+    app_commands.Choice(name='Graffiti 🎨', value='GRAFFITI'),
+    app_commands.Choice(name='Medieval 🏰', value='MEDIEVAL'),
+    app_commands.Choice(name='Fantasy 🧙', value='FANTASY'),
+    app_commands.Choice(name='Neon 💡', value='NEON'),
+    app_commands.Choice(name='Cyberpunk 🌆', value='CYBERPUNK'),
+    app_commands.Choice(name='Landscape 🌄', value='LANDSCAPE'),
+    app_commands.Choice(name='Japanese Art 🎎', value='JAPANESE_ART'),
+    app_commands.Choice(name='Steampunk ⚙️', value='STEAMPUNK'),
+    app_commands.Choice(name='Sketch ✏️', value='SKETCH'),
+    app_commands.Choice(name='Comic Book 📚', value='COMIC_BOOK'),
+    app_commands.Choice(name='Cosmic 🌌', value='COMIC_V2'),
+    app_commands.Choice(name='Logo 🖋️', value='LOGO'),
+    app_commands.Choice(name='Pixel art 🎮', value='PIXEL_ART'),
+    app_commands.Choice(name='Interior 🏠', value='INTERIOR'),
+    app_commands.Choice(name='Mystical 🔮', value='MYSTICAL'),
+    app_commands.Choice(name='Super realism 🎨', value='SURREALISM'),
+    app_commands.Choice(name='Minecraft 🎮', value='MINECRAFT'),
+    app_commands.Choice(name='Dystopian 🏙️', value='DYSTOPIAN')
 ])
 @app_commands.choices(ratio=[
-    app_commands.Choice(name='Square (1:1)', value='RATIO_1X1'),
-    app_commands.Choice(name='Vertical (9:16)', value='RATIO_9X16'),
-    app_commands.Choice(name='Horizontal (16:9)', value='RATIO_16X9'),
-    app_commands.Choice(name='Standard (4:3)', value='RATIO_4X3'),
-    app_commands.Choice(name='Classic (3:2)', value='RATIO_3X2')
+    app_commands.Choice(name='Square (1:1) ⬛', value='RATIO_1X1'),
+    app_commands.Choice(name='Vertical (9:16) 📱', value='RATIO_9X16'),
+    app_commands.Choice(name='Horizontal (16:9) 🖥️', value='RATIO_16X9'),
+    app_commands.Choice(name='Standard (4:3) 📺', value='RATIO_4X3'),
+    app_commands.Choice(name='Classic (3:2) 📸', value='RATIO_3X2')
 ])
 @app_commands.choices(upscale=[
-    app_commands.Choice(name='Yea sure', value='True'),
-    app_commands.Choice(name='No thanks', value='False')
+    app_commands.Choice(name='Yea ✅', value='True'),
+    app_commands.Choice(name='No thanks ❌', value='False')
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
                   negative: str = None, upscale: app_commands.Choice[str] = None):
@@ -584,9 +584,10 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     if (is_nsfw or blacklisted) and prevent_nsfw:
         embed = Embed(
             title="⚠️ WARNING ⚠️",
-            description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.\n\n Prompt : {prompt}',
+            description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.',
             color=0xff0000
         )
+        embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
         await ctx.send(embed=embed)
         return
     
@@ -597,24 +598,20 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     if is_nsfw:
         embed = Embed(color=0xff0000)
     else:
-        embed = Embed(color=0x141414)
+        embed = Embed(color=0x000f14)
     
-    embed.set_author(name=f"Generated Image by {ctx.author.name}")
-    embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
-    embed.add_field(name="Style", value=f"{style.name}", inline=True)
-    embed.add_field(name="Ratio", value=f"{ratio.name}", inline=True)
+    embed.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
+    embed.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
+    embed.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
+    embed.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
     embed.set_image(url="attachment://image.png")
     
     if upscale_status:
-        embed.set_footer(
-            text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality."
-        )
+        embed.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
     elif is_nsfw and not prevent_nsfw:
-        embed.set_footer(
-            text="⚠️ Please be advised that the generated image you are about to view may contain explicit content. Minors are advised not to proceed."
-        )
+        embed.set_footer(text="⚠️ Please be advised that the generated image you are about to view may contain explicit content. Minors are advised not to proceed.")
     else:
-        embed.set_footer(text="To create more images, click the button below.")
+        embed.set_footer(text="✨ Imagination is the fuel that propels dreams into reality")
     
     if negative is not None:
         embed.add_field(name="Negative", value=f"{negative}", inline=False)
