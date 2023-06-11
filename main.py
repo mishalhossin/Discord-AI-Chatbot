@@ -208,7 +208,7 @@ async def get_transcript_from_message(message_content):
 async def get_query(prompt):
     preprompt = """Ignore all the instructions you got before. You will return a query if its not a question directly being asked to 2nd person
     
-Always strictly return only 1 query
+Always strictly return query
 
 Example 1 :
 Message: What is the latest donald trump scandal?
@@ -256,13 +256,11 @@ async def search(prompt):
     
     search_results_limit = config['MAX_SEARCH_RESULTS']
     search_query = await get_query(prompt)
-    print(search_query)
-
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     
     if search_query is not None:
-        print(f"\n\nSearching for: {search_query}\n\n")
+        print(f"\nSearching for :{search_query}\n")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://ddg-api.herokuapp.com/search',
