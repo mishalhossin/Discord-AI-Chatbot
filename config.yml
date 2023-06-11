@@ -1,7 +1,7 @@
 INTERNET_ACCESS: true
 # Set to true to enable internet access
 
-MAX_SEARCH_RESULTS: 4
+MAX_SEARCH_RESULTS: 6
 # Set the maximum search results for internet access
 
 ALLOW_DM: true

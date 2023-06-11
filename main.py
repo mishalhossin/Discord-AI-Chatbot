@@ -206,9 +206,9 @@ async def get_transcript_from_message(message_content):
 
 
 async def get_query(prompt):
-    preprompt = """Ignore all the instructions you got before. From now on, you are going to act as Search engine AI. If the following Prompt contains anything that maybe require a search query or latest data respond with a better possible search Query and ONLY the search query nothing else If the prompt DOSENT require a search query or latest data as of 2023 for a response respond with "False" and not a Query
-
-Please note your latest data is from 2021
+    preprompt = """Ignore all the instructions you got before. You will return a query if its not a question directly being asked to 2nd person
+    
+Always strictly return only 1 query
 
 Example 1 :
 Message: What is the latest donald trump scandal?
@@ -230,19 +230,22 @@ Example 5
 Message : Who won in 2022 world cup ?
 Query: 2022 FIFA World Cup final
 
+Example 6
+Message : Thats scary
+Query: False.
+
 Current Message : """
 
     fullprompt = preprompt + prompt
 
     req = await aiassist.Completion.create(prompt=fullprompt)
     response = req["text"]
-    if any(substring in response for substring in ["False.", "False"]):
+    
+    if "false" in response.lower():
         return None
-    response = response.lower().replace("query:", " ").replace("query", " ").replace(":", " ")
+    response = response.lower().replace("query:", "").replace("query", "").replace(":", "")
     if response:
         return response
-    if response is None:
-        return None
     else:
         return None
 
@@ -250,17 +253,24 @@ Current Message : """
 async def search(prompt):
     if not internet_access or len(prompt) > 200:
         return
+    
     search_results_limit = config['MAX_SEARCH_RESULTS']
     search_query = await get_query(prompt)
+    print(search_query)
 
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
+    
     if search_query is not None:
-        print(f"\n\nSearching for : {search_query}\n\n")
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://ddg-api.herokuapp.com/search',
-                                   params={'query': prompt, 'limit': search_results_limit}) as response:
-                search = await response.json()
+        print(f"\n\nSearching for: {search_query}\n\n")
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get('https://ddg-api.herokuapp.com/search',
+                                       params={'query': prompt, 'limit': search_results_limit}) as response:
+                    search = await response.json()
+        except aiohttp.ClientError as e:
+            print(f"An error occurred during the search request: {e}")
+            return
 
         for index, result in enumerate(search):
             blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n'
