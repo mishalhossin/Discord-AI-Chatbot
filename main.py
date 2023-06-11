@@ -422,7 +422,7 @@ async def on_message(message):
                 "https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             response = await generate_response(prompt)
             message_history[key].append(
-                f"\{search_results}\n{bot.user.name} : {response}")
+                f"\n{bot.user.name} : {response}")
             chunks = split_response(response)
             for chunk in chunks:
                 chunk = chunk.replace("@", "@\u200B")
