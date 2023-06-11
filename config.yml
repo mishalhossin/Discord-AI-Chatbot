@@ -2,7 +2,7 @@ INTERNET_ACCESS: true
 # Set to true to enable internet access
 
 MAX_SEARCH_RESULTS: 4
-# Set the maximum search results
+# Set the maximum search results for internet access
 
 ALLOW_DM: true
 # Set to true to allow direct messages
@@ -13,13 +13,11 @@ SMART_MENTION: true
 MAX_HISTORY: 15
 # Set the maximum message history
 
-TRIGGER:
-  - chatbot
-  - bot nickname
-  - bot alias
-  - bot name
-  - Other bot alias...
-# Define the triggers that the bot should always respond to when in message
+PRESENCES_CHANGE_DELAY: 10
+# Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
+
+AI_NSFW_CONTENT_FILTER: true
+# Enable NSFW AI detector to detect NSFW prompt on Imagine Command
 
 LANGUAGE: en
 # Specify the language code (check 'lang' folder for valid codes)
@@ -28,8 +26,15 @@ INSTRUCTIONS: assist
 # Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
 # To add custom prompts, create a .txt file like 'custom.txt' and set INSTRUCTIONS as 'custom'
 
-PRESENCES_CHANGE_DELAY: 60
-# Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
+
+TRIGGER:
+  - chatbot
+  - bot nickname
+  - bot alias
+  - bot name
+  - Other bot alias...
+# Define the triggers that the bot should always respond to when in message
+
 
 PRESENCES:
   - Coded by Mishal#1916
@@ -60,4 +65,4 @@ BLACKLIST_WORDS:
   - sex
   - erotic
   
-# Blacklisted words for /Imagine command
+# Blacklisted words for /Imagine command this is disabled if you enable AI_NSFW_CONTENT_FILTER

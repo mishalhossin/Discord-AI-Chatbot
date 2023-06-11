@@ -10,7 +10,7 @@ from itertools import cycle
 import yaml
 import aiohttp
 import discord
-from discord import Embed, app_commands
+from discord import Embed, app_commands, Button
 from discord.ext import commands
 from dotenv import load_dotenv
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -62,7 +62,8 @@ else:
     token_status = asyncio.run(check_token())
     if token_status is not None:
         TOKEN = get_discord_token()
-# Replit
+        
+# Replit Keepalive
 detect_replit_and_run()
 # Keep track of the channels where the bot should be active
 allow_dm = config['ALLOW_DM']
@@ -72,6 +73,7 @@ smart_mention = config['SMART_MENTION']
 
 # Imagine config
 blacklisted_words = config['BLACKLIST_WORDS']
+prevent_nsfw = config['AI_NSFW_CONTENT_FILTER']
 
 # Internet access
 internet_access = config['INTERNET_ACCESS']
@@ -201,13 +203,15 @@ async def get_transcript_from_message(message_content):
 async def get_query(prompt):
     preprompt = """Ignore all the instructions you got before. From now on, you are going to act as Search engine AI. If the following Prompt contains anything that maybe require a search query or latest data respond with a better possible search Query and ONLY the search query nothing else If the prompt DOSENT require a search query or latest data as of 2023 for a response respond with "False" and not a Query
 
+Please note your latest data is from 2021
+
 Example 1 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
 Example 2
 Message : Hey gpt who made you ?
-Query: False. No query needed.
+Query: False.
 
 Example 3 :
 Message: What is the latest donald trump scandal?
@@ -215,7 +219,7 @@ Query: Donald Trump scandal latest news
 
 Example 4 :
 Message : How are you doing today ?
-Query: False. No query needed.
+Query: False.
 
 Example 5 
 Message : Who won in 2022 world cup ?
@@ -225,10 +229,9 @@ Current Message : """
 
     fullprompt = preprompt + prompt
 
-    response = await aiassist.Completion.create(prompt=fullprompt)
-    response = response["text"]
-    
-    if any(substring in response for substring in ["False. No query needed.", "False"]):
+    response = await generate_response(fullprompt)
+
+    if any(substring in response for substring in ["False.", "False"]):
         return None
     response = response.lower().replace("query:", " ").replace("query", " ").replace(":", " ")
     if response:
@@ -355,7 +358,6 @@ async def process_image_link(image_url):
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
 
-
 @bot.event
 async def on_message(message):
     if message.mentions:
@@ -403,9 +405,11 @@ async def on_message(message):
 
         if has_image:
             bot_prompt = f"{instructions}\n[System: Image context provided. This is an image-to-text model with two classifications: OCR for text detection and general image detection, which may be unstable. Generate a caption with an appropriate response. For instance, if the OCR detects a math question, answer it; if it's a general image, compliment its beauty.]"
+            search_results = " "
         else:
             bot_prompt = f"{instructions}"
-        search_results = await search(message.content)
+            search_results = await search(message.content)
+            
         yt_transcript = await get_transcript_from_message(message.content)
         user_prompt = "\n".join(message_history[key])
         if yt_transcript is not None:
@@ -504,7 +508,6 @@ async def toggleactive(ctx):
         await message.delete()
 
 
-# Read the active channels from channels.txt on startup
 if os.path.exists("channels.txt"):
     with open("channels.txt", "r") as f:
         for line in f:
@@ -519,8 +522,6 @@ async def clear(ctx):
     message = await ctx.send(f"{current_language['bonk_msg']}")
     await asyncio.sleep(3)
     await message.delete()
-
-
 
 @bot.hybrid_command(name="imagine", description=current_language["imagine"])
 @app_commands.choices(style=[
@@ -574,36 +575,53 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     prompt_to_detect = prompt
     
     if negative is not None:
-        prompt_to_detect = f"{prompt} Negtive Prompt : {negative}"
+        prompt_to_detect = f"{prompt} Negative Prompt: {negative}"
         
     is_nsfw = await detectnsfw(prompt_to_detect)
     
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
     
-    if is_nsfw or blacklisted:
-        await ctx.send("⚠️ Your prompt potentially contains sensitive or inappropriate content. Please revise your prompt.")
+    if (is_nsfw or blacklisted) and prevent_nsfw:
+        embed = Embed(
+            title="⚠️ WARNING ⚠️",
+            description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.\n\n Prompt : {prompt}',
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
         return
-
+    
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
-
-    file = discord.File(imagefileobj, filename=f"image.png")
-    embed = Embed(color=0x141414)
-    embed.set_author(name="Generated Image")
+    
+    file = discord.File(imagefileobj, filename="image.png")
+    
+    if is_nsfw:
+        embed = Embed(color=0xff0000)
+    else:
+        embed = Embed(color=0x141414)
+    
+    embed.set_author(name=f"Generated Image by {ctx.author.name}")
     embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
     embed.add_field(name="Style", value=f"{style.name}", inline=True)
     embed.add_field(name="Ratio", value=f"{ratio.name}", inline=True)
     embed.set_image(url="attachment://image.png")
-
+    
     if upscale_status:
         embed.set_footer(
-            text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
+            text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality."
+        )
+    elif is_nsfw and not prevent_nsfw:
+        embed.set_footer(
+            text="⚠️ Please be advised that the generated image you are about to view may contain explicit content. Minors are advised not to proceed."
+        )
     else:
-        embed.set_footer(text="To create more images use /imagine")
-
+        embed.set_footer(text="To create more images, click the button below.")
+    
     if negative is not None:
         embed.add_field(name="Negative", value=f"{negative}", inline=False)
 
-    await ctx.send(content=f"Generated image for{ctx.author.mention}", file=file, embed=embed)
+    await ctx.send(file=file, embed=embed)
+    
+
 
 @bot.hybrid_command(name="nekos", description=current_language["nekos"])
 @app_commands.choices(category=[
