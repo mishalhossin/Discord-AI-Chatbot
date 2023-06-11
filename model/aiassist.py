@@ -31,7 +31,7 @@ class Completion:
                         if line.strip():
                             data = json.loads(line)
                             text = data["text"]
-                            accumulated_content += text + "\n"
+                            accumulated_content = text + "\n"
                 
                 return accumulated_content
 
