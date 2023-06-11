@@ -37,9 +37,9 @@ def detect_replit_and_run():
   if detect_replit() is True:
     threading.Thread(target=run_flask_app).start()
     print(Welcomer)
-    repl_owner_name = os.environ.get('REPL_OWNER')
-    repl_project_name = os.environ.get('REPL_OWNER')
-    print(f"\033[1;32m\n\nTo ensure your bot runs 24/7 on Replit, you can use services like Uptime Robot to ping the following URL: \033[0m\033[1;32mhttps://{repl_project_name}.{repl_owner_name}.repl.co\033[0m\033[1;32m\n\n\033[0m")
+    repl_owner_name = os.environ.get('REPL_OWNER').lower()
+    repl_project_name = os.environ.get('REPL_SLUG').lower()
+    print(f"\033[1;32m\n\nTo ensure your bot runs 24/7 on Replit, you can use services like Uptime Robot to ping the following URL:\033[0m \n\n https://{repl_project_name}.{repl_owner_name}.repl.co\n\n")
   else:
     return
 
