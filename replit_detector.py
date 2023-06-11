@@ -9,41 +9,7 @@ app = Flask("keepalive")
 @app.route('/', methods=['GET', 'POST', 'CONNECT', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'TRACE', 'HEAD'])
 def main():
     repl_owner = os.environ.get('REPL_OWNER')
-    return f'''<!DOCTYPE html>
-<html>
-<head>
-    <meta content="A Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT3, It also utilizes the Imaginepy for generating midjourney like images" property="og:description" />
-    <meta content="https://replit.com/public/icons/favicon-prompt-192.png" property="og:image" />
-    <meta content="#fcba03" data-react-helmet="true" name="theme-color" />
-    <link rel="icon" href="https://replit.com/public/icons/favicon-prompt-192.png" type="image/png">
-    <title>Discord AI Chatbot</title>
-    <style>
-        body {{
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }}
-        
-        h1 {{
-            --gradient-start: orange;
-            --gradient-end: purple;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 4vw;
-            text-align: center;
-            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }}
-    </style>
-</head>
-<body>
-    <h1>Hey there, {repl_owner}! To keep your Replit running continuously, you'll need to use an uptime monitoring service like UptimeRobot.</h1>
-</body>
-</html>
-'''
+    return f'''Hey there, {repl_owner}! To keep your Replit running continuously, you'll need to use an uptime monitoring service like UptimeRobot'''
 
 
 log = logging.getLogger('werkzeug')
@@ -54,22 +20,26 @@ cli.show_server_banner = lambda *x: None
 
 def run_flask_app():
     app.run(host='0.0.0.0', port=3000, debug=False, use_reloader=False)
-
-Welcomer = """\033[1;31m⚠️ Looks like you are running this project on Replit\033[0m
-        
-\033[1;33mPlease note that the .env file cannot exist on Replit.
-Instead, create environment variable DISCORD_TOKEN in the "Secrets" tab under "Tools".\033[0m
-"""
-            
+    
+    
 def detect_replit():
     if "REPL_OWNER" in os.environ:
         return True
     return False
-
+     
+Welcomer = """\033[1;31m⚠️ Looks like you are running this project on Replit\033[0m
+        
+\033[1;33mPlease note that the .env file cannot exist on Replit.
+Instead, create environment variable DISCORD_TOKEN in the "Secrets" tab under "Tools". \033[0m
+"""
+            
 def detect_replit_and_run():
   if detect_replit() is True:
     threading.Thread(target=run_flask_app).start()
     print(Welcomer)
+    repl_owner_name = os.environ.get('REPL_OWNER')
+    repl_project_name = os.environ.get('REPL_OWNER')
+    print("\033[1;32m\n\nTo ensure your bot runs 24/7 on Replit, you can use services like Uptime Robot to ping the following URL: \033[0m\033[1;32mhttps://{repl_project_name}.{repl_owner_name}.repl.co\033[0m\033[1;32m\n\n\033[0m")
   else:
     return
 
