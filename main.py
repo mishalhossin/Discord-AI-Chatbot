@@ -150,7 +150,7 @@ async def generate_response(prompt):
     
     headers = {
         'Content-Type': 'application/json',
-        'x-api-key': 'sk-i_love_mishal'
+        'x-api-key': 'mh-gimme_the_api'
     }
 
     data = {
