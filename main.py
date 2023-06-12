@@ -332,11 +332,10 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     await ctx.send(file=file, embed=embed)
     
 
-
 @bot.hybrid_command(name="gif", description=current_language["nekos"])
 @app_commands.choices(category=[
     app_commands.Choice(name=category.capitalize(), value=category)
-    for category in ['baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance', 'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug', 'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke', 'pout', 'punch', 'shoot', 'shrug', 'slap', 'sleep', 'smile', 'smug', 'stare', 'think', 'thumbsup', 'tickle', 'wave', 'wink', 'yeet']
+    for category in ['baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance', 'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug', 'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke', 'pout', 'punch', 'shoot', 'shrug']
 ])
 async def gif(ctx, category: app_commands.Choice[str]):
     base_url = "https://nekos.best/api/v2/"
