@@ -360,6 +360,22 @@ async def gif(ctx, category: app_commands.Choice[str]):
             embed.set_image(url=image_url)
             await ctx.send(embed=embed)
 
+@bot.hybrid_command(name="translate", description="Translate text to english")
+async def translate(ctx, *, text):
+    await ctx.defer()
+    API_URL = "https://api.popcat.xyz/translate?to=en"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(API_URL, params={"text": text}) as response:
+            data = await response.json()
+            translation = data.get("translated")
+
+            embed = discord.Embed(
+                title="Translation",
+                description=translation,
+                color=discord.Color.blue()
+            )
+            await ctx.send(embed=embed)
+
 bot.remove_command("help")
 
 @bot.hybrid_command(name="help", description=current_language["help"])
