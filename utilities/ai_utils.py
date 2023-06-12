@@ -64,7 +64,7 @@ async def generate_response(prompt):
                 response_data = await response.json()
                 return(response_data['choices'][0]['text'])
     except aiohttp.ClientError as error:
-        print('Error making the request:', error)
+        print('Error making the request retrying with fallback model')
         endpoint = error_base_url + arguments
         async with aiohttp.ClientSession() as session:
             async with session.post(endpoint, headers=headers, json=data) as response:
