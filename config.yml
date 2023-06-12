@@ -10,7 +10,7 @@ ALLOW_DM: true
 SMART_MENTION: true
 # Set to true to enable smart mention feature
 
-MAX_HISTORY: 4
+MAX_HISTORY: 5
 # Set the maximum message history
 
 PRESENCES_CHANGE_DELAY: 10
