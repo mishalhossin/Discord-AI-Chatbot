@@ -16,37 +16,24 @@ MAX_HISTORY: 10
 PRESENCES_CHANGE_DELAY: 10
 # Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
 
-AI_NSFW_CONTENT_FILTER: true
+AI_NSFW_CONTENT_FILTER: false
 # Enable NSFW AI detector to detect NSFW prompt on Imagine Command
 
 LANGUAGE: en
 # Specify the language code (check 'lang' folder for valid codes)
 
-INSTRUCTIONS: assist
+INSTRUCTIONS: suzy
 # Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
 # To add custom prompts, create a .txt file like 'custom.txt' and set INSTRUCTIONS as 'custom'
 
 
 TRIGGER:
-  - chatbot
-  - bot nickname
-  - bot alias
-  - bot name
-  - Other bot alias...
+  - suzy
 # Define the triggers that the bot should always respond to when in message
 
 
 PRESENCES:
-  - Coded by Mishal#1916
-  - How can I assist you?
-  - Currently in {guild_count} guilds
-  - Minecraft
-  - Multiplayer madness
-  - Exploring the vast virtual universe
-  - Assisting users like you
-  - Crafting virtual wonders
-  - Optimizing processes for efficiency
-  - Unraveling the mysteries of AI
+  - With Your Emotions
 # List of different presences to be used
 
 OCR_MODEL_URLS:
@@ -55,14 +42,6 @@ OCR_MODEL_URLS:
 # List of URLs for OCR models
 
 BLACKLIST_WORDS:
-  - naked
-  - loli
-  - hentai
-  - explicit
-  - pornography
-  - adult
-  - XXX
-  - sex
-  - erotic
+  - scat
   
 # Blacklisted words for /Imagine command this is disabled if you enable AI_NSFW_CONTENT_FILTER
