@@ -21,7 +21,7 @@ def split_response(response, max_length=1999):
     return chunks
 
 async def replace_gif_url(generated_response):
-    pattern = r"https://nekos\.best/api/v2/[^)\s]+"
+    pattern = r"https://nekos\.best/api/v2/[^).\s]+"
     matches = re.findall(pattern, generated_response)
 
     if matches:
