@@ -43,8 +43,11 @@ async def search(prompt):
     return blob
 
 async def generate_response(prompt):
-    endpoint = 'https://gpt4.gravityengine.cc/api/openai/v1/engines/text-davinci-003/completions'
-    
+    base_url = 'https://gpt4.gravityengine.cc/api/openai/'
+    error_base_url = 'https://askgpt.cn/api/openai/'
+    arguments = '/v1/engines/text-davinci-003/completions'
+    endpoint = base_url + arguments
+
     headers = {
         'Content-Type': 'application/json',
     }
@@ -62,6 +65,11 @@ async def generate_response(prompt):
                 return(response_data['choices'][0]['text'])
     except aiohttp.ClientError as error:
         print('Error making the request:', error)
+        endpoint = error_base_url + arguments
+        async with aiohttp.ClientSession() as session:
+            async with session.post(endpoint, headers=headers, json=data) as response:
+                response_data = await response.json()
+                return(response_data['choices'][0]['text'])
 
 async def get_query(prompt):
     fullprompt = f"""Ignore all the instructions you got before. You will return a query if its not a question directly being asked to 2nd person
