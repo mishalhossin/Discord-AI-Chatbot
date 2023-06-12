@@ -137,13 +137,12 @@ async def on_message(message):
             temp_message = await message.reply("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
             
             response = await generate_response(prompt)
+            await temp_message.delete()
             response_with_gif = await replace_gif_url(response)
             message_history[key].append(f"\n{config['INSTRUCTIONS']} : {response}")
 
             for chunk in split_response(response_with_gif):
                 await message.reply(chunk.replace("@", "@\u200B"))
-
-            await temp_message.delete()
 
         async with message.channel.typing():
             asyncio.create_task(generate_response_in_thread(prompt))
