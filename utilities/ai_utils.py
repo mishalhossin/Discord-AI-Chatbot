@@ -11,6 +11,8 @@ current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
 async def search(prompt):
+    if "gif" or "gifs" in response.lower():
+        return None
     if not internet_access or len(prompt) > 200:
         return
     
@@ -103,7 +105,7 @@ Query : """
         return None
 
 
-async def detectnsfw(prompt):
+async def detect_nsfw(prompt):
     fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involes graphic sexual material or nudity, content respond with "1." else respond with "0." and nothing else
 
 Prompt = {prompt}

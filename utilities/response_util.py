@@ -1,3 +1,5 @@
+import re
+import aiohttp
 
 def split_response(response, max_length=1999):
     lines = response.splitlines()
@@ -17,3 +19,23 @@ def split_response(response, max_length=1999):
         chunks.append(current_chunk.strip())
 
     return chunks
+
+async def replace_gif_url(generated_response):
+    pattern = r"https://nekos\.best/api/v2/[^)\s]+"
+    matches = re.findall(pattern, generated_response)
+
+    if matches:
+        async with aiohttp.ClientSession() as session:
+            for match in matches:
+                url = match
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        response_data = await response.json()
+                        if "results" in response_data and len(response_data["results"]) > 0:
+                            new_url = response_data["results"][0]["url"]
+                            generated_response = generated_response.replace(url, new_url)
+                        else:
+                            return generated_response
+                    else:
+                        return generated_response
+    return generated_response
