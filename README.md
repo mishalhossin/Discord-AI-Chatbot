@@ -115,6 +115,7 @@ To select a Language, set the value of `"LANGUAGE"` of `config.yml` with the val
 - `en` - English 🇺🇸
 - `fr` - Français 🇫🇷
 - `es` - Español 🇪🇸
+- `de` - Deutsch 🇩🇪  
 - `vn` - Vietnamese 🇻🇳
 - `cn` - Chinese 🇨🇳
 - `ru` - Russian 🇷🇺
