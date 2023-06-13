@@ -44,7 +44,7 @@ async def search(prompt):
     return blob
 
 async def generate_response(prompt):
-    base_urls = ['https://gpt4.gravityengine.cc/',
+    base_urls = ['https://gpt4.gravityengine.cc',
                  'https://askgpt.cn',
                  'http://chat.darkflow.top']
     arguments = '/api/openai/v1/engines/text-davinci-003/completions'
