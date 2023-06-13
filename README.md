@@ -13,17 +13,6 @@
 
 <div align="center">
   
-##### End point status
-  
-</div>
-
-</div>
-<div align="center">
-  <a href="https://api.mishal0legit.repl.co">
-    <img src="https://img.shields.io/website?down_message=Aww%20man%20its%20down&label=api%20endpoint&style=for-the-badge&up_message=Up%20and%20running&url=https://api.mishal0legit.repl.co">
-  </a>
-</p>
-</div>
 
 🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
