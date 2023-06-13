@@ -131,7 +131,7 @@ async def on_message(message):
         if yt_transcript is not None:
             prompt = f"{yt_transcript}"
         else:
-            prompt = f"{bot_prompt}\n\n{image_caption}\n\n{search_results}\n\n{user_prompt}\n{config['INSTRUCTIONS']}:"
+            prompt = f"{search_results}\n{bot_prompt}\n\n{image_caption}\n\n{user_prompt}\n{config['INSTRUCTIONS']}:"
 
         async def generate_response_in_thread(prompt):
             temp_message = await message.reply("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
