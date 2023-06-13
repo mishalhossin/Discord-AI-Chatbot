@@ -11,6 +11,8 @@ current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
 async def search(prompt):
+    if "gif" or "gifs" in response.lower():
+        return None
     if not internet_access or len(prompt) > 200:
         return
     
@@ -41,8 +43,11 @@ async def search(prompt):
     return blob
 
 async def generate_response(prompt):
-    endpoint = 'https://gpt4.gravityengine.cc/api/openai/v1/engines/text-davinci-003/completions'
-    
+    base_url = 'https://gpt4.gravityengine.cc/api/openai/'
+    error_base_url = 'https://askgpt.cn/api/openai/'
+    arguments = '/v1/engines/text-davinci-003/completions'
+    endpoint = base_url + arguments
+
     headers = {
         'Content-Type': 'application/json',
     }
@@ -59,7 +64,12 @@ async def generate_response(prompt):
                 response_data = await response.json()
                 return(response_data['choices'][0]['text'])
     except aiohttp.ClientError as error:
-        print('Error making the request:', error)
+        print('Error making the request retrying with fallback model')
+        endpoint = error_base_url + arguments
+        async with aiohttp.ClientSession() as session:
+            async with session.post(endpoint, headers=headers, json=data) as response:
+                response_data = await response.json()
+                return(response_data['choices'][0]['text'])
 
 async def get_query(prompt):
     fullprompt = f"""Ignore all the instructions you got before. You will return a query if its not a question directly being asked to 2nd person
@@ -70,23 +80,15 @@ Example 1 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
-Example 2
-Message : Hey gpt who made you ?
-Query: False.
-
-Example 3 :
+Example 2 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
-Example 4 :
-Message : How are you doing today ?
-Query: False.
-
-Example 5 
+Example 3 
 Message : Who won in 2022 world cup ?
 Query: 2022 FIFA World Cup final
 
-Example 6
+Example 4
 Message : Thats scary
 Query: False.
 
@@ -103,7 +105,7 @@ Query : """
         return None
 
 
-async def detectnsfw(prompt):
+async def detect_nsfw(prompt):
     fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involes graphic sexual material or nudity, content respond with "1." else respond with "0." and nothing else
 
 Prompt = {prompt}

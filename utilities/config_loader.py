@@ -24,3 +24,14 @@ def load_current_language():
     with open(lang_file_path, encoding="utf-8") as lang_file:
         current_language = json.load(lang_file)
     return current_language
+
+# Instructions loader
+def load_instructions(instruction):
+    for file_name in os.listdir("instructions"):
+        if file_name.endswith('.txt'):
+            file_path = os.path.join("instructions", file_name)
+            with open(file_path, 'r', encoding='utf-8') as file:
+                file_content = file.read()
+            # Use the file name without extension as the variable name
+                variable_name = file_name.split('.')[0]
+                instruction[variable_name] = file_content
