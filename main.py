@@ -9,7 +9,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from utilities.ai_utils import generate_response, detect_nsfw, generate_image, get_yt_transcript, search
-from utilities.response_util import split_response, replace_gif_url
+from utilities.response_util import split_response, replace_gif_url, translate_to_en
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
@@ -281,8 +281,10 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         upscale_status = True
     else:
         upscale_status = False
-
+        
     await ctx.defer()
+    
+    prompt = await translate_to_en(prompt)
     
     prompt_to_detect = prompt
     
@@ -363,18 +365,13 @@ async def gif(ctx, category: app_commands.Choice[str]):
 @bot.hybrid_command(name="translate", description="Translate text to english")
 async def translate(ctx, *, text):
     await ctx.defer()
-    API_URL = "https://api.popcat.xyz/translate?to=en"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(API_URL, params={"text": text}) as response:
-            data = await response.json()
-            translation = data.get("translated")
-
-            embed = discord.Embed(
-                title="Translation",
-                description=translation,
-                color=discord.Color.blue()
-            )
-            await ctx.send(embed=embed)
+    translated = await translate_to_en(text)
+    embed = discord.Embed(
+        title="Translation",
+        description=translated,
+        color=discord.Color.blue()
+    )
+    await ctx.send(embed=embed)
 
 bot.remove_command("help")
 

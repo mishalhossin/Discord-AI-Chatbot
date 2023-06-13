@@ -94,7 +94,7 @@ class AsyncImagine:
             except Exception as e:
                 print(f"An error occurred while making the request: {e}")
                 if attempt == 0:
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(2)
                     print("Retrying...")
                 else:
                     return None

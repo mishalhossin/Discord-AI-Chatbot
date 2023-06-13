@@ -80,23 +80,15 @@ Example 1 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
-Example 2
-Message : Hey gpt who made you ?
-Query: False.
-
-Example 3 :
+Example 2 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
-Example 4 :
-Message : How are you doing today ?
-Query: False.
-
-Example 5 
+Example 3 
 Message : Who won in 2022 world cup ?
 Query: 2022 FIFA World Cup final
 
-Example 6
+Example 4
 Message : Thats scary
 Query: False.
 

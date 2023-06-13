@@ -39,3 +39,11 @@ async def replace_gif_url(generated_response):
                     else:
                         return generated_response
     return generated_response
+
+async def translate_to_en(text):
+    API_URL = "https://api.popcat.xyz/translate?to=en"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(API_URL, params={"text": text}) as response:
+            data = await response.json()
+            translation = data.get("translated")
+            return translation
