@@ -2,6 +2,7 @@ import aiohttp
 import io
 from datetime import datetime
 import re
+import random
 from youtube_transcript_api import YouTubeTranscriptApi
 
 from utilities.config_loader import load_current_language, config
@@ -11,8 +12,8 @@ current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
 async def search(prompt):
-    if "gif" or "gifs" in response.lower():
-        return None
+    if "gif" in prompt.lower() or "gifs" in prompt.lower():
+        return
     if not internet_access or len(prompt) > 200:
         return
     
@@ -43,33 +44,31 @@ async def search(prompt):
     return blob
 
 async def generate_response(prompt):
-    base_url = 'https://gpt4.gravityengine.cc/api/openai/'
-    error_base_url = 'https://askgpt.cn/api/openai/'
-    arguments = '/v1/engines/text-davinci-003/completions'
-    endpoint = base_url + arguments
+    base_urls = ['https://gpt4.gravityengine.cc/',
+                 'https://askgpt.cn',
+                 'http://chat.darkflow.top']
+    arguments = '/api/openai/v1/engines/text-davinci-003/completions'
+    headers = {'Content-Type': 'application/json'}
+    data = {'prompt': prompt, 'max_tokens': 1000, 'temperature': 0.9}
 
-    headers = {
-        'Content-Type': 'application/json',
-    }
+    random.shuffle(base_urls)
 
-    data = {
-        'prompt': prompt,
-        'max_tokens': 1000,
-        'temperature': 0.9
-    }
+    for base_url in base_urls:
+        endpoint = base_url + arguments
+        for attempt in range(2):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(endpoint, headers=headers, json=data) as response:
+                        response_data = await response.json()
+                        return response_data['choices'][0]['text']
+            except aiohttp.ClientError as error:
+                print(f'Error making the request with {base_url}: {error}')
+                if attempt < 1:
+                    print('Retrying with a different base URL.')
+                    break
 
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(endpoint, headers=headers, json=data) as response:
-                response_data = await response.json()
-                return(response_data['choices'][0]['text'])
-    except aiohttp.ClientError as error:
-        print('Error making the request retrying with fallback model')
-        endpoint = error_base_url + arguments
-        async with aiohttp.ClientSession() as session:
-            async with session.post(endpoint, headers=headers, json=data) as response:
-                response_data = await response.json()
-                return(response_data['choices'][0]['text'])
+    print('All base URLs failed to provide a response.')
+    return None
 
 async def get_query(prompt):
     fullprompt = f"""Ignore all the instructions you got before. You will return a query if its not a question directly being asked to 2nd person
@@ -80,22 +79,20 @@ Example 1 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
-Example 2 :
 Message: What is the latest donald trump scandal?
 Query: Donald Trump scandal latest news
 
-Example 3 
 Message : Who won in 2022 world cup ?
 Query: 2022 FIFA World Cup final
 
-Example 4
 Message : Thats scary
 Query: False.
 
-Current Message : {prompt}
+Message : {prompt}
 Query : """
 
     response = await generate_response(prompt=fullprompt)
+    print(response)
     if "false" in response.lower():
         return None
     response = response.lower().replace("query:", "").replace("query", "").replace(":", "")
