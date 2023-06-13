@@ -54,8 +54,8 @@ async def generate_response(prompt):
 
     data = {
         'prompt': prompt,
-        'max_tokens': 800,
-        'temperature': 0.8
+        'max_tokens': 1000,
+        'temperature': 0.9
     }
 
     try:
