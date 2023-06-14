@@ -138,10 +138,9 @@ async def on_message(message):
         message_history[key].append({"role": "user", "content": message.content})
         
         async with message.channel.typing():
-            to_be_replaced_response = await generate_response(instructions, search_results, image_caption, history)
-            response = await replace_with_image_url(to_be_replaced_response)
+            response = await generate_response(instructions, search_results, image_caption, history)
 
-        message_history[key].append({"role": "assistant", "content": to_be_replaced_response})
+        message_history[key].append({"role": "assistant", "content": response})
 
         for chunk in split_response(response):
             await message.reply(chunk.replace("@", "@\u200B"))

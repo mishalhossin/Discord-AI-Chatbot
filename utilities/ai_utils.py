@@ -53,19 +53,14 @@ async def generate_response(instructions, search, image_caption, history):
     data = {
         'model': 'gpt-3.5-turbo-16k-0613',
         'temperature': 0.1,
-        'presence_penalty': 2.0,
+        'presence_penalty': 1.0,
         'messages': [
-        {"role": "system", "content": f"The following are the related search results, if any: {search}\nAdditionally, here is any attachment captioning: {image_caption} {instructions}"},
-        {"role": "user", "content": "Can you draw me a picture of a cat ? "},
-        {"role": "assistant", "content": "Here you go : \n<draw: “A picture a cat”>"},
-        {"role": "user", "content": "Awww, that's so cute : "},
-        {"role": "assistant", "content": "I'm glad that you liked it"},
-        {"role": "user", "content": "Can you send me a picture of a beautiful landscape ? "},
-        {"role": "assistant", "content": "Here :\n<draw: “A Breathtaking picture of a beautiful landscape ”>"},
-        *history,
-    ]
+            {"role": "system", "content": instructions},
+            {"role": "system", "content": search},
+            *history,
+            {"role": "system", "content": image_caption},
+        ]
     }
-
     random.shuffle(base_urls)
 
     for base_url in base_urls:
