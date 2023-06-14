@@ -45,7 +45,7 @@ async def search(prompt):
     return blob
 
 async def generate_response(instructions, search, image_caption, history):
-    base_urls = ['https://gpt4.gravityengine.cc','https://a.z-pt.com', 'http://chat.darkflow.top']
+    base_urls = ['https://gpt4.gravityengine.cc','https://gptdidi.com', 'http://chat.darkflow.top']
     arguments = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
