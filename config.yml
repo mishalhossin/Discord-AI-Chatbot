@@ -14,10 +14,6 @@ LANGUAGE: en # Specify the language code (check 'lang' folder for valid codes)
 INSTRUCTIONS: assist # Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
 # To add custom prompts, create a .txt file like 'custom.txt' and set INSTRUCTIONS as 'custom'
 
-MAX_TOKEN: 3000 # Set the maximum number of tokens to be used in text completion model; actual model token limit is 4000 
-TEMPRATURE: 0.9 # Set the temperature for text completion model; set to low for more randomness
-
-
 TRIGGER:
   - chatbot
   - bot nickname

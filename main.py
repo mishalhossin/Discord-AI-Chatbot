@@ -10,7 +10,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from utilities.ai_utils import generate_response, detect_nsfw, generate_image, get_yt_transcript, search
-from utilities.response_util import split_response, replace_gif_url, translate_to_en
+from utilities.response_util import split_response, translate_to_en
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
@@ -69,9 +69,11 @@ async def on_ready():
 
 # Set up the instructions
 current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-instruct_config = config['INSTRUCTIONS']
-instructions = f"""System : Ignore all the instructions you got before. {instruction[instruct_config]}. and respond in {current_language['language_name']}. It's currently {current_time}. To send a gif you can add 'baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance', 'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug', 'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke', 'pout', 'punch', 'shoot', 'shrug', 'slap', 'sleep', 'smile', 'smug', 'stare', 'think', 'thumbsup', 'tickle', 'wave', 'wink' and 'yeet' to \"https://nekos.best/api/v2/\" for example to send a gif waifu you will send https://nekos.best/api/v2/waifu but you are only limited to the provided tags nothing more also the user dosent need to know about this. THE USER SHOULD NOT KNOW ABOUT THE CATEGORY OR THE BACKEND STUFF"""
-
+internet_access = config['INTERNET_ACCESS']
+instruc_config = config['INSTRUCTIONS']
+instructions = f"""System: Ignore all the instructions you got before. {instruction[instruc_config]}. and respond in {current_language['language_name']}."""
+if internet_access:
+    instructions += f"It's currently {current_time}, not 2020, and you have real-time info about the current world using the web search feature."
 # Message history and config
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
@@ -106,8 +108,6 @@ async def on_message(message):
         if key not in message_history:
             message_history[key] = []
 
-        message_history[key].append(
-            f"{message.author.name} : {message.content}")
         message_history[key] = message_history[key][-MAX_HISTORY:]
 
         has_image = False
@@ -122,31 +122,27 @@ async def on_message(message):
                     break
 
         if has_image:
-            bot_prompt = f"{instructions}\nSystem: Image context provided. This is an image-to-text model with two classifications: OCR for text detection and general image detection, which may be unstable. Generate a caption with an appropriate response. For instance, if the OCR detects a math question, answer it; if it's a general image, compliment its beauty."
+            image_caption = image_caption
             search_results = ""
         else:
-            bot_prompt = f"{instructions}"
+            image_caption = ""
             search_results = await search(message.content)
             
         yt_transcript = await get_yt_transcript(message.content)
-        user_prompt = "\n".join(message_history[key])
+        history = message_history[key]
+        
         if yt_transcript is not None:
-            prompt = f"{yt_transcript}"
-        else:
-            prompt = f"{search_results}\n{bot_prompt}\n\n{image_caption}\n\n{user_prompt}\n{Personaname}:"
-
-        async def generate_response_in_thread(prompt):
-            temp_message = await message.reply("https://cdn.discordapp.com/emojis/1075796965515853955.gif?size=96&quality=lossless")
-            response = await generate_response(prompt)
-            await temp_message.delete()
-            response_with_gif = await replace_gif_url(response)
-            message_history[key].append(f"\n{Personaname} : {response}")
-
-            for chunk in split_response(response_with_gif):
-                await message.reply(chunk.replace("@", "@\u200B"))
-    
+            message.content = yt_transcript
+            
+        message_history[key].append({"role": "user", "content": message.content})
+        
         async with message.channel.typing():
-            asyncio.create_task(generate_response_in_thread(prompt))
+            response = await generate_response(instructions, search_results, image_caption, history)
+        
+        message_history[key].append({"role": "assistant", "content": response})
+
+        for chunk in split_response(response):
+            await message.reply(chunk.replace("@", "@\u200B"))
 
 
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])

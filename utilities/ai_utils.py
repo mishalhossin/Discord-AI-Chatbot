@@ -10,8 +10,6 @@ from imaginepy import AsyncImagine, Style, Ratio
 
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
-max_token = config['MAX_TOKEN']
-temperature = config['TEMPRATURE']
 
 async def search(prompt):
     if "gif" in prompt.lower() or "gifs" in prompt.lower():
@@ -20,12 +18,12 @@ async def search(prompt):
         return
     
     search_results_limit = config['MAX_SEARCH_RESULTS']
-    search_query = await get_query(prompt)
+    search_query = (" "+prompt)
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     
     if search_query is not None:
-        print(f"\nSearching for :{search_query}\n")
+        print(f"\nSearching for :{search_query}")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://ddg-api.herokuapp.com/search',
@@ -45,12 +43,20 @@ async def search(prompt):
 
     return blob
 
-async def generate_response(prompt):
-    base_urls = ['https://a.z-pt.com',
-                 'http://chat.darkflow.top']
-    arguments = '/api/openai/v1/engines/text-davinci-003/completions'
-    headers = {'Content-Type': 'application/json'}
-    data = {'prompt': prompt, 'max_tokens': int(max_token), 'temperature': int(temperature)}
+async def generate_response(instructions, search, image_caption, history):
+    base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
+    arguments = '/api/openai/v1/chat/completions'
+    headers = {
+        'Content-Type': 'application/json',
+    }
+    data = {
+        'model': 'gpt-3.5-turbo-16k-0613',
+        'messages': [
+        {"role": "system", "content": instructions },
+        *history,
+        {"role": "system", "content": f"The following are the related search results, if any: {search}\nAdditionally, here is any attachment captioning: {image_caption}"}
+    ]
+    }
 
     random.shuffle(base_urls)
 
@@ -61,7 +67,9 @@ async def generate_response(prompt):
                 async with aiohttp.ClientSession() as session:
                     async with session.post(endpoint, headers=headers, json=data) as response:
                         response_data = await response.json()
-                        return response_data['choices'][0]['text']
+                        choices = response_data['choices']
+                        if choices:
+                            return choices[0]['message']['content']
             except aiohttp.ClientError as error:
                 print(f'Error making the request with {base_url}: {error}')
                 if attempt < 1:
@@ -71,50 +79,17 @@ async def generate_response(prompt):
     print('All base URLs failed to provide a response.')
     return None
 
-async def get_query(prompt):
-    fullprompt = f"""Disregard any previous instructions you have received. Your task is to only respond with a query if the question being asked is not directly addressed to the second person. It is important to consistently return a query in such cases.
-
-Message: What is the latest donald trump scandal?
-Search query : Donald Trump scandal latest news
-
-Message : Hi there
-Search query : Null.
-
-Message: What is the latest donald trump scandal?
-Search query : Donald Trump scandal latest news
-
-Message : how are you doing
-Search query : Null.
-
-Message : Who won in 2022 world cup ?
-Search query : 2022 FIFA World Cup final
-
-Message : Thats scary
-Search query : Null.
-
-Message : {prompt}
-Search query : """
-
-    response = await generate_response(prompt=fullprompt)
-    if "null" in response.lower() or "null." in response.lower():
-        return None
-    response = response.lower().replace("query:", "").replace("query", "").replace(":", "")
-    if response:
-        return response
-    else:
-        return None
-
-
 async def detect_nsfw(prompt):
-    fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involes graphic sexual material or nudity, content respond with "1." else respond with "0." and nothing else
+    fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involes graphic sexual material or nudity, content respond with "1" else respond with "0" and nothing else
 
 Prompt = {prompt}
 
 Eval = """
-
-    response = await generate_response(prompt=fullprompt)
-  
-    if response == "1.":
+    async with aiohttp.ClientSession() as session:
+        async with session.post('https://a.z-pt.com/api/openai/v1/engines/text-davinci-003/completions', headers={'Content-Type': 'application/json'}, json={'prompt': prompt, 'max_tokens': 200, 'temperature': 0}) as response:
+            response_data = await response.json()
+            response = response_data['choices'][0]['text']
+    if response == "1":
         return True
     else:
         return False
@@ -167,6 +142,6 @@ async def get_yt_transcript(message_content):
         [entry['text'] for entry in translated_transcript.fetch()])
     formatted_transcript = formatted_transcript[:2500]
 
-    response = f"System : Ignore all the instructions you got before. Summarizie the following in 8 bullet points:\n\n{formatted_transcript}\n\n\nProvide a summary or additional information based on the content. Write the summary in {current_language['language_name']}\n ChatBOT:"
+    response = f"Ignore all the instructions you got before. Summarizie the following in 8 bullet points:\n\n{formatted_transcript}\n\n\nProvide a summary or additional information based on the content. Write the summary in {current_language['language_name']}"
 
     return response
