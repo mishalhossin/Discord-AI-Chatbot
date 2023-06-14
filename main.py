@@ -297,13 +297,13 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
     
     if (is_nsfw or blacklisted) and prevent_nsfw:
-        embed = Embed(
+        embed_warning = Embed(
             title="⚠️ WARNING ⚠️",
             description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.',
             color=0xff0000
         )
-        embed.add_field(name="Prompt", value=f"{prompt}", inline=False)
-        await ctx.send(embed=embed)
+        embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
+        await ctx.send(embed=embed_warning)
         return
     
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
@@ -311,29 +311,32 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     file = discord.File(imagefileobj, filename="image.png")
     
     if is_nsfw:
-        embed = Embed(color=0xff0000)
+        embed_info = Embed(color=0xff0000)
+        embed_image = Embed(color=0xff0000)
     else:
-        embed = Embed(color=0x000f14)
+        embed_info = Embed(color=0x000f14)
+        embed_image = Embed(color=0x000f14)
     
-    embed.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
-    embed.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
-    embed.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
-    embed.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
-    embed.set_image(url="attachment://image.png")
+    embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
+    embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
+    embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
+    embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
     
     if upscale_status:
-        embed.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
+        embed_info.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
     elif is_nsfw and not prevent_nsfw:
-        embed.set_footer(text="⚠️ Please be advised that the generated image you are about to view may contain explicit content. Minors are advised not to proceed.")
+        embed_info.set_footer(text="⚠️ Please be advised that the generated image you are about to view may contain explicit content. Minors are advised not to proceed.")
     else:
-        embed.set_footer(text="✨ Imagination is the fuel that propels dreams into reality")
+        embed_info.set_footer(text="✨ Imagination is the fuel that propels dreams into reality")
     
     if negative is not None:
-        embed.add_field(name="Negative", value=f"{negative}", inline=False)
+        embed_info.add_field(name="Negative", value=f"{negative}", inline=False)
 
-    await ctx.send(file=file, embed=embed)
-
-
+    embed_image.set_image(url="attachment://image.png")
+    
+    embeds = [embed_info, embed_image]
+    
+    await ctx.send(embeds=embeds, file=file)
 
 @bot.hybrid_command(name="gif", description=current_language["nekos"])
 @app_commands.choices(category=[
