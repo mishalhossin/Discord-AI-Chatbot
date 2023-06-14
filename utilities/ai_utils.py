@@ -86,13 +86,36 @@ Prompt = {prompt}
 
 Eval = """
     async with aiohttp.ClientSession() as session:
-        async with session.post('https://a.z-pt.com/api/openai/v1/engines/text-davinci-003/completions', headers={'Content-Type': 'application/json'}, json={'prompt': prompt, 'max_tokens': 200, 'temperature': 0}) as response:
+        async with session.post('https://a.z-pt.com/api/openai/v1/engines/text-davinci-003/completions', headers={'Content-Type': 'application/json'}, json={'prompt': fullprompt, 'max_tokens': 200, 'temperature': 1}) as response:
             response_data = await response.json()
             response = response_data['choices'][0]['text']
     if response == "1":
         return True
     else:
         return False
+
+async def generate_dalle_image(prompt, size):
+    url = "https://a.z-pt.com/api/openai/v1/images/generations"
+    headers = {
+        'Content-Type': 'application/json',
+    }
+    data = {
+        'prompt': prompt,
+        'n': 1,
+        'size': size
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, json=data) as response:
+            response_data = await response.json()
+            if 'error' in response_data:
+                return None
+            image_url = response_data['data'][0]['url']
+            async with session.get(image_url) as image_response:
+                image_content = await image_response.read()
+                img_file = io.BytesIO(image_content)
+                
+    return img_file
 
 async def generate_image(image_prompt, style_value, ratio_value, negative, upscale):
     imagine = AsyncImagine()
@@ -114,8 +137,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
     try:
         img_file = io.BytesIO(img_data)
     except Exception as e:
-        print(
-            f"An error occurred while creating the in-memory image file: {e}")
+        print(f"An error occurred while creating the in-memory image file: {e}")
         return None
 
     await imagine.close()

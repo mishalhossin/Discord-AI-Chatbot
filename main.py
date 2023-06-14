@@ -9,7 +9,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, detect_nsfw, generate_image, get_yt_transcript, search
+from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
 from utilities.response_util import split_response, translate_to_en
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -296,13 +296,23 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed_warning = Embed(
             title="⚠️ WARNING ⚠️",
             description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.',
-            color=0xff0000
+            color=0xf74940
         )
         embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
         await ctx.send(embed=embed_warning)
         return
     
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
+    
+    if imagefileobj is None:
+        embed_warning = Embed(
+            title="😅",
+            description='Please invoke the command again',
+            color=0xf7a440
+        )
+        embed_warning.add_field(name="Prompt", value=prompt, inline=False)
+        await ctx.send(embed=embed_warning)
+        return
     
     file = discord.File(imagefileobj, filename="image.png")
     
@@ -328,6 +338,47 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     if negative is not None:
         embed_info.add_field(name="Negative", value=f"{negative}", inline=False)
 
+    embed_image.set_image(url="attachment://image.png")
+    
+    embeds = [embed_info, embed_image]
+    
+    await ctx.send(embeds=embeds, file=file)
+
+@bot.hybrid_command(name="dalle", description="Create images using dalle")
+@app_commands.choices(ratio=[
+    app_commands.Choice(name='Small', value='256x256'),
+    app_commands.Choice(name='Medium', value='512x512'),
+    app_commands.Choice(name='Large', value='1024x1024')
+])
+async def dalle(ctx, prompt: str, ratio: app_commands.Choice[str]):
+
+    await ctx.defer()
+    
+    prompt = await translate_to_en(prompt)
+    
+    imagefileobj = await generate_dalle_image(prompt, ratio.value)
+    
+    if imagefileobj is None:
+        embed_warning = Embed(
+            title="⚠️ WARNING ⚠️",
+            description='Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system.\nPlease revise your prompt.',
+            color=0xff0000
+        )
+        embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
+        await ctx.send(embed=embed_warning)
+        return
+    
+    file = discord.File(imagefileobj, filename="image.png")
+    
+    embed_info = Embed(color=0x000f14)
+    embed_image = Embed(color=0x000f14)
+    
+    embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
+    embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
+    embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
+    
+    embed_info.set_footer(text="✨ Imagination is the fuel that propels dreams into reality")
+    
     embed_image.set_image(url="attachment://image.png")
     
     embeds = [embed_info, embed_image]
