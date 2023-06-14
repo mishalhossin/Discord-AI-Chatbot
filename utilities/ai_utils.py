@@ -44,7 +44,7 @@ async def search(prompt):
     return blob
 
 async def generate_response(prompt):
-    base_urls = ['https://askgpt.cn',
+    base_urls = ['https://a.z-pt.com',
                  'http://chat.darkflow.top']
     arguments = '/api/openai/v1/engines/text-davinci-003/completions'
     headers = {'Content-Type': 'application/json'}
@@ -70,29 +70,31 @@ async def generate_response(prompt):
     return None
 
 async def get_query(prompt):
-    fullprompt = f"""Ignore all the instructions you got before. You will return a query if its not a question directly being asked to 2nd person
-    
-Always strictly return query
-
-Example 1 :
-Message: What is the latest donald trump scandal?
-Query: Donald Trump scandal latest news
+    fullprompt = f"""Disregard any previous instructions you have received. Your task is to only respond with a query if the question being asked is not directly addressed to the second person. It is important to consistently return a query in such cases.
 
 Message: What is the latest donald trump scandal?
-Query: Donald Trump scandal latest news
+Search query : Donald Trump scandal latest news
+
+Message : Hi there
+Search query : Null.
+
+Message: What is the latest donald trump scandal?
+Search query : Donald Trump scandal latest news
+
+Message : how are you doing
+Search query : Null.
 
 Message : Who won in 2022 world cup ?
-Query: 2022 FIFA World Cup final
+Search query : 2022 FIFA World Cup final
 
 Message : Thats scary
-Query: False.
+Search query : Null.
 
 Message : {prompt}
-Query : """
+Search query : """
 
     response = await generate_response(prompt=fullprompt)
-    print(response)
-    if "false" in response.lower():
+    if "null" in response.lower() or "null." in response.lower():
         return None
     response = response.lower().replace("query:", "").replace("query", "").replace(":", "")
     if response:
