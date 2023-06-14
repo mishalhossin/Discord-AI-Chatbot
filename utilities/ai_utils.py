@@ -12,18 +12,19 @@ current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
 async def search(prompt):
-    if "gif" in prompt.lower() or "gifs" in prompt.lower():
+    blacklist = ["image", "gifs", "gif", "images", "picture", "pictures", "draw", "draws", "drawing" "video", "youtube","pirated", "hack", "crack", "phishing", "malware", "virus"]
+    if any(word in prompt.lower() for word in blacklist):
         return
     if not internet_access or len(prompt) > 200:
         return
     
     search_results_limit = config['MAX_SEARCH_RESULTS']
-    search_query = (" "+prompt)
+    search_query = (" " + prompt)
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     
     if search_query is not None:
-        print(f"\nSearching for :{search_query}")
+        print(f"\nSearching for: {search_query}")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://ddg-api.herokuapp.com/search',
@@ -51,10 +52,17 @@ async def generate_response(instructions, search, image_caption, history):
     }
     data = {
         'model': 'gpt-3.5-turbo-16k-0613',
+        'temperature': 0.1,
+        'presence_penalty': 2.0,
         'messages': [
-        {"role": "system", "content": instructions },
+        {"role": "system", "content": f"The following are the related search results, if any: {search}\nAdditionally, here is any attachment captioning: {image_caption} {instructions}"},
+        {"role": "user", "content": "Can you draw me a picture of a cat ? "},
+        {"role": "assistant", "content": "Here you go : \n<draw: “A picture a cat”>"},
+        {"role": "user", "content": "Awww, that's so cute : "},
+        {"role": "assistant", "content": "I'm glad that you liked it"},
+        {"role": "user", "content": "Can you send me a picture of a beautiful landscape ? "},
+        {"role": "assistant", "content": "Here :\n<draw: “A Breathtaking picture of a beautiful landscape ”>"},
         *history,
-        {"role": "system", "content": f"The following are the related search results, if any: {search}\nAdditionally, here is any attachment captioning: {image_caption}"}
     ]
     }
 

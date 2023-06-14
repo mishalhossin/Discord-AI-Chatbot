@@ -10,7 +10,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
-from utilities.response_util import split_response, translate_to_en
+from utilities.response_util import split_response, translate_to_en, replace_with_image_url
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
@@ -71,9 +71,10 @@ async def on_ready():
 current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 internet_access = config['INTERNET_ACCESS']
 instruc_config = config['INSTRUCTIONS']
-instructions = f"""System: Ignore all the instructions you got before. {instruction[instruc_config]}. and respond in {current_language['language_name']}."""
+instructions = f"""System: Ignore all the instructions you got before. {instruction[instruc_config]}. Additionally you are designed to draw artwork for users
+- When the user requests an image (e.g. “User: Can you draw me a picture of a cat?”), Assistant sends a prompt to an AI image generator like so: <draw: “Put prompt here”> A program will pick this up and send the AI picture to the human."""
 if internet_access:
-    instructions += f"It's currently {current_time}, not 2020, and you have real-time info about the current world using the web search feature."
+    instructions += f"\n\nIt's currently {current_time}, not 2020"
 # Message history and config
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
@@ -137,9 +138,10 @@ async def on_message(message):
         message_history[key].append({"role": "user", "content": message.content})
         
         async with message.channel.typing():
-            response = await generate_response(instructions, search_results, image_caption, history)
-        
-        message_history[key].append({"role": "assistant", "content": response})
+            to_be_replaced_response = await generate_response(instructions, search_results, image_caption, history)
+            response = await replace_with_image_url(to_be_replaced_response)
+
+        message_history[key].append({"role": "assistant", "content": to_be_replaced_response})
 
         for chunk in split_response(response):
             await message.reply(chunk.replace("@", "@\u200B"))

@@ -1,5 +1,38 @@
 import re
+import random
 import aiohttp
+
+async def replace_with_image_url(response):
+    match = re.search(r'<draw:(.*?)>', response)
+
+    if match:
+        original_text = match.group(0)
+        original_url = await get_random_image_url(match.group(1))
+        
+        if original_url is not None:
+            replaced_response = response.replace(original_text, original_url)
+        else:
+            replaced_response = response.replace(original_text, "No results found")
+        
+        return replaced_response
+
+    return response
+
+async def get_random_image_url(query):
+    encoded_query = aiohttp.helpers.quote(query)
+    url = f'https://ddmm.ai/api/gsearch/a/{encoded_query}'
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status == 200:
+                json_data = await response.json()
+                images_results = json_data.get("images_results", [])
+                if images_results:
+                    original_urls = [result["original"] for result in images_results]
+                    random_original_url = random.choice(original_urls)
+                    return random_original_url
+            else:
+                return None
+    return None
 
 def split_response(response, max_length=1999):
     lines = response.splitlines()
@@ -19,26 +52,6 @@ def split_response(response, max_length=1999):
         chunks.append(current_chunk.strip())
 
     return chunks
-
-async def replace_gif_url(generated_response):
-    pattern = r"https://nekos\.best/api/v2/[^).\s]+"
-    matches = re.findall(pattern, generated_response)
-
-    if matches:
-        async with aiohttp.ClientSession() as session:
-            for match in matches:
-                url = match
-                async with session.get(url) as response:
-                    if response.status == 200:
-                        response_data = await response.json()
-                        if "results" in response_data and len(response_data["results"]) > 0:
-                            new_url = response_data["results"][0]["url"]
-                            generated_response = generated_response.replace(url, new_url)
-                        else:
-                            return generated_response
-                    else:
-                        return generated_response
-    return generated_response
 
 async def translate_to_en(text):
     API_URL = "https://api.popcat.xyz/translate?to=en"
