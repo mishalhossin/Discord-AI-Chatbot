@@ -10,6 +10,8 @@ from imaginepy import AsyncImagine, Style, Ratio
 
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
+max_token = config['MAX_TOKEN']
+temperature = config['TEMPRATURE']
 
 async def search(prompt):
     if "gif" in prompt.lower() or "gifs" in prompt.lower():
@@ -48,7 +50,7 @@ async def generate_response(prompt):
                  'http://chat.darkflow.top']
     arguments = '/api/openai/v1/engines/text-davinci-003/completions'
     headers = {'Content-Type': 'application/json'}
-    data = {'prompt': prompt, 'max_tokens': 1000, 'temperature': 0.9}
+    data = {'prompt': prompt, 'max_tokens': int(max_token), 'temperature': int(temperature)}
 
     random.shuffle(base_urls)
 

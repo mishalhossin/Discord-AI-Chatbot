@@ -1,30 +1,21 @@
-INTERNET_ACCESS: true
-# Set to true to enable internet access
+INTERNET_ACCESS: true # Set to true to enable internet access
+MAX_SEARCH_RESULTS: 2 # Set the maximum search results for internet access
 
-MAX_SEARCH_RESULTS: 2
-# Set the maximum search results for internet access
+ALLOW_DM: true # Set to true to allow direct messages
+SMART_MENTION: true # Set to true to enable smart mention feature
+MAX_HISTORY: 10 # Set the maximum message history
 
-ALLOW_DM: true
-# Set to true to allow direct messages
+PRESENCES_CHANGE_DELAY: 10 # Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
 
-SMART_MENTION: true
-# Set to true to enable smart mention feature
+AI_NSFW_CONTENT_FILTER: true # Enable NSFW AI detector to detect NSFW prompt on Imagine Command
 
-MAX_HISTORY: 10
-# Set the maximum message history
+LANGUAGE: en # Specify the language code (check 'lang' folder for valid codes)
 
-PRESENCES_CHANGE_DELAY: 10
-# Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
-
-AI_NSFW_CONTENT_FILTER: true
-# Enable NSFW AI detector to detect NSFW prompt on Imagine Command
-
-LANGUAGE: en
-# Specify the language code (check 'lang' folder for valid codes)
-
-INSTRUCTIONS: assist
-# Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
+INSTRUCTIONS: assist # Specify the instruction prompt to use (check 'instruction' folder for valid prompts)
 # To add custom prompts, create a .txt file like 'custom.txt' and set INSTRUCTIONS as 'custom'
+
+MAX_TOKEN: 3000 # Set the maximum number of tokens to be used in text completion model; actual model token limit is 4000 
+TEMPRATURE: 0.9 # Set the temperature for text completion model; set to low for more randomness
 
 
 TRIGGER:
@@ -34,7 +25,6 @@ TRIGGER:
   - bot name
   - Other bot alias...
 # Define the triggers that the bot should always respond to when in message
-
 
 PRESENCES:
   - Coded by Mishal#1916
