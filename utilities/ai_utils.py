@@ -97,7 +97,8 @@ Eval = """
         return False
 
 async def generate_dalle_image(prompt, size):
-    url = "https://a.z-pt.com/api/openai/v1/images/generations"
+    base_urls = ['https://gpt4.gravityengine.cc', 'https://gptdidi.com', 'http://chat.darkflow.top']
+    endpoint = '/api/openai/v1/images/generations'
     headers = {
         'Content-Type': 'application/json',
     }
@@ -108,16 +109,23 @@ async def generate_dalle_image(prompt, size):
     }
 
     async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=data) as response:
-            response_data = await response.json()
-            if 'error' in response_data:
-                return None
-            image_url = response_data['data'][0]['url']
-            async with session.get(image_url) as image_response:
-                image_content = await image_response.read()
-                img_file = io.BytesIO(image_content)
-                
-    return img_file
+        for base_url in base_urls:
+            url = base_url + endpoint
+            async with session.post(url, headers=headers, json=data) as response:
+                if response.status != 200:
+                    continue
+
+                response_data = await response.json()
+                if 'error' in response_data:
+                    return None
+
+                image_url = response_data['data'][0]['url']
+                async with session.get(image_url) as image_response:
+                    image_content = await image_response.read()
+                    img_file = io.BytesIO(image_content)
+                    return img_file
+
+    return None
 
 async def generate_image(image_prompt, style_value, ratio_value, negative, upscale):
     imagine = AsyncImagine()
