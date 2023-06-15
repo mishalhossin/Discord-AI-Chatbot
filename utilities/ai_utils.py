@@ -110,7 +110,6 @@ Eval = 0
 Prompt = {prompt}
 Eval = """
     response = await generate_completion(prompt=fullprompt, max_token=20, temp=1)
-    print(response)
     if "1" in response.lower():
         return True
     else:
