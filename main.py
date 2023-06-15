@@ -9,7 +9,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
+from utilities.ai_utils import generate_response, generate_completion, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
 from utilities.response_util import split_response, translate_to_en
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -42,6 +42,8 @@ presences = config["PRESENCES"]
 # Imagine config
 blacklisted_words = config['BLACKLIST_WORDS']
 prevent_nsfw = config['AI_NSFW_CONTENT_FILTER']
+# Model config
+use_davinci = config['USE_TEXT_DAVINCI']
 
 ## Instructions Loader ##
 current_language = load_current_language()
@@ -71,13 +73,16 @@ async def on_ready():
 current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 internet_access = config['INTERNET_ACCESS']
 instruc_config = config['INSTRUCTIONS']
-instructions = f"""Ignore all the instructions you got before. {instruction[instruc_config]}."""
+instructions_part_1 = f"""System : Ignore all the instructions you got before. {instruction[instruc_config]}."""
 if internet_access:
-    instructions += f"\n\nIt's currently {current_time}, not 2020"
+    instructions_part_1 += f"\n\nIt's currently {current_time}, not 2020"
+    
+instructions = instructions_part_1 + " This is the following conversations"
+
 # Message history and config
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
-Personaname = config['INSTRUCTIONS'].title()
+personaname = config['INSTRUCTIONS'].title()
 @bot.event
 async def on_message(message):
     if message.mentions:
@@ -123,23 +128,42 @@ async def on_message(message):
 
         if has_image:
             image_caption = image_caption
+            message.content += "*Sends a image*"
             search_results = ""
         else:
             image_caption = ""
             search_results = await search(message.content)
             
         yt_transcript = await get_yt_transcript(message.content)
-        history = message_history[key]
-        
         if yt_transcript is not None:
             message.content = yt_transcript
             
-        message_history[key].append({"role": "user", "content": message.content})
+        if use_davinci:
+            message_history[key].append(f"{message.author.name} : {message.content}")
+        else:    
+            message_history[key].append({"role": "user", "content": message.content})
+            
+        if use_davinci:
+            history = "\n".join(message_history[key])
+            print(history)
+        else:
+            history = message_history[key]
         
         async with message.channel.typing():
-            response = await generate_response(instructions, search_results, image_caption, history)
-
-        message_history[key].append({"role": "assistant", "content": response})
+            if use_davinci:
+                if yt_transcript is not None:
+                    prompt = f"{message.author.name} : {yt_transcript} {personaname}:"
+                else:
+                    prompt = f"{search_results}\nSystem : {instructions}\n\n{history}\n{image_caption}\n{personaname} :"
+            if use_davinci:
+                response = await generate_completion(prompt)
+            else:
+                response = await generate_response(instructions, search_results, image_caption, history)
+            
+        if use_davinci:
+            message_history[key].append(f"{personaname} : {response}")
+        else:
+            message_history[key].append({"role": "assistant", "content": response})
 
         for chunk in split_response(response):
             await message.reply(chunk.replace("@", "@\u200B"))

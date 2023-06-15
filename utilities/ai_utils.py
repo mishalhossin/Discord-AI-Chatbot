@@ -11,6 +11,9 @@ from imaginepy import AsyncImagine, Style, Ratio
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
+base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
+
+
 async def search(prompt):
     blacklist = ["image", "gifs", "gif", "images", "picture", "pictures", "draw", "draws", "drawing" "video", "youtube","pirated", "hack", "crack", "phishing", "malware", "virus"]
     if any(word in prompt.lower() for word in blacklist):
@@ -19,7 +22,7 @@ async def search(prompt):
         return
     
     search_results_limit = config['MAX_SEARCH_RESULTS']
-    search_query = (" " + prompt)
+    search_query = await get_query(prompt)
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     
@@ -48,8 +51,7 @@ async def generate_response(instructions, search, image_caption, history):
     search_results = 'Search feature is currently disabled so you have no realtime information'
     if search is not None:
         search_results = search
-    base_urls = ['https://gpt4.gravityengine.cc','https://gptdidi.com', 'http://chat.darkflow.top']
-    arguments = '/api/openai/v1/chat/completions'
+    endpoint = 'https://gpt4.gravityengine.cc/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
     }
@@ -66,7 +68,6 @@ async def generate_response(instructions, search, image_caption, history):
     random.shuffle(base_urls)
 
     for base_url in base_urls:
-        endpoint = base_url + arguments
         for attempt in range(2):
             try:
                 async with aiohttp.ClientSession() as session:
@@ -84,8 +85,70 @@ async def generate_response(instructions, search, image_caption, history):
     print('All base URLs failed to provide a response.')
     return None
 
+async def generate_completion(prompt, max_token=None, temp=None):
+    endpoint = '/api/openai/v1/engines/text-davinci-003/completions'
+    headers = {'Content-Type': 'application/json'}
+
+    async with aiohttp.ClientSession() as session:
+        for base_url in base_urls:
+            url = base_url + endpoint
+            async with session.post(url, headers=headers, json={'prompt': prompt, 'max_tokens': max_token or 2048, 'temperature': temp or 0.7}) as response:
+                if response.status != 200:
+                    continue
+                response_data = await response.json()
+                response = response_data['choices'][0]['text']
+                return response
+
+    return None
+
 async def detect_nsfw(prompt):
-    base_urls = ['https://gpt4.gravityengine.cc', 'https://a.z-pt.com', 'https://gptdidi.com', 'http://chat.darkflow.top']
+    fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involves graphic sexual material or nudity, content respond with "1" else respond with "0" and nothing else
+Prompt = a Girl, China, 20yo, HD, realistic, without dress, uncensored. sfw.
+Eval = 1
+Prompt = a Girl, China, 20yo, HD, realistic, without dress, Transparent bra, uncensored.
+Eval = 1
+Prompt = girl, european, 18yo
+Eval = 1
+Prompt = A cute anime girl
+Eval = 0
+Prompt = {prompt}
+Eval = """
+    response = await generate_completion(prompt=fullprompt, max_token=20, temp=1)
+    if response == "1":
+        return True
+    else:
+        return False
+
+async def get_query(prompt):
+    fullprompt = f"""If a message is not directly addressed to the second person, you will need to initiate a search query.
+
+Message: What is happening in ukraine
+Query: Ukraine military news today
+Message : Hi
+Query: False
+Message: What is the latest donald trump scandal?
+Query: Donald Trump scandal latest news
+Message : Who made you ?
+Query: False
+Message : How are you doing ?
+Query: False
+Message : Who won in 2022 world cup ?
+Query: 2022 FIFA World Cup final
+Message : Thats scary
+Query: False
+Message : {prompt}
+Query : """
+
+    response = await generate_completion(prompt=fullprompt, max_token=20)
+    if "false" in response.lower():
+        return None
+    response = response.lower().replace("query:", "").replace("query", "").replace(":", "")
+    if response:
+        return response
+    else:
+        return None
+
+async def detect_nsfw(prompt):
     endpoint = '/api/openai/v1/engines/text-davinci-003/completions'
     headers = {'Content-Type': 'application/json'}
     fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involves graphic sexual material or nudity, content respond with "1" else respond with "0" and nothing else
@@ -111,7 +174,7 @@ Eval = """
     return None
 
 async def generate_dalle_image(prompt, size):
-    base_urls = ['https://gpt4.gravityengine.cc','https://a.z-pt.com','https://gptdidi.com', 'http://chat.darkflow.top']
+    base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
     endpoint = '/api/openai/v1/images/generations'
     headers = {
         'Content-Type': 'application/json',
