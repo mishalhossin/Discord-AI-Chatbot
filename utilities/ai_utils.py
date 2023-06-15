@@ -88,7 +88,7 @@ async def generate_completion(prompt, max_token=None, temp=None):
     async with aiohttp.ClientSession() as session:
         for base_url in base_urls:
             url = base_url + endpoint
-            async with session.post(url, headers=headers, json={'prompt': prompt, 'max_tokens': max_token or 2048, 'temperature': temp or 0.7}) as response:
+            async with session.post(url, headers=headers, json={'prompt': prompt, 'temperature': temp or 0.7}) as response:
                 if response.status != 200:
                     continue
                 response_data = await response.json()
@@ -132,6 +132,8 @@ Message : Who won in 2022 world cup ?
 Query: 2022 FIFA World Cup final
 Message : Thats scary
 Query: False
+Message : Phần mềm diệt virus nào tốt nhất năm 2023
+Query: 8 Best Antivirus Software
 Message : {prompt}
 Query : """
 
