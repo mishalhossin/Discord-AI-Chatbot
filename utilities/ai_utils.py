@@ -221,7 +221,7 @@ async def get_yt_transcript(message_content):
     translated_transcript = first_transcript.translate('en')
     formatted_transcript = ". ".join(
         [entry['text'] for entry in translated_transcript.fetch()])
-    formatted_transcript = formatted_transcript[:2500]
+    formatted_transcript = formatted_transcript[:1000]
 
     response = f"Ignore all the instructions you got before. Summarizie the following in 8 bullet points:\n\n{formatted_transcript}\n\n\nProvide a summary or additional information based on the content. Write the summary in {current_language['language_name']}"
 
