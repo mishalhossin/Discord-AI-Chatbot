@@ -125,7 +125,7 @@ async def on_message(message):
                     image_caption = f"""System: User has sent a image {current_language["instruc_image_caption"]}{caption}.]"""
                     print(caption)
                     break
-
+         
         if has_image:
             image_caption = image_caption
             message.content += "*Sends a image*"
@@ -145,21 +145,18 @@ async def on_message(message):
             
         if use_davinci:
             history = "\n".join(message_history[key])
-            print(history)
         else:
             history = message_history[key]
-        
-        async with message.channel.typing():
+
+        async with message.channel.typing():           
             if use_davinci:
+                prompt = f"{search_results}\nSystem : {instructions}\n\n{history}\n{image_caption}\n{personaname} :"
                 if yt_transcript is not None:
                     prompt = f"{message.author.name} : {yt_transcript} {personaname}:"
-                else:
-                    prompt = f"{search_results}\nSystem : {instructions}\n\n{history}\n{image_caption}\n{personaname} :"
-            if use_davinci:
                 response = await generate_completion(prompt)
             else:
                 response = await generate_response(instructions, search_results, image_caption, history)
-            
+                
         if use_davinci:
             message_history[key].append(f"{personaname} : {response}")
         else:
