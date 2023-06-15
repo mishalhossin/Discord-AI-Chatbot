@@ -15,9 +15,6 @@ base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
 
 
 async def search(prompt):
-    blacklist = ["image", "gifs", "gif", "images", "picture", "pictures", "draw", "draws", "drawing" "video", "youtube","pirated", "hack", "crack", "phishing", "malware", "virus"]
-    if any(word in prompt.lower() for word in blacklist):
-        return
     if not internet_access or len(prompt) > 200:
         return
     
