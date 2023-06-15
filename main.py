@@ -79,6 +79,8 @@ if internet_access:
     
 instructions = instructions_part_1 + " This is the following conversations"
 
+if instruc_config != 'assist' and not use_davinci:
+    print("\033[1m\033[31m⚠️ You are currently using a persona with GPT3 you should use davinci for better output\033[0m")
 # Message history and config
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
