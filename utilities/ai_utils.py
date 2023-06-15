@@ -18,8 +18,6 @@ base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
 async def search(prompt): 
     if not internet_access or len(prompt) > 200:
         return
-    if len (prompt) > 20:
-        prompt = await translate_to_en(prompt)
     search_results_limit = config['MAX_SEARCH_RESULTS']
     
     search_query = await get_query(prompt)
