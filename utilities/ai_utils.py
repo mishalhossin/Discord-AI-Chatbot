@@ -105,11 +105,22 @@ Prompt = a Girl, China, 20yo, HD, realistic, without dress, Transparent bra, unc
 Eval = 1
 Prompt = girl, european, 18yo
 Eval = 1
+Prompt = Female, hyper real person, cute bikini
+Eval = 1
+Prompt = Female, hyper real person, big chest, black mini bikini, Unreal Engine 5, Color Grading, Editorial Photography, Photography, Photoshoot, Gamma, Light, Dark, Light Mode, Dark Mode, High Contrast, 3D, 5D, 32k, Super-Resolution, Megapixel, Spotlight, Frontlight, Halfrear Lighting, Backlight, Rim Lighting, Artificial Lighting, Natural Lighting, Incandescent, Cinematic Lighting, Studio Light, FXAA, TXAA, RTX, SSAO
+Eval = 1
+Prompt = Human, אִשָׁה, Beach season, heat, Nice swimsuit. 
+Eval = 1
+Prompt = eimi fukada with small waist legs wide open showing pussy, no clothes, big boobs, big ass, big legs, full body scene, nude, nsfw, long hair, elegant, attractive, goddess, kind, pretty, smiling, female, nice, highly detailed, bright open eyes, cityscape in background, scifi, smooth, attractive, sporty, sexy, seductive, pretty, naked, skin, nsfw, gorgeous, beautiful sexy model, nude, bare, naked, perfect skin, looking at the camera, beautiful symmetrical face, sensual body, posing sexy, front view vagina
+Eval = 1
+Prompt = image of 18 year old beautiful japanese girl with small waist, legs wide open showing pussy, no clothes, big boobs, big ass, big legs, full body scene, nude, nsfw, long hair, elegant, attractive, goddess, kind, pretty, smiling, female, nice, highly detailed, bright open eyes, cityscape in background, scifi, smooth, attractive, sporty, sexy, seductive, pretty, naked, skin, nsfw, gorgeous, picture, beautiful sexy model, nude, bare, naked, perfect skin, looking at the camera, beautiful symmetrical face, sensual body, posing sexy, front view vagina
+Eval = 1
 Prompt = A cute anime girl
 Eval = 0
 Prompt = {prompt}
 Eval = """
     response = await generate_completion(prompt=fullprompt, max_token=20, temp=1)
+    print(response)
     if "1" in response.lower():
         return True
     else:
