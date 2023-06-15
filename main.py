@@ -163,9 +163,11 @@ async def on_message(message):
             message_history[key].append(f"{personaname} : {response}")
         else:
             message_history[key].append({"role": "assistant", "content": response})
-
-        for chunk in split_response(response):
-            await message.reply(chunk.replace("@", "@\u200B"))
+        if response is not None:
+            for chunk in split_response(response):
+                await message.reply(chunk.replace("@", "@\u200B"))
+        else:
+            await message.reply("Ugh idk what to say :(")
 
 
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])
