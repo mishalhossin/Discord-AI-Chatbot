@@ -55,9 +55,9 @@ async def generate_response(instructions, search, image_caption, history):
         'temperature': 0.75,
         'messages': [
             {"role": "system", "content": instructions},
-            {"role": "system", "content": search},
             *history,
-            {"role": "system", "content": image_caption},
+            {"role": "user", "content": search},
+            {"role": "user", "content": image_caption},
         ]
     }
     random.shuffle(base_urls)
