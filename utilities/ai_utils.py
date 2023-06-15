@@ -44,9 +44,10 @@ async def search(prompt):
 
     return blob
 
-async def generate_response(instructions, search, image_caption, history):
-    if search is None:
-        search = " "
+async def generate_response(instructions, search, image_caption, history): 
+    search_results = 'Search feature is currently disabled so you have no realtime information'
+    if search is not None:
+        search_results = search
     base_urls = ['https://gpt4.gravityengine.cc','https://gptdidi.com', 'http://chat.darkflow.top']
     arguments = '/api/openai/v1/chat/completions'
     headers = {
@@ -56,8 +57,9 @@ async def generate_response(instructions, search, image_caption, history):
         'model': 'gpt-3.5-turbo-16k-0613',
         'temperature': 0.7,
         'messages': [
-            {"role": "system", "content": str(search) + str(instructions)},
+            {"role": "system", "content": instructions},
             *history,
+            {"role": "system", "content": search_results},
             {"role": "system", "content": image_caption},
         ]
     }
