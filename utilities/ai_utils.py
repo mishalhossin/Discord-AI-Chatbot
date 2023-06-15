@@ -12,20 +12,18 @@ from imaginepy import AsyncImagine, Style, Ratio
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
-
+base_urls = ['https://gpt4.gravityengine.cc']
 
 async def search(prompt): 
     if not internet_access or len(prompt) > 200:
         return
     search_results_limit = config['MAX_SEARCH_RESULTS']
     
-    search_query = await get_query(prompt)
+    search_query = prompt #await get_query(prompt)
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
     
     if search_query is not None:
-        print(f"\nSearching for: {search_query}")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://ddg-api.herokuapp.com/search',
@@ -49,7 +47,7 @@ async def generate_response(instructions, search, image_caption, history):
     search_results = 'Search feature is currently disabled so you have no realtime information'
     if search is not None:
         search_results = search
-    endpoint = 'https://gpt4.gravityengine.cc/api/openai/v1/chat/completions'
+    endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
     }
@@ -63,38 +61,28 @@ async def generate_response(instructions, search, image_caption, history):
         ]
     }
     
-    for attempt in range(2):
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(endpoint, headers=headers, json=data) as response:
-                    response_data = await response.json()
-                    choices = response_data['choices']
-                    if choices:
-                        return choices[0]['message']['content']
-        except aiohttp.ClientError as error:
-            print(f'Error making the request with {endpoint}: {error}')
-            if attempt < 1:
-                print('Retrying with a different base URL.')
-                break
-
+    for base_url in base_urls:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(base_url+endpoint, headers=headers, json=data) as response:
+                response_data = await response.json()
+                choices = response_data['choices']
+                if choices:
+                    return choices[0]['message']['content']
     print('All base URLs failed to provide a response.')
     return None
 
-async def generate_completion(prompt, max_token=None, temp=None):
-    endpoint = '/api/openai/v1/engines/text-davinci-003/completions'
-    headers = {'Content-Type': 'application/json'}
+# async def generate_completion(prompt, max_token=None, temp=None):
+#     endpoint = '/api/openai/v1/engines/text-davinci-003/completions'
+#     headers = {'Content-Type': 'application/json'}
 
-    async with aiohttp.ClientSession() as session:
-        for base_url in base_urls:
-            url = base_url + endpoint
-            async with session.post(url, headers=headers, json={'prompt': prompt, 'temperature': temp or 0.7}) as response:
-                if response.status != 200:
-                    continue
-                response_data = await response.json()
-                response = response_data['choices'][0]['text']
-                return response
-
-    return None
+#     async with aiohttp.ClientSession() as session:
+#         base_url = 'https://a.z-pt.com'
+#         url = base_url + endpoint
+#         async with session.post(url, headers=headers, json={'prompt': prompt, 'temperature': temp or 0.7}) as response:
+#             response_data = await response.json()
+#             response = response_data['choices'][0]['text']
+#             return response
+#     return None
 
 async def detect_nsfw(prompt):
     fullprompt = f"""Ignore all the instructions you got before. From now on, you are going to act as nsfw art image to text prompt detector. If the following contains stuff that involves graphic sexual material or nudity, content respond with "1" else respond with "0" and nothing else
@@ -118,7 +106,8 @@ Prompt = A cute anime girl
 Eval = 0
 Prompt = {prompt}
 Eval = """
-    response = await generate_completion(prompt=fullprompt, max_token=20, temp=1)
+    # response = await generate_completion(prompt=fullprompt, max_token=20, temp=1)
+    response = 0
     print(response)
     if "1" in response.lower():
         return True
@@ -147,7 +136,8 @@ Query: 8 Best Antivirus Software
 Message : {prompt}
 Query : """
 
-    response = await generate_completion(prompt=fullprompt, max_token=20)
+    # response = await generate_completion(prompt=fullprompt, max_token=20)
+    response = "false"
     if "false" in response.lower():
         return None
     response = response.lower().replace("query:", "").replace("query", "").replace(":", "")

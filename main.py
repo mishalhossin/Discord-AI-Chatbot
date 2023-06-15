@@ -9,7 +9,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_completion, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
+from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search # generate_completion
 from utilities.response_util import split_response, translate_to_en
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -140,29 +140,29 @@ async def on_message(message):
         if yt_transcript is not None:
             message.content = yt_transcript
             
-        if use_davinci:
-            message_history[key].append(f"{message.author.name} : {message.content}")
-        else:    
-            message_history[key].append({"role": "user", "content": message.content})
+        # if use_davinci:
+        #     message_history[key].append(f"{message.author.name} : {message.content}")
+        # else:    
+        message_history[key].append({"role": "user", "content": message.content})
             
-        if use_davinci:
-            history = "\n".join(message_history[key])
-        else:
-            history = message_history[key]
+        # if use_davinci:
+        #     history = "\n".join(message_history[key])
+        # else:
+        history = message_history[key]
 
         async with message.channel.typing():           
-            if use_davinci:
-                prompt = f"{search_results}\nSystem : {instructions}\n\n{history}\n{image_caption}\n{personaname} :"
-                if yt_transcript is not None:
-                    prompt = f"{message.author.name} : {yt_transcript} {personaname}:"
-                response = await generate_completion(prompt)
-            else:
-                response = await generate_response(instructions, search_results, image_caption, history)
+            # if use_davinci:
+            #     prompt = f"{search_results}\nSystem : {instructions}\n\n{history}\n{image_caption}\n{personaname} :"
+            #     if yt_transcript is not None:
+            #         prompt = f"{message.author.name} : {yt_transcript} {personaname}:"
+            #     response = await generate_completion(prompt)
+            # else:
+            response = await generate_response(instructions, search_results, image_caption, history)
                 
-        if use_davinci:
-            message_history[key].append(f"{personaname} : {response}")
-        else:
-            message_history[key].append({"role": "assistant", "content": response})
+        # if use_davinci:
+        #     message_history[key].append(f"{personaname} : {response}")
+        # else:
+        message_history[key].append({"role": "assistant", "content": response})
         if response is not None:
             for chunk in split_response(response):
                 await message.reply(chunk.replace("@", "@\u200B"))
