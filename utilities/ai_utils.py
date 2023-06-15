@@ -15,12 +15,13 @@ internet_access = config['INTERNET_ACCESS']
 base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
 
 
-async def search(prompt):
-    prompt = await translate_to_en(prompt)
+async def search(prompt): 
     if not internet_access or len(prompt) > 200:
         return
-    
+    if len (prompt) > 20:
+        prompt = await translate_to_en(prompt)
     search_results_limit = config['MAX_SEARCH_RESULTS']
+    
     search_query = await get_query(prompt)
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for '{prompt}' at {current_time}:\n\n"
