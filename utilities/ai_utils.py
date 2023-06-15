@@ -55,12 +55,11 @@ async def generate_response(instructions, search, image_caption, history):
     }
     data = {
         'model': 'gpt-3.5-turbo-16k-0613',
-        'temperature': 0.7,
+        'temperature': 0.1,
         'messages': [
-            {"role": "system", "content": instructions},
-            *history,
             {"role": "system", "content": search_results},
-            {"role": "system", "content": image_caption},
+            {"role": "user", "content": instructions},
+            *history,
         ]
     }
     
