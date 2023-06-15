@@ -65,22 +65,20 @@ async def generate_response(instructions, search, image_caption, history):
             {"role": "system", "content": image_caption},
         ]
     }
-    random.shuffle(base_urls)
-
-    for base_url in base_urls:
-        for attempt in range(2):
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(endpoint, headers=headers, json=data) as response:
-                        response_data = await response.json()
-                        choices = response_data['choices']
-                        if choices:
-                            return choices[0]['message']['content']
-            except aiohttp.ClientError as error:
-                print(f'Error making the request with {base_url}: {error}')
-                if attempt < 1:
-                    print('Retrying with a different base URL.')
-                    break
+    
+    for attempt in range(2):
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(endpoint, headers=headers, json=data) as response:
+                    response_data = await response.json()
+                    choices = response_data['choices']
+                    if choices:
+                        return choices[0]['message']['content']
+        except aiohttp.ClientError as error:
+            print(f'Error making the request with {endpoint}: {error}')
+            if attempt < 1:
+                print('Retrying with a different base URL.')
+                break
 
     print('All base URLs failed to provide a response.')
     return None
