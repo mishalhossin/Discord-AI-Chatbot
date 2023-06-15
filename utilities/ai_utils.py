@@ -6,6 +6,7 @@ import random
 from youtube_transcript_api import YouTubeTranscriptApi
 
 from utilities.config_loader import load_current_language, config
+from utilities.response_util import translate_to_en
 from imaginepy import AsyncImagine, Style, Ratio
 
 current_language = load_current_language()
@@ -15,6 +16,7 @@ base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
 
 
 async def search(prompt):
+    prompt = await translate_to_en(prompt)
     if not internet_access or len(prompt) > 200:
         return
     
