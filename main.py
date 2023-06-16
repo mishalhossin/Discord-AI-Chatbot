@@ -10,7 +10,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search # generate_completion
-from utilities.response_util import split_response, translate_to_en
+from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
@@ -276,8 +276,12 @@ async def clear(ctx):
     app_commands.Choice(name='Yea ✅', value='True'),
     app_commands.Choice(name='No thanks ❌', value='False')
 ])
+@app_commands.choices(prompt_enhancement=[
+    app_commands.Choice(name='Please help me 😭', value='True'),
+    app_commands.Choice(name='I use my own prompt 😤', value='False')
+])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
-                  negative: str = None, upscale: app_commands.Choice[str] = None):
+                  negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None):
 
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
@@ -286,8 +290,12 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         
     await ctx.defer()
     
+    
     prompt = await translate_to_en(prompt)
     
+    if prompt_enhancement.value == 'True':
+        prompt = await get_random_prompt(prompt)
+        
     prompt_to_detect = prompt
     
     if negative is not None:
