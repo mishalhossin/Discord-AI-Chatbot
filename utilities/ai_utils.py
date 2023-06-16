@@ -243,9 +243,7 @@ async def get_yt_transcript(message_content):
         return None
 
     translated_transcript = first_transcript.translate('en')
-    formatted_transcript = ". ".join(
-        [entry['text'] for entry in translated_transcript.fetch()])
-    formatted_transcript = formatted_transcript[:2000]
+    formatted_transcript = ". ".join([f"{entry['start']} - {entry['text']}" for entry in translated_transcript.fetch()])
 
     response = f"""Summarizie the following youtube video transcript in 8 bullet points:
     
