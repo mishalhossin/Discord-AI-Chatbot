@@ -87,13 +87,18 @@ async def on_message(message):
         for mention in message.mentions:
             message.content = message.content.replace(
                 f'<@{mention.id}>', f'@{mention.display_name}')
-
-    if message.author.bot:
+            
+    has_sticker = len(message.stickers) > 0
+    
+    if has_sticker:
+        return
+    
+    if message.author.bot :
         return
 
     if message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds):
         return
-
+    
     is_replied = (message.reference and message.reference.resolved.author == bot.user ) and smart_mention
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     is_active_channel = message.channel.id in active_channels
