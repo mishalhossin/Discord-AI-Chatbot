@@ -42,8 +42,6 @@ presences = config["PRESENCES"]
 # Imagine config
 blacklisted_words = config['BLACKLIST_WORDS']
 prevent_nsfw = config['AI_NSFW_CONTENT_FILTER']
-# Model config
-use_davinci = config['USE_TEXT_DAVINCI']
 
 ## Instructions Loader ##
 current_language = load_current_language()
@@ -79,8 +77,6 @@ if internet_access:
     
 instructions = instructions_part_1 + " This is the following conversations"
 
-if instruc_config != 'assist' and not use_davinci:
-    print("\033[1m\033[31m⚠️ You are currently using a persona with GPT3 you should use davinci for better output\033[0m")
 # Message history and config
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
@@ -116,6 +112,7 @@ async def on_message(message):
             message_history[key] = []
 
         message_history[key] = message_history[key][-MAX_HISTORY:]
+        message_history[key].append({"role": "user", "content": message.content})
 
         has_image = False
         image_caption = ""
@@ -139,29 +136,12 @@ async def on_message(message):
         yt_transcript = await get_yt_transcript(message.content)
         if yt_transcript is not None:
             message.content = yt_transcript
-            
-        # if use_davinci:
-        #     message_history[key].append(f"{message.author.name} : {message.content}")
-        # else:    
-        message_history[key].append({"role": "user", "content": message.content})
-            
-        # if use_davinci:
-        #     history = "\n".join(message_history[key])
-        # else:
+               
         history = message_history[key]
 
         async with message.channel.typing():           
-            # if use_davinci:
-            #     prompt = f"{search_results}\nSystem : {instructions}\n\n{history}\n{image_caption}\n{personaname} :"
-            #     if yt_transcript is not None:
-            #         prompt = f"{message.author.name} : {yt_transcript} {personaname}:"
-            #     response = await generate_completion(prompt)
-            # else:
             response = await generate_response(instructions, search_results, image_caption, history)
                 
-        # if use_davinci:
-        #     message_history[key].append(f"{personaname} : {response}")
-        # else:
         message_history[key].append({"role": "assistant", "content": response})
         if response is not None:
             for chunk in split_response(response):
