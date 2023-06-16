@@ -30,7 +30,7 @@ async def search(prompt):
     else:
         search_query = await get_query(prompt)
     
-    if len(search_query) > 400:
+    if search_query is not None and len(search_query) > 500:
         return
     
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
