@@ -300,7 +300,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     orignial_prompt = prompt
 
     prompt = await translate_to_en(prompt)
-
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
         prompt = await get_random_prompt(prompt)
 
