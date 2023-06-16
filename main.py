@@ -112,7 +112,6 @@ async def on_message(message):
             message_history[key] = []
 
         message_history[key] = message_history[key][-MAX_HISTORY:]
-        message_history[key].append({"role": "user", "content": message.content})
 
         has_image = False
         image_caption = ""
@@ -128,17 +127,20 @@ async def on_message(message):
         if has_image:
             image_caption = image_caption
             message.content += "*Sends a image*"
-            search_results = ""
+            search_results = None
         else:
             image_caption = ""
-            search_results = await search(message.content)
             
         yt_transcript = await get_yt_transcript(message.content)
         if yt_transcript is not None:
+            search_results = None
             message.content = yt_transcript
-               
+        else:
+            search_results = await search(message.content)
+            
+        message_history[key].append({"role": "user", "content": message.content})
         history = message_history[key]
-
+        
         async with message.channel.typing():           
             response = await generate_response(instructions, search_results, image_caption, history)
                 
@@ -290,6 +292,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         
     await ctx.defer()
     
+    orignial_prompt = prompt
     
     prompt = await translate_to_en(prompt)
     
@@ -337,6 +340,8 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed_image = Embed(color=0x000f14)
     
     embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
+    if prompt_enhancement.value == 'True':
+        embed_info.add_field(name="Orignial prompt 📝", value=f"{orignial_prompt}", inline=False)
     embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
     embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
     embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
