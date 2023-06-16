@@ -22,7 +22,11 @@ async def search(prompt):
     
     url_match = re.search(r'(https?://\S+)', prompt)
     if url_match:
-        search_query = url_match.group(0)
+        url = url_match.group(0)
+        async with aiohttp.ClientSession() as session:
+                async with session.get(f'https://api.microlink.io/?url={url}') as response:
+                    response_text = await response.text()
+                    return response_text
     else:
         search_query = await get_query(prompt)
     
@@ -64,7 +68,7 @@ async def generate_response(instructions, search, image_caption, history):
             {"role": "system", "name": "instructions", "content": instructions},
             {"role": "user", "content": instructions},
             *history,
-            {"role": "system", "name": "search_results", "content": search_results}
+            {"role": "system", "name": "web_content", "content": search_results}
         ]
     }
     
@@ -238,6 +242,11 @@ async def get_yt_transcript(message_content):
         [entry['text'] for entry in translated_transcript.fetch()])
     formatted_transcript = formatted_transcript[:2000]
 
-    response = f"Ignore all the instructions you got before. Summarizie the following in 8 bullet points:\n\n{formatted_transcript}\n\n\nProvide a summary or additional information based on the content. Write the summary in {current_language['language_name']}"
+    response = f"""Summarizie the following youtube video transcript in 8 bullet points:
+    
+    {formatted_transcript}
+    
+    
+    Please Provide a summary or additional information based on the content. Write the summary in {current_language['language_name']}"""
 
     return response
