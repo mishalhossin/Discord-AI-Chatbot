@@ -29,7 +29,7 @@ async def search(prompt):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for: '{search_query}' at {current_time}:\n"
     if search_query is not None:
-        print(blob)
+        print(f"\033[1;32mSearching for '\033[1;33m{search_query}\033[1;32m' at {current_time} with {search_results_limit} results limit ...\033[0m")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://ddg-api.herokuapp.com/search',
