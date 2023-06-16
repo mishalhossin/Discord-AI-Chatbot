@@ -294,25 +294,25 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         upscale_status = True
     else:
         upscale_status = False
-        
+
     await ctx.defer()
-    
+
     orignial_prompt = prompt
-    
+
     prompt = await translate_to_en(prompt)
-    
+
     if prompt_enhancement.value == 'True':
         prompt = await get_random_prompt(prompt)
-        
+
     prompt_to_detect = prompt
-    
+
     if negative is not None:
         prompt_to_detect = f"{prompt} Negative Prompt: {negative}"
-        
+
     is_nsfw = await detect_nsfw(prompt_to_detect)
-    
+
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
-    
+
     if (is_nsfw or blacklisted) and prevent_nsfw:
         embed_warning = Embed(
             title="⚠️ WARNING ⚠️",
@@ -322,9 +322,9 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
         await ctx.send(embed=embed_warning)
         return
-    
+
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
-    
+
     if imagefileobj is None:
         embed_warning = Embed(
             title="😅",
@@ -334,23 +334,23 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed_warning.add_field(name="Prompt", value=prompt, inline=False)
         await ctx.send(embed=embed_warning)
         return
-    
+
     file = discord.File(imagefileobj, filename="image.png")
-    
+
     if is_nsfw:
         embed_info = Embed(color=0xff0000)
         embed_image = Embed(color=0xff0000)
     else:
         embed_info = Embed(color=0x000f14)
         embed_image = Embed(color=0x000f14)
-    
+
     embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
     if prompt_enhancement.value == 'True':
         embed_info.add_field(name="Orignial prompt 📝", value=f"{orignial_prompt}", inline=False)
     embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
     embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
     embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
-    
+
     if upscale_status:
         embed_info.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
     elif is_nsfw and not prevent_nsfw:
