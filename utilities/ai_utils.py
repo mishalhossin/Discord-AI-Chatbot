@@ -137,20 +137,18 @@ async def detect_nsfw(prompt):
         return False
 
 async def get_query(prompt):
-    instructions = f"""If a message is dosent have enough context, assistent will need to return a query else assistent will respond with False nothing more"""
+    instructions = f"""If a message is dosent have enough context, assistent will need to return a query else assistent will respond with False nothing more assistent must only help by returning a query"""
     messages = [
-        {"role": "system", "content": instructions},
-        {"role": "system", "name": "example_user", "content":  "What is happening in ukraine"},
+        {"role": "system", "name": "instructions","content": instructions},
+        {"role": "system", "name": "example_user", "content":  "Prompt =What is happening in ukraine"},
         {"role": "system", "name": "example_assistant", "content":  "Query : Ukraine military news today"},
-        {"role": "system", "name": "example_user", "content": "Hi"},
+        {"role": "system", "name": "example_user", "content": "Prompt =Hi"},
         {"role": "system", "name": "example_assistant", "content":  "Query : False"},
         {"role": "system", "name": "example_user", "content": "Query : How are you doing ?"},
         {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user", "content": "Thats scary"},
-        {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user", "content": "Phần mềm diệt virus nào tốt nhất năm 2023"},
+        {"role": "system", "name": "example_user", "content": "Prompt = Phần mềm diệt virus nào tốt nhất năm 2023"},
         {"role": "system", "name": "example_assistant", "content":  "Query : 8 Best Antivirus Software"},
-        {"role": "user", "content": prompt}
+        {"role": "user", "content": f"Prompt = {prompt}"}
     ]
 
     response = await generate_chat_completion(messages)
