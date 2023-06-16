@@ -30,6 +30,9 @@ async def search(prompt):
     else:
         search_query = await get_query(prompt)
     
+    if len(search_query) > 400:
+        return
+    
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     blob = f"Search results for: '{search_query}' at {current_time}:\n"
     if search_query is not None:
@@ -144,15 +147,17 @@ async def get_query(prompt):
     instructions = f""""If a message is not directly addressed to the second person, you will need to initiate a search query else assistent will respond with False nothing more and assistant must only help by returning a query"""
     messages = [
         {"role": "system", "name": "instructions","content": instructions},
-        {"role": "system", "name": "example_user", "content":  "Prompt =What is happening in ukraine"},
+        {"role": "system", "name": "example_user", "content":  "Message : What is happening in ukraine"},
         {"role": "system", "name": "example_assistant", "content":  "Query : Ukraine military news today"},
-        {"role": "system", "name": "example_user", "content": "Prompt =Hi"},
+        {"role": "system", "name": "example_user", "content": "Message : Hi"},
         {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user", "content": "Query : How are you doing ?"},
+        {"role": "system", "name": "example_user", "content": "Message : How are you doing ?"},
         {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user", "content": "Prompt = Phần mềm diệt virus nào tốt nhất năm 2023"},
+        {"role": "system", "name": "example_user", "content": "Message : How to print how many commands are synced on_ready ?"},
+        {"role": "system", "name": "example_assistant", "content":  "Query : Python code to print the number of synced commands in on_ready event"},
+        {"role": "system", "name": "example_user", "content": "Message : Phần mềm diệt virus nào tốt nhất năm 2023"},
         {"role": "system", "name": "example_assistant", "content":  "Query : 8 Best Antivirus Software"},
-        {"role": "user", "content": f"Prompt = {prompt}"}
+        {"role": "user", "content": f"Message : {prompt}"}
     ]
 
     response = await generate_chat_completion(messages)
