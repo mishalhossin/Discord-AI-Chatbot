@@ -137,7 +137,7 @@ async def detect_nsfw(prompt):
         return False
 
 async def get_query(prompt):
-    instructions = f"""If a message is dosent have enough context, assistent will need to return a query else assistent will respond with False nothing more assistent must only help by returning a query"""
+    instructions = f""""If a message is not directly addressed to the second person, you will need to initiate a search query else assistent will respond with False nothing more and assistant must only help by returning a query"""
     messages = [
         {"role": "system", "name": "instructions","content": instructions},
         {"role": "system", "name": "example_user", "content":  "Prompt =What is happening in ukraine"},
