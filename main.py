@@ -185,23 +185,14 @@ async def on_message_delete(message):
         
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])
 @commands.is_owner()
-async def pfp(ctx, attachment_url=None):
-    if attachment_url is None and not ctx.message.attachments:
-        return await ctx.send(
-            f"{current_language['pfp_change_msg_1']}"
-        )
-    else:
-        await ctx.send(
-            f"{current_language['pfp_change_msg_2']}"
-        )
-    if attachment_url is None:
-        attachment_url = ctx.message.attachments[0].url
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(attachment_url) as response:
-            await bot.user.edit(avatar=await response.read())
-
-
+async def pfp(ctx, attachment: discord.Attachment):
+    if not attachment.content_type.startswith('image/'):
+        await ctx.send("Please upload an image file.")
+        return
+    
+    await ctx.send(current_language['pfp_change_msg_2'])
+    await bot.user.edit(avatar=await attachment.read())
+    
 @bot.hybrid_command(name="ping", description=current_language["ping"])
 async def ping(ctx):
     latency = bot.latency * 1000
@@ -428,6 +419,9 @@ async def dalle(ctx, prompt: str, ratio: app_commands.Choice[str]):
 @bot.hybrid_command(name="interrogate", description="Generates a prompt from image")
 async def get_attachments(ctx, attachment: discord.Attachment):
     await ctx.defer()
+    if not attachment.content_type.startswith('image/'):
+        await ctx.send("Please upload an image file.")
+        return
     attachment_bytes = await attachment.read()
     prompt = await generate_caption(attachment_bytes)
     await ctx.send(embed=discord.Embed(title="Interrogated Prompt", description=prompt))
