@@ -69,6 +69,7 @@ async def on_ready():
         await bot.change_presence(activity=discord.Game(name=presence_with_count))
         await asyncio.sleep(delay)
 
+ 
 # Set up the instructions
 current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 internet_access = config['INTERNET_ACCESS']
@@ -83,8 +84,14 @@ instructions = instructions_part_1 + " This is the following conversations"
 message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
 personaname = config['INSTRUCTIONS'].title()
+replied_messages = {}
 @bot.event
 async def on_message(message):
+    if message.author == bot.user and message.reference:
+        replied_messages[message.reference.message_id] = message
+        if len(replied_messages) > 5:
+            oldest_message_id = min(replied_messages.keys())
+            del replied_messages[oldest_message_id]
     if message.mentions:
         for mention in message.mentions:
             message.content = message.content.replace(
@@ -119,7 +126,7 @@ async def on_message(message):
             message_history[key] = []
 
         message_history[key] = message_history[key][-MAX_HISTORY:]
-
+        
         has_image = False
         image_caption = ""
         if message.attachments:
@@ -187,6 +194,14 @@ async def on_message(message):
             await message.reply("Ugh idk what to say :(")
 
 
+@bot.event
+async def on_message_delete(message):
+    if message.id in replied_messages:
+        replied_to_message = replied_messages[message.id]
+        await replied_to_message.delete()
+        del replied_messages[message.id]
+    
+        
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])
 @commands.is_owner()
 async def pfp(ctx, attachment_url=None):
