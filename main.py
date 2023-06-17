@@ -1,10 +1,12 @@
 import asyncio
 import os
+import io
 from itertools import cycle
 import datetime
 
 import aiohttp
 import discord
+import PyPDF2
 from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -128,28 +130,54 @@ async def on_message(message):
                     image_caption = f"""System: User has sent a image {current_language["instruc_image_caption"]}{caption}.]"""
                     print(caption)
                     break
-         
+                
+        has_file = False
+        for attachment in message.attachments:
+            if attachment.filename.endswith(('.txt', '.rtf', '.md', '.html', '.xml', '.csv', '.json', '.js', '.css', '.py', '.java', '.c', '.cpp', '.php', '.rb', '.swift', '.sql', '.sh', '.bat', '.ps1', '.ini', '.cfg', '.conf', '.log', '.svg', '.epub', '.mobi', '.tex', '.docx', '.odt', '.xlsx', '.ods', '.pptx', '.odp', '.eml', '.htaccess', '.nginx.conf', '.pdf')):
+                file_content = await attachment.read()
+
+                if attachment.filename.endswith('.pdf'):
+                    pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_content))
+                    num_pages = len(pdf_reader.pages)
+                    text_content = ""
+
+                    for page_num in range(num_pages):
+                        page = pdf_reader.pages[page_num]
+                        text_content += page.extract_text()
+
+                else:
+                    text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding='utf-8').read()
+                
+                message.content += f"File content : {text_content}"
+                has_file = True
+        
         if has_image:
             image_caption = image_caption
             message.content += "*Sends a image*"
             search_results = None
         else:
             image_caption = ""
-            
-        yt_transcript = await get_yt_transcript(message.content)
-        if yt_transcript is not None:
+        if not has_file:
+            yt_transcript = await get_yt_transcript(message.content)
+        else:
+            yt_transcript = ""
+        if yt_transcript is not None and not has_file:
             search_results = None
             message.content = yt_transcript
-        else:
+        elif not has_file:
             search_results = await search(message.content)
-            
-        message_history[key].append({"role": "user", "content": message.content})
+        else:
+            search_results = ""
+        
+        username = message.author.name.split()[0].lower()
+        message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
         history = message_history[key]
         
         async with message.channel.typing():           
             response = await generate_response(instructions, search_results, image_caption, history)
                 
-        message_history[key].append({"role": "assistant", "content": response})
+        message_history[key].append({"role": "assistant", "name": f"{personaname}", "content": response})
+        
         if response is not None:
             for chunk in split_response(response):
                 await message.reply(chunk.replace("@", "@\u200B"))
@@ -205,9 +233,8 @@ async def changeusr(ctx, new_username):
 async def toggledm(ctx):
     global allow_dm
     allow_dm = not allow_dm
-    message = await ctx.send(f"DMs are now {'on' if allow_dm else 'off'}")
-    await asyncio.sleep(3)
-    await message.delete()
+    await ctx.send(f"DMs are now {'on' if allow_dm else 'off'}", delete_after=3)
+
 
 @bot.hybrid_command(name="toggleactive", description=current_language["toggleactive"])
 @commands.has_permissions(administrator=True)
@@ -218,19 +245,14 @@ async def toggleactive(ctx):
         with open("channels.txt", "w") as f:
             for id in active_channels:
                 f.write(str(id) + "\n")
-        message = await ctx.send(
-            f"{ctx.channel.mention} {current_language['toggleactive_msg_1']}"
-        )
-        await asyncio.sleep(3)
-        await message.delete()
+        await ctx.send(
+            f"{ctx.channel.mention} {current_language['toggleactive_msg_1']}", delete_after=3)
     else:
         active_channels.add(channel_id)
         with open("channels.txt", "a") as f:
             f.write(str(channel_id) + "\n")
-        message = await ctx.send(
-            f"{ctx.channel.mention} {current_language['toggleactive_msg_2']}")
-        await asyncio.sleep(3)
-        await message.delete()
+        await ctx.send(
+            f"{ctx.channel.mention} {current_language['toggleactive_msg_2']}", delete_after=3)
 
 if os.path.exists("channels.txt"):
     with open("channels.txt", "r") as f:
@@ -244,7 +266,8 @@ async def clear(ctx):
     message_history[key].clear()
     await ctx.send(f"Message history has been cleared", delete_after=3)
 
-@bot.hybrid_command(name="imagine", description=current_language["imagine"])
+
+@bot.hybrid_command(name="imagine", description="Command to imagine an image")
 @app_commands.choices(style=[
     app_commands.Choice(name='Imagine V3 🌌', value='IMAGINE_V3'),
     app_commands.Choice(name='Imagine V4 Beta 🚀', value='IMAGINE_V4_Beta'),
@@ -287,9 +310,10 @@ async def clear(ctx):
     app_commands.Choice(name='Please help me 😭', value='True'),
     app_commands.Choice(name='I use my own prompt 😤', value='False')
 ])
+
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
                   negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None):
-
+    
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
     else:

@@ -4,9 +4,8 @@ discord.py
 requests
 flask
 discord
-fake-useragent
 python-dotenv
 PyYAML
 youtube-transcript-api
 langdetect
-poe-api
+PyPDF2
