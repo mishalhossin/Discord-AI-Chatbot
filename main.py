@@ -95,7 +95,7 @@ async def on_message(message):
 
     if message.mentions:
         for mention in message.mentions:
-            message.content = message.content.replace(f'<@{mention.id}>', f'<@{mention.id}> aka {mention.display_name}')
+            message.content = message.content.replace(f'<@{mention.id}>', f'{mention.display_name}')
 
     if message.stickers or message.author.bot or (message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds)):
         return
