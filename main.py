@@ -189,7 +189,7 @@ async def on_message(message):
                 try:
                     await message.reply(chunk.replace("@", "@\u200B"))
                 except discord.errors.NotFound:
-                    await message.send(chunk.replace("@", "@\u200B"))
+                    await message.channel.send("Your message was deleted, so I'm unable to respond. :(")
         else:
             await message.reply("Ugh idk what to say :(")
 
@@ -488,8 +488,8 @@ async def translate(ctx, *, text):
     )
     await ctx.send(embed=embed)
 
-bot.remove_command("help")
 
+bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
     embed = discord.Embed(title="Bot Commands", color=0x03a64b)
@@ -503,9 +503,20 @@ async def help(ctx):
                         value=command_description, inline=False)
 
     embed.set_footer(text=f"{current_language['help_footer']}")
+    embed.add_field(name="Need Support?", value="For further assistance or support, run `/support` command.", inline=False)
 
     await ctx.send(embed=embed)
 
+@bot.hybrid_command(name="support", description="Provides support information.")
+async def support(ctx):
+    invite_link = "https://discord.gg/3V5TcfsE8C"
+    github_repo = "https://github.com/mishalhossin/Discord-AI-Chatbot"
+
+    embed = discord.Embed(title="Support Information", color=0x03a64b)
+    embed.add_field(name="Discord Server", value=f"[Join Here]({invite_link})\nCheck out our Discord server for community discussions, support, and updates.", inline=False)
+    embed.add_field(name="GitHub Repository", value=f"[GitHub Repo]({github_repo})\nExplore our GitHub repository for the source code, documentation, and contribution opportunities.", inline=False)
+
+    await ctx.send(embed=embed)
 
 @bot.event
 async def on_command_error(ctx, error):
