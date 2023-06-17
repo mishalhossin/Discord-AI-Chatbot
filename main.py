@@ -18,6 +18,7 @@ from utilities.config_loader import config, load_current_language, load_instruct
 from utilities.requests_utils import process_image_link
 from utilities.script_integrity import check_file_integrity
 from utilities.replit_detector import detect_replit
+from utilities.sanitization_utils import sanitize_username
 
 load_dotenv()
 
@@ -180,6 +181,7 @@ async def on_message(message):
             message.content = yt_transcript
             
         username = message.author.name.split()[0].lower()[:63]
+        username = sanitize_username(username)
         message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
             
         history = message_history[key]
