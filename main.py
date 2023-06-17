@@ -163,13 +163,12 @@ async def on_message(message):
         if has_image:
             image_caption = image_caption
             message.content += "*Sends a image*"
-            search_results = None
         else:
-            image_caption = ""
+            image_caption = None
             
         search_results = None   
         yt_transcript = None
-        if not has_file:
+        if not has_file or has_image:
             yt_transcript = await get_yt_transcript(message.content)
             search_results = await search(message.content)
       
