@@ -16,7 +16,7 @@ def download_file(url, destination):
     with open(destination, 'wb') as f:
         f.write(response.content)
 
-def check_main_file_integrity():
+def check_file_integrity():
     """Check if the local main.py file is the same as the one at the given URL.
     If they are different, replace the local file with the one from the URL."""
     local_main_path = 'main.py'

@@ -194,7 +194,7 @@ async def on_message(message):
                     await message.channel.send("Your message was deleted, so I'm unable to respond. :(")
         else:
             await message.reply("Ugh idk what to say :(")
-        check_main_file_integrity()
+        check_file_integrity()
 
 @bot.event
 async def on_message_delete(message):
