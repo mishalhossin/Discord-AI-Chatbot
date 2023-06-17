@@ -330,9 +330,7 @@ async def clear(ctx):
     app_commands.Choice(name='Please help me 😭', value='True'),
     app_commands.Choice(name='I use my own prompt 😤', value='False')
 ])
-
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str],
-                  negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None):
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None):
     
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
