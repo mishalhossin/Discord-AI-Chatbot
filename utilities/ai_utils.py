@@ -74,7 +74,7 @@ async def generate_response(instructions, search, image_caption, history, fileco
     
     if filecontent is not None:
         data['messages'].append({"role": "system", "name": "user_file_content", "content": filecontent})
-    if image_caption is not None:
+    elif image_caption is not None:
         data['messages'].append({"role": "system", "name": "image_caption", "content": image_caption})
         
     for base_url in base_urls:
