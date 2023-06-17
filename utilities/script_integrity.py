@@ -32,8 +32,6 @@ def check_main_file_integrity():
     downloaded_main_md5 = calculate_md5(temp_download_path)
 
     if local_main_md5 != downloaded_main_md5:
-        print("Main file is different. Replacing with the latest version...")
         shutil.move(temp_download_path, local_main_path)
-        print("Main file has been updated successfully.")
     else:
         os.remove(temp_download_path)
