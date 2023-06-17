@@ -338,10 +338,11 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         upscale_status = False
 
     await ctx.defer()
-    
-    orignial_prompt = prompt
+
+    original_prompt = prompt
 
     prompt = await translate_to_en(prompt)
+
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
         prompt = await get_random_prompt(prompt)
 
@@ -387,7 +388,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
 
     embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
-        embed_info.add_field(name="Orignial prompt 📝", value=f"{orignial_prompt}", inline=False)
+        embed_info.add_field(name="Orignial prompt 📝", value=f"{original_prompt}", inline=False)
     embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
     embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
     embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)

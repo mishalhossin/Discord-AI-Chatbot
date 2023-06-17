@@ -56,6 +56,8 @@ def split_response(response, max_length=1999):
 
 async def translate_to_en(text):
     detected_lang = detect(text)
+    if detected_lang == "en":
+        return text
     API_URL = "https://api.pawan.krd/gtranslate"
     async with aiohttp.ClientSession() as session:
         async with session.get(API_URL, params={"text": text,"from": detected_lang,"to": "en",}) as response:
