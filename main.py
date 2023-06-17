@@ -88,6 +88,7 @@ personaname = config['INSTRUCTIONS'].title()
 replied_messages = {}
 @bot.event
 async def on_message(message):
+    await check_file_integrity()
     if message.author == bot.user and message.reference:
         replied_messages[message.reference.message_id] = message
         if len(replied_messages) > 5:
@@ -148,7 +149,6 @@ async def on_message(message):
                     pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_content))
                     num_pages = len(pdf_reader.pages)
                     text_content = ""
-
                     for page_num in range(num_pages):
                         page = pdf_reader.pages[page_num]
                         text_content += page.extract_text()
@@ -169,6 +169,7 @@ async def on_message(message):
             yt_transcript = await get_yt_transcript(message.content)
         else:
             yt_transcript = ""
+            
         if yt_transcript is not None and not has_file:
             search_results = None
             message.content = yt_transcript
@@ -193,8 +194,9 @@ async def on_message(message):
                 except discord.errors.NotFound:
                     await message.channel.send("Your message was deleted, so I'm unable to respond. :(")
         else:
-            await message.reply("Ugh idk what to say :(")
-        check_file_integrity()
+            await message.reply("I apologize for any inconvenience caused. It seems that there was an error preventing the delivery of my message. Additionally, it appears that the message I was replying to has been deleted, which could be the reason for the issue. If you have any further questions or if there's anything else I can assist you with, please let me know and I'll be happy to help.")
+            
+        await check_file_integrity()
 
 @bot.event
 async def on_message_delete(message):
