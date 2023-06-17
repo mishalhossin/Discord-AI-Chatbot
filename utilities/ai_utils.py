@@ -53,17 +53,10 @@ async def search(prompt):
     return blob
 
 async def generate_response(instructions, search, image_caption, history, filecontent):
-    if filecontent is not None:
-        filecontent = filecontent
-        search_results = None
-    else:
-        filecontent = None
-        
     if search is not None:
         search_results = search
     else:
-        search_results = 'Search feature is currently disabled'
-        
+        search_results = "Search results is disabled for current response."
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
@@ -75,15 +68,15 @@ async def generate_response(instructions, search, image_caption, history, fileco
             {"role": "system", "name": "instructions", "content": instructions},
             {"role": "user", "content": instructions},
             *history,
+            {"role": "system", "name": "search_results", "content": search_results},
         ]
     }
+    
     if filecontent is not None:
         data['messages'].append({"role": "system", "name": "user_file_content", "content": filecontent})
-    if search_results is not None:
-        data['messages'].append({"role": "system", "name": "search_results", "content": search_results})
     if image_caption is not None:
         data['messages'].append({"role": "system", "name": "image_caption", "content": image_caption})
-    
+        
     for base_url in base_urls:
         async with aiohttp.ClientSession() as session:
             async with session.post(base_url+endpoint, headers=headers, json=data) as response:
