@@ -79,7 +79,8 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 - [x] `/toggledm`: Toggle DM for chatting. 💬
 - [x] `/clear`: Clear the message history. 🗑️
 - [x] `/gif`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions. 🐱
-
+- [x] `/dalle`: create images using `dalle`
+- [x] `/support`: Need Support?
 </details>
 
 ## Additional configuration ⚙️
