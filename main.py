@@ -186,6 +186,7 @@ async def on_message_delete(message):
 @bot.hybrid_command(name="pfp", description=current_language["pfp"])
 @commands.is_owner()
 async def pfp(ctx, attachment: discord.Attachment):
+    await ctx.defer()
     if not attachment.content_type.startswith('image/'):
         await ctx.send("Please upload an image file.")
         return
