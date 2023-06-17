@@ -147,8 +147,8 @@ async def on_message(message):
 
                 else:
                     text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding='utf-8').read()
-                
-                file_content += f"File content : {text_content}."
+
+                file_content = f"File content: {text_content}."
                 has_file = True
         
         if has_image:
@@ -179,7 +179,10 @@ async def on_message(message):
         
         if response is not None:
             for chunk in split_response(response):
-                await message.reply(chunk.replace("@", "@\u200B"))
+                try:
+                    await message.reply(chunk.replace("@", "@\u200B"))
+                except discord.errors.NotFound:
+                    await message.send(chunk.replace("@", "@\u200B"))
         else:
             await message.reply("Ugh idk what to say :(")
 
