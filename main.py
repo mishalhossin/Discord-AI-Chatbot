@@ -141,9 +141,12 @@ async def on_message(message):
                     break
                 
         has_file = False
+        file_content = None
         for attachment in message.attachments:
-            if attachment.filename.endswith(('.txt', '.rtf', '.md', '.html', '.xml', '.csv', '.json', '.js', '.css', '.py', '.java', '.c', '.cpp', '.php', '.rb', '.swift', '.sql', '.sh', '.bat', '.ps1', '.ini', '.cfg', '.conf', '.log', '.svg', '.epub', '.mobi', '.tex', '.docx', '.odt', '.xlsx', '.ods', '.pptx', '.odp', '.eml', '.htaccess', '.nginx.conf', '.pdf','.yml')):
+            file_extension = attachment.filename.split('.')[-1].lower()
+            if file_extension in ['txt', 'rtf', 'md', 'html', 'xml', 'csv', 'json', 'js', 'css', 'py', 'java', 'c', 'cpp', 'php', 'rb', 'swift', 'sql', 'sh', 'bat', 'ps1', 'ini', 'cfg', 'conf', 'log', 'svg', 'epub', 'mobi', 'tex', 'docx', 'odt', 'xlsx', 'ods', 'pptx', 'odp', 'eml', 'htaccess', 'nginx.conf', 'pdf', 'yml']:
                 file_content = await attachment.read()
+                file_type = file_extension
 
                 if attachment.filename.endswith('.pdf'):
                     pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_content))
@@ -156,7 +159,7 @@ async def on_message(message):
                 else:
                     text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding='utf-8').read()
 
-                file_content = f"File content: {text_content}."
+                file_content = f"File content for {file_type}: {text_content}."
                 has_file = True
         
         if has_image:
@@ -165,26 +168,24 @@ async def on_message(message):
             search_results = None
         else:
             image_caption = ""
+            
+        search_results = None   
+        yt_transcript = None
         if not has_file:
             yt_transcript = await get_yt_transcript(message.content)
-        else:
-            yt_transcript = ""
-            
-        if yt_transcript is not None and not has_file:
+            search_results = await search(message.content)
+      
+        if yt_transcript is not None:
             search_results = None
             message.content = yt_transcript
-        else:
-            search_results = await search(message.content)
+            
         username = message.author.name.split()[0].lower()[:63]
-        if has_file:
-            message_history[key].append({"role": "user", "name": f"{username}", "content": f"{message.content} Sent file content {file_content}"})
-        else:
-            message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
+        message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
             
         history = message_history[key]
         
         async with message.channel.typing():
-            response = await generate_response(instructions, search_results, image_caption, history)
+            response = await generate_response(instructions, search_results, image_caption, history, file_content)
         message_history[key].append({"role": "assistant", "name": f"{personaname}", "content": response})
         
         if response is not None:

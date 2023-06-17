@@ -1,12 +1,11 @@
-import asyncio
 import hashlib
 import os
 import shutil
-import sys
 import requests
 
 # Global variable to track if the code has already run
 has_run = False
+#has_run = True
 
 def calculate_md5(file_path):
     """Calculate the MD5 hash of a file."""
