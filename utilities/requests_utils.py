@@ -4,13 +4,7 @@ import os
 import uuid
 from utilities.config_loader import config
 
-# A random string with hf_ prefix
-api_key = "hf_bd3jtYbJ3kpWVqfJ7OLZnktzZ36yIaqeqX"
-
 API_URLS = config['OCR_MODEL_URLS']
-
-headers = {"Authorization": f"Bearer {api_key}"}
-
 
 async def fetch_response(client, api_url, data):
     headers = {"Content-Type": "application/json"}

@@ -169,7 +169,7 @@ async def on_message(message):
         else:
             search_results = ""
         
-        username = message.author.name.split()[0].lower()
+        username = message.author.name.split()[0].lower()[:63]
         message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
         history = message_history[key]
         
