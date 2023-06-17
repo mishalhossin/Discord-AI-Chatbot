@@ -88,7 +88,7 @@ personaname = config['INSTRUCTIONS'].title()
 replied_messages = {}
 @bot.event
 async def on_message(message):
-    await check_file_integrity()
+    #await check_file_integrity()
     if message.author == bot.user and message.reference:
         replied_messages[message.reference.message_id] = message
         if len(replied_messages) > 5:
@@ -144,9 +144,9 @@ async def on_message(message):
         file_content = None
         for attachment in message.attachments:
             file_extension = attachment.filename.split('.')[-1].lower()
-            if file_extension in ['txt', 'rtf', 'md', 'html', 'xml', 'csv', 'json', 'js', 'css', 'py', 'java', 'c', 'cpp', 'php', 'rb', 'swift', 'sql', 'sh', 'bat', 'ps1', 'ini', 'cfg', 'conf', 'log', 'svg', 'epub', 'mobi', 'tex', 'docx', 'odt', 'xlsx', 'ods', 'pptx', 'odp', 'eml', 'htaccess', 'nginx.conf', 'pdf', 'yml']:
+            if file_extension in ['txt', 'rtf', 'md', 'html', 'xml', 'csv', 'json', 'js', 'css', 'py', 'java', 'c', 'cpp', 'php', 'rb', 'swift', 'sql', 'sh', 'bat', 'ps1', 'ini', 'cfg', 'conf', 'log', 'svg', 'epub', 'mobi', 'tex', 'docx', 'odt', 'xlsx', 'ods', 'pptx', 'odp', 'eml', 'htaccess', 'nginx.conf', 'pdf', 'yml', 'env']:
                 file_content = await attachment.read()
-                file_type = file_extension
+                file_type = attachment.filename
 
                 if attachment.filename.endswith('.pdf'):
                     pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_content))
