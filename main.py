@@ -16,7 +16,7 @@ from utilities.response_util import split_response, translate_to_en, get_random_
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
-from utilities.script_integrity import check_main_file_integrity
+from utilities.script_integrity import check_file_integrity
 from utilities.replit_detector import detect_replit
 
 load_dotenv()
