@@ -86,7 +86,7 @@ personaname = config['INSTRUCTIONS'].title()
 replied_messages = {}
 @bot.event
 async def on_message(message):
-    await check_file_integrity()
+    #await check_file_integrity()
     if message.author == bot.user and message.reference:
         replied_messages[message.reference.message_id] = message
         if len(replied_messages) > 5:
@@ -136,7 +136,7 @@ async def on_message(message):
                 else:
                     text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding='utf-8').read()
 
-                file_content = f"File content for {file_type}: {text_content}."
+                file_content = f"The following is the content for the file user has sent file content for {file_type}: {text_content}."
                 has_file = True
                 break
 
