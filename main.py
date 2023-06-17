@@ -16,6 +16,7 @@ from utilities.response_util import split_response, translate_to_en, get_random_
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
+from utilities.script_integrity import check_main_file_integrity
 from utilities.replit_detector import detect_replit
 
 load_dotenv()
@@ -174,14 +175,15 @@ async def on_message(message):
         else:
             search_results = await search(message.content)
         username = message.author.name.split()[0].lower()[:63]
-        message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
+        if has_file:
+            message_history[key].append({"role": "user", "name": f"{username}", "content": f"{message.content} Sent file content {file_content}"})
+        else:
+            message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
+            
         history = message_history[key]
         
         async with message.channel.typing():
-            if has_file:          
-                response = await generate_response(instructions, search_results, image_caption, history+file_content)
-            else:
-                response = await generate_response(instructions, search_results, image_caption, history)   
+            response = await generate_response(instructions, search_results, image_caption, history)
         message_history[key].append({"role": "assistant", "name": f"{personaname}", "content": response})
         
         if response is not None:
@@ -192,7 +194,7 @@ async def on_message(message):
                     await message.channel.send("Your message was deleted, so I'm unable to respond. :(")
         else:
             await message.reply("Ugh idk what to say :(")
-
+        check_main_file_integrity()
 
 @bot.event
 async def on_message_delete(message):
