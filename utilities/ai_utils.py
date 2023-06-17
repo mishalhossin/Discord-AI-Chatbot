@@ -22,11 +22,7 @@ async def search(prompt):
     
     url_match = re.search(r'(https?://\S+)', prompt)
     if url_match:
-        url = url_match.group(0)
-        async with aiohttp.ClientSession() as session:
-                async with session.get(f'https://api.microlink.io/?url={url}') as response:
-                    response_text = await response.text()
-                    return response_text
+        search_query = url_match.group(0)
     else:
         search_query = await get_query(prompt)
     

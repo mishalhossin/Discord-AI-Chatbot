@@ -148,7 +148,7 @@ async def on_message(message):
                 else:
                     text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding='utf-8').read()
                 
-                message.content += f"File content : {text_content}"
+                file_content += f"File content : {text_content}."
                 has_file = True
         
         if has_image:
@@ -164,18 +164,17 @@ async def on_message(message):
         if yt_transcript is not None and not has_file:
             search_results = None
             message.content = yt_transcript
-        elif not has_file:
-            search_results = await search(message.content)
         else:
-            search_results = ""
-        
+            search_results = await search(message.content)
         username = message.author.name.split()[0].lower()[:63]
         message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
         history = message_history[key]
         
-        async with message.channel.typing():           
-            response = await generate_response(instructions, search_results, image_caption, history)
-                
+        async with message.channel.typing():
+            if has_file:          
+                response = await generate_response(instructions, search_results, image_caption, history+file_content)
+            else:
+                response = await generate_response(instructions, search_results, image_caption, history)   
         message_history[key].append({"role": "assistant", "name": f"{personaname}", "content": response})
         
         if response is not None:
