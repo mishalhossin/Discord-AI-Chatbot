@@ -338,7 +338,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         upscale_status = False
 
     await ctx.defer()
-
+    
     orignial_prompt = prompt
 
     prompt = await translate_to_en(prompt)
