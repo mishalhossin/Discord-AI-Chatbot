@@ -218,7 +218,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
         priority="1",
         high_res_results="1",
         steps="70",
-        negative=negative
+        negative=negative or "ugly, disfigured, low quality, blurry, nsfw"
     )
 
     if upscale:

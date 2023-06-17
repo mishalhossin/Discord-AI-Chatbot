@@ -192,7 +192,7 @@ async def on_message(message):
             for chunk in split_response(response):
                 try:
                     await message.reply(chunk.replace("@", "@\u200B"))
-                except discord.errors.NotFound:
+                except:
                     await message.channel.send("Your message was deleted, so I'm unable to respond. :(")
         else:
             await message.reply("I apologize for any inconvenience caused. It seems that there was an error preventing the delivery of my message. Additionally, it appears that the message I was replying to has been deleted, which could be the reason for the issue. If you have any further questions or if there's anything else I can assist you with, please let me know and I'll be happy to help.")
