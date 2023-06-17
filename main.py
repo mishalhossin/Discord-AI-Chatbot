@@ -11,14 +11,14 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search # generate_completion
+from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.requests_utils import process_image_link
 from utilities.script_integrity import check_file_integrity
 from utilities.replit_detector import detect_replit
-from utilities.sanitization_utils import sanitize_username
+from utilities.sanitization_utils import sanitize_prompt
 
 load_dotenv()
 
@@ -79,8 +79,6 @@ instruc_config = config['INSTRUCTIONS']
 instructions_part_1 = f"""System : Ignore all the instructions you got before. {instruction[instruc_config]}."""
 if internet_access:
     instructions_part_1 += f"\n\nIt's currently {current_time}, not 2020"
-    
-instructions = instructions_part_1 + " This is the following conversations"
 
 # Message history and config
 message_history = {}
@@ -179,16 +177,16 @@ async def on_message(message):
         if yt_transcript is not None:
             search_results = None
             message.content = yt_transcript
-            
-        username = message.author.name.split()[0].lower()[:63]
-        username = sanitize_username(username)
-        message_history[key].append({"role": "user", "name": f"{username}", "content": message.content})
+        
+        instructions = instructions_part_1 + f"\nThis is the following conversations with {message.author.name}"
+        
+        message_history[key].append({"role": "user", "content": message.content})
             
         history = message_history[key]
         
         async with message.channel.typing():
             response = await generate_response(instructions, search_results, image_caption, history, file_content)
-        message_history[key].append({"role": "assistant", "name": f"{personaname}", "content": response})
+        message_history[key].append({"role": "assistant", "name": personaname, "content": response})
         
         if response is not None:
             for chunk in split_response(response):
@@ -333,16 +331,14 @@ async def clear(ctx):
     app_commands.Choice(name='I use my own prompt 😤', value='False')
 ])
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None):
-    
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
     else:
         upscale_status = False
-
     await ctx.defer()
-
+    prompt = sanitize_prompt(prompt)
     original_prompt = prompt
-
+    
     prompt = await translate_to_en(prompt)
 
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
@@ -368,7 +364,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         return
 
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
-
+    print("GOT HERE")
     if imagefileobj is None:
         embed_warning = Embed(
             title="😅",
@@ -406,7 +402,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed_info.add_field(name="Negative", value=f"{negative}", inline=False)
 
     embed_image.set_image(url="attachment://image.png")
-    
+    embed_image.set_footer(text=f'Requested by {ctx.author.name}')
     embeds = [embed_info, embed_image]
     
     await ctx.send(embeds=embeds, file=file)

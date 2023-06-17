@@ -1,13 +1,13 @@
 import re
 
+
 def sanitize_username(name):
-    # Remove non-alphanumeric characters and underscores
-    name = re.sub(r'[^a-zA-Z0-9_]', '', name)
-    
-    # Convert to lowercase
     name = name.lower()
-    
-    # Limit the username to a maximum of 64 characters
+    name = re.sub(r'[^a-zA-Z0-9_]', '', name)
+    name = name.replace(' ', '')
     name = name[:64]
-    
     return name
+
+def sanitize_prompt(input_string):
+    sanitized_string = re.sub(r'[^\w\s]', '', input_string)
+    return sanitized_string

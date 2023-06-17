@@ -26,7 +26,7 @@ async def search(prompt):
     else:
         search_query = await get_query(prompt)
     
-    if search_query is not None and len(search_query) > 500:
+    if search_query is not None and len(search_query) > 1000:
         return
     
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -152,13 +152,13 @@ async def get_query(prompt):
     instructions = f""""If a message is not directly addressed to the second person, you will need to initiate a search query else assistent will respond with False nothing more and assistant must only help by returning a query"""
     messages = [
         {"role": "system", "name": "instructions","content": instructions},
+        {"role": "system", "name": "example_user", "content":  "Message : Who won in 2022 fifa world cup"},
+        {"role": "system", "name": "example_assistant", "content":  "Query : FIFA World Cup results 2022"},
         {"role": "system", "name": "example_user", "content":  "Message : What is happening in ukraine"},
         {"role": "system", "name": "example_assistant", "content":  "Query : Ukraine military news today"},
         {"role": "system", "name": "example_user", "content": "Message : Hi"},
         {"role": "system", "name": "example_assistant", "content":  "Query : False"},
         {"role": "system", "name": "example_user", "content": "Message : How are you doing ?"},
-        {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user", "content": "Message : Explain this file for me"},
         {"role": "system", "name": "example_assistant", "content":  "Query : False"},
         {"role": "system", "name": "example_user", "content": "Message : How to print how many commands are synced on_ready ?"},
         {"role": "system", "name": "example_assistant", "content":  "Query : Python code to print the number of synced commands in on_ready event"},
@@ -208,6 +208,8 @@ async def generate_dalle_image(prompt, size):
     return None
 
 async def generate_image(image_prompt, style_value, ratio_value, negative, upscale):
+    if negative is None:
+        negative = False
     imagine = AsyncImagine()
     style_enum = Style[style_value]
     ratio_enum = Ratio[ratio_value]
@@ -218,7 +220,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
         priority="1",
         high_res_results="1",
         steps="70",
-        negative=negative or "ugly, disfigured, low quality, blurry, nsfw"
+        negative=negative
     )
 
     if upscale:
