@@ -133,7 +133,7 @@ async def on_message(message):
                 
         has_file = False
         for attachment in message.attachments:
-            if attachment.filename.endswith(('.txt', '.rtf', '.md', '.html', '.xml', '.csv', '.json', '.js', '.css', '.py', '.java', '.c', '.cpp', '.php', '.rb', '.swift', '.sql', '.sh', '.bat', '.ps1', '.ini', '.cfg', '.conf', '.log', '.svg', '.epub', '.mobi', '.tex', '.docx', '.odt', '.xlsx', '.ods', '.pptx', '.odp', '.eml', '.htaccess', '.nginx.conf', '.pdf')):
+            if attachment.filename.endswith(('.txt', '.rtf', '.md', '.html', '.xml', '.csv', '.json', '.js', '.css', '.py', '.java', '.c', '.cpp', '.php', '.rb', '.swift', '.sql', '.sh', '.bat', '.ps1', '.ini', '.cfg', '.conf', '.log', '.svg', '.epub', '.mobi', '.tex', '.docx', '.odt', '.xlsx', '.ods', '.pptx', '.odp', '.eml', '.htaccess', '.nginx.conf', '.pdf','.yml')):
                 file_content = await attachment.read()
 
                 if attachment.filename.endswith('.pdf'):
