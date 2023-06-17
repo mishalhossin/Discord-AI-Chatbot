@@ -55,9 +55,9 @@ async def search(prompt):
 async def generate_response(instructions, search, image_caption, history, filecontent):
     if filecontent is not None:
         filecontent = filecontent
-        search_results = 'Search feature cant be used with filecontent'
+        search_results = None
     else:
-        filecontent = "User hasn't send any file yet only text content"
+        filecontent = None
         
     if search is not None:
         search_results = search
@@ -75,10 +75,14 @@ async def generate_response(instructions, search, image_caption, history, fileco
             {"role": "system", "name": "instructions", "content": instructions},
             {"role": "user", "content": instructions},
             *history,
-            {"role": "system", "name": "user_file_content", "content": filecontent},
-            {"role": "system", "name": "search_results", "content": search_results}
         ]
     }
+    if filecontent is not None:
+        data['messages'].append({"role": "system", "name": "user_file_content", "content": filecontent})
+    if search_results is not None:
+        data['messages'].append({"role": "system", "name": "search_results", "content": search_results})
+    if image_caption is not None:
+        data['messages'].append({"role": "system", "name": "image_caption", "content": image_caption})
     
     for base_url in base_urls:
         async with aiohttp.ClientSession() as session:
@@ -234,6 +238,12 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
 
     await imagine.close()
     return img_file
+
+async def generate_caption(image_bytes):
+    imagine = AsyncImagine()
+    text = await imagine.interrogator(image=image_bytes)
+    await imagine.close()
+    return text
 
 async def get_yt_transcript(message_content):
     def extract_video_id(message_content):

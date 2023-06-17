@@ -2,6 +2,7 @@ import io
 
 import aiohttp
 from langdetect import detect
+import traceback
 import asyncio
 
 from .constants import *
@@ -63,15 +64,16 @@ class AsyncImagine:
             return await resp.read()
 
     async def sdprem(self, prompt: str, negative: str = None, priority: str = None, steps: str = None,
-                     high_res_results: str = None, style: Style = Style.IMAGINE_V1, seed: str = None,
-                     ratio: Ratio = Ratio.RATIO_1X1, cfg: float = 9.5) -> bytes:
+                    high_res_results: str = None, style: Style = Style.IMAGINE_V1, seed: str = None,
+                    ratio: Ratio = Ratio.RATIO_1X1, cfg: float = 9.5) -> bytes:
         """Generates AI Art."""
         try:
             validated_cfg = validate_cfg(cfg)
         except Exception as e:
             print(f"An error occurred while validating cfg: {e}")
+            traceback.print_exc()  # Print the full traceback for detailed debugging
             return None
-    
+
         for attempt in range(2):
             try:
                 async with self.session.post(
@@ -93,6 +95,7 @@ class AsyncImagine:
                     return await resp.read()
             except Exception as e:
                 print(f"An error occurred while making the request: {e}")
+                traceback.print_exc()  # Print the full traceback for detailed debugging
                 if attempt == 0:
                     await asyncio.sleep(0.4)
                     print("Retrying....")

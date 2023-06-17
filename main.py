@@ -11,11 +11,10 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search
+from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search, generate_caption
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
-from utilities.requests_utils import process_image_link
 from utilities.script_integrity import check_file_integrity
 from utilities.replit_detector import detect_replit
 from utilities.sanitization_utils import sanitize_prompt
@@ -133,10 +132,10 @@ async def on_message(message):
         if message.attachments:
             for attachment in message.attachments:
                 if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', 'webp')):
-                    caption = await process_image_link(attachment.url)
+                    image_bytes = await attachment.read()
+                    caption = await generate_caption(image_bytes)
                     has_image = True
-                    image_caption = f"""System: User has sent a image {current_language["instruc_image_caption"]}{caption}.]"""
-                    print(caption)
+                    image_caption = f"""User has sent a image {current_language["instruc_image_caption"]}{caption}.]"""
                     break
                 
         has_file = False
@@ -174,7 +173,7 @@ async def on_message(message):
             yt_transcript = await get_yt_transcript(message.content)
             search_results = await search(message.content)
       
-        if yt_transcript is not None:
+        if yt_transcript is not None or image_caption is not None:
             search_results = None
             message.content = yt_transcript
         
@@ -364,7 +363,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         return
 
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
-    print("GOT HERE")
     if imagefileobj is None:
         embed_warning = Embed(
             title="😅",
@@ -447,6 +445,13 @@ async def dalle(ctx, prompt: str, ratio: app_commands.Choice[str]):
     embeds = [embed_info, embed_image]
     
     await ctx.send(embeds=embeds, file=file)
+
+@bot.hybrid_command(name="interrogate", description="Generates a prompt from image")
+async def get_attachments(ctx, attachment: discord.Attachment):
+    await ctx.defer()
+    attachment_bytes = await attachment.read()
+    prompt = await generate_caption(attachment_bytes)
+    await ctx.send(embed=discord.Embed(title="Interrogated Prompt", description=prompt))
 
 @bot.hybrid_command(name="gif", description=current_language["nekos"])
 @app_commands.choices(category=[
