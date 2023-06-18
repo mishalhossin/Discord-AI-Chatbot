@@ -3,7 +3,6 @@ import os
 import io
 from itertools import cycle
 import datetime
-import sys
 
 import aiohttp
 import discord
@@ -510,16 +509,6 @@ if detect_replit():
     run_flask_in_thread()
 if update_on_start_up:
     from updater import update_repository
-    import asyncio
-
-    async def update_and_restart():
-        is_updated = await update_repository()
-        if is_updated:
-            print("Trying to restart main.py...")
-            python = sys.executable
-            os.execl(python, python, *sys.argv)
-
-    asyncio.run(update_and_restart())
-
-if __name__ == "__main__":
-    bot.run(TOKEN)
+    update_repository()
+    
+bot.run(TOKEN)
