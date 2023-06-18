@@ -74,8 +74,10 @@ async def update_repository():
         print(GREEN + "The following files have been updated:" + RESET)
         for file in changed_files:
             print(YELLOW + "- " + file + RESET)
+        return True
     else:
         print("No files have been updated.")
+        return False
 
 if __name__ == "__main__":
     asyncio.run(update_repository())
