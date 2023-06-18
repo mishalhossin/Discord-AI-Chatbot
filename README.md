@@ -48,8 +48,7 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
 
 ## File reader feature
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/405d0e94-7311-4a59-a353-84b3ef8f55fa)
-
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/c933f647-b12f-45fa-a4d2-fab9f59c5319)
 
 </details>
 
