@@ -9,3 +9,4 @@ PyYAML
 youtube-transcript-api
 langdetect
 PyPDF2
+tqdm
