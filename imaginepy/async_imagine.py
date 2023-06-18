@@ -81,7 +81,7 @@ class AsyncImagine:
                         data={
                             "model_version": self.version,
                             "prompt": prompt + (style.value[3] or ""),
-                            "negative_prompt": negative or "",
+                            "negative_prompt": negative or "ugly, disfigured, low quality, blurry, nsfw",
                             "style_id": style.value[0],
                             "width": ratio.value[0],
                             "height": ratio.value[1],
