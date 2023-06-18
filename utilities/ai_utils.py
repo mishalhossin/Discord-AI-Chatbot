@@ -48,17 +48,18 @@ async def search(prompt):
         return blob
     else:
         blob = "No search query is needed for a response"
-
+    print(blob)
     return blob
 
 
 async def generate_response(instructions, search, history, filecontent):
-    if search is not None and filecontent is not None:
-        search_results = search
-    else:
-        search_results = 'Search feature is currently disabled.'
     if filecontent is None:
         filecontent = 'No extra files sent.'
+    if search is not None:
+        search_results = search
+    elif search is None:
+        search_results = "Search feature is disabled"
+
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
