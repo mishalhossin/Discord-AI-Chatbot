@@ -58,16 +58,16 @@ for root, dirs, files in os.walk("temp/Discord-AI-Chatbot-main"):
         # Replace the existing file with the updated file if it has changed
         if current_hash != existing_hash:
             shutil.copyfile(file_path, destination_path)
-            changed_files.append(file_path)
+            changed_files.append(file)
 
 # Clean up the temporary directory and zip file
 shutil.rmtree("temp")
 os.remove("repository.zip")
 
-# Print the changed files with colorful output or "No files updated"
+# Print the changed files with colorful output
 if changed_files:
     print(GREEN + "The following files have been updated:" + RESET)
-    for file_path in changed_files:
-        print(YELLOW + "- " + file_path + RESET)
+    for file in changed_files:
+        print(YELLOW + "- " + file + RESET)
 else:
-    print("No files updated.")
+    print("No files have been updated.")
