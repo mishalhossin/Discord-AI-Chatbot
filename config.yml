@@ -6,7 +6,7 @@ MAX_SEARCH_RESULTS: 4 # Set the maximum search results for internet access DONT 
 ALLOW_DM: true # Set to true to allow direct messages
 SMART_MENTION: true # Set to true to enable smart mention feature
 
-MAX_HISTORY: 20 # Set the maximum message history
+MAX_HISTORY: 8 # Set the maximum message history
 
 PRESENCES_CHANGE_DELAY: 10 # Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
 AI_NSFW_CONTENT_FILTER: true # Enable NSFW AI detector to detect NSFW prompt on Imagine Command

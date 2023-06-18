@@ -510,5 +510,5 @@ if detect_replit():
 if update_on_start_up:
     from updater import update_repository
     update_repository()
-    
-bot.run(TOKEN)
+if __name__ == "__main__":
+    bot.run(TOKEN)
