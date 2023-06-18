@@ -520,5 +520,6 @@ if update_on_start_up:
             os.execl(python, python, *sys.argv)
 
     asyncio.run(update_and_restart())
-    
-bot.run(TOKEN)
+
+if __name__ == "__main__":
+    bot.run(TOKEN)
