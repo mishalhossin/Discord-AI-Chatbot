@@ -91,7 +91,9 @@ Now, let's talk about the bot's features. It has **OCR** for images, so it can r
 
 <details>
 <summary><strong>Enabling Internet access 🌐🔍(Click to Expand)</strong></summary>
-
+  
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/751f0c2e-14bd-41e1-b574-77888c527f0e)
+  
 To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
 
 https://github.com/mishalhossin/Discord-AI-Chatbot/blob/5bcb2c9b471e2a9cbf9a7d50882a897ce5d5890b/config.yml#L1
