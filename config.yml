@@ -1,5 +1,5 @@
 INTERNET_ACCESS: true # Set to true to enable internet access
-MAX_SEARCH_RESULTS: 4 # Set the maximum search results for internet access DONT SET TOO HIGH
+MAX_SEARCH_RESULTS: 8 # Set the maximum search results for internet access DONT SET TOO HIGH
 
 ALLOW_DM: true # Set to true to allow direct messages
 SMART_MENTION: true # Set to true to enable smart mention feature
