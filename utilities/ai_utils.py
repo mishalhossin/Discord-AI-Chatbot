@@ -48,7 +48,6 @@ async def search(prompt):
         return blob
     else:
         blob = "No search query is needed for a response"
-    print(blob)
     return blob
 
 
