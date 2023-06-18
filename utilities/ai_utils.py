@@ -278,7 +278,7 @@ async def get_yt_transcript(message_content):
     formatted_transcript = ". ".join(
         [f"{entry['start']} - {entry['text']}" for entry in translated_transcript.fetch()])
 
-    response = f"""Summarizie the following youtube video transcript in 8 bullet points:
+    response = f"""Summarize the following youtube video transcript into few short concise bullet points:
     
     {formatted_transcript}
     
