@@ -62,13 +62,14 @@ async def generate_response(instructions, search, history, filecontent):
         'model': 'gpt-3.5-turbo-16k-0613',
         'temperature': 0.7,
         'messages': [
+            {"role": "system", "name": "searchresults", "content": search_results},
             {"role": "system", "name": "instructions", "content": instructions},
             {"role": "user", "content": instructions},
-            {"role": "system", "name": "search_results", "content": search_results},
-            *history,
-            {"role": "system", "name": "file_content", "content": filecontent}
+            *history
         ]
     }
+    if filecontent is not None:
+        data['messages'].append({"role": "system", "name": "filecontent", "content": filecontent})
     
     for base_url in base_urls:
         async with aiohttp.ClientSession() as session:
