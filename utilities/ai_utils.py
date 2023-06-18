@@ -48,12 +48,12 @@ async def search(prompt):
 
 
 async def generate_response(instructions, search, history, filecontent):
-    if filecontent is None:
-        filecontent = 'No extra files sent.'
-    if search is not None:
+    if search is not None and filecontent is not None:
         search_results = search
     else:
-        search_results = 'Search feature is currently disabled'
+        search_results = 'Search feature is currently disabled.'
+    if filecontent is None:
+        filecontent = 'No extra files sent.'
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
@@ -62,24 +62,28 @@ async def generate_response(instructions, search, history, filecontent):
         'model': 'gpt-3.5-turbo-16k-0613',
         'temperature': 0.7,
         'messages': [
-            {"role": "system", "name": "searchresults", "content": search_results},
             {"role": "system", "name": "instructions", "content": instructions},
-            {"role": "user", "content": instructions},
-            *history
+            {"role": "system", "name": "search_results", "content": search_results},
+            *history,
+            {"role": "system", "name": "file_content", "content": filecontent}
         ]
-    }
-    if filecontent is not None:
-        data['messages'].append({"role": "system", "name": "filecontent", "content": filecontent})
-    
+    } 
     for base_url in base_urls:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(base_url+endpoint, headers=headers, json=data) as response:
-                response_data = await response.json()
-                choices = response_data['choices']
-                if choices:
-                    return choices[0]['message']['content']
-                else:
-                    print(f"There was an error this is the response from the API {response_data}")
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(base_url+endpoint, headers=headers, json=data) as response:
+                    response_data = await response.json()
+                    choices = response_data['choices']
+                    if choices:
+                        return choices[0]['message']['content']
+                    else:
+                        print(f"There was an error this is the response from the API {response_data}")
+        except aiohttp.ClientError as e:
+            print(f"\033[91mAn error occurred during the API request: {e}\033[0m")
+        except KeyError as e:
+            print(f"\033[91mInvalid response received from the API: {e}\033[0m")
+        except Exception as e:
+            print(f"\033[91mAn unexpected error occurred: {e}\033[0m")
     return None
 
 

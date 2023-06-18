@@ -15,7 +15,6 @@ from utilities.ai_utils import generate_response, detect_nsfw, generate_image, g
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
-from utilities.script_integrity import check_file_integrity
 from utilities.replit_detector import detect_replit
 from utilities.sanitization_utils import sanitize_prompt
 
@@ -86,7 +85,6 @@ personaname = config['INSTRUCTIONS'].title()
 replied_messages = {}
 @bot.event
 async def on_message(message):
-    await check_file_integrity()
     if message.author == bot.user and message.reference:
         replied_messages[message.reference.message_id] = message
         if len(replied_messages) > 5:
