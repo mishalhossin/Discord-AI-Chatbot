@@ -509,6 +509,6 @@ if detect_replit():
     run_flask_in_thread()
 if update_on_start_up:
     from updater import update_repository
-    update_repository()
+    await update_repository()
     
 bot.run(TOKEN)
