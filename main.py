@@ -509,6 +509,7 @@ if detect_replit():
     run_flask_in_thread()
 if update_on_start_up:
     from updater import update_repository
-    await update_repository()
+    asyncio.run(update_repository())
+    print("Updated repository.")
     
 bot.run(TOKEN)
