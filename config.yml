@@ -1,3 +1,5 @@
+RUN_UPDATER_ON_START_UP: false # RUn updater.py on startup of bot
+
 INTERNET_ACCESS: true # Set to true to enable internet access
 MAX_SEARCH_RESULTS: 2 # Set the maximum search results for internet access DONT SET TOO HIGH
 
