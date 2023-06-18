@@ -7,6 +7,7 @@ import datetime
 import aiohttp
 import discord
 import PyPDF2
+import docx
 from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -133,10 +134,22 @@ async def on_message(message):
                     for page_num in range(num_pages):
                         page = pdf_reader.pages[page_num]
                         text_content += page.extract_text()
+                elif attachment.filename.endswith('.docx'):
+                    doc = docx.Document(io.BytesIO(file_content))
+                    text_content = "\n".join([paragraph.text for paragraph in doc.paragraphs])
                 else:
-                    text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding='utf-8').read()
+                    encodings = ['utf-8', 'ascii', 'latin-1', 'utf-16', 'utf-32', 'cp1251', 'cp1252', 'koi8-r', 'utf-7']
+                    text_content = None
+                    for encoding in encodings:
+                        try:
+                            text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding=encoding).read()
+                            break
+                        except UnicodeDecodeError:
+                            pass
+                    if text_content is None:
+                        text_content = "Unable to read file content in any of the supported encodings."
 
-                file_content = f"The following is the content for the file user has sent file content for {file_type}: {text_content}."
+                file_content = f"The user has sent the following file content for creating a response based on it: {file_type}: {text_content}."
                 has_file = True
                 break
 
