@@ -74,7 +74,7 @@ async def generate_response(instructions, search, history, filecontent):
             {"role": "system", "name": "file_content", "content": filecontent},
         ]
     }
-    await asynico.sleep(2)
+    asynico.sleep(2)
     for base_url in base_urls:
         try:
             async with aiohttp.ClientSession() as session:
