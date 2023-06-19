@@ -2,7 +2,6 @@ import aiohttp
 import io
 from datetime import datetime
 import re
-import asynico
 
 from youtube_transcript_api import YouTubeTranscriptApi
 
