@@ -2,6 +2,7 @@ import aiohttp
 import io
 from datetime import datetime
 import re
+import asynico
 
 from youtube_transcript_api import YouTubeTranscriptApi
 
@@ -72,7 +73,8 @@ async def generate_response(instructions, search, history, filecontent):
             *history,
             {"role": "system", "name": "file_content", "content": filecontent},
         ]
-    } 
+    }
+    await asynico.sleep(2)
     for base_url in base_urls:
         try:
             async with aiohttp.ClientSession() as session:
