@@ -224,6 +224,7 @@ if os.path.exists("channels.txt"):
 
 @bot.hybrid_command(name="clear", description=current_language["bonk"])
 async def clear(ctx):
+    await ctx.defer()
     key = f"{ctx.author.id}-{ctx.channel.id}"
     message_history[key].clear()
     await ctx.send(f"Message history has been cleared", delete_after=3)
