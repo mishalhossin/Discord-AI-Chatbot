@@ -11,7 +11,7 @@ from imaginepy import AsyncImagine, Style, Ratio
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-base_urls = ['https://gpt4.gravityengine.cc']
+base_urls = ['https://a.z-pt.com']
 
 
 async def search(prompt):
