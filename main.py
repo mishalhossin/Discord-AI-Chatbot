@@ -32,9 +32,6 @@ else:
     if token_status is not None:
         TOKEN = get_discord_token()
         
-# Updator config
-update_on_start_up = config["RUN_UPDATER_ON_START_UP"]
-
 # Chatbot and discord config
 allow_dm = config['ALLOW_DM']
 active_channels = set()
@@ -431,8 +428,5 @@ async def on_command_error(ctx, error):
 if detect_replit():
     from utilities.replit_flask_runner import run_flask_in_thread
     run_flask_in_thread()
-if update_on_start_up:
-    from updater import update_repository
-    update_repository()
 if __name__ == "__main__":
     bot.run(TOKEN)
