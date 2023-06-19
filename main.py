@@ -122,36 +122,9 @@ async def on_message(message):
         file_content = None
 
         for attachment in message.attachments:
-            file_extension = attachment.filename.split('.')[-1].lower()
-            if file_extension in ['txt', 'rtf', 'md', 'html', 'xml', 'csv', 'json', 'js', 'css', 'py', 'java', 'c', 'cpp', 'php', 'rb', 'swift', 'sql', 'sh', 'bat', 'ps1', 'ini', 'cfg', 'conf', 'log', 'svg', 'epub', 'mobi', 'tex', 'docx', 'odt', 'xlsx', 'ods', 'pptx', 'odp', 'eml', 'htaccess', 'nginx.conf', 'pdf', 'yml', 'env']:
-                file_type = attachment.filename
-                file_content = await attachment.read()
-
-                if attachment.filename.endswith('.pdf'):
-                    pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_content))
-                    num_pages = len(pdf_reader.pages)
-                    text_content = ""
-                    for page_num in range(num_pages):
-                        page = pdf_reader.pages[page_num]
-                        text_content += page.extract_text()
-                elif attachment.filename.endswith('.docx'):
-                    doc = docx.Document(io.BytesIO(file_content))
-                    text_content = "\n".join([paragraph.text for paragraph in doc.paragraphs])
-                else:
-                    encodings = ['utf-8', 'ascii', 'latin-1', 'utf-16', 'utf-32', 'cp1251', 'cp1252', 'koi8-r', 'utf-7']
-                    text_content = None
-                    for encoding in encodings:
-                        try:
-                            text_content = io.TextIOWrapper(io.BytesIO(file_content), encoding=encoding).read()
-                            break
-                        except UnicodeDecodeError:
-                            pass
-                    if text_content is None:
-                        text_content = "Unable to read file content in any of the supported encodings."
-
-                file_content = f"The user has sent the following file content for creating a response based on it: {file_type}: {text_content}."
-                has_file = True
-                break
+            file_content = f"The user has sent the at file"
+            has_file = True
+            break
 
         if not has_file and message.attachments:
             for attachment in message.attachments:
