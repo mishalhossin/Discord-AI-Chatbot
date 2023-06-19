@@ -70,7 +70,7 @@ async def generate_response(instructions, search, history, filecontent):
             {"role": "system", "name": "instructions", "content": instructions},
             {"role": "system", "name": "search_results", "content": search_results},
             *history,
-            {"role": "system", "name": "file_content", "content": filecontent}
+            {"role": "system", "name": "file_content", "content": filecontent},
         ]
     } 
     for base_url in base_urls:
