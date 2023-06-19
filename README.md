@@ -16,7 +16,7 @@
 
 🤖 This is a Python-based Discord chat bot that uses the discord.py library. It can respond to messages using GPT, It also utilizes the [Imaginepy](https://github.com/ItsCEED/Imaginepy) for generating midjourney like images. 🖼️
 
-Now, let's talk about the bot's features. It has **Image detector** for images, so it can read text from images. It can also do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 
+Now, let's talk about the bot's features. It can do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 
 
 <p align="center">
   <b>❤️ Your donation is vital for the project's future. Thank you for your support.</b>
@@ -44,12 +44,6 @@ Now, let's talk about the bot's features. It has **Image detector** for images, 
 ## Web access using DuckDuckGo 🌐 (Not enabled by default)
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/d3e35ce8-38fa-4744-bc4e-ce22b16f2bdb)
 
-## OCR for images 🔍
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/85f4f847-ded5-45fc-ac07-37251edfa627)
-
-## File reader feature
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/c933f647-b12f-45fa-a4d2-fab9f59c5319)
-
 </details>
 
 <details>
@@ -60,7 +54,6 @@ Now, let's talk about the bot's features. It has **Image detector** for images, 
 - [x] Free LLM Model: Enjoy the powerful capabilities of this language model without spending a dime. 🤖
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
-- [x] File Reading Capability: The bot is equipped with the ability to read and process files. 
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
 - [x] GPT3 and GPT4 Models: Leverage the power of GPT models for advanced language processing capabilities. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
