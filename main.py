@@ -6,8 +6,6 @@ import datetime
 
 import aiohttp
 import discord
-import PyPDF2
-import docx
 from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -122,7 +120,7 @@ async def on_message(message):
         file_content = None
 
         for attachment in message.attachments:
-            file_content = f"The user has sent the at file"
+            file_content = f"The user has sent a file"
             has_file = True
             break
             
