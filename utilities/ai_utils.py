@@ -190,7 +190,7 @@ async def get_query(prompt):
 
 
 async def generate_dalle_image(prompt, size):
-    base_urls = ['https://a.z-pt.com', 'http://chat.darkflow.top']
+    base_urls = ['https://a.z-pt.com']
     endpoint = '/api/openai/v1/images/generations'
     headers = {
         'Content-Type': 'application/json',
