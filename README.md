@@ -19,7 +19,7 @@
 Now, let's talk about the bot's features. It has **Image detector** for images, so it can read text from images. It can also do web searches using **DuckDuckGo** and even summarize **YouTube** videos for you. Pretty handy, right? 
 
 <p align="center">
-  <b>❤️ Your donation is vital for the project's future. Thank you for your support. 🙏</b>
+  <b>❤️ Your donation is vital for the project's future. Thank you for your support.</b>
 </p>
 
 <div align="center">
