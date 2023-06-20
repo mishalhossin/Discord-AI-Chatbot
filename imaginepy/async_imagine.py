@@ -50,19 +50,6 @@ class AsyncImagine:
         ) as resp:
             return await resp.read()
 
-    async def variate(self, image: bytes, prompt: str, style: Style = Style.IMAGINE_V1) -> bytes:
-        async with self.session.post(
-                url=f'{self.api}/variate',
-                data={
-                    "model_version": self.version,
-                    "prompt": prompt + (style.value[3] or ""),
-                    "strength": "0",
-                    "style_id": str(style.value[0]),
-                    "image": self.bytes_to_io(image, "image.png")
-                }
-        ) as resp:
-            return await resp.read()
-
     async def sdprem(self, prompt: str, negative: str = None, priority: str = None, steps: str = None,
                     high_res_results: str = None, style: Style = Style.IMAGINE_V1, seed: str = None,
                     ratio: Ratio = Ratio.RATIO_1X1, cfg: float = 9.5) -> bytes:
@@ -116,19 +103,7 @@ class AsyncImagine:
         except Exception as e:
             print(f"An error occurred while making the request: {e}")
             return None
-
-    async def translate(self, prompt: str) -> str:
-        """Translates the prompt."""
-        async with self.session.post(
-                url=f"{self.api}/translate",
-                data={
-                    "q": prompt,
-                    "source": detect(prompt),
-                    "target": "en"
-                }
-        ) as resp:
-            return (await resp.json())["translatedText"]
-
+            
     async def interrogator(self, image: bytes) -> str:
         """Generates a prompt."""
         async with self.session.post(
@@ -150,26 +125,6 @@ class AsyncImagine:
                     "negative_prompt": negative or "",
                     "seed": seed or "",
                     "cfg": validate_cfg(cfg),
-                    "image": self.bytes_to_io(image, "image.png")
-                }
-        ) as resp:
-            return await resp.read()
-
-    async def controlnet(self, image: bytes, prompt: str, negative: str = None, cfg: float = 9.5,
-                         control: Control = Control.SCRIBBLE, style: Style = Style.IMAGINE_V1,
-                         seed: str = None) -> bytes:
-        """Performs image remix."""
-        async with self.session.post(
-                url=f"{self.api}/controlnet",
-                data={
-                    "model_version": self.version,
-                    "prompt": prompt + (style.value[3] or ""),
-                    "negative_prompt": negative or "",
-                    "strength": "0",
-                    "cfg": validate_cfg(cfg),
-                    "control": control.value,
-                    "style_id": str(style.value[0]),
-                    "seed": seed or "",
                     "image": self.bytes_to_io(image, "image.png")
                 }
         ) as resp:
