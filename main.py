@@ -349,47 +349,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     
     await ctx.send(embeds=embeds, file=file)
 
-@bot.hybrid_command(name="dalle", description="Create images using dalle")
-@app_commands.choices(ratio=[
-    app_commands.Choice(name='Small', value='256x256'),
-    app_commands.Choice(name='Medium', value='512x512'),
-    app_commands.Choice(name='Large', value='1024x1024')
-])
-async def dalle(ctx, prompt: str, ratio: app_commands.Choice[str]):
-
-    await ctx.defer()
-    
-    prompt = await translate_to_en(prompt)
-    
-    imagefileobj = await generate_dalle_image(prompt, ratio.value)
-    
-    if imagefileobj is None:
-        embed_warning = Embed(
-            title="⚠️ WARNING ⚠️",
-            description='Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system.\nPlease revise your prompt.',
-            color=0xff0000
-        )
-        embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
-        await ctx.send(embed=embed_warning)
-        return
-    
-    file = discord.File(imagefileobj, filename="image.png")
-    
-    embed_info = Embed(color=0x000f14)
-    embed_image = Embed(color=0x000f14)
-    
-    embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
-    embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
-    embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
-    
-    embed_info.set_footer(text="✨ Imagination is the fuel that propels dreams into reality")
-    
-    embed_image.set_image(url="attachment://image.png")
-    
-    embeds = [embed_info, embed_image]
-    
-    await ctx.send(embeds=embeds, file=file)
-
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
