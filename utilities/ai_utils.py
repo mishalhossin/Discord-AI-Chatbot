@@ -2,6 +2,7 @@ import aiohttp
 import io
 from datetime import datetime
 import re
+import asyncio
 
 from youtube_transcript_api import YouTubeTranscriptApi
 
@@ -58,7 +59,7 @@ async def generate_response(instructions, search, history, filecontent):
         search_results = search
     elif search is None:
         search_results = "Search feature is disabled"
-
+    asyncio.sleep(0.6) # Don't overwhelm the API :)
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
@@ -84,11 +85,11 @@ async def generate_response(instructions, search, history, filecontent):
                     else:
                         print(f"There was an error this is the response from the API {response_data}")
         except aiohttp.ClientError as e:
-            print(f"\033[91mAn error occurred during the API request: {e}\033[0m")
+            print(f"\033[91mAn error occurred during the API request: {e} \n Response : {response_data}\033[0m")
         except KeyError as e:
-            print(f"\033[91mInvalid response received from the API: {e}\033[0m")
+            print(f"\033[91mInvalid response received from the API: {e} \n Response : {response_data}\033[0m")
         except Exception as e:
-            print(f"\033[91mAn unexpected error occurred: {e}\033[0m")
+            print(f"\033[91mAn unexpected error occurred: {e} \n Response : {response_data}\033[0m")
     return None
 
 
