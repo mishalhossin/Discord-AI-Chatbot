@@ -181,7 +181,7 @@ class Ratio(Enum):
     RATIO_1X1 = (1, 1)
     RATIO_9X16 = (9, 16)
     RATIO_16X9 = (16, 9)
-    RATIO_4X3 = (4, 2)
+    RATIO_4X3 = (4, 3)
     RATIO_3X2 = (3, 2)
 
 
