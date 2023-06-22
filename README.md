@@ -56,7 +56,7 @@ Now, let's talk about the bot's features. It can do web searches using **DuckDuc
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
-- [x] GPT3 and GPT4 Models: Leverage the power of GPT models for advanced language processing capabilities. 🤖
+- [x] GPT3 model: Leverage the power of GPT model for advanced language processing capabilities. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
