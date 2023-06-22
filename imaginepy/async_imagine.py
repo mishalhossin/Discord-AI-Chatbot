@@ -57,6 +57,8 @@ class AsyncImagine:
                     high_res_results: str = None, style: Style = Style.IMAGINE_V1, seed: str = None,
                     ratio: Ratio = Ratio.RATIO_1X1, cfg: float = 9.5) -> bytes:
         """Generates AI Art."""
+        if style is not None:
+            self.HEADERS["style-id"] = str(style.value[0])
         try:
             validated_cfg = validate_cfg(cfg)
         except Exception as e:
