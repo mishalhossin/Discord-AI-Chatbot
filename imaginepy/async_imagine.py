@@ -19,7 +19,6 @@ class AsyncImagine:
     """Async class for handling API requests to the Imagine service."""
 
     HEADERS = {
-        "bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzMDVlNmJiNy0yYzc2LTRjZTMtOTA5NS1iZWFkYzhhZDYwZTEiLCJpYXQiOjE2ODc0MjAyOTAsImV4cCI6MTY4NzUwNjY5MH0.FH9Js_B31ZjHlhUToD53mNZROXQCbi0hV42pvzIfrfU",
         "accept": "*/*",
         "user-agent": "okhttp/4.10.0",
         "style-id":"30"
@@ -27,7 +26,7 @@ class AsyncImagine:
 
     def __init__(self,style = None):
         self.asset = "https://1966211409.rsc.cdn77.org"
-        self.api = "https://api.vyro.ai"
+        self.api = "https://inferenceengine.vyro.ai"
         if style is not None:
             self.HEADERS["style-id"] = str(style.value[0])
         self.session = aiohttp.ClientSession(raise_for_status=True, headers=self.HEADERS)
@@ -68,7 +67,7 @@ class AsyncImagine:
         for attempt in range(2):
             try:
                 async with self.session.post(
-                        url=f"{self.api}/v1/imagine/web/generations",
+                        url=f"{self.api}/sdprem",
                         data={
                             "model_version": self.version,
                             "prompt": prompt + (style.value[3] or ""),
