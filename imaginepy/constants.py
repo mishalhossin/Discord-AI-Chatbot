@@ -178,11 +178,11 @@ class Style(Enum):
 
 class Ratio(Enum):
     """Enum for the different image ratios."""
-    RATIO_1X1 = (512, 512)
-    RATIO_9X16 = (368, 648)
-    RATIO_16X9 = (648, 368)
-    RATIO_4X3 = (512, 384)
-    RATIO_3X2 = (648, 432)
+    RATIO_1X1 = (1, 1)
+    RATIO_9X16 = (9, 16)
+    RATIO_16X9 = (16, 9)
+    RATIO_4X3 = (4, 2)
+    RATIO_3X2 = (3, 2)
 
 
 class Control(Enum):
@@ -190,7 +190,6 @@ class Control(Enum):
     SCRIBBLE = "scribble"
     POSE = "openpose"
     DEPTH = "depth"
-
 
 class DeviantArt(Enum):
     """Enum for the DeviantArt API credentials."""
