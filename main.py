@@ -293,9 +293,6 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     await ctx.defer()
     prompt = sanitize_prompt(prompt)
     original_prompt = prompt
-    
-    prompt = await translate_to_en(prompt)
-
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
         prompt = await get_random_prompt(prompt)
 
@@ -342,8 +339,8 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
         embed_info.add_field(name="Orignial prompt 📝", value=f"{original_prompt}", inline=False)
     embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
-    embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=True)
-    embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=True)
+    embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=False)
+    embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=False)
 
     if upscale_status:
         embed_info.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
