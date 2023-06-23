@@ -359,7 +359,11 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     embed_image.set_footer(text=f'Requested by {ctx.author.name}')
     embeds = [embed_info, embed_image]
     
-    await ctx.send(embeds=embeds, file=file)
+    sent_message = await ctx.send(embeds=embeds, file=file)
+
+    reactions = ["⬆️", "⬇️"]
+    for reaction in reactions:
+        await sent_message.add_reaction(reaction)
 
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
