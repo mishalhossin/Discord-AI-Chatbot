@@ -283,9 +283,12 @@ async def clear(ctx):
     upscale="Upscale the image or not ?",
     ratio="Ratio for images",
     style="Style for images",
-    negative="Prompt that specifies what you do not want the model to generate"
+    negative="Prompt that specifies what you do not want the model to generate",
+    seed="Seed for images",
+    cfg="Cfg for images",
+    steps="Steps for images"
 )
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None):
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None, seed: str = "", cfg: str = "9.5", steps: str = "70"):
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
     else:
@@ -315,7 +318,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         await ctx.send(embed=embed_warning)
         return
 
-    imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status)
+    imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status, seed, cfg, steps)
     if imagefileobj is None:
         embed_warning = Embed(
             title="😅",
@@ -341,6 +344,15 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
     embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=False)
     embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=False)
+    
+    if seed is not None:
+        embed_info.add_field(name="Seed ", value=f"{seed}", inline=False)
+    
+    if cfg is not None:
+        embed_info.add_field(name="CFG ", value=f"{cfg}", inline=False)
+    
+    if steps is not None:
+        embed_info.add_field(name="Steps ", value=f"{steps}", inline=False)
 
     if upscale_status:
         embed_info.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
