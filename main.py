@@ -288,7 +288,7 @@ async def clear(ctx):
     cfg="The setting that controls how closely Stable Diffusion should follow your text prompt",
     steps="This parameter controls the number of these denoising steps. Usually, higher is better but to a certain degree."
 )
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None, seed: str = "", cfg: int = 9.5, steps: int = 70):
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None, seed: str = "", cfg: str = "9.5", steps: str = "70"):
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
     else:
@@ -317,8 +317,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
         embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
         await ctx.send(embed=embed_warning)
         return
-    cfg = str(cfg)
-    steps = str(steps)
+        
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status, seed, cfg, steps)
     if imagefileobj is None:
         embed_warning = Embed(
