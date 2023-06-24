@@ -236,7 +236,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
         cfg=cfg,
         priority="1",
         high_res_results="1",
-        steps=steps,
+        steps=steps or "50",
         negative=negative
     )
 
