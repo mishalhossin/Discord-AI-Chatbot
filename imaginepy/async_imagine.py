@@ -7,12 +7,17 @@ import asyncio
 
 from .constants import *
 
-
-def validate_cfg(cfg: float) -> str:
+def validate_cfg(cfg: str) -> float:
     """Validates the cfg parameter."""
-    if cfg < 0.0 or cfg > 16.0:
-        raise ValueError(f"Invalid CFG, must be in range (0; 16), {cfg}")
-    return str(cfg)
+    cfg_float = float(cfg)
+    if cfg_float < 0.0 or cfg_float > 16.0:
+        raise ValueError(f"Invalid CFG, must be in range (0; 16), {cfg_float}")
+    return cfg_float
+# def validate_cfg(cfg: float) -> str:
+#     """Validates the cfg parameter."""
+#     if cfg < 0.0 or cfg > 16.0:
+#         raise ValueError(f"Invalid CFG, must be in range (0; 16), {cfg}")
+#     return str(cfg)
 
 
 class AsyncImagine:
