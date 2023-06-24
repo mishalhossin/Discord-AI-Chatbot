@@ -59,7 +59,7 @@ async def generate_response(instructions, search, history, filecontent):
         search_results = search
     elif search is None:
         search_results = "Search feature is disabled"
-    asyncio.sleep(0.6) # Don't overwhelm the API :)
+    await asyncio.sleep(0.6) # Don't overwhelm the API :)
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
