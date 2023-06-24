@@ -222,7 +222,7 @@ async def generate_dalle_image(prompt, size):
     return None
 
 
-async def generate_image(image_prompt, style_value, ratio_value, negative, upscale):
+async def generate_image(image_prompt, style_value, ratio_value, negative, upscale, seed, cfg, steps):
     if negative is None:
         negative = False
     imagine = AsyncImagine()
@@ -232,9 +232,11 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
         prompt=image_prompt,
         style=style_enum,
         ratio=ratio_enum,
+        seed=seed,
+        cfg=cfg,
         priority="1",
         high_res_results="1",
-        steps="70",
+        steps=steps or "50",
         negative=negative
     )
 
