@@ -289,6 +289,9 @@ async def clear(ctx):
     steps="This parameter controls the number of these denoising steps. Usually, higher is better but to a certain degree."
 )
 async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None, seed: str = "", cfg: str = "9.5", steps: str = "70"):
+    if not re.match("^\d+$", seed):
+        await ctx.send("Seed should contain numbers only.")
+        return
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
     else:
@@ -307,16 +310,21 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     is_nsfw = await detect_nsfw(prompt_to_detect)
 
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
-
-    if (is_nsfw or blacklisted) and prevent_nsfw:
+        if (is_nsfw or blacklisted) and prevent_nsfw:
         embed_warning = Embed(
             title="⚠️ WARNING ⚠️",
             description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.',
             color=0xf74940
         )
         embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
+
+        if blacklisted:
+            blacklisted_words_str = ', '.join(blacklisted)
+            embed_warning.add_field(name="Blacklisted Words", value=blacklisted_words_str, inline=True)
+        
         await ctx.send(embed=embed_warning)
         return
+
         
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status, seed, cfg, steps)
     if imagefileobj is None:
@@ -373,6 +381,72 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     reactions = ["⬆️", "⬇️"]
     for reaction in reactions:
         await sent_message.add_reaction(reaction)
+
+
+
+@bot.hybrid_command(name="imagine-pollinations", description="Bring your imagination into reality with pollinations.ai!")
+@app_commands.choices(ratio=[
+    app_commands.Choice(name='Small', value='256'),
+    app_commands.Choice(name='Medium', value='512'),
+    app_commands.Choice(name='Large', value='1024')
+])
+@app_commands.describe(ratio="Choose the ratio of your image.")
+@app_commands.describe(prompt="Provide a description of your imagination to turn them into image.")
+async def pollinations(ctx, prompt: str, ratio: app_commands.Choice[str]):
+    await ctx.defer()
+    prompt = await translate_to_en(prompt)
+
+   #comment/delete the following code block if you want to bot to not generate NSFW images (not recommened) 
+    try:
+        with open("config.yml", "r") as config_file:
+            config = yaml.safe_load(config_file)
+            blacklist_words = config.get("BLACKLIST_WORDS", [])
+
+        blacklisted_word = next((word for word in blacklist_words if word.lower() in prompt.lower()), None)
+        if blacklisted_word:
+            embed_warning = discord.Embed(
+                title="⚠️ WARNING ⚠️",
+                description="Your prompt potentially contains sensitive or inappropriate content.",
+                color=0xf74940
+            )
+            embed_warning.add_field(name="Prompt 📝:", value=f"{prompt}", inline=True)
+            embed_warning.add_field(name="Triggered word:", value=f"> {blacklisted_word}", inline=True)
+            await ctx.send(embed=embed_warning)
+            return
+
+        imagefileobjs = await generate_four_pollinations_images(prompt, ratio.value)
+
+        if not all(imagefileobjs):
+            raise Exception("Image generation failed")
+
+        # create the message with formatted text
+        message = f"**🎨 Generated Image by {ctx.author.name} \n \n**Prompt  📝:**\n> {prompt}\n**Ratio 📐: **\n> {ratio.name}"
+
+        # send the message with files
+        files = [discord.File(imagefileobj, filename=f"image{i + 1}.png") for i, imagefileobj in enumerate(imagefileobjs)]
+        sent_message = await ctx.send(message, files=files)
+
+        reactions = ["⬆️", "⬇️"]
+        for reaction in reactions:
+            await sent_message.add_reaction(reaction)
+
+    except Exception as e:
+        await ctx.send("Oops, something went wrong. Please try again later.")
+        print(e)  # Print the error for debugging purposes
+
+
+#bonus command... cause why not
+
+
+@bot.hybrid_command(name="echo", description="Makes the bot say something in the specified channel.")
+@app_commands.describe(message = "What do you want to say?")
+@app_commands.describe(channel="In which channel do you want to send a message?")
+async def echo(ctx, channel: discord.TextChannel=None, *, message):
+    if channel is None:
+        channel = ctx.channel
+    await channel.send(message)
+    await ctx.send("Message sent!", ephemeral=True)
+
 
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])

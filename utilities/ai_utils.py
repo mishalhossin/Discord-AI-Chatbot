@@ -189,7 +189,32 @@ async def get_query(prompt):
     else:
         return None
 
+#pollination ai 
+async def generate_pollinations_image(prompt, size):
+    endpoint = f'https://image.pollinations.ai/prompt/{prompt}?size={size}'
+    async with aiohttp.ClientSession() as session:
+        async with session.get(endpoint) as response:
+            if response.status != 200:
+                await ctx.send(f"Apologies for the inconvenience, but the API is currently experiencing downtime, and there is no ETA for when it will be up. However, you can use the alternative image generation command called </imagine:1120257822970609787> to continue your creative endeavors.")
 
+            image_content = await response.read()
+            img_file = io.BytesIO(image_content)
+            return img_file
+
+    return None
+#to generate a collage of 4 images
+async def generate_four_pollinations_images(prompt, ratio):
+    image_files = []
+    for _ in range(4):
+        unique_prompt = f"{prompt} ({time.time()})"
+        print(f"Generating image with prompt: {unique_prompt}, size: {ratio}")
+        image_file = await generate_pollinations_image(unique_prompt, ratio)
+        if image_file:
+            image_files.append(image_file)
+        else:
+            return []
+
+    return image_files
 async def generate_dalle_image(prompt, size):
     base_urls = ['https://a.z-pt.com']
     endpoint = '/api/openai/v1/images/generations'
