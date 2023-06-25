@@ -3,6 +3,8 @@ import io
 from datetime import datetime
 import re
 import asyncio
+import time
+import random
 
 from youtube_transcript_api import YouTubeTranscriptApi
 
@@ -189,32 +191,14 @@ async def get_query(prompt):
     else:
         return None
 
-#pollination ai 
-async def generate_pollinations_image(prompt, size):
-    endpoint = f'https://image.pollinations.ai/prompt/{prompt}?size={size}'
-    async with aiohttp.ClientSession() as session:
-        async with session.get(endpoint) as response:
-            if response.status != 200:
-                await ctx.send(f"Apologies for the inconvenience, but the API is currently experiencing downtime, and there is no ETA for when it will be up. However, you can use the alternative image generation command called </imagine:1120257822970609787> to continue your creative endeavors.")
+async def poly_image_gen(session, prompt):
+    seed = random.randint(1, 100000)
+    image_url = f"https://image.pollinations.ai/prompt/{prompt}{seed}"
+    async with session.get(image_url) as response:
+        image_data = await response.read()
+        image_io = io.BytesIO(image_data)
+        return image_io
 
-            image_content = await response.read()
-            img_file = io.BytesIO(image_content)
-            return img_file
-
-    return None
-#to generate a collage of 4 images
-async def generate_four_pollinations_images(prompt, ratio):
-    image_files = []
-    for _ in range(4):
-        unique_prompt = f"{prompt} ({time.time()})"
-        print(f"Generating image with prompt: {unique_prompt}, size: {ratio}")
-        image_file = await generate_pollinations_image(unique_prompt, ratio)
-        if image_file:
-            image_files.append(image_file)
-        else:
-            return []
-
-    return image_files
 async def generate_dalle_image(prompt, size):
     base_urls = ['https://a.z-pt.com']
     endpoint = '/api/openai/v1/images/generations'
@@ -248,6 +232,8 @@ async def generate_dalle_image(prompt, size):
 
 
 async def generate_image(image_prompt, style_value, ratio_value, negative, upscale, seed, cfg, steps):
+    if cfg > 9.9:
+        cfg = 7
     if negative is None:
         negative = False
     imagine = AsyncImagine()
@@ -258,7 +244,7 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
         style=style_enum,
         ratio=ratio_enum,
         seed=seed,
-        cfg=cfg,
+        cfg=f"{cfg}",
         priority="1",
         high_res_results="1",
         steps=steps or "50",

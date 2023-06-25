@@ -6,11 +6,12 @@ import datetime
 
 import aiohttp
 import discord
+import random
 from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, detect_nsfw, generate_image, generate_dalle_image, get_yt_transcript, search, generate_caption
+from utilities.ai_utils import generate_response, detect_nsfw, generate_image, get_yt_transcript, search, poly_image_gen
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -288,20 +289,22 @@ async def clear(ctx):
     cfg="The setting that controls how closely Stable Diffusion should follow your text prompt",
     steps="This parameter controls the number of these denoising steps. Usually, higher is better but to a certain degree."
 )
-async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None, seed: str = "", cfg: str = "9.5", steps: str = "70"):
-    if not re.match("^\d+$", seed):
-        await ctx.send("Seed should contain numbers only.")
-        return
+async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_commands.Choice[str], negative: str = None, upscale: app_commands.Choice[str] = None, prompt_enhancement: app_commands.Choice[str] = None, seed: int = None, steps: int = 30, cfg: float = 7.5):
     if upscale is not None and upscale.value == 'True':
         upscale_status = True
     else:
         upscale_status = False
+    
     await ctx.defer()
+    
     prompt = sanitize_prompt(prompt)
     original_prompt = prompt
+    
+    prompt = await translate_to_en(prompt)
+
     if prompt_enhancement is not None and prompt_enhancement.value == 'True':
         prompt = await get_random_prompt(prompt)
-
+        
     prompt_to_detect = prompt
 
     if negative is not None:
@@ -310,22 +313,20 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     is_nsfw = await detect_nsfw(prompt_to_detect)
 
     blacklisted = any(words in prompt.lower() for words in blacklisted_words)
-        if (is_nsfw or blacklisted) and prevent_nsfw:
+
+    if (is_nsfw or blacklisted) and prevent_nsfw:
         embed_warning = Embed(
-            title="⚠️ WARNING ⚠️",
+            title="⚠️",
             description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.',
             color=0xf74940
         )
         embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
-
-        if blacklisted:
-            blacklisted_words_str = ', '.join(blacklisted)
-            embed_warning.add_field(name="Blacklisted Words", value=blacklisted_words_str, inline=True)
-        
-        await ctx.send(embed=embed_warning)
+        await ctx.send(embed=embed_warning, delete_after=8)
         return
-
-        
+    
+    if seed is None:
+        seed = random.randint(10**15, (10**16)-2)
+    
     imagefileobj = await generate_image(prompt, style.value, ratio.value, negative, upscale_status, seed, cfg, steps)
     if imagefileobj is None:
         embed_warning = Embed(
@@ -352,25 +353,23 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
     embed_info.add_field(name="Prompt 📝", value=f"{prompt}", inline=False)
     embed_info.add_field(name="Style 🎨", value=f"{style.name}", inline=False)
     embed_info.add_field(name="Ratio 📐", value=f"{ratio.name}", inline=False)
-    
-    if seed is not None:
-        embed_info.add_field(name="Seed ", value=f"{seed}", inline=False)
-    
+
     if cfg is not None:
         embed_info.add_field(name="CFG ", value=f"{cfg}", inline=False)
-    
+
     if steps is not None:
         embed_info.add_field(name="Steps ", value=f"{steps}", inline=False)
-
+    if negative is not None:
+        embed_info.add_field(name="Negative", value=f"{negative}", inline=False)
+    if seed is not None:
+        embed_info.add_field(name="🌱 Seed", value=f"{seed}", inline=False)
+    
     if upscale_status:
         embed_info.set_footer(text="⚠️ Upscaling is only noticeable when you open the image in a browser because Discord reduces image quality.")
     elif is_nsfw and not prevent_nsfw:
         embed_info.set_footer(text="⚠️ Please be advised that the generated image you are about to view may contain explicit content. Minors are advised not to proceed.")
     else:
         embed_info.set_footer(text="✨ Imagination is the fuel that propels dreams into reality")
-    
-    if negative is not None:
-        embed_info.add_field(name="Negative", value=f"{negative}", inline=False)
 
     embed_image.set_image(url="attachment://image.png")
     embed_image.set_footer(text=f'Requested by {ctx.author.name}')
@@ -385,54 +384,25 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
 
 
 @bot.hybrid_command(name="imagine-pollinations", description="Bring your imagination into reality with pollinations.ai!")
-@app_commands.choices(ratio=[
-    app_commands.Choice(name='Small', value='256'),
-    app_commands.Choice(name='Medium', value='512'),
-    app_commands.Choice(name='Large', value='1024')
-])
-@app_commands.describe(ratio="Choose the ratio of your image.")
+@app_commands.describe(images="Choose the amount of your image.")
 @app_commands.describe(prompt="Provide a description of your imagination to turn them into image.")
-async def pollinations(ctx, prompt: str, ratio: app_commands.Choice[str]):
+async def imagine_poly(ctx, *, prompt: str, images: int = 4):
     await ctx.defer()
-    prompt = await translate_to_en(prompt)
-
-   #comment/delete the following code block if you want to bot to not generate NSFW images (not recommened) 
-    try:
-        with open("config.yml", "r") as config_file:
-            config = yaml.safe_load(config_file)
-            blacklist_words = config.get("BLACKLIST_WORDS", [])
-
-        blacklisted_word = next((word for word in blacklist_words if word.lower() in prompt.lower()), None)
-        if blacklisted_word:
-            embed_warning = discord.Embed(
-                title="⚠️ WARNING ⚠️",
-                description="Your prompt potentially contains sensitive or inappropriate content.",
-                color=0xf74940
-            )
-            embed_warning.add_field(name="Prompt 📝:", value=f"{prompt}", inline=True)
-            embed_warning.add_field(name="Triggered word:", value=f"> {blacklisted_word}", inline=True)
-            await ctx.send(embed=embed_warning)
-            return
-
-        imagefileobjs = await generate_four_pollinations_images(prompt, ratio.value)
-
-        if not all(imagefileobjs):
-            raise Exception("Image generation failed")
-
-        # create the message with formatted text
-        message = f"**🎨 Generated Image by {ctx.author.name} \n \n**Prompt  📝:**\n> {prompt}\n**Ratio 📐: **\n> {ratio.name}"
-
-        # send the message with files
-        files = [discord.File(imagefileobj, filename=f"image{i + 1}.png") for i, imagefileobj in enumerate(imagefileobjs)]
-        sent_message = await ctx.send(message, files=files)
-
-        reactions = ["⬆️", "⬇️"]
-        for reaction in reactions:
-            await sent_message.add_reaction(reaction)
-
-    except Exception as e:
-        await ctx.send("Oops, something went wrong. Please try again later.")
-        print(e)  # Print the error for debugging purposes
+    images = min(images, 18)
+    tasks = []
+    async with aiohttp.ClientSession() as session:
+        while len(tasks) < images:
+            task = asyncio.ensure_future(poly_image_gen(session, prompt))
+            tasks.append(task)
+            
+        generated_images = await asyncio.gather(*tasks)
+            
+    files = []
+    for index, image in enumerate(generated_images):
+        file = discord.File(image, filename=f"image_{index+1}.png")
+        files.append(file)
+        
+    await ctx.send(files=files)
 
 
 #bonus command... cause why not
