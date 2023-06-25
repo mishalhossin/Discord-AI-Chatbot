@@ -438,8 +438,8 @@ async def help(ctx):
 
 @bot.hybrid_command(name="support", description="Provides support information.")
 async def support(ctx):
-    invite_link = "https://discord.gg/3V5TcfsE8C"
-    github_repo = "https://github.com/mishalhossin/Discord-AI-Chatbot"
+    invite_link = config['Discord']
+    github_repo = config['Github']
 
     embed = discord.Embed(title="Support Information", color=0x03a64b)
     embed.add_field(name="Discord Server", value=f"[Join Here]({invite_link})\nCheck out our Discord server for community discussions, support, and updates.", inline=False)
