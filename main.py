@@ -176,8 +176,8 @@ async def ping(ctx):
 @bot.hybrid_command(name="changeusr", description=current_language["changeusr"])
 @commands.is_owner()
 async def changeusr(ctx, new_username):
-    await ctx.defer
-    taken_usernames = [user.name.lower() for user in bot.get_all_members()]
+    await ctx.defer()
+    taken_usernames = [user.name.lower() for user in ctx.guild.members]
     if new_username.lower() in taken_usernames:
         message = f"{current_language['changeusr_msg_2_part_1']}{new_username}{current_language['changeusr_msg_2_part_2']}"
     else:
@@ -186,9 +186,10 @@ async def changeusr(ctx, new_username):
             message = f"{current_language['changeusr_msg_3']}'{new_username}'"
         except discord.errors.HTTPException as e:
             message = "".join(e.text.split(":")[1:])
-    await ctx.send(message)
+    
+    sent_message = await ctx.send(message)
     await asyncio.sleep(3)
-    await message.delete()
+    await sent_message.delete()
 
 
 @bot.hybrid_command(name="toggledm", description=current_language["toggledm"])
