@@ -141,7 +141,7 @@ async def on_message(message):
         if response is not None:
             for chunk in split_response(response):
                 try:
-                    await message.reply(chunk.replace("@", "@\u200B"))
+                    await message.reply(chunk, allowed_mentions=discord.AllowedMentions.none(), suppress_embeds=True)
                 except:
                     await message.channel.send("I apologize for any inconvenience caused. It seems that there was an error preventing the delivery of my message. Additionally, it appears that the message I was replying to has been deleted, which could be the reason for the issue. If you have any further questions or if there's anything else I can assist you with, please let me know and I'll be happy to help.")
         else:
