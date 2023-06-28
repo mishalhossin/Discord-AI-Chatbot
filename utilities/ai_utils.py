@@ -14,7 +14,7 @@ from imaginepy import AsyncImagine, Style, Ratio
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-base_urls = ['https://mishalsgpt.vercel.app']
+base_urls = ['https://chat-aim.vercel.app']
 
 
 async def search(prompt):
