@@ -388,7 +388,7 @@ async def imagine(ctx, prompt: str, style: app_commands.Choice[str], ratio: app_
 @app_commands.describe(images="Choose the amount of your image.")
 @app_commands.describe(prompt="Provide a description of your imagination to turn them into image.")
 async def imagine_poly(ctx, *, prompt: str, images: int = 4):
-    await ctx.defer()
+    await ctx.defer(ephemeral=True)
     images = min(images, 18)
     tasks = []
     async with aiohttp.ClientSession() as session:
@@ -403,21 +403,7 @@ async def imagine_poly(ctx, *, prompt: str, images: int = 4):
         file = discord.File(image, filename=f"image_{index+1}.png")
         files.append(file)
         
-    await ctx.send(files=files)
-
-
-#bonus command... cause why not
-
-
-@bot.hybrid_command(name="echo", description="Makes the bot say something in the specified channel.")
-@app_commands.describe(message = "What do you want to say?")
-@app_commands.describe(channel="In which channel do you want to send a message?")
-async def echo(ctx, channel: discord.TextChannel=None, *, message):
-    if channel is None:
-        channel = ctx.channel
-    await channel.send(message)
-    await ctx.send("Message sent!", ephemeral=True)
-
+    await ctx.send(files=files, ephemeral=True)
 
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
