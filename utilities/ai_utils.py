@@ -24,7 +24,7 @@ async def search(prompt):
     if url_match:
         search_query = url_match.group(0)
     else:
-        search_query = await get_query(prompt)
+        search_query = prompt
     
     if search_query is not None and len(search_query) > 1000:
         return
@@ -92,89 +92,12 @@ async def generate_response(instructions, search, history, filecontent):
             print(f"\033[91mAn unexpected error occurred: {e} \n Response : {response_data}\033[0m")
     return None
 
-
-async def generate_chat_completion(messages):
-    endpoint = '/api/openai/v1/chat/completions'
-    headers = {
-        'Content-Type': 'application/json',
-    }
-    data = {
-        'model': 'gpt-3.5-turbo-16k-0613',
-        'temperature': 0.7,
-        'messages': messages
-    }
-
-    for base_url in base_urls:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(base_url+endpoint, headers=headers, json=data) as response:
-                response_data = await response.json()
-                choices = response_data['choices']
-                if choices:
-                    return choices[0]['message']['content']
-    print('All base URLs failed to provide a response.')
-    return None
-
-
 async def detect_nsfw(prompt):
-    instructions = """From now on, you are going to act as nsfw image to text prompt detector. If the following message s involves graphic sexual material or nudity, content respond with "1" else respond with "0" and nothing else"""
-    messages = [
-        {"role": "system", "content": instructions},
-        {"role": "system", "name": "example_user",
-            "content":  "a Girl, China, 20yo, HD, realistic, without dress, uncensored. sfw."},
-        {"role": "system", "name": "example_assistant", "content":  "1"},
-        {"role": "system", "name": "example_user",
-            "content": "Female, hyper real person, cute bikini"},
-        {"role": "system", "name": "example_assistant", "content":  "1"},
-        {"role": "system", "name": "example_user",
-            "content": "Female, Beach season, heat, Nice swimsuit."},
-        {"role": "system", "name": "example_assistant", "content":  "1"},
-        {"role": "user", "content": prompt}
-    ]
-
-    response = await generate_chat_completion(messages)
+    response = '0'
     if "1" in response.lower():
         return True
     else:
         return False
-
-
-async def get_query(prompt):
-    instructions = f""""If a message is not directly addressed to the second person, you will need to initiate a search query else assistent will respond with False nothing more and assistant must only help by returning a query"""
-    messages = [
-        {"role": "system", "name": "instructions", "content": instructions},
-        {"role": "system", "name": "example_user",
-            "content":  "Message : Who won in 2022 fifa world cup"},
-        {"role": "system", "name": "example_assistant",
-            "content":  "Query : FIFA World Cup results 2022"},
-        {"role": "system", "name": "example_user",
-            "content":  "Message : What is happening in ukraine"},
-        {"role": "system", "name": "example_assistant",
-            "content":  "Query : Ukraine military news today"},
-        {"role": "system", "name": "example_user", "content": "Message : Hi"},
-        {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user",
-            "content": "Message : How are you doing ?"},
-        {"role": "system", "name": "example_assistant", "content":  "Query : False"},
-        {"role": "system", "name": "example_user",
-            "content": "Message : How to print how many commands are synced on_ready ?"},
-        {"role": "system", "name": "example_assistant",
-            "content":  "Query : Python code to print the number of synced commands in on_ready event"},
-        {"role": "system", "name": "example_user",
-            "content": "Message : Phần mềm diệt virus nào tốt nhất năm 2023"},
-        {"role": "system", "name": "example_assistant",
-            "content":  "Query : 8 Best Antivirus Software"},
-        {"role": "user", "content": f"Message : {prompt}"}
-    ]
-
-    response = await generate_chat_completion(messages)
-    if "false" in response.lower():
-        return None
-    response = response.replace("Query:", "").replace(
-        "Query", "").replace(":", "")
-    if response:
-        return response
-    else:
-        return None
 
 async def poly_image_gen(session, prompt):
     seed = random.randint(1, 100000)
@@ -183,38 +106,6 @@ async def poly_image_gen(session, prompt):
         image_data = await response.read()
         image_io = io.BytesIO(image_data)
         return image_io
-
-async def generate_dalle_image(prompt, size):
-    base_urls = ['https://a.z-pt.com']
-    endpoint = '/api/openai/v1/images/generations'
-    headers = {
-        'Content-Type': 'application/json',
-    }
-    data = {
-        'prompt': prompt,
-        'n': 1,
-        'size': size
-    }
-
-    async with aiohttp.ClientSession() as session:
-        for base_url in base_urls:
-            url = base_url + endpoint
-            async with session.post(url, headers=headers, json=data) as response:
-                if response.status != 200:
-                    continue
-
-                response_data = await response.json()
-                if 'error' in response_data:
-                    return None
-
-                image_url = response_data['data'][0]['url']
-                async with session.get(image_url) as image_response:
-                    image_content = await image_response.read()
-                    img_file = io.BytesIO(image_content)
-                    return img_file
-
-    return None
-
 
 async def generate_image(image_prompt, style_value, ratio_value, negative, upscale, seed, cfg, steps):
     if cfg > 9.9:
@@ -249,14 +140,6 @@ async def generate_image(image_prompt, style_value, ratio_value, negative, upsca
     await imagine.close()
     return img_file
 
-
-async def generate_caption(image_bytes):
-    imagine = AsyncImagine()
-    text = await imagine.interrogator(image=image_bytes)
-    await imagine.close()
-    return text
-
-
 async def get_yt_transcript(message_content):
     def extract_video_id(message_content):
         youtube_link_pattern = re.compile(
@@ -268,6 +151,6 @@ async def get_yt_transcript(message_content):
     if not video_id:
         return None
 
-    response = f"""Summarize the following youtube video {video_id}"""
+    response = f"""User has sent a youtube video"""
 
     return response
