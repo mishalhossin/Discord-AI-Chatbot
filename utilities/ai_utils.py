@@ -114,19 +114,6 @@ async def generate_chat_completion(messages):
     print('All base URLs failed to provide a response.')
     return None
 
-# async def generate_completion(prompt, max_token=None, temp=None):
-#     endpoint = '/api/openai/v1/engines/text-davinci-003/completions'
-#     headers = {'Content-Type': 'application/json'}
-
-#     async with aiohttp.ClientSession() as session:
-#         base_url = 'https://a.z-pt.com'
-#         url = base_url + endpoint
-#         async with session.post(url, headers=headers, json={'prompt': prompt, 'temperature': temp or 0.7}) as response:
-#             response_data = await response.json()
-#             response = response_data['choices'][0]['text']
-#             return response
-#     return None
-
 
 async def detect_nsfw(prompt):
     instructions = """From now on, you are going to act as nsfw image to text prompt detector. If the following message s involves graphic sexual material or nudity, content respond with "1" else respond with "0" and nothing else"""
