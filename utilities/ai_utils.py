@@ -6,8 +6,6 @@ import asyncio
 import time
 import random
 
-from youtube_transcript_api import YouTubeTranscriptApi
-
 from utilities.config_loader import load_current_language, config
 from imaginepy import AsyncImagine, Style, Ratio
 
@@ -283,20 +281,6 @@ async def get_yt_transcript(message_content):
     if not video_id:
         return None
 
-    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-    first_transcript = next(iter(transcript_list), None)
-    if not first_transcript:
-        return None
-
-    translated_transcript = first_transcript.translate('en')
-    formatted_transcript = ". ".join(
-        [f"{entry['start']} - {entry['text']}" for entry in translated_transcript.fetch()])
-
-    response = f"""Summarize the following youtube video transcript into few short concise bullet points:
-    
-    {formatted_transcript}
-    
-    
-    Please Provide a summary or additional information based on the content. Write the summary in {current_language['language_name']}"""
+    response = f"""Summarize the following youtube video {video_id}"""
 
     return response
