@@ -242,24 +242,11 @@ async def clear(ctx):
 )
 async def imagine(ctx, prompt):
     await ctx.defer()
-    
-    prompt = sanitize_prompt(prompt)
-    original_prompt = prompt
-    
-    prompt = await translate_to_en(prompt)
+    print(prompt)
     imagefileobj = await generate_image(prompt)
 
-    file = discord.File(imagefileobj, filename="image.png")
-
-    embed_info = Embed(color=0x000f14)
-    embed_image = Embed(color=0x000f14)
-
-    embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
-    embed_image.set_image(url="attachment://image.png")
-    embed_image.set_footer(text=f'Requested by {ctx.author.name}')
-    embeds = [embed_info, embed_image]
-    
-    sent_message = await ctx.send(embeds=embeds, file=file)
+    file = discord.File(imagefileobj, filename="image.png", spoiler=True, description=prompt)
+    sent_message = await ctx.send(f'🎨 Generated Image by {ctx.author.name}', file=file)
 
     reactions = ["⬆️", "⬇️"]
     for reaction in reactions:
