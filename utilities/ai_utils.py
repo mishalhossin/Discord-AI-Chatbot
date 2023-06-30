@@ -106,39 +106,52 @@ async def poly_image_gen(session, prompt):
         image_data = await response.read()
         image_io = io.BytesIO(image_data)
         return image_io
+        
+async def generate_image(prompt):
+    async def generate_job(prompt, seed=None, model=None):
+        if seed is None:
+          seed = random.randint(10000, 99999)
+        
+        url = 'https://api.prodia.com/generate'
+        params = {
+            'new': 'true',
+            'prompt': f'{quote(prompt)}',
+            'model': 'anything-v4.5-pruned.ckpt [65745d25]',
+            'negative_prompt': 'verybadimagenegative_v1.3, ng_deepnegative_v1_75t, (ugly face:0.8),cross-eyed,sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, {Multiple people}, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet, cropped, poorly drawn hands, poorly drawn face, mutation, deformed, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, extra fingers, fewer digits, extra limbs, extra arms,extra legs, malformed limbs, fused fingers, too many fingers, long neck, cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proportions, text, error, missing fingers, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, repeating hair',
+            'steps': '100',
+            'cfg': '9.5',
+            'seed': f'{seed}',
+            'sampler': 'Euler',
+            'aspect_ratio': 'square'
+        }
+        headers = {
+            'authority': 'api.prodia.com',
+            'accept': '*/*',
+            'accept-language': 'en-US,en;q=0.6',
+            'dnt': '1',
+        }
+    
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, params=params, headers=headers) as response:
+                data = await response.json()
+                return data['job']
+                
+    job_id = await generate_job(prompt)
+    url = f'https://api.prodia.com/job/{job_id}'
+    headers = {
+        'authority': 'api.prodia.com',
+        'accept': '*/*',
+    }
 
-async def generate_image(image_prompt, style_value, ratio_value, negative, upscale, seed, cfg, steps):
-    if cfg > 9.9:
-        cfg = 7
-    if negative is None:
-        negative = False
-    imagine = AsyncImagine()
-    style_enum = Style[style_value]
-    ratio_enum = Ratio[ratio_value]
-    img_data = await imagine.sdprem(
-        prompt=image_prompt,
-        style=style_enum,
-        ratio=ratio_enum,
-        seed=seed,
-        cfg=f"{cfg}",
-        priority="1",
-        high_res_results="1",
-        steps=steps or "50",
-        negative=negative
-    )
-
-    if upscale:
-        img_data = await imagine.upscale(image=img_data)
-
-    try:
-        img_file = io.BytesIO(img_data)
-    except Exception as e:
-        print(
-            f"An error occurred while creating the in-memory image file: {e}")
-        return None
-
-    await imagine.close()
-    return img_file
+    async with aiohttp.ClientSession() as session:
+        while True:
+            async with session.get(url, headers=headers) as response:
+                json = await response.json()
+                if json['status'] == 'succeeded':
+                    async with session.get(f'https://images.prodia.xyz/{job_id}.png?download=1', headers=headers) as response:
+                        content = await response.content.read()
+                        img_file_obj = io.BytesIO(content)
+                        return img_file_obj
 
 async def get_yt_transcript(message_content):
     def extract_video_id(message_content):
