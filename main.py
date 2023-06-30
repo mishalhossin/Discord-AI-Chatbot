@@ -247,36 +247,7 @@ async def imagine(ctx, prompt):
     original_prompt = prompt
     
     prompt = await translate_to_en(prompt)
-
-    if prompt_enhancement is not None and prompt_enhancement.value == 'True':
-        prompt = await get_random_prompt(prompt)
-        
-    prompt_to_detect = prompt
-
-    is_nsfw = await detect_nsfw(prompt_to_detect)
-
-    blacklisted = any(words in prompt.lower() for words in blacklisted_words)
-
-    if (is_nsfw or blacklisted) and prevent_nsfw:
-        embed_warning = Embed(
-            title="⚠️",
-            description='Your prompt potentially contains sensitive or inappropriate content.\nPlease revise your prompt.',
-            color=0xf74940
-        )
-        embed_warning.add_field(name="Prompt", value=f"{prompt}", inline=False)
-        await ctx.send(embed=embed_warning, delete_after=8)
-        return
-
     imagefileobj = await generate_image(prompt)
-    if imagefileobj is None:
-        embed_warning = Embed(
-            title="😅",
-            description='Please invoke the command again',
-            color=0xf7a440
-        )
-        embed_warning.add_field(name="Prompt", value=prompt, inline=False)
-        await ctx.send(embed=embed_warning)
-        return
 
     file = discord.File(imagefileobj, filename="image.png")
 
