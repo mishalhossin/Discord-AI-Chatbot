@@ -11,7 +11,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, detect_nsfw, generate_image, get_yt_transcript, search, poly_image_gen
+from utilities.ai_utils import generate_response, generate_image, get_yt_transcript, search, poly_image_gen
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
