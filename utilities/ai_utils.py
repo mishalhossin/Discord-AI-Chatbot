@@ -5,7 +5,8 @@ import re
 import asyncio
 import time
 import random
-
+import asyncio
+from urllib.parse import quote
 from utilities.config_loader import load_current_language, config
 
 current_language = load_current_language()
@@ -99,45 +100,46 @@ async def poly_image_gen(session, prompt):
         image_io = io.BytesIO(image_data)
         return image_io
         
-async def generate_image(prompt):
-    async def generate_job(prompt, seed=None):
-        if seed is None:
-          seed = random.randint(10000, 99999)
-        
-        url = 'https://api.prodia.com/generate'
-        params = {
-            'new': 'true',
-            'prompt': f'{quote(prompt)}',
-            'model': 'anything-v4.5-pruned.ckpt [65745d25]',
-            'negative_prompt': '(nsfw:1.5),verybadimagenegative_v1.3, ng_deepnegative_v1_75t, (ugly face:0.8),cross-eyed,sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, {Multiple people}, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet, cropped, poorly drawn hands, poorly drawn face, mutation, deformed, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, extra fingers, fewer digits, extra limbs, extra arms,extra legs, malformed limbs, fused fingers, too many fingers, long neck, cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proportions, text, error, missing fingers, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, repeating hair',
-            'steps': '30',
-            'cfg': '7',
-            'seed': f'{seed}',
-            'sampler': 'Euler',
-            'aspect_ratio': 'square'
-        }
-        headers = {
-            'authority': 'api.prodia.com',
-            'accept': '*/*',
-            'accept-language': 'en-US,en;q=0.6',
-            'dnt': '1',
-            'origin': 'https://app.prodia.com',
-            'referer': 'https://app.prodia.com/',
-            'sec-ch-ua': '"Brave";v="113", "Chromium";v="113", "Not-A.Brand";v="24"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Linux"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-site',
-            'sec-gpc': '1',
-            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-        }
+async def generate_job(prompt, seed=None):
+    print("Got here too")
+    if seed is None:
+      seed = random.randint(10000, 99999)
     
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, params=params, headers=headers) as response:
-                data = await response.json()
-                return data['job']
-                
+    url = 'https://api.prodia.com/generate'
+    params = {
+        'new': 'true',
+        'prompt': f'{quote(prompt)}',
+        'model': 'anything-v4.5-pruned.ckpt [65745d25]',
+        'negative_prompt': '(nsfw:1.5),verybadimagenegative_v1.3, ng_deepnegative_v1_75t, (ugly face:0.8),cross-eyed,sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, {Multiple people}, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet, cropped, poorly drawn hands, poorly drawn face, mutation, deformed, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, extra fingers, fewer digits, extra limbs, extra arms,extra legs, malformed limbs, fused fingers, too many fingers, long neck, cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proportions, text, error, missing fingers, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, repeating hair',
+        'steps': '30',
+        'cfg': '9.5',
+        'seed': f'{seed}',
+        'sampler': 'Euler',
+        'aspect_ratio': 'square'
+    }
+    headers = {
+        'authority': 'api.prodia.com',
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.6',
+        'dnt': '1',
+        'origin': 'https://app.prodia.com',
+        'referer': 'https://app.prodia.com/',
+        'sec-ch-ua': '"Brave";v="113", "Chromium";v="113", "Not-A.Brand";v="24"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Linux"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-site',
+        'sec-gpc': '1',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params, headers=headers) as response:
+            data = await response.json()
+            return data['job']
+
+async def generate_image(prompt):
     job_id = await generate_job(prompt)
     url = f'https://api.prodia.com/job/{job_id}'
     headers = {
@@ -147,6 +149,7 @@ async def generate_image(prompt):
 
     async with aiohttp.ClientSession() as session:
         while True:
+            await asyncio.sleep(0.3)
             async with session.get(url, headers=headers) as response:
                 json = await response.json()
                 if json['status'] == 'succeeded':
