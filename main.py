@@ -251,12 +251,8 @@ async def imagine(ctx, prompt):
 
     file = discord.File(imagefileobj, filename="image.png")
 
-    if is_nsfw:
-        embed_info = Embed(color=0xff0000)
-        embed_image = Embed(color=0xff0000)
-    else:
-        embed_info = Embed(color=0x000f14)
-        embed_image = Embed(color=0x000f14)
+    embed_info = Embed(color=0x000f14)
+    embed_image = Embed(color=0x000f14)
 
     embed_info.set_author(name=f"🎨 Generated Image by {ctx.author.name}")
     embed_image.set_image(url="attachment://image.png")
