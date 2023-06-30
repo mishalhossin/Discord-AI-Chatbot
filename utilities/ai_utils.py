@@ -7,7 +7,6 @@ import time
 import random
 
 from utilities.config_loader import load_current_language, config
-from imaginepy import AsyncImagine, Style, Ratio
 
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
