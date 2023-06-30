@@ -58,7 +58,7 @@ async def generate_response(instructions, search, history, filecontent):
         search_results = search
     elif search is None:
         search_results = "Search feature is disabled"
-    await asyncio.sleep(0.6) # Don't overwhelm the API :)
+    await asyncio.sleep(1) # Don't overwhelm the API :)
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
@@ -90,13 +90,6 @@ async def generate_response(instructions, search, history, filecontent):
         except Exception as e:
             print(f"\033[91mAn unexpected error occurred: {e} \n Response : {response_data}\033[0m")
     return None
-
-async def detect_nsfw(prompt):
-    response = '0'
-    if "1" in response.lower():
-        return True
-    else:
-        return False
 
 async def poly_image_gen(session, prompt):
     seed = random.randint(1, 100000)
