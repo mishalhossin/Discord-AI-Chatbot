@@ -103,6 +103,7 @@ To select a Language, set the value of `"LANGUAGE"` of `config.yml` with the val
 - `ru` - Russian 🇷🇺
 - `ua` - Ukrainian 🇺🇦
 - `pt` - Português 🇧🇷
+- `pl` - Polish 🇵🇱
 
 https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c20f26b0b8f1b6bba2fae8f6d7da3efcafaf157c/config.yml#L23
   
