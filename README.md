@@ -26,19 +26,6 @@
 
 ## Features and commands 🌟
 
-<details>
-<summary><strong>🌟 Feature Preview 👀(Click to expand)</strong></summary>
-
-## Image generation (Any language) 🖼️
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/3ebd2f09-d564-43b5-a494-74ed08026b7e)
-  
-## YouTube video summary (Any language) 🎥
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/271bb26d-1f5e-48ed-854e-781a9b0712e3)  
-  
-## Web access using DuckDuckGo 🌐 (Not enabled by default)
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/d3e35ce8-38fa-4744-bc4e-ce22b16f2bdb)
-
 </details>
 
 <details>
@@ -53,8 +40,8 @@
 - [x] GPT3 model: Leverage the power of GPT model for advanced language processing capabilities. 🤖
 - [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
-- [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
-- [x] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
+- [ ] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
+- [ ] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
 - [ ] Speech recognition: Coming soon! Get ready for an LLM-powered voice assistant.
 
 </details>
