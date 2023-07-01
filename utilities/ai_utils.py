@@ -16,8 +16,9 @@ base_urls = ['https://chat-aim.vercel.app']
 
 
 async def search(prompt):
-    if not internet_access or len(prompt) > 200:
+    if not internet_access:
         return
+        
     search_results_limit = config['MAX_SEARCH_RESULTS']
     
     url_match = re.search(r'(https?://\S+)', prompt)
@@ -26,7 +27,7 @@ async def search(prompt):
     else:
         search_query = prompt
     
-    if search_query is not None and len(search_query) > 1000:
+    if search_query is not None and len(search_query) > 100:
         return
     
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -39,8 +40,7 @@ async def search(prompt):
                                        params={'query': search_query, 'limit': search_results_limit}) as response:
                     search = await response.json()
         except aiohttp.ClientError as e:
-            print(f"An error occurred during the search request: {e}")
-            return
+            return "No search query is needed for a response"
 
         for index, result in enumerate(search):
             blob += f'[{index}] "{result["snippet"]}"\n\nURL: {result["link"]}\n'
@@ -59,7 +59,7 @@ async def generate_response(instructions, search, history, filecontent):
         search_results = search
     elif search is None:
         search_results = "Search feature is disabled"
-    await asyncio.sleep(1) # Don't overwhelm the API :)
+    await asyncio.sleep(2) # Don't overwhelm the API :)
     endpoint = '/api/openai/v1/chat/completions'
     headers = {
         'Content-Type': 'application/json',
