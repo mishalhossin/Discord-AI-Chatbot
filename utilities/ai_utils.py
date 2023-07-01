@@ -157,18 +157,3 @@ async def generate_image(prompt):
                         content = await response.content.read()
                         img_file_obj = io.BytesIO(content)
                         return img_file_obj
-
-async def get_yt_transcript(message_content):
-    def extract_video_id(message_content):
-        youtube_link_pattern = re.compile(
-            r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')
-        match = youtube_link_pattern.search(message_content)
-        return match.group(6) if match else None
-
-    video_id = extract_video_id(message_content)
-    if not video_id:
-        return None
-
-    response = f"""User has sent a youtube video"""
-
-    return response
