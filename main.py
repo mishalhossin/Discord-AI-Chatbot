@@ -126,9 +126,6 @@ async def on_message(message):
         if has_file:
             search_results = None
             
-        if yt_transcript is not None:
-            message.content += yt_transcript
-            
         message_history[key].append({"role": "user", "content": message.content})
         history = message_history[key]
 
