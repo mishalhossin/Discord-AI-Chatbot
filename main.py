@@ -270,7 +270,7 @@ async def imagine_poly(ctx, *, prompt: str, images: int = 4):
         
     await ctx.send(files=files, ephemeral=True)
 
- @bot.hybrid_command(name="gif", description=current_language["nekos"])
+@bot.hybrid_command(name="gif", description=current_language["nekos"])
 @app_commands.choices(category=[
     app_commands.Choice(name=category.capitalize(), value=category)
     for category in ['baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance', 'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug', 'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke', 'pout', 'punch', 'shoot', 'shrug']
