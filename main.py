@@ -270,6 +270,35 @@ async def imagine_poly(ctx, *, prompt: str, images: int = 4):
         
     await ctx.send(files=files, ephemeral=True)
 
+ @bot.hybrid_command(name="gif", description=current_language["nekos"])
+@app_commands.choices(category=[
+    app_commands.Choice(name=category.capitalize(), value=category)
+    for category in ['baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance', 'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug', 'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke', 'pout', 'punch', 'shoot', 'shrug']
+])
+async def gif(ctx, category: app_commands.Choice[str]):
+    base_url = "https://nekos.best/api/v2/"
+
+    url = base_url + category.value
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status != 200:
+                await ctx.channel.send("Failed to fetch the image.")
+                return
+
+            json_data = await response.json()
+
+            results = json_data.get("results")
+            if not results:
+                await ctx.channel.send("No image found.")
+                return
+
+            image_url = results[0].get("url")
+
+            embed = Embed(colour=0x141414)
+            embed.set_image(url=image_url)
+            await ctx.send(embed=embed)
+
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
