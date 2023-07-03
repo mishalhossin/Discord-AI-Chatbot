@@ -328,6 +328,11 @@ async def support(ctx):
 
     await ctx.send(embed=embed)
 
+@bot.hybrid_command(name="server", description='Server List')
+@commands.is_owner()
+async def server(ctx):
+  await ctx.send('\n'.join(guild.name for guild in bot.guilds))
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
