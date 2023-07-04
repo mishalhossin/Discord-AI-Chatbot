@@ -231,6 +231,7 @@ async def clear(ctx):
     await ctx.send(f"Message history has been cleared", delete_after=4)
 
 
+@commands.guild_only()
 @bot.hybrid_command(name="imagine", description="Command to imagine an image")
 @app_commands.describe(
     prompt="Write a amazing prompt for a image",
@@ -248,7 +249,7 @@ async def imagine(ctx, prompt):
         await sent_message.add_reaction(reaction)
 
 
-
+@commands.guild_only()
 @bot.hybrid_command(name="imagine-pollinations", description="Bring your imagination into reality with pollinations.ai!")
 @app_commands.describe(images="Choose the amount of your image.")
 @app_commands.describe(prompt="Provide a description of your imagination to turn them into image.")
@@ -270,6 +271,7 @@ async def imagine_poly(ctx, *, prompt: str, images: int = 4):
         
     await ctx.send(files=files, ephemeral=True)
 
+@commands.guild_only()
 @bot.hybrid_command(name="gif", description=current_language["nekos"])
 @app_commands.choices(category=[
     app_commands.Choice(name=category.capitalize(), value=category)
