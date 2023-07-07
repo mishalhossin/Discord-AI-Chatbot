@@ -8,12 +8,9 @@ import random
 import asyncio
 from urllib.parse import quote
 from utilities.config_loader import load_current_language, config
-
+import deepai as openai
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
-
-base_urls = ['https://chat-aim.vercel.app']
-
 
 async def search(prompt):
     """
@@ -72,38 +69,16 @@ async def generate_response(instructions, search, history, filecontent):
         search_results = search
     elif search is None:
         search_results = "Search feature is disabled"
-    await asyncio.sleep(2) # Don't overwhelm the API :)
-    endpoint = '/api/openai/v1/chat/completions'
-    headers = {
-        'Content-Type': 'application/json',
-    }
-    data = {
-        'model': 'gpt-3.5-turbo-16k-0613',
-        'temperature': 0.7,
-        'messages': [
+    messages = [
             {"role": "system", "name": "instructions", "content": instructions},
             {"role": "system", "name": "search_results", "content": search_results},
             *history,
             {"role": "system", "name": "file_content", "content": filecontent},
         ]
-    }
-    for base_url in base_urls:
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(base_url+endpoint, headers=headers, json=data) as response:
-                    response_data = await response.json()
-                    choices = response_data['choices']
-                    if choices:
-                        return choices[0]['message']['content']
-                    else:
-                        print(f"There was an error this is the response from the API {response_data}")
-        except aiohttp.ClientError as e:
-            print(f"\033[91mAn error occurred during the API request: {e} \n Response : {response_data}\033[0m")
-        except KeyError as e:
-            print(f"\033[91mInvalid response received from the API: {e} \n Response : {response_data}\033[0m")
-        except Exception as e:
-            print(f"\033[91mAn unexpected error occurred: {e} \n Response : {response_data}\033[0m")
-    return None
+    response = ""
+    for chunk in openai.ChatCompletion.create(messages):
+        response += chunk
+    return response
 
 async def poly_image_gen(session, prompt):
     seed = random.randint(1, 100000)
