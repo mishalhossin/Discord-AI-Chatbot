@@ -77,8 +77,11 @@ async def generate_response(instructions, search, history, filecontent):
         ]
     response = ""
     while True:
-        for chunk in openai.ChatCompletion.create(messages):
-            response += chunk
+        try:
+            for chunk in openai.ChatCompletion.create(messages):
+                response += chunk
+        except:
+            pass
         break
     return response
 
