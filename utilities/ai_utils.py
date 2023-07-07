@@ -76,8 +76,10 @@ async def generate_response(instructions, search, history, filecontent):
             {"role": "system", "name": "search_results", "content": search_results},
         ]
     response = ""
-    for chunk in openai.ChatCompletion.create(messages):
-        response += chunk
+    while True:
+        for chunk in openai.ChatCompletion.create(messages):
+            response += chunk
+        break
     return response
 
 async def poly_image_gen(session, prompt):
