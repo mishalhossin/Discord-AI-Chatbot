@@ -70,9 +70,8 @@ async def generate_response(instructions, search, history, filecontent):
     elif search is None:
         search_results = "Search feature is disabled"
     messages = [
-            {"role": "system", "name": "instructions", "content": instructions},
+            {"role": "user", "name": "instructions", "content": instructions},
             *history,
-            {"role": "system", "name": "file_content", "content": filecontent},
             {"role": "system", "name": "search_results", "content": search_results},
         ]
     response = "​"
