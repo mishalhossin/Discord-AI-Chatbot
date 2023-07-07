@@ -75,13 +75,17 @@ async def generate_response(instructions, search, history, filecontent):
             {"role": "system", "name": "file_content", "content": filecontent},
             {"role": "system", "name": "search_results", "content": search_results},
         ]
-    response = ""
+    response = "​"
+    timeout = 300  # Timeout in seconds
+    start_time = time.time()
     while True:
         try:
             for chunk in openai.ChatCompletion.create(messages):
                 response += chunk
         except:
             pass
+        if time.time() - start_time >= timeout:
+            break
         break
     return response
 
