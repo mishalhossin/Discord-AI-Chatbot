@@ -106,6 +106,8 @@ async def on_message(message):
     bot_name_in_message = bot.user.name.lower() in message.content.lower() and smart_mention
 
     if is_active_channel or is_allowed_dm or contains_trigger_word or is_bot_mentioned or is_replied or bot_name_in_message:
+        if internet_access:
+            await message.add_reaction("​🔍")
         channel_id = message.channel.id
         key = f"{message.author.id}-{channel_id}"
 
@@ -131,6 +133,8 @@ async def on_message(message):
 
         async with message.channel.typing():
             response = await generate_response(instructions, search_results, history, file_content)
+            if internet_access:
+                await message.remove_reaction("​🔍", bot.user)
         message_history[key].append({"role": "assistant", "name": personaname, "content": response})
 
         if response is not None:
