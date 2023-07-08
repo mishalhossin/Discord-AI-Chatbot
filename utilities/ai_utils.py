@@ -71,7 +71,7 @@ async def search(prompt):
 async def fetch_models():
     return openai.Model.list()
     
-async def generate_response(instructions, search, history, filecontent):
+def generate_response(instructions, search, history):
     if search is not None:
         search_results = search
     elif search is None:
@@ -88,7 +88,7 @@ async def generate_response(instructions, search, history, filecontent):
     message = response.choices[0].message.content
     return message
 
-async def generate_gpt4_response(prompt):
+def generate_gpt4_response(prompt):
     messages = [
             {"role": "system", "name": "admin_user", "content": prompt},
         ]

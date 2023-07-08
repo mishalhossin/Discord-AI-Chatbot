@@ -137,24 +137,14 @@ async def on_message(message):
             message_history[key] = []
 
         message_history[key] = message_history[key][-MAX_HISTORY:]
-
-        has_file = False
-        file_content = None
-
-        for attachment in message.attachments:
-            file_content = f"The user has sent a file"
-            has_file = True
-            break
             
         search_results = await search(message.content)
-        if has_file:
-            search_results = None
             
         message_history[key].append({"role": "user", "content": message.content})
         history = message_history[key]
 
         async with message.channel.typing():
-            response = await generate_response(instructions, search_results, history, file_content)
+            response = await asyncio.to_thread(generate_response, instructions=instructions, search=search_results, history=history)
             if internet_access:
                 await message.remove_reaction("🔎", bot.user)
         message_history[key].append({"role": "assistant", "name": personaname, "content": response})
@@ -353,9 +343,10 @@ async def gif(ctx, category: app_commands.Choice[str]):
 @bot.hybrid_command(name="askgpt4", description="Ask gpt4 a question")
 async def ask(ctx, prompt: str):
     await ctx.defer()
-    response = await generate_gpt4_response(prompt)
-    await ctx.send(response)
-    
+    response = await asyncio.to_thread(generate_gpt4_response, prompt=prompt)
+    for chunk in split_response(response):
+        await ctx.send(chunk, allowed_mentions=discord.AllowedMentions.none(), suppress_embeds=True)
+
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
