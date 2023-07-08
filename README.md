@@ -1,28 +1,20 @@
-
-<div align="center">
-
 # Discord AI Chatbot 🤖
-###### Your All-in-One Discord AI Companion!
+#### Your Discord AI Companion!
 
-</div>
+![Image](https://cdn.discordapp.com/attachments/1119920576417513472/1127122563982688296/image.png)
+![Image](https://cdn.discordapp.com/attachments/1119920576417513472/1127134209169969253/image.png)
+
 <div align="center">
   <a href="https://discord.gg/3V5TcfsE8C">
     <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
   </a>
-</p>
 </div>
 
 <div align="center">
 <p align="center">
   <b>❤️ Your donation is vital for the project's future. Thank you for your support.</b>
 </p>
-
-<div align="center">
-  <a href="https://www.patreon.com/mishalhossin">
-    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dmishalhossin%26type%3Dpatrons&style=for-the-badge" width="250">
-  </a>
 </div>
-
 
 ## Features and commands 🌟
 
@@ -38,7 +30,6 @@
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader in your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
 - [x] GPT3 model: Leverage the power of GPT model for advanced language processing capabilities. 🤖
-- [x] Image Detection Model: The bot can detect objects and text in images with OCR and GPT2 captioning using a fancy Hugging Face API. 🕵️‍♂️
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [ ] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
 - [ ] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
@@ -154,16 +145,29 @@ cd Discord-AI-Chatbot
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 </details>
 
-### Step 4. 🔐 Rename `example.env` to `.env` and put the Discord bot token It will look like this:
+### Step 4.
+<strong>Getting a Free Reverse OpenAI proxy Key 🔑
+
+Follow these steps:
+
+1. Join the Discord server by clicking on the following invite link: [CHIMIRA GPT](https://discord.gg/BgmVEQbga)
+2. Once you have joined the server, run the `/key get` command in any text channel.
+3. This command will provide you with a reverse OpenAI key.
+
+You can additionally enable `gpt-4` in `config.yml`
+</strong>
+
+### Step 5. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimira gpt key It will look like this:
 ```
-DISCORD_TOKEN=token_from_step_3
+DISCORD_TOKEN=<YOUR_DISCORD_BOT_TOKEN
+CHIMIRA_GPT_KEY=<YOUR_CHIMIRA_API_KEY>
 ```
-### Step 5. 🚀 Run the bot
+### Step 6. 🚀 Run the bot
 ```
 python main.py
 ```
 #### You may need to run as admin if you are on windows
-### Step 6. 🔗 Invite the bot 
+### Step 7. 🔗 Invite the bot 
 You can Invite your bot using the link in console
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
 
@@ -173,7 +177,7 @@ You can Invite your bot using the link in console
 - For more awesome commands use **/help**
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
 
-# ✨✨✨  Other ways to run ✨✨✨
+# ✨  Other ways to run ✨
 ### Using replit to run ☁️
 # [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
 - Have a replit account
@@ -214,11 +218,9 @@ For SUSE-based distributions (such as openSUSE):
 ```
 sudo zypper update -y && sudo zypper install -y docker-compose
 ```
-
 </details>
 
 #### Start the bot in docker container :
-
 ```
 sudo docker-compose up --build
 ```

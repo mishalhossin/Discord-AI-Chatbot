@@ -8,9 +8,16 @@ import random
 import asyncio
 from urllib.parse import quote
 from utilities.config_loader import load_current_language, config
-import deepai as openai
+import openai
+import os
+from dotenv import load_dotenv # python-dotenv
+
+load_dotenv()
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
+
+openai.api_key = os.getenv('CHIMIRA_GPT_KEY')
+openai.api_base = "https://chimeragpt.adventblocks.cc/v1"
 
 async def search(prompt):
     """
@@ -63,8 +70,6 @@ async def search(prompt):
     
 
 async def generate_response(instructions, search, history, filecontent):
-    if filecontent is None:
-        filecontent = 'No extra files sent.'
     if search is not None:
         search_results = search
     elif search is None:
@@ -74,19 +79,23 @@ async def generate_response(instructions, search, history, filecontent):
             *history,
             {"role": "system", "name": "search_results", "content": search_results},
         ]
-    response = "​"
-    timeout = 300  # Timeout in seconds
-    start_time = time.time()
-    while True:
-        try:
-            for chunk in openai.ChatCompletion.create(messages):
-                response += chunk
-        except:
-            pass
-        if time.time() - start_time >= timeout:
-            break
-        break
-    return response
+    response = openai.ChatCompletion.create(
+        model=config['GPT_MODEL'],
+        messages=messages
+    )
+    message = response.choices[0].message.content
+    return message
+
+async def generate_gpt4_response(prompt):
+    messages = [
+            {"role": "system", "name": "admin_user", "content": prompt},
+        ]
+    response = openai.ChatCompletion.create(
+        model='gpt-4',
+        messages=messages
+    )
+    message = response.choices[0].message.content
+    return message
 
 async def poly_image_gen(session, prompt):
     seed = random.randint(1, 100000)

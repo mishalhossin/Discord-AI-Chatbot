@@ -11,7 +11,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen
+from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen, generate_gpt4_response
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -53,7 +53,7 @@ load_instructions(instruction)
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    presences_cycle = cycle(presences)
+    presences_cycle = cycle(presences + [current_language['help_footer']])
     print(f"{bot.user} aka {bot.user.name} has connected to Discord!")
     invite_link = discord.utils.oauth_url(
         bot.user.id,
@@ -304,7 +304,13 @@ async def gif(ctx, category: app_commands.Choice[str]):
             embed = Embed(colour=0x141414)
             embed.set_image(url=image_url)
             await ctx.send(embed=embed)
-
+            
+@bot.hybrid_command(name="askgpt4", description="Ask gpt4 a question")
+async def ask(ctx, prompt: str):
+    await ctx.defer()
+    response = await generate_gpt4_response(prompt)
+    await ctx.send(response)
+    
 bot.remove_command("help")
 @bot.hybrid_command(name="help", description=current_language["help"])
 async def help(ctx):
