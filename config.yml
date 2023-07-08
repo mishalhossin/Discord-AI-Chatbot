@@ -8,7 +8,7 @@ GPT_MODEL: gpt-3.5-turbo-16k # Model used for chat completion
 
 MAX_HISTORY: 8 # Set the maximum message history
 
-PRESENCES_CHANGE_DELAY: 1 # Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
+PRESENCES_CHANGE_DELAY: 8 # Please note that the Presences Change Delay is measured in seconds. It is advisable not to set it too low, as doing so may result in your bot being rate-limited by Discord
 AI_NSFW_CONTENT_FILTER: true # Enable NSFW AI detector to detect NSFW prompt on Imagine Command
 
 LANGUAGE: en # Specify the language code (check 'lang' folder for valid codes)
@@ -30,7 +30,7 @@ TRIGGER:
 PRESENCES:
   - How can I assist you?
   - Currently in {guild_count} guilds
-  - Support at https://discord.gg/3V5TcfsE8C
+  - Support at https://discord.gg/6MT3CZauT8
 # List of different presences to be used
 
 OCR_MODEL_URLS:

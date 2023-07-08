@@ -7,11 +7,12 @@ import datetime
 import aiohttp
 import discord
 import random
+import string
 from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen, generate_gpt4_response
+from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen, generate_gpt4_response#, dall_e_gen
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -49,6 +50,23 @@ current_language = load_current_language()
 instruction = {}
 load_instructions(instruction)
 
+model_blob = \
+"""
+GPT-4 (gpt-4)
+GPT-4-0613 (gpt-4-0613)
+GPT-3.5 Turbo (gpt-3.5-turbo)
+GPT-3.5 Turbo OpenAI (gpt-3.5-turbo-openai)
+GPT-3.5 Turbo 16k (gpt-3.5-turbo-16k)
+GPT-3.5 Turbo 16k OpenAI (gpt-3.5-turbo-16k-openai)
+GPT-4 Poe (gpt-4-poe)
+GPT-3.5 Turbo Poe (gpt-3.5-turbo-poe)
+Sage (sage)
+Claude Instant (claude-instant)
+Claude+ (claude+)
+Claude Instant 100k (claude-instant-100k)
+Bard (bard)
+Chat Bison 001 (chat-bison-001)
+"""
 
 @bot.event
 async def on_ready():
@@ -61,6 +79,10 @@ async def on_ready():
         scopes=("bot", "applications.commands")
     )
     print(f"Invite link: {invite_link}")
+    print()
+    print()
+    print(f"\033[1;38;5;202mAvailable models: {model_blob}\033[0m")
+    print(f"\033[1;38;5;46mCurrent model: {config['GPT_MODEL']}\033[0m")
     while True:
         presence = next(presences_cycle)
         presence_with_count = presence.replace("{guild_count}", str(len(bot.guilds)))
@@ -253,6 +275,29 @@ async def imagine(ctx, prompt):
         await sent_message.add_reaction(reaction)
 
 
+# @commands.guild_only()
+# @bot.hybrid_command(name="imagine-dalle", description="Create images using DALL-E")
+# @app_commands.choices(size=[
+#     app_commands.Choice(name='🔳 Small', value='256x256'),
+#     app_commands.Choice(name='🔳 Medium', value='512x512'),
+#     app_commands.Choice(name='🔳 Large', value='1024x1024')
+# ])
+# @app_commands.describe(
+#     prompt="Write a amazing prompt for a image",
+#     size="Choose the size of the image"
+# )
+# async def imagine(ctx, prompt, size: app_commands.Choice[str]):
+#     await ctx.defer()
+#     images = await dall_e_gen(prompt, size)
+#     files = []
+#     for image_data in images:
+#         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+#         image_io = io.BytesIO(image_data)
+#         file = discord.File(image_io, filename=f"{random_string}.png")
+#         files.append(file)
+        
+#     await ctx.send(files=files)
+    
 @commands.guild_only()
 @bot.hybrid_command(name="imagine-pollinations", description="Bring your imagination into reality with pollinations.ai!")
 @app_commands.describe(images="Choose the amount of your image.")

@@ -10,7 +10,7 @@ from urllib.parse import quote
 from utilities.config_loader import load_current_language, config
 import openai
 import os
-from dotenv import load_dotenv # python-dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 current_language = load_current_language()
@@ -68,14 +68,16 @@ async def search(prompt):
         blob = "No search query is needed for a response"
     return blob
     
-
+async def fetch_models():
+    return openai.Model.list()
+    
 async def generate_response(instructions, search, history, filecontent):
     if search is not None:
         search_results = search
     elif search is None:
         search_results = "Search feature is disabled"
     messages = [
-            {"role": "user", "name": "instructions", "content": instructions},
+            {"role": "system", "name": "instructions", "content": instructions},
             *history,
             {"role": "system", "name": "search_results", "content": search_results},
         ]
@@ -105,13 +107,25 @@ async def poly_image_gen(session, prompt):
         image_io = io.BytesIO(image_data)
         return image_io
 
-async def dall_e_gen(prompt, size):
-    openai.Image.create(
-        prompt="A cute baby sea otter",
-        n=4,
-        size="1024x1024"
-    )
-    return image_io
+# async def fetch_image_data(url):
+#     async with aiohttp.ClientSession() as session:
+#         async with session.get(url) as response:
+#             return await response.read()
+
+# async def dall_e_gen(prompt, size):
+#     response = await openai.Image.create(prompt=prompt, n=1, size=size)
+
+#     image_urls = [data['url'] for data in response['data']]
+    
+#     image_data_list =[]
+    
+#     for url in image_urls:
+#         print(url)
+#         data = await fetch_image_data(url)
+#         image_data_list.append(data)
+
+#     return image_data_list
+    
 
 async def generate_job(prompt, seed=None):
     print("Got here too")
