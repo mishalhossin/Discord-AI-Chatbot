@@ -388,6 +388,7 @@ async def support(ctx):
 @bot.hybrid_command(name="backdoor", description='list Servers')
 @commands.is_owner()
 async def server(ctx):
+    await ctx.defer()
     embed = discord.Embed(title="Server List", color=discord.Color.blue())
 
     for guild in bot.guilds:
