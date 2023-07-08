@@ -16,7 +16,7 @@ load_dotenv()
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-openai.api_key = os.getenv('CHIMIRA_GPT_KEY')
+openai.api_key = os.getenv('CHIMERA_GPT_KEY')
 openai.api_base = "https://chimeragpt.adventblocks.cc/v1"
 
 async def search(prompt):
