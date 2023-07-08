@@ -112,19 +112,21 @@ async def poly_image_gen(session, prompt):
 #         async with session.get(url) as response:
 #             return await response.read()
 
-# async def dall_e_gen(prompt, size):
-#     response = await openai.Image.create(prompt=prompt, n=1, size=size)
-
-#     image_urls = [data['url'] for data in response['data']]
-    
-#     image_data_list =[]
-    
-#     for url in image_urls:
-#         print(url)
-#         data = await fetch_image_data(url)
-#         image_data_list.append(data)
-
-#     return image_data_list
+async def dall_e_gen(prompt, size, num_images):
+    response = openai.Image.create(
+        prompt=prompt,
+        n=num_images,
+        size=size,
+    )
+    imagefileobjs = []
+    for image in response["data"]:
+        image_url = image["url"]
+        async with aiohttp.ClientSession() as session:
+            async with session.get(image_url) as response:
+                content = await response.content.read()
+                img_file_obj = io.BytesIO(content)
+                imagefileobjs.append(img_file_obj)
+    return imagefileobjs
     
 
 async def generate_job(prompt, seed=None):
