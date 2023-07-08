@@ -5,7 +5,7 @@
 ![Image](https://cdn.discordapp.com/attachments/1119920576417513472/1127134209169969253/image.png)
 
 <div align="center">
-  <a href="https://discord.gg/3V5TcfsE8C">
+  <a href="https://discord.gg/6MT3CZauT8">
     <img src="https://discordapp.com/api/guilds/1110950079390547968/widget.png?style=banner2">
   </a>
 </div>
@@ -150,7 +150,7 @@ cd Discord-AI-Chatbot
 
 Follow these steps:
 
-1. Join the Discord server by clicking on the following invite link: [CHIMIRA GPT](https://discord.gg/BgmVEQbga)
+1. Join the Discord server by clicking on the following invite link: [CHIMIRA GPT](https://discord.gg/BgmVEQbg)
 2. Once you have joined the server, run the `/key get` command in any text channel.
 3. This command will provide you with a reverse OpenAI key.
 

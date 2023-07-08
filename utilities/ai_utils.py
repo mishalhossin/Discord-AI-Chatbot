@@ -104,7 +104,15 @@ async def poly_image_gen(session, prompt):
         image_data = await response.read()
         image_io = io.BytesIO(image_data)
         return image_io
-        
+
+async def dall_e_gen(prompt, size):
+    openai.Image.create(
+        prompt="A cute baby sea otter",
+        n=4,
+        size="1024x1024"
+    )
+    return image_io
+
 async def generate_job(prompt, seed=None):
     print("Got here too")
     if seed is None:
