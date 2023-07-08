@@ -279,6 +279,8 @@ async def imagine(ctx, prompt):
 async def imagine_dalle(ctx, prompt, size: app_commands.Choice[str], num_images : int = 1):
     await ctx.defer()
     size = size.value
+    if num_images > 4:
+        num_images = 4
     imagefileobjs = await dall_e_gen(prompt, size, num_images)
     await ctx.send(f'🎨 Generated Image by {ctx.author.name}')
     for imagefileobj in imagefileobjs:
