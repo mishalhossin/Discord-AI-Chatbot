@@ -280,9 +280,10 @@ async def imagine_dalle(ctx, prompt, size: app_commands.Choice[str], num_images 
     await ctx.defer()
     size = size.value
     imagefileobjs = await dall_e_gen(prompt, size, num_images)
+    await ctx.send(f'🎨 Generated Image by {ctx.author.name}')
     for imagefileobj in imagefileobjs:
         file = discord.File(imagefileobj, filename="image.png", spoiler=True, description=prompt)
-        sent_message = await ctx.send(f'🎨 Generated Image by {ctx.author.name}', file=file)
+        sent_message =  await ctx.send(file=file)
         reactions = ["⬆️", "⬇️"]
         for reaction in reactions:
             await sent_message.add_reaction(reaction)
