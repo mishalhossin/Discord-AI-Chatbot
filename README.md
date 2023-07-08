@@ -160,7 +160,7 @@ You can additionally enable `gpt-4` in `config.yml`
 ### Step 5. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimira gpt key It will look like this:
 ```
 DISCORD_TOKEN=<YOUR_DISCORD_BOT_TOKEN
-CHIMIRA_GPT_KEY=<YOUR_CHIMIRA_API_KEY>
+CHIMERA_GPT_KEY=<YOUR_CHIMIRA_API_KEY>
 ```
 ### Step 6. 🚀 Run the bot
 ```
