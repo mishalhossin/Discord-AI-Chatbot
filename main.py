@@ -12,7 +12,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen, generate_gpt4_response#, dall_e_gen
+from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen, generate_gpt4_response, dall_e_gen
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -265,28 +265,31 @@ async def imagine(ctx, prompt):
         await sent_message.add_reaction(reaction)
 
 
-# @commands.guild_only()
-# @bot.hybrid_command(name="imagine-dalle", description="Create images using DALL-E")
-# @app_commands.choices(size=[
-#     app_commands.Choice(name='🔳 Small', value='256x256'),
-#     app_commands.Choice(name='🔳 Medium', value='512x512'),
-#     app_commands.Choice(name='🔳 Large', value='1024x1024')
-# ])
-# @app_commands.describe(
-#     prompt="Write a amazing prompt for a image",
-#     size="Choose the size of the image"
-# )
-# async def imagine(ctx, prompt, size: app_commands.Choice[str]):
-#     await ctx.defer()
-#     images = await dall_e_gen(prompt, size)
-#     files = []
-#     for image_data in images:
-#         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-#         image_io = io.BytesIO(image_data)
-#         file = discord.File(image_io, filename=f"{random_string}.png")
-#         files.append(file)
-        
-#     await ctx.send(files=files)
+@bot.hybrid_command(name="imagine-dalle", description="Create images using DALL-E")
+@commands.guild_only()
+@app_commands.choices(size=[
+     app_commands.Choice(name='🔳 Small', value='256x256'),
+     app_commands.Choice(name='🔳 Medium', value='512x512'),
+     app_commands.Choice(name='🔳 Large', value='1024x1024')
+])
+@app_commands.describe(
+     prompt="Write a amazing prompt for a image",
+     size="Choose the size of the image"
+)
+async def imagine_dalle(ctx, prompt, size: app_commands.Choice[str], num_images : int = 1):
+    await ctx.defer()
+    size = size.value
+    if num_images > 4:
+        num_images = 4
+    imagefileobjs = await dall_e_gen(prompt, size, num_images)
+    await ctx.send(f'🎨 Generated Image by {ctx.author.name}')
+    for imagefileobj in imagefileobjs:
+        file = discord.File(imagefileobj, filename="image.png", spoiler=True, description=prompt)
+        sent_message =  await ctx.send(file=file)
+        reactions = ["⬆️", "⬇️"]
+        for reaction in reactions:
+            await sent_message.add_reaction(reaction)
+
     
 @commands.guild_only()
 @bot.hybrid_command(name="imagine-pollinations", description="Bring your imagination into reality with pollinations.ai!")
