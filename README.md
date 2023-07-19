@@ -130,7 +130,11 @@ git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 ```
 cd Discord-AI-Chatbot
 ```
-### Step 3. 🔑 Getting discord bot token and enabling intents from [HERE](https://discord.com/developers/applications)
+## Step 3. 💾 Install requirements
+```
+python3.10 -m pip install -r requirements.txt
+```
+### Step 4. 🔑 Getting discord bot token and enabling intents from [HERE](https://discord.com/developers/applications)
 <details>
 <summary><strong>Read more...  ⚠️  (Click to expand)</strong></summary>
 
