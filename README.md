@@ -130,7 +130,7 @@ git clone https://github.com/mishalhossin/Discord-AI-Chatbot
 ```
 cd Discord-AI-Chatbot
 ```
-## Step 3. 📁 Install requirements
+## Step 3. 💾 Install requirements
 ```
 python3.10 -m pip install -r requirements.txt
 ```
