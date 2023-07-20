@@ -12,13 +12,13 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_image, search, poly_image_gen, generate_gpt4_response, dall_e_gen
+from utilities.ai_utils import generate_response, generate_image_prodia, search, poly_image_gen, generate_gpt4_response, dall_e_gen
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
 from utilities.replit_detector import detect_replit
 from utilities.sanitization_utils import sanitize_prompt
-
+from model_enum import Model
 load_dotenv()
 
 # Set up the Discord bot
@@ -284,13 +284,14 @@ async def clear(ctx):
     model="Model to generate image",
     sampler="Sampler for denosing",
     negative="Prompt that specifies what you do not want the model to generate",
-    prompt_enhancement= "Enhance prompt using ai ?"
 )
 @commands.guild_only()
 async def imagine(ctx, prompt: str, model: app_commands.Choice[str], sampler: app_commands.Choice[str], negative: str = None, seed: int = None):
     for word in prompt.split():
         if word in blacklisted_words:
             is_nsfw = True
+        else:
+            is_nsfw = False
     if seed is None:
         seed = random.randint(10000, 99999)
     await ctx.defer()
