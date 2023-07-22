@@ -31,7 +31,7 @@
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
 - [x] GPT3 model: Leverage the power of GPT model for advanced language processing capabilities. 🤖
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
-- [ ] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
+- [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
 - [ ] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
 - [ ] Speech recognition: Coming soon! Get ready for an LLM-powered voice assistant.
 
