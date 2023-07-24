@@ -149,8 +149,7 @@ python3.10 -m pip install -r requirements.txt
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 </details>
 
-### Step 5.
-<strong>Getting a Free Reverse OpenAI proxy Key 🔑
+### Step 5.Getting a Free Reverse OpenAI proxy Key 🔑
 
 Follow these steps:
 
@@ -159,7 +158,6 @@ Follow these steps:
 3. This command will provide you with a reverse OpenAI key.
 
 You can additionally enable `gpt-4` in `config.yml`
-</strong>
 
 ### Step 6. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimira gpt key It will look like this:
 ```
