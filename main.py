@@ -3,6 +3,7 @@ import os
 import io
 from itertools import cycle
 import datetime
+import json
 
 import aiohttp
 import discord
@@ -104,6 +105,7 @@ message_history = {}
 MAX_HISTORY = config['MAX_HISTORY']
 personaname = config['INSTRUCTIONS'].title()
 replied_messages = {}
+active_channels = {}
 @bot.event
 async def on_message(message):
     if message.author == bot.user and message.reference:
@@ -118,7 +120,7 @@ async def on_message(message):
 
     if message.stickers or message.author.bot or (message.reference and (message.reference.resolved.author != bot.user or message.reference.resolved.embeds)):
         return
-    string_channel_id = message.channel.id
+    string_channel_id = f"{message.channel.id}"
     is_replied = (message.reference and message.reference.resolved.author == bot.user) and smart_mention
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
     is_active_channel = string_channel_id in active_channels
@@ -143,7 +145,6 @@ async def on_message(message):
 
         if internet_access:
             instructions += f"""\n\nIt's currently {current_time}, You have real-time information and the ability to browse the internet."""
-        key = f"{message.author.id}-X-{channel_id}"
         if internet_access:
             await message.add_reaction("🔎")
         channel_id = message.channel.id
