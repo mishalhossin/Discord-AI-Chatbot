@@ -60,7 +60,7 @@
 
 To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
 
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/5bcb2c9b471e2a9cbf9a7d50882a897ce5d5890b/config.yml#L1
+[Config.yml Link](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/5bcb2c9b471e2a9cbf9a7d50882a897ce5d5890b/config.yml#L1)
 
 You can also set the maximum search results
   
@@ -157,11 +157,11 @@ python3.10 -m pip install -r requirements.txt
 
 </details>
 
-### Step 5. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimira GPT key. It will look like this:
+### Step 5. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimera GPT key. It will look like this:
 
 ```
 DISCORD_TOKEN=<YOUR_DISCORD_BOT_TOKEN>
-CHIMERA_GPT_KEY=<YOUR_CHIMIRA_API_KEY>
+CHIMERA_GPT_KEY=<YOUR_CHIMERA_API_KEY>
 ```
 
 ### Step 6. 🚀 Run the bot
@@ -177,8 +177,8 @@ python main.py
 You can invite your bot using the link provided in the console.
 #### There are 2 ways to talk to the AI
 - Invite your bot and DM (Direct Message) it | ⚠️ Make sure you have DM enabled
-- if you want it in the server channel use **/toggleactive** 
-- For more awesome commands use **/help**
+- If you want it in the server channel, use **/toggleactive** 
+- For more awesome commands, use **/help**
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
 
 # ✨ Other ways to run ✨
