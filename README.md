@@ -55,14 +55,7 @@
 
 ## Additional Configuration ⚙️
 
-<details>
-<summary><strong>Enabling Internet Access 🌐🔍(Click to Expand)</strong></summary>
-
-To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
-
-You can also set the maximum search results.
-
-</details>
+Enabling Internet Access 🌐🔍(Click to Expand)
 
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
