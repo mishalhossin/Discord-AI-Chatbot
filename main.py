@@ -54,19 +54,14 @@ load_instructions(instruction)
 model_blob = \
 """
 GPT-4 (gpt-4)
-GPT-4-0613 (gpt-4-0613)
-GPT-3.5 Turbo (gpt-3.5-turbo)
-GPT-3.5 Turbo OpenAI (gpt-3.5-turbo-openai)
-GPT-3.5 Turbo 16k (gpt-3.5-turbo-16k)
-GPT-3.5 Turbo 16k OpenAI (gpt-3.5-turbo-16k-openai)
-GPT-4 Poe (gpt-4-poe)
-GPT-3.5 Turbo Poe (gpt-3.5-turbo-poe)
-Sage (sage)
-Claude Instant (claude-instant)
-Claude+ (claude+)
-Claude Instant 100k (claude-instant-100k)
-Bard (bard)
-Chat Bison 001 (chat-bison-001)
+GPT-4-0314 (gpt-4-0314) 
+GPT-4-32k (gpt-4-32k)
+GPT-3.5-TURBO (gpt-3.5-turbo)
+GPT-3.5-TURBO-0301 (gpt-3.5-turbo-0301) 
+GPT-3.5-TURBO-16K (gpt-3.5-turbo-16k) 
+LLAMA-2-7B-CHAT (llama-2-7b-chat)
+LLAMA-2-13B-CHA (llama-2-13b-chat) 
+LLAMA-2-70B-CHAT (llama-2-70b-chat)
 """
 
 @bot.event
