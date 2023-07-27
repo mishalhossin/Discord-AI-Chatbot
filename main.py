@@ -5,6 +5,7 @@ from itertools import cycle
 import datetime
 import json
 
+import requests
 import aiohttp
 import discord
 import random
