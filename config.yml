@@ -27,6 +27,7 @@ TRIGGER:
   - Other bot alias...
 # Define the triggers that the bot should always respond to when in message
 
+DISABLE_PRESENCE: false 
 PRESENCES:
   - How can I assist you?
   - Currently in {guild_count} guilds
