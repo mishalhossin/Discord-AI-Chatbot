@@ -10,12 +10,6 @@
   </a>
 </div>
 
-<div align="center">
-<p align="center">
-  <b>❤️ Your donation is vital for the project's future. Thank you for your support.</b>
-</p>
-</div>
-
 ## Features and commands 🌟
 
 </details>
