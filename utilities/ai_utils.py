@@ -101,7 +101,7 @@ def generate_gpt4_response(prompt):
 
 async def poly_image_gen(session, prompt):
     seed = random.randint(1, 100000)
-    image_url = f"https://image.pollinations.ai/prompt/{prompt}{seed}"
+    image_url = f"https://image.pollinations.ai/prompt/{prompt}?seed={seed}"
     async with session.get(image_url) as response:
         image_data = await response.read()
         image_io = io.BytesIO(image_data)
