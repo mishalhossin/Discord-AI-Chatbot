@@ -14,7 +14,7 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_image_prodia, search, poly_image_gen, generate_gpt4_response, dall_e_gen
+from utilities.ai_utils import generate_response, generate_image_prodia, search, poly_image_gen, generate_gpt4_response, dall_e_gen, sdxl
 from utilities.response_util import split_response, translate_to_en, get_random_prompt
 from utilities.discord_util import check_token, get_discord_token
 from utilities.config_loader import config, load_current_language, load_instructions
@@ -285,6 +285,7 @@ async def clear(ctx):
     app_commands.Choice(name='🔍 DDIM', value='DDIM')
 ])
 @app_commands.choices(model=[
+    app_commands.Choice(name='🙂 SDXL (The best of the best)', value='sdxl'),
     app_commands.Choice(name='🌈 Elldreth vivid mix (Landscapes, Stylized characters, nsfw)', value='ELLDRETHVIVIDMIX'),
     app_commands.Choice(name='💪 Deliberate v2 (Anything you want, nsfw)', value='DELIBERATE'),
     app_commands.Choice(name='🔮 Dreamshaper (HOLYSHIT this so good)', value='DREAMSHAPER_6'),
@@ -329,8 +330,10 @@ async def imagine(ctx, prompt: str, model: app_commands.Choice[str], sampler: ap
     if is_nsfw and not ctx.channel.nsfw:
         await ctx.send(f"⚠️ You can create NSFW images in NSFW channels only\n To create NSFW image first create a age ristricted channel ", delete_after=30)
         return
-        
-    imagefileobj = await generate_image_prodia(prompt, model_uid, sampler.value, seed, negative)
+    if model_uid=="sdxl":
+        imagefileobj = sdxl(prompt)
+    else:
+        imagefileobj = await generate_image_prodia(prompt, model_uid, sampler.value, seed, negative)
     
     if is_nsfw:
         img_file = discord.File(imagefileobj, filename="image.png", spoiler=True, description=prompt)

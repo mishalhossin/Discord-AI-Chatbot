@@ -18,6 +18,14 @@ internet_access = config['INTERNET_ACCESS']
 
 openai.api_key = os.getenv('CHIMERA_GPT_KEY')
 openai.api_base = "https://chimeragpt.adventblocks.cc/api/v1"
+def sdxl(prompt):
+    response = openai.Image.create(
+    model="sdxl",
+    prompt=prompt,
+    n=1,  # images count
+    size="1024x1024"
+)
+    return response['data'][0]["url"]
 
 async def search(prompt):
     """

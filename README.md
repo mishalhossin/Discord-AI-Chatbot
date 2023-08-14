@@ -67,6 +67,7 @@ To select a Language, set the value of `"LANGUAGE"` of `config.yml` with the val
 
 - `tr` - Türkçe 🇹🇷  
 - `en` - English 🇺🇸
+- `ar` - Arabic 🇦🇪
 - `fr` - Français 🇫🇷
 - `es` - Español 🇪🇸
 - `de` - Deutsch 🇩🇪  
