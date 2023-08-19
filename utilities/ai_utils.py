@@ -120,8 +120,9 @@ async def poly_image_gen(session, prompt):
 #         async with session.get(url) as response:
 #             return await response.read()
 
-async def dall_e_gen(prompt, size, num_images):
+async def dall_e_gen(model, prompt, size, num_images):
     response = openai.Image.create(
+        model=model,
         prompt=prompt,
         n=num_images,
         size=size,
