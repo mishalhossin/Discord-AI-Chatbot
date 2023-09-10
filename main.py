@@ -14,12 +14,12 @@ from discord import Embed, app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from utilities.ai_utils import generate_response, generate_image_prodia, search, poly_image_gen, generate_gpt4_response, dall_e_gen, sdxl
-from utilities.response_util import split_response, translate_to_en, get_random_prompt
-from utilities.discord_util import check_token, get_discord_token
-from utilities.config_loader import config, load_current_language, load_instructions
-from utilities.replit_detector import detect_replit
-from utilities.sanitization_utils import sanitize_prompt
+from bot_utilities.ai_utils import generate_response, generate_image_prodia, search, poly_image_gen, generate_gpt4_response, dall_e_gen, sdxl
+from bot_utilities.response_util import split_response, translate_to_en, get_random_prompt
+from bot_utilities.discord_util import check_token, get_discord_token
+from bot_utilities.config_loader import config, load_current_language, load_instructions
+from bot_utilities.replit_detector import detect_replit
+from bot_utilities.sanitization_utils import sanitize_prompt
 from model_enum import Model
 load_dotenv()
 
@@ -512,7 +512,7 @@ async def on_command_error(ctx, error):
         await ctx.send(f"{ctx.author.mention} Only the owner of the bot can use this command.")
 
 if detect_replit():
-    from utilities.replit_flask_runner import run_flask_in_thread
+    from bot_utilities.replit_flask_runner import run_flask_in_thread
     run_flask_in_thread()
 if __name__ == "__main__":
     bot.run(TOKEN)

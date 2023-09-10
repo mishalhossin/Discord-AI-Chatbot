@@ -7,7 +7,7 @@ import time
 import random
 import asyncio
 from urllib.parse import quote
-from utilities.config_loader import load_current_language, config
+from bot_utilities.config_loader import load_current_language, config
 import openai
 import os
 from dotenv import load_dotenv
