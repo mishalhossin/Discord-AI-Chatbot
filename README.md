@@ -223,6 +223,10 @@ sudo zypper update -y && sudo zypper install -y docker-compose
 sudo docker-compose up --build
 ```
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=mishalhossin/Discord-AI-Chatbot&type=Timeline)](https://star-history.com/#mishalhossin/Discord-AI-Chatbot&Timeline)
+
 ### Lovely Contributors : 
 
 <a href="https://github.com/mishalhossin/Discord-AI-Chatbot/graphs/contributors">
