@@ -58,7 +58,7 @@ async def search(prompt):
     if search_query is not None:
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get('https://ddg-api.awam.repl.co/api/search,
+                async with session.get('https://ddg-api.awam.repl.co/api/search',
                                        params={'query': search_query, 'maxNumResults': search_results_limit}) as response:
                     search = await response.json()
         except aiohttp.ClientError as e:
