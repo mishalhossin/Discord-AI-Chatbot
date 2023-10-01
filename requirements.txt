@@ -12,4 +12,5 @@ PyPDF2
 python-docx
 tqdm
 fake-useragent
+langchain
 openai

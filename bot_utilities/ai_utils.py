@@ -1,16 +1,24 @@
 import aiohttp
 import io
-from datetime import datetime
 import re
 import asyncio
 import time
 import random
 import asyncio
-from urllib.parse import quote
-from bot_utilities.config_loader import load_current_language, config
 import openai
 import os
+
+from datetime import datetime
+from urllib.parse import quote
+from bot_utilities.config_loader import load_current_language, config
+
 from dotenv import load_dotenv
+
+from langchain.agents import initialize_agent, Tool, AgentType
+from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.schema import SystemMessage
 
 load_dotenv()
 current_language = load_current_language()
@@ -18,6 +26,7 @@ internet_access = config['INTERNET_ACCESS']
 
 openai.api_key = os.getenv('CHIMERA_GPT_KEY')
 openai.api_base = "https://api.naga.ac/v1"
+openai.model = config['GPT_MODEL']
 def sdxl(prompt):
     response = openai.Image.create(
     model="sdxl",
@@ -44,12 +53,14 @@ async def search(prompt):
         return
     search_results_limit = config['MAX_SEARCH_RESULTS']
 
+    # Find if any URL's matched and I imagine get those if required
     url_match = re.search(r'(https?://\S+)', prompt)
     if url_match:
-        search_query = url_match.group(0)
+        search_query = url_match.group(0) 
     else:
         search_query = prompt
 
+    # Cant do long searches
     if search_query is not None and len(search_query) > 200:
         return
 
@@ -58,6 +69,7 @@ async def search(prompt):
     if search_query is not None:
         try:
             async with aiohttp.ClientSession() as session:
+                # Search uses duck-duck-go api
                 async with session.get('https://ddg-api.awam.repl.co/api/search',
                                        params={'query': search_query, 'maxNumResults': search_results_limit}) as response:
                     search = await response.json()
@@ -75,10 +87,67 @@ async def search(prompt):
     else:
         blob = "No search query is needed for a response"
     return blob
+
+def create_agent(id, instructions):
+    system_message = SystemMessage(
+        content=instructions
+    )
+
+    agent_kwargs = {
+        "system_message": system_message,
+        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+    }
+
+    memory = ConversationBufferWindowMemory(memory_key="memory", return_messages=True)
+
+    llm = ChatOpenAI(openai_api_base = openai.api_base,
+        openai_api_key = openai.api_key,
+        temperature=0,
+        model=openai.model)
+    llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
+    tools = [        
+        Tool(
+            name="Calculator",
+            func=llm_math_chain.run,
+            description="useful for when you need to answer questions about math"
+        ),        
+    ]
+    
+    # Todo: Consider replacing agent type with SELF_ASK_WITH_SEARCH
+    agent = initialize_agent(
+        tools, 
+        llm, 
+        agent=AgentType.OPENAI_FUNCTIONS,
+        verbose=True,
+        agent_kwargs=agent_kwargs,
+        memory=memory
+    )
+
+    agent_db[id] = agent
+    
+    return agent
     
 async def fetch_models():
     return openai.Model.list()
-    
+
+def generate_response_new(instructions, search, user_input):
+    id = user_input["id"]
+    message = user_input["message"]
+
+    # Establish new agent if one doesnt exist for the current user
+    if id not in agent_db:
+        agent = create_agent(id, instructions)
+        # Starting message to establish the user's handle
+        message = "My username is " + user_input["name"] + ". " + message
+    else:
+        agent = agent_db[id]
+
+
+    response = agent.run(message)
+    return response
+
+
+# Todo: remove
 def generate_response(instructions, search, history):
     if search is not None:
         search_results = search

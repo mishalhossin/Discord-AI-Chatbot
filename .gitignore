@@ -128,6 +128,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+DiscordBot/
 
 # Spyder project settings
 .spyderproject
