@@ -23,6 +23,8 @@ from bot_utilities.sanitization_utils import sanitize_prompt
 from model_enum import Model
 load_dotenv()
 
+#global agent_db
+
 # Set up the Discord bot and check token
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="/", intents=intents, heartbeat_timeout=60)
@@ -55,8 +57,8 @@ load_instructions(instruction)
 # Note the Chimera/Naga AI key works as a proxy for OpenAI services
 CHIMERA_GPT_KEY = os.getenv('CHIMERA_GPT_KEY')
 
-# Todo: investigate if global
-agent_db = {}
+
+#agent_db = {}
 
 # Fetch and print all models
 def fetch_chat_models():
@@ -121,6 +123,7 @@ personaname = config['INSTRUCTIONS'].title()
 replied_messages = {}
 active_channels = {}
 
+print(f"Initialized at {current_time}")
 
 @bot.event
 async def on_message(message):
@@ -166,29 +169,19 @@ async def on_message(message):
         )
 
         if internet_access:
+            current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             instructions += f"""\n\nIt's currently {current_time}, You have real-time information and the ability to browse the internet."""
         if internet_access:
             await message.add_reaction("📜")
         channel_id = message.channel.id
         key = f"{message.author.id}-{channel_id}"
-
-        # Local history of chat messages by user and channel
-        if key not in message_history:
-            message_history[key] = []
-
-        # Pull out the last n (MAX_HISTORY) messages
-        message_history[key] = message_history[key][-MAX_HISTORY:]
             
-        search_results = await search(message.content)
-            
-        message_history[key].append({"role": "user", "content": message.content})
-        history = message_history[key]
+        user_input = {"id": key, "name": message.author.global_name, "message": message.content}
 
         async with message.channel.typing():
-            response = await asyncio.to_thread(generate_response, instructions=instructions, search=search_results, history=history)
+            response = await asyncio.to_thread(generate_response, instructions=instructions, user_input=user_input)
             if internet_access:
                 await message.remove_reaction("📜", bot.user)
-        message_history[key].append({"role": "assistant", "name": personaname, "content": response})
 
         if response is not None:
             for chunk in split_response(response):

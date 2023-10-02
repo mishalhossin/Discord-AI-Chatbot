@@ -1,13 +1,15 @@
 import aiohttp
+import asyncio
 import io
-import re
-import asyncio
-import time
-import random
-import asyncio
+import json
 import openai
 import os
+import re
+import requests
+import time
+import random
 
+from bs4 import BeautifulSoup
 from datetime import datetime
 from urllib.parse import quote
 from bot_utilities.config_loader import load_current_language, config
@@ -15,10 +17,14 @@ from bot_utilities.config_loader import load_current_language, config
 from dotenv import load_dotenv
 
 from langchain.agents import initialize_agent, Tool, AgentType
+from langchain.chains import LLMMathChain
+from langchain.chains.summarize import load_summarize_chain
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferWindowMemory
+from langchain.prompts import MessagesPlaceholder, PromptTemplate
 from langchain.schema import SystemMessage
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv()
 current_language = load_current_language()
@@ -27,6 +33,11 @@ internet_access = config['INTERNET_ACCESS']
 openai.api_key = os.getenv('CHIMERA_GPT_KEY')
 openai.api_base = "https://api.naga.ac/v1"
 openai.model = config['GPT_MODEL']
+openai.max_tokens = config['MAX_TOKENS']
+
+browserless_token = os.getenv('BROWSERLESS_TOKEN')
+serp_api_key = os.getenv('SERP_API_KEY')
+
 def sdxl(prompt):
     response = openai.Image.create(
     model="sdxl",
@@ -36,7 +47,193 @@ def sdxl(prompt):
 )
     return response['data'][0]["url"]
 
-async def search(prompt):
+def summary(text):
+    """
+    The following function defines an llm chain that summarizes scraped content if its is too long.
+    This uses paragraph and escape splits as seperators for a recursive character text splitter as well as map_reduce for the summarizing strategy
+
+    """
+    # Define the system prompt 
+    map_reduce_prompt = """
+    Write a summary of the following website content:
+    "{text}"
+    SUMMARY:
+    """
+
+    llm = ChatOpenAI(openai_api_base = openai.api_base,
+    openai_api_key = openai.api_key,
+    temperature=0,
+    model=openai.model,
+    max_tokens=openai.max_tokens)
+
+    # Prepare splitter and split content
+    text_splitter = RecursiveCharacterTextSplitter(separators=["/n/n", "\n"], chunk_size=5000, chunk_overlap=350)
+    split_website_text = text_splitter.create_documents([text])
+
+    # Prepare summarizer chain
+    summary_prompt_template = PromptTemplate(template=map_reduce_prompt, input_variables=["text"])
+    summarize_chain = load_summarize_chain(llm=llm, chain_type='map_reduce', map_prompt=summary_prompt_template)
+
+    summary = summarize_chain.run(split_website_text)
+    return summary
+
+def scrape_website(url: str):
+    """
+    Defining a website scraping tool, this tool will also summarize content if the website is too long
+
+    """
+    headers = {
+        'Content-Type': 'application/json',
+        'DNT': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.1234.567 Safari/537.36',
+        'Accept-Encoding': 'gzip, deflate'
+    }
+
+    data = {
+        "url": url
+    }
+
+    error_message = "I appear to be having issues with this request"
+
+    data_json = json.dumps(data)
+    try:
+        # Fast and reliable web scraping and browser automation for any size project. Todo: Create and update token
+        response = requests.post(f"https://chrome.browserless.io/content?token={browserless_token}", headers=headers, data=data_json)
+
+        # parse content
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, "html.parser")
+            text = soup.get_text()
+
+            if len(text) > 5000:
+                text = summary(text)
+                
+            return text
+        else:
+            print(f"HTTP request failed with status code {response.status_code}")
+            return error_message
+    except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
+        print(f"An error occurred: {e}")
+        return error_message
+
+def search(query):
+    """
+    A tool that enables search functionality over the web for auxillary knowledge to boost the LLM's capability
+
+    """
+    url = "https://google.serper.dev/search"
+
+    payload = json.dumps({
+        "q": query
+    })
+    headers = {
+        'X-API-KEY': f'{serp_api_key}',
+        'Content-Type': 'application/json',
+        'DNT': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.1234.567 Safari/537.36',
+        'Accept-Encoding': 'gzip, deflate'
+    }
+
+    error_message = {"data": "I appear to be having issues with this request"}
+    error_obj = json.dumps(error_message)
+    
+    #try:
+    # Make the GET request
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        results = response.json()
+
+        return results
+    else:
+        print(f"HTTP request failed with status code {response.status_code}")
+        return error_obj
+    #except (requests.exceptions.RequestException, ValueError) as e:
+    #    print(f"An error occurred: {e}")
+    #    return error_obj
+
+
+
+def create_agent(id, instructions):
+    system_message = SystemMessage(
+        content=instructions
+    )
+
+    agent_kwargs = {
+        "system_message": system_message,
+        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+    }
+
+    memory = ConversationBufferWindowMemory(memory_key="memory", return_messages=True)
+
+    llm = ChatOpenAI(openai_api_base = openai.api_base,
+        openai_api_key = openai.api_key,
+        temperature=0,
+        model=openai.model,
+        max_tokens=openai.max_tokens)
+
+    llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
+    tools = [  
+        Tool(
+        name="Calculator",
+        func=llm_math_chain.run,
+        description="useful for when you need to answer questions about math"
+        ),
+        Tool(
+        name="Search",
+        func=search,
+        description = "Only use this to answer questions about events, data, or terms that you don't really understand. You should ask targeted questions"
+        ),
+        Tool(
+            name="Scrape_website",
+            func = scrape_website,
+            description = "Use this to pull content and knowledge from a website url"
+        ),
+    ]
+    
+    # Todo: Consider replacing agent type with SELF_ASK_WITH_SEARCH
+    agent = initialize_agent(
+        tools, 
+        llm, 
+        agent=AgentType.OPENAI_FUNCTIONS,
+        verbose=True,
+        agent_kwargs=agent_kwargs,
+        memory=memory
+    )
+
+    agent_db[id] = agent
+    
+    return agent
+    
+async def fetch_models():
+    return openai.Model.list()
+
+agent_db = {}
+
+def generate_response(instructions, user_input):
+    id = user_input["id"]
+    message = user_input["message"]
+
+
+    # Establish new agent if one doesnt exist for the current user
+    if id not in agent_db:
+        agent = create_agent(id, instructions)
+        # Starting message to establish the user's handle
+        message = "My username is " + user_input["name"] + ". " + message
+    else:
+        agent = agent_db[id]
+
+    time_start = datetime.now()
+    print(f"User request started at: {time_start.strftime('%Y-%m-%d %H:%M:%S')}")
+    response = agent.run(message)
+    time_end = datetime.now()
+    print(f"User request ended at: {time_end.strftime('%Y-%m-%d %H:%M:%S')}. Total duration: {time_end - time_start}")
+
+    return response
+
+# Todo: Remove
+async def search_old(prompt):
     """
     Asynchronously searches for a prompt and returns the search results as a blob.
 
@@ -88,67 +285,8 @@ async def search(prompt):
         blob = "No search query is needed for a response"
     return blob
 
-def create_agent(id, instructions):
-    system_message = SystemMessage(
-        content=instructions
-    )
-
-    agent_kwargs = {
-        "system_message": system_message,
-        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
-    }
-
-    memory = ConversationBufferWindowMemory(memory_key="memory", return_messages=True)
-
-    llm = ChatOpenAI(openai_api_base = openai.api_base,
-        openai_api_key = openai.api_key,
-        temperature=0,
-        model=openai.model)
-    llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
-    tools = [        
-        Tool(
-            name="Calculator",
-            func=llm_math_chain.run,
-            description="useful for when you need to answer questions about math"
-        ),        
-    ]
-    
-    # Todo: Consider replacing agent type with SELF_ASK_WITH_SEARCH
-    agent = initialize_agent(
-        tools, 
-        llm, 
-        agent=AgentType.OPENAI_FUNCTIONS,
-        verbose=True,
-        agent_kwargs=agent_kwargs,
-        memory=memory
-    )
-
-    agent_db[id] = agent
-    
-    return agent
-    
-async def fetch_models():
-    return openai.Model.list()
-
-def generate_response_new(instructions, search, user_input):
-    id = user_input["id"]
-    message = user_input["message"]
-
-    # Establish new agent if one doesnt exist for the current user
-    if id not in agent_db:
-        agent = create_agent(id, instructions)
-        # Starting message to establish the user's handle
-        message = "My username is " + user_input["name"] + ". " + message
-    else:
-        agent = agent_db[id]
-
-
-    response = agent.run(message)
-    return response
-
-
 # Todo: remove
-def generate_response(instructions, search, history):
+def generate_response_old(instructions, search, history):
     if search is not None:
         search_results = search
     elif search is None:
