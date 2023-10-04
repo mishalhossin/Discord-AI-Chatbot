@@ -9,5 +9,4 @@ def sanitize_username(name):
     return name
 
 def sanitize_prompt(input_string):
-    sanitized_string = re.sub(r'[^\w\s]', '', input_string)
-    return sanitized_string
+    return re.sub(r'[^\w\s]', '', input_string)
