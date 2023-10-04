@@ -4,19 +4,15 @@ import aiohttp
 from langdetect import detect
 
 async def replace_with_image_url(response):
-    match = re.search(r'<draw:(.*?)>', response)
-
-    if match:
+    if match := re.search(r'<draw:(.*?)>', response):
         original_text = match.group(0)
         original_url = await get_random_image_url(match.group(1))
-        
-        if original_url is not None:
-            replaced_response = response.replace(original_text, original_url)
-        else:
-            replaced_response = response.replace(original_text, "No results found")
-        
-        return replaced_response
 
+        return (
+            response.replace(original_text, original_url)
+            if original_url is not None
+            else response.replace(original_text, "No results found")
+        )
     return response
 
 async def get_random_image_url(query):
@@ -24,15 +20,12 @@ async def get_random_image_url(query):
     url = f'https://ddmm.ai/api/gsearch/a/{encoded_query}'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            if response.status == 200:
-                json_data = await response.json()
-                images_results = json_data.get("images_results", [])
-                if images_results:
-                    original_urls = [result["original"] for result in images_results]
-                    random_original_url = random.choice(original_urls)
-                    return random_original_url
-            else:
+            if response.status != 200:
                 return None
+            json_data = await response.json()
+            if images_results := json_data.get("images_results", []):
+                original_urls = [result["original"] for result in images_results]
+                return random.choice(original_urls)
     return None
 
 def split_response(response, max_length=1999):
@@ -62,8 +55,7 @@ async def translate_to_en(text):
     async with aiohttp.ClientSession() as session:
         async with session.get(API_URL, params={"text": text,"from": detected_lang,"to": "en",}) as response:
             data = await response.json()
-            translation = data.get("translated")
-            return translation
+            return data.get("translated")
 
 async def get_random_prompt(prompt):
     url = 'https://lexica.art/api/infinite-prompts'
@@ -85,10 +77,9 @@ async def get_random_prompt(prompt):
 
     async with aiohttp.ClientSession() as session:
         async with session.post(url, headers=headers, json=data) as response:
-            if response.status == 200:
-                response_json = await response.json()
-                prompts = response_json['prompts']
-                random_prompt = random.choice(prompts)
-                return random_prompt['prompt']
-            else:
+            if response.status != 200:
                 return prompt
+            response_json = await response.json()
+            prompts = response_json['prompts']
+            random_prompt = random.choice(prompts)
+            return random_prompt['prompt']

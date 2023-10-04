@@ -20,5 +20,4 @@ async def check_token(TOKEN):
 def get_discord_token():
     print("\033[31mLooks like you haven't properly set up a Discord token environment variable in the `.env` file. (Secrets on replit)\033[0m")
     print("\033[33mNote: If you don't have a Discord token environment variable, you will have to input it every time. \033[0m")
-    TOKEN = input("Please enter your Discord token: ")
-    return TOKEN
+    return input("Please enter your Discord token: ")

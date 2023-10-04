@@ -44,8 +44,7 @@ async def search(prompt):
         return
     search_results_limit = config['MAX_SEARCH_RESULTS']
 
-    url_match = re.search(r'(https?://\S+)', prompt)
-    if url_match:
+    if url_match := re.search(r'(https?://\S+)', prompt):
         search_query = url_match.group(0)
     else:
         search_query = prompt
@@ -80,10 +79,7 @@ async def fetch_models():
     return openai.Model.list()
     
 def generate_response(instructions, search, history):
-    if search is not None:
-        search_results = search
-    elif search is None:
-        search_results = "Search feature is disabled"
+    search_results = search if search is not None else "Search feature is disabled"
     messages = [
             {"role": "system", "name": "instructions", "content": instructions},
             *history,
@@ -112,8 +108,7 @@ async def poly_image_gen(session, prompt):
     image_url = f"https://image.pollinations.ai/prompt/{prompt}?seed={seed}"
     async with session.get(image_url) as response:
         image_data = await response.read()
-        image_io = io.BytesIO(image_data)
-        return image_io
+        return io.BytesIO(image_data)
 
 # async def fetch_image_data(url):
 #     async with aiohttp.ClientSession() as session:
