@@ -85,7 +85,7 @@ def generate_response(instructions, search, history):
             *history,
             {"role": "system", "name": "search_results", "content": search_results},
         ]
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completion.create(
         model=config['GPT_MODEL'],
         messages=messages
     )
@@ -96,7 +96,7 @@ def generate_gpt4_response(prompt):
     messages = [
             {"role": "system", "name": "admin_user", "content": prompt},
         ]
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completion.create(
         model='gpt-4',
         messages=messages
     )
