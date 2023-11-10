@@ -85,7 +85,7 @@ def generate_response(instructions, search, history):
             *history,
             {"role": "system", "name": "search_results", "content": search_results},
         ]
-    response = openai.chat.completion.create(
+    response = openai.chat.completions.create(
         model=config['GPT_MODEL'],
         messages=messages
     )
@@ -96,7 +96,7 @@ def generate_gpt4_response(prompt):
     messages = [
             {"role": "system", "name": "admin_user", "content": prompt},
         ]
-    response = openai.chat.completion.create(
+    response = openai.chat.completions.create(
         model='gpt-4',
         messages=messages
     )
@@ -116,7 +116,7 @@ async def poly_image_gen(session, prompt):
 #             return await response.read()
 
 async def dall_e_gen(model, prompt, size, num_images):
-    response = openai.Image.create(
+    response = openai.images.generate(
         model=model,
         prompt=prompt,
         n=num_images,
