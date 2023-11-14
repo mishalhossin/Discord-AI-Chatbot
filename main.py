@@ -170,7 +170,7 @@ async def on_message(message):
         history = message_history[key]
 
         async with message.channel.typing():
-            response = await asyncio.to_thread(generate_response, instructions=instructions, search=search_results, history=history)
+            response = await generate_response(instructions=instructions, search=search_results, history=history)
             if internet_access:
                 await message.remove_reaction("🔎", bot.user)
         message_history[key].append({"role": "assistant", "name": personaname, "content": response})
@@ -444,7 +444,7 @@ async def gif(ctx, category: app_commands.Choice[str]):
 @bot.hybrid_command(name="askgpt4", description="Ask gpt4 a question")
 async def ask(ctx, prompt: str):
     await ctx.defer()
-    response = await asyncio.to_thread(generate_gpt4_response, prompt=prompt)
+    response = await generate_gpt4_response(prompt=prompt)
     for chunk in split_response(response):
         await ctx.send(chunk, allowed_mentions=discord.AllowedMentions.none(), suppress_embeds=True)
 

@@ -8,7 +8,7 @@ import random
 import asyncio
 from urllib.parse import quote
 from bot_utilities.config_loader import load_current_language, config
-import openai
+from openai import AsyncOpenAI
 import os
 from dotenv import load_dotenv
 
@@ -16,16 +16,19 @@ load_dotenv()
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-openai.api_key = os.getenv('CHIMERA_GPT_KEY')
-openai.api_base = "https://api.naga.ac/v1"
-def sdxl(prompt):
-    response = openai.Image.create(
-    model="sdxl",
-    prompt=prompt,
-    n=1,  # images count
-    size="1024x1024"
+openai_client = AsyncOpenAI(
+    api_key = os.getenv('CHIMERA_GPT_KEY'),
+    base_url = "https://api.naga.ac/v1"
 )
-    return response['data'][0]["url"]
+
+async def sdxl(prompt):
+    response = await openai_client.images.generate(
+        model="sdxl",
+        prompt=prompt,
+        n=1,  # images count
+        size="1024x1024"
+    )
+    return response.data[0].url
 
 async def search(prompt):
     """
@@ -76,27 +79,28 @@ async def search(prompt):
     return blob
     
 async def fetch_models():
-    return openai.Model.list()
+    models = await openai_client.models.list()
+    return models
     
-def generate_response(instructions, search, history):
+async def generate_response(instructions, search, history):
     search_results = search if search is not None else "Search feature is disabled"
     messages = [
             {"role": "system", "name": "instructions", "content": instructions},
             *history,
             {"role": "system", "name": "search_results", "content": search_results},
         ]
-    response = openai.chat.completions.create(
+    response = await openai_client.chat.completions.create(
         model=config['GPT_MODEL'],
         messages=messages
     )
     message = response.choices[0].message.content
     return message
 
-def generate_gpt4_response(prompt):
+async def generate_gpt4_response(prompt):
     messages = [
             {"role": "system", "name": "admin_user", "content": prompt},
         ]
-    response = openai.chat.completions.create(
+    response = await openai_client.chat.chat.completions.create(
         model='gpt-4',
         messages=messages
     )
@@ -116,15 +120,15 @@ async def poly_image_gen(session, prompt):
 #             return await response.read()
 
 async def dall_e_gen(model, prompt, size, num_images):
-    response = openai.images.generate(
+    response = await openai_client.chat.images.generate(
         model=model,
         prompt=prompt,
         n=num_images,
         size=size,
     )
     imagefileobjs = []
-    for image in response["data"]:
-        image_url = image["url"]
+    for image in response.data:
+        image_url = image.url
         async with aiohttp.ClientSession() as session:
             async with session.get(image_url) as response:
                 content = await response.content.read()
