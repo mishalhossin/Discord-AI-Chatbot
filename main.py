@@ -67,7 +67,7 @@ def fetch_chat_models():
         models.extend(
             model['id']
             for model in ModelsData.get('data')
-            if "chat" in model['endpoints'][0]
+            if "max_images" not in model
         )
     else:
         print(f"Failed to fetch chat models. Status code: {response.status_code}")
