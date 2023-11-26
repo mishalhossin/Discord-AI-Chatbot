@@ -4,7 +4,7 @@ MAX_SEARCH_RESULTS: 4 # Set the maximum search results for internet access DONT 
 ALLOW_DM: true # Set to true to allow direct messages
 SMART_MENTION: true # Set to true to enable smart mention feature
 
-GPT_MODEL: gpt-3.5-turbo-16k-0613 # Model used for chat completion
+GPT_MODEL: gpt-3.5-turbo-0613 # Model used for chat completion
 
 MAX_HISTORY: 8 # Set the maximum message history
 
