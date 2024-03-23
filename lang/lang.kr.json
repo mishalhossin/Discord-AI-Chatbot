@@ -1,1 +1,26 @@
-
+{
+  "language_name": "Korean",
+  "instruc_image_caption": "이미지-텍스트 모델을 로드하는 데 시간이 걸리고 시간 초과 오류가 발생할 수 있습니다. 대신 대체 또는 기능 모델을 사용해야 합니다. 이미지에 대한 캡션은 기호나 기호가 포함된 이미지에 적합한 OCR(1차)과 OCR에 매우 부정확한 일반 이미지 감지(2차)로 분류됩니다. 이미지 캡션:",
+  "pfp": "이미지 URL을 사용하여 봇의 PFP 변경",
+  "pfp_change_msg_1": "이미지 URL을 제공하거나 이 명령에 대한 이미지를 첨부하세요.",
+  "pfp_change_msg_2": "프로필 사진이 변경되었습니다.",
+  "ping": "퐁! 봇 대기 시간 제공",
+  "ping_msg": "퐁! 지연 시간 ",
+  "changeusr": "봇의 실제 사용자 이름 변경",
+  "changeusr_msg_1": "사용자 이름을 변경하려고 합니다....",
+  "changeusr_msg_2_part_1": "죄송합니다. 사용자 이름입니다. '",
+  "changeusr_msg_2_part_2": "' 이미 촬영.",
+  "changeusr_msg_3": "사용자 이름이 다음으로 변경되었습니다. ",
+  "toggledm": "채팅을 위해 DM을 전환하세요",
+  "toggleactive": "활성 채널 전환",
+  "toggleactive_msg_1": "활성 채널 목록에서 제거되었습니다.",
+  "toggleactive_msg_2": "활성 채널 목록에 추가되었습니다!",
+  "help": "다른 모든 명령을 받아보세요!",
+  "help_footer": "https://dsc.gg/mishals-abode",
+  "nekos": "neko, waifu, husbando, kitsune 또는 기타 작업의 무작위 이미지 또는 GIF 표시",
+  "nekos_msg": "잘못된 카테고리가 제공되었습니다. 유효한 카테고리는 다음과 같습니다: ",
+  "imagine": "이미지 생성",
+  "imagine_msg": "이미지 생성 완료!",
+  "bonk": "메시지 지우기",
+  "bonk_msg": "메시지 기록이 삭제되었습니다!"
+}
