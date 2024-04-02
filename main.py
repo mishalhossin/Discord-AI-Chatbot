@@ -308,6 +308,7 @@ async def clear(ctx):
     app_commands.Choice(name='📏 Euler a', value='Euler a'),
     app_commands.Choice(name='📐 Heun', value='Heun'),
     app_commands.Choice(name='💥 DPM++ 2M Karras', value='DPM++ 2M Karras'),
+    app_commands.Choice(name='💥 DPM++ SDE Karras', value='DPM++ SDE Karras'),
     app_commands.Choice(name='🔍 DDIM', value='DDIM')
 ])
 @app_commands.choices(model=[
