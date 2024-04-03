@@ -1,15 +1,24 @@
-import openai
-import os
-from dotenv import load_dotenv # python-dotenv
+from g4f.client import Client
+from g4f.Provider import RetryProvider, FlowGpt, ChatgptAi, Liaobots
 
-load_dotenv()
-openai.api_key = os.getenv('CHIMIRA_GPT_KEY')
-openai.api_base = "https://chimeragpt.adventblocks.cc/v1"
-def printurl():
-    # response = openai.Image.create(
-    #     prompt="a cute anime girl doing",
-    #     n=1,
-    #     size="256x256"
-    # )
-    print()
-printurl()
+client = Client(
+    provider=RetryProvider([FlowGpt, ChatgptAi, Liaobots]),
+)
+try:
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": "Say this is a test"}],
+    )
+    print(response.choices[0].message.content)
+    print('gpt-3.5-turbo worked fine')
+except:
+    print('gpt-3.5-turbo failed')
+try:
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": "Say this is a test"}],
+    )
+    print(response.choices[0].message.content)
+    print('gpt-4 worked fine')
+except:
+    print('gpt-4 failed')

@@ -18,7 +18,7 @@ for filename in os.listdir(lang_directory):
         language_code = filename.split(".")[1]
         valid_language_codes.append(language_code)
 
-def load_current_language():
+def load_current_language() -> dict:
     lang_file_path = os.path.join(
         lang_directory, f"lang.{current_language_code}.json")
     with open(lang_file_path, encoding="utf-8") as lang_file:
@@ -26,7 +26,8 @@ def load_current_language():
     return current_language
 
 # Instructions loader
-def load_instructions(instruction):
+def load_instructions() -> dict:
+    instructions = {}
     for file_name in os.listdir("instructions"):
         if file_name.endswith('.txt'):
             file_path = os.path.join("instructions", file_name)
@@ -34,4 +35,11 @@ def load_instructions(instruction):
                 file_content = file.read()
             # Use the file name without extension as the variable name
                 variable_name = file_name.split('.')[0]
-                instruction[variable_name] = file_content
+                instructions[variable_name] = file_content
+    return instructions
+
+def load_active_channels() -> dict:
+    if os.path.exists("channels.json"):
+        with open("channels.json", "r", encoding='utf-8') as f:
+            active_channels = json.load(f)
+    return active_channels

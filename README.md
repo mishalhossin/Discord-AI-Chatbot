@@ -31,17 +31,8 @@
 <details>
 <summary><strong>Commands ⚙️⚙️ (Click to expand) </strong></summary>
 
-- [x] `/help`: Get all other commands. ⚙️
-- [x] `/pfp [image_url]`: Change the bot's actual profile picture. 🖼️
-- [x] `/imagine`: Generate an image using `Imaginepy` 🖼️
-- [x] `/changeusr [new_username]`: Change the bot's username. 📛
-- [x] `/ping`: Get a "Pong" response from the bot. 🏓
-- [x] `/toggleactive`: Toggle active channels. 🔀
-- [x] `/toggledm`: Toggle DM for chatting. 💬
-- [x] `/clear`: Clear the message history. 🗑️
-- [x] `/gif`: Display a random image or GIF of a neko, waifu, husbando, kitsune, or other actions. 🐱
-- [x] `/dalle`: create images using `Dalle`
-- [x] `/support`: Need Support?
+- [x] `/help`: Get all  commands
+Too lazy to list all of em right here
 </details>
 
 ## Additional configuration ⚙️
@@ -142,27 +133,16 @@ python3.10 -m pip install -r requirements.txt
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 </details>
 
-### Step 5.Getting a Free Reverse OpenAI proxy Key 🔑
-
-Follow these steps:
-
-1. Join the Discord server by clicking on the following invite link: [NAGA AI](https://discord.naga.ac/)
-2. Once you have joined the server, run the `/key get` command in any text channel.
-3. This command will provide you with a reverse OpenAI key.
-
-You can additionally enable `gpt-4` in `config.yml`
-
-### Step 6. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimira gpt key It will look like this:
+### Step 5. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Chimira gpt key It will look like this:
 ```
-DISCORD_TOKEN=<YOUR_DISCORD_BOT_TOKEN
-CHIMERA_GPT_KEY=<YOUR_CHIMIRA_API_KEY>
+DISCORD_TOKEN=YOUR_DISCORD_BOT_TOKEN
 ```
-### Step 7. 🚀 Run the bot
+### Step 6. 🚀 Run the bot
 ```
 python main.py
 ```
 #### You may need to run as admin if you are on Windows
-### Step 8. 🔗 Invite the bot 
+### Step 7. 🔗 Invite the bot 
 You can Invite your bot using the link in console
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
 
@@ -172,21 +152,6 @@ You can Invite your bot using the link in console
 - For more awesome commands use **/help**
 ![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
 
-# ✨  Other ways to run ✨
-### Using replit to run ☁️
-# [![Try on repl.it](https://img.shields.io/badge/Replit-DD1200?style=for-the-badge&logo=Replit&logoColor=white)](https://repl.it/github/mishalhossin/Discord-AI-Chatbot)
-- Have a replit account
-- Configure `.replit` to run `python main.py`
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/81819ac2-7600-464e-b7c8-dc0a399aba15)
-
-- Please note environments variables of `.env` needs to be set in `Secrets` from `Tools` tab of replit 
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/e93b1be7-4706-4b6f-a632-239c4fd16acf)
-
-- Config `secrets` in replit like this
-
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/d629e97a-60d9-4ba4-b4fb-8fc6a8a97831)
 
 ### Using docker to run 🐳
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
