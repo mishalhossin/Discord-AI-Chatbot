@@ -13,7 +13,6 @@
 
 <details>
 <summary><strong>Features ✨ (Click to expand) </strong></summary>
-
 - [x] Hybrid Command System: Get the best of slash and normal commands. It's like a buffet! ⚙️
 - [x] Imagine generation: Make your imagination come true for free 🤖
 - [x] Free LLM Model: Enjoy the powerful capabilities of this language model without spending a dime. 🤖
@@ -23,9 +22,6 @@
 - [x] GPT3 model: Leverage the power of GPT model for advanced language processing capabilities. 🤖
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
-- [ ] YouTube Video Summarizer: This is a feature that utilizes the power of the Language Model (LLM) to generate summaries of YouTube videos. 🌐
-- [ ] Speech recognition: Coming soon! Get ready for an LLM-powered voice assistant.
-
 </details>
 
 <details>
@@ -36,17 +32,6 @@ Too lazy to list all of em right here
 </details>
 
 ## Additional configuration ⚙️
-
-<details>
-<summary><strong>Enabling Internet access 🌐🔍(Click to Expand)</strong></summary>
-
-To ensure that the bot has access to the most up-to-date information, you can enable internet access by setting the `INTERNET_ACCESS` parameter to true in the `config.yml` file. This will allow the bot to retrieve information beyond the data it was initially trained on, which was only available up until 2021.
-
-https://github.com/mishalhossin/Discord-AI-Chatbot/blob/5bcb2c9b471e2a9cbf9a7d50882a897ce5d5890b/config.yml#L1
-
-You can also set the maximum search results
-  
-</details>
 
 <details>
 <summary><strong>Language Selection 🌐⚙️ (Click to Expand)</strong></summary>
@@ -97,11 +82,11 @@ https://github.com/mishalhossin/Discord-AI-Chatbot/blob/c20f26b0b8f1b6bba2fae8f6
 To create a custom personality, follow these steps:
 1. Create a `.txt` file like `custom.txt` inside the `instructions` folder.
 2. Add the way you want to bot to act in `custom.txt`
-3. Open the `config.json` file and locate [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12).
+3. Open the `config.yml` file and locate [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12).
 4. Set the value of INSTRUCTIONS at [line 12](https://github.com/mishalhossin/Discord-AI-Chatbot/blob/2626075fda36fa6463cb857d9885e6b05f438f60/config.json#L12) as `"custom"` to specify the custom persona.
 
   
-⚠️ You don't explicitly need to use the name `custom` for persona name and set it in `config.json` 
+⚠️ You don't explicitly need to use the name `custom` for persona name and set it in `config.yml` 
   
 </details>
 
