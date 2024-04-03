@@ -135,8 +135,7 @@ You can Invite your bot using the link in console
 - Invite your bot and DM (Direct Message) it | ⚠️ Make sure you have DM enabled
 - if you want it in the server channel use **/toggleactive** 
 - For more awesome commands use **/help**
-![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/6f26c552-751d-4753-bd17-883baf7ee6d5)
-
+![image](https://github.com/mishalhossin/Discord-AI-Chatbot/assets/91066601/d8ee35d5-4a1a-4501-9dbe-d7c110e81518)
 
 ### Using docker to run 🐳
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
