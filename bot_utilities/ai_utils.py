@@ -82,6 +82,7 @@ async def generate_response(instructions, history):
             messages=messages
         ) 
         return second_response.choices[0].message.content
+    return response_message.content
 
 async def duckduckgotool(query) -> str:
     if config['INTERNET_ACCESS']:
