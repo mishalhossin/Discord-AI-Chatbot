@@ -93,7 +93,7 @@ class AiStuffCog(commands.Cog):
         model_uid = Model[model.value].value[0]
 
         if is_nsfw and not ctx.channel.nsfw:
-            await ctx.send(f"⚠️ You can create NSFW images in NSFW channels only\n To create NSFW image first create a age ristricted channel ", delete_after=30)
+            await ctx.send("⚠️ You can create NSFW images in NSFW channels only\n To create NSFW image first create a age ristricted channel ", delete_after=30)
             return
         imagefileobj = await generate_image_prodia(prompt, model_uid, sampler.value, seed, negative)
 

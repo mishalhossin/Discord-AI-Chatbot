@@ -36,7 +36,7 @@ class ChatConfigCog(commands.Cog):
         try:
             message_history[key].clear()
         except Exception as e:
-            await ctx.send("⚠️ There is no message history to be cleared ", delete_after=2)
+            await ctx.send(f"⚠️ There is no message history to be cleared \n ```{e}```", delete_after=2)
             return
 
         await ctx.send("Message history has been cleared", delete_after=4)
