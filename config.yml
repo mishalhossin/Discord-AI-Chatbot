@@ -1,10 +1,11 @@
+API_BASE_URL: https://api.groq.com/openai/v1/
 INTERNET_ACCESS: true # Set to true to enable internet access
 MAX_SEARCH_RESULTS: 4 # Set the maximum search results for internet access DONT SET TOO HIGH
 
 ALLOW_DM: true # Set to true to allow direct messages
 SMART_MENTION: true # Set to true to enable smart mention feature
 
-GPT_MODEL: gpt-3.5-turbo # Model used for chat completion
+MODEL_ID: mixtral-8x7b-32768 # Model used for chat completion
 
 MAX_HISTORY: 8 # Set the maximum message history
 

@@ -1,26 +1,25 @@
 import aiohttp
 import io
 import time
+import os
 import random
-import nest_asyncio
+import json
 from langdetect import detect
 from gtts import gTTS
 from urllib.parse import quote
 from bot_utilities.config_loader import load_current_language, config
-from g4f.client import Client
-from g4f.Provider import RetryProvider, FlowGpt, ChatgptAi, Liaobots
+from openai import AsyncOpenAI
+from duckduckgo_search import AsyncDDGS
 from dotenv import load_dotenv
 
 load_dotenv()
-nest_asyncio.apply()
 
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-client = Client(
-    provider=RetryProvider([FlowGpt, ChatgptAi, Liaobots]),
-    # image_provider=BingCreateImages,
-    # No image provider works lmao
+client = AsyncOpenAI(
+    base_url=config['API_BASE_URL'],
+    api_key=os.environ.get("API_KEY"),
 )
 
 async def generate_response(instructions, history):
@@ -28,23 +27,74 @@ async def generate_response(instructions, history):
             {"role": "system", "name": "instructions", "content": instructions},
             *history,
         ]
-    response = client.chat.completions.create(
-        model=config['GPT_MODEL'],
-        messages=messages
-    )
-    message = response.choices[0].message.content
-    return message
 
-async def generate_gpt4_response(prompt):
-    messages = [
-            {"role": "system", "name": "admin_user", "content": prompt},
-        ]
-    response = client.chat.completions.create(
-        model='gpt-4',
-        messages=messages
+    tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "searchtool",
+                "description": "Searches the internet.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "The query for search engine",
+                        }
+                    },
+                    "required": ["query"],
+                },
+            },
+        }
+    ]
+    response = await client.chat.completions.create(
+        model=config['MODEL_ID'],
+        messages=messages,        
+        tools=tools,
+        tool_choice="auto",
     )
-    message = response.choices[0].message.content
-    return message
+    response_message = response.choices[0].message
+    tool_calls = response_message.tool_calls
+
+    if tool_calls:
+        available_functions = {
+            "searchtool": duckduckgotool,
+        }
+        messages.append(response_message)
+
+        for tool_call in tool_calls:
+            function_name = tool_call.function.name
+            function_to_call = available_functions[function_name]
+            function_args = json.loads(tool_call.function.arguments)
+            function_response = await function_to_call(
+                query=function_args.get("query")
+            )
+            messages.append(
+                {
+                    "tool_call_id": tool_call.id,
+                    "role": "tool",
+                    "name": function_name,
+                    "content": function_response,
+                }
+            )
+        second_response = await client.chat.completions.create(
+            model=config['MODEL_ID'],
+            messages=messages
+        ) 
+        return second_response.choices[0].message.content
+
+async def duckduckgotool(query) -> str:
+    if config['INTERNET_ACCESS']:
+        return "internet access has been disabled by user"
+    blob = ''
+    results = await AsyncDDGS(proxy=None).text(query, max_results=6)
+    try:
+        for index, result in enumerate(results[:6]):  # Limiting to 6 results
+            blob += f'[{index}] Title : {result["title"]}\nSnippet : {result["body"]}\n\n\n Provide a cohesive response base on provided Search results'
+    except Exception as e:
+        blob += f"Search error: {e}\n"
+    return blob
+
 
 async def poly_image_gen(session, prompt):
     seed = random.randint(1, 100000)

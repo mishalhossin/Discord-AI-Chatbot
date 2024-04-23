@@ -4,7 +4,7 @@ from discord.ext import commands
 from bot_utilities.response_utils import split_response
 from bot_utilities.ai_utils import generate_response, text_to_speech
 from bot_utilities.config_loader import config, load_active_channels
-from ..common import allow_dm, trigger_words, replied_messages, smart_mention, message_history, MAX_HISTORY, instructions
+from ..common import allow_dm, trigger_words, smart_mention, message_history, MAX_HISTORY, instructions
 
 
 class OnMessage(commands.Cog):
@@ -15,8 +15,7 @@ class OnMessage(commands.Cog):
         
     @commands.Cog.listener()
     async def on_message(self, message):
-        replied_messages.update_replied_messages(message)
-
+        
         if self.should_skip_message(message):
             return
 
@@ -25,9 +24,21 @@ class OnMessage(commands.Cog):
         instructions = self.get_instructions(instruc_config)
 
         key = f"{message.author.id}-{string_channel_id}"
-        history = self.update_message_history(key, message)
+        if key not in message_history:
+            message_history[key] = []
+        else: 
+            message_history[key] = message_history[key][-MAX_HISTORY:]
+
+        message_history[key].append({"role": "user", "content": message.content})
+
+        history = message_history[key]
 
         response = await self.generate_bot_response(message, instructions, history)
+        
+        message_history[key].append({"role": "assistant", "content": response})
+
+        message_history[key] = message_history[key][-MAX_HISTORY:]
+        
         await self.play_response_audio(response, message)
 
         await self.send_response_chunks(response, message)

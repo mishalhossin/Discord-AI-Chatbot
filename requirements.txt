@@ -7,5 +7,5 @@ python-dotenv
 pyttsx3
 PyYAML
 Requests
-nest_asyncio
-g4f
+openai
+duckduckgo-search

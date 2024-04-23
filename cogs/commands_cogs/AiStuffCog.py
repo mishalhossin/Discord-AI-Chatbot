@@ -5,7 +5,7 @@ import aiohttp
 import asyncio
 import random
 from bot_utilities.response_utils import split_response
-from bot_utilities.ai_utils import generate_gpt4_response, poly_image_gen, generate_image_prodia
+from bot_utilities.ai_utils import poly_image_gen, generate_image_prodia
 from prodia.constants import Model
 from ..common import current_language, blacklisted_words
 
@@ -13,13 +13,6 @@ from ..common import current_language, blacklisted_words
 class AiStuffCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.hybrid_command(name="askgpt4", description="Ask gpt4 a question")
-    async def ask(self, ctx, prompt: str):
-        await ctx.defer()
-        response = await generate_gpt4_response(prompt)
-        for chunk in split_response(response):
-            await ctx.send(chunk, allowed_mentions=discord.AllowedMentions.none(), suppress_embeds=True)
 
     @commands.guild_only()
     @commands.hybrid_command(name="imagine-pollinations", description="Bring your imagination into reality with pollinations.ai!")
