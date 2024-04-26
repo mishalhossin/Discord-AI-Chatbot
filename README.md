@@ -19,7 +19,7 @@
 - [x] Mention Recognition: The bot always responds when you mention it or say its name. It's as attentive as a squirrel spotting a shiny acorn! ⚙️
 - [x] Message Handling: The bot knows when you're replying to someone else, so it won't cause confusion. It's like having a mind reader on your server! 🪄
 - [x] Channel-Specific Responses: Use the `/toggleactive` command to chill the bot in a specific channel. ⚙️
-- [x] Opensource models: Leverage the powers opensource models via 🤖
+- [x] Opensource models: Leverage the powers of source models via 🤖
 - [x] Secure Credential Management: Keep your credentials secure using environment variables. 🔑
 - [x] Web Access: Web Access is now available! Unlock a whole new level of awesomeness. 🌐
 </details>
@@ -43,7 +43,8 @@ To select a Language, set the value of `"LANGUAGE"` of `config.yml` with the val
 - `ar` - Arabic 🇦🇪
 - `fr` - Français 🇫🇷
 - `es` - Español 🇪🇸
-- `de` - Deutsch 🇩🇪  
+- `de` - Deutsch 🇩🇪
+- `kr` - Korean 🇰🇷 
 - `vn` - Vietnamese 🇻🇳
 - `cn` - Chinese 🇨🇳
 - `ru` - Russian 🇷🇺
@@ -117,7 +118,7 @@ python3.10 -m pip install -r requirements.txt
 ##### Get the token !!! by clicking copy
 ![image](https://user-images.githubusercontent.com/91066601/235555065-6b51844d-dfbd-4b11-a14b-f65dd6de20d9.png)
 </details>
-### Step 5. 🔑 Get Groq api key from [here](https://console.groq.com/keys)
+### Step 5. 🔑 Get Groq API key from [here](https://console.groq.com/keys)
 ### Step 6. 🔐 Rename `example.env` to `.env` and put the Discord bot token and your Groq key It will look like this:
 ```
 DISCORD_TOKEN=YOUR_DISCORD_BOT_TOKEN
@@ -129,7 +130,7 @@ python main.py
 ```
 #### You may need to run as admin if you are on Windows
 ### Step 8. 🔗 Invite the bot 
-You can Invite your bot using the link in console
+You can Invite your bot using the link in the console
 ![image](https://user-images.githubusercontent.com/91066601/236673317-64a1789c-f6b1-48d7-ba1b-dbb18e7d802a.png)
 
 #### There are 2 ways to talk to the AI
