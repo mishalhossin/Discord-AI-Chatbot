@@ -1,5 +1,4 @@
 from bot_utilities.config_loader import load_current_language, load_instructions, config
-import os
 
 # Chatbot and discord config
 
