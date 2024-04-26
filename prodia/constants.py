@@ -52,4 +52,5 @@ class Sampler(Enum):
     EULER_A = ("Euler a", "02")
     HEUN = ("Heun", "03")
     DPM_2M_KARRAS = ("DPM++ 2M Karras", "04")
-    DDIM = ("DDIM", "05")
+    DPM_SDE_KARRAS = ("DPM++ SDE Karras", "05")
+    DDIM = ("DDIM", "06")

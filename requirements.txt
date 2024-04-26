@@ -1,18 +1,11 @@
 aiohttp
-asyncio
 discord.py
-requests
-flask
-discord
-python-dotenv
-PyYAML
-youtube-transcript-api
-langdetect
-PyPDF2
-python-docx
-tqdm
-fake-useragent
-openai
-werkzeug>=3.0.1 # not directly required, pinned by Snyk to avoid a vulnerability
+discord.py[voice]
 gtts
+langdetect
+python-dotenv
 pyttsx3
+PyYAML
+Requests
+openai
+duckduckgo-search
