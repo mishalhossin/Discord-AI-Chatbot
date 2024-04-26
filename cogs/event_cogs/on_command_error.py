@@ -1,6 +1,5 @@
 from discord.ext import commands
 
-from ..common import current_language
 
 class OnError(commands.Cog):
     def __init__(self, bot):

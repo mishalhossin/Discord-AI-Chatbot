@@ -23,5 +23,5 @@ for model in models.data:
                     model=model.id
                 )
             print(f"{model.id} responded with : {response.choices[0].message.content}\n\n")
-        except:
+        except Exception:
             print(f'{model.id} failed : {response}\n\n')

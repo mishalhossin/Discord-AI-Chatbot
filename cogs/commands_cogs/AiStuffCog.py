@@ -4,10 +4,9 @@ from discord.ext import commands
 import aiohttp
 import asyncio
 import random
-from bot_utilities.response_utils import split_response
 from bot_utilities.ai_utils import poly_image_gen, generate_image_prodia
 from prodia.constants import Model
-from ..common import current_language, blacklisted_words
+from ..common import blacklisted_words
 
 
 class AiStuffCog(commands.Cog):
